@@ -1,7 +1,7 @@
-var Sequelize = require('sequelize');
-var path = require('path');
-var fs = require('fs');
-var dotenv = require('dotenv');
+const Sequelize = require('sequelize');
+const path = require('path');
+const fs = require('fs');
+const dotenv = require('dotenv');
 
 dotenv.config(); //LOAD CONFIG
 
@@ -31,7 +31,7 @@ fs.readdirSync(__dirname)
         return file.indexOf('.js') && file !== 'index.js';
     })
     .forEach((file) => {
-        var model = sequelize.import(path.join(__dirname, file));
+        const model = sequelize.import(path.join(__dirname, file));
         db[model.name] = model;
     });
 
