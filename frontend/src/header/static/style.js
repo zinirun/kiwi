@@ -23,7 +23,6 @@ export const useStyles = makeStyles((theme) => ({
         },
     },
     menuButton: {
-        marginRight: theme.spacing(2),
         [theme.breakpoints.up('sm')]: {
             display: 'none',
         },
@@ -34,6 +33,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     drawerIcon: {
         color: 'white',
+        minWidth: '35px',
         '& svg': {
             fontSize: '1.05rem',
         },
@@ -41,11 +41,12 @@ export const useStyles = makeStyles((theme) => ({
     drawerText: {
         color: 'white',
         '& span': {
-            fontSize: '0.95rem',
+            fontSize: '0.925rem',
         },
     },
     drawerItem: {
         paddingLeft: theme.spacing(3),
+        height: '50px',
     },
     sideDivider: {
         backgroundColor: theme.palette.primary.dark,
