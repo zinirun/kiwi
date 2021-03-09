@@ -22,11 +22,11 @@ class App {
     }
 
     dbConnection() {
-        // DB authentication
         db.sequelize
             .authenticate()
             .then(() => {
                 console.log('Connection has been established successfully.');
+                // 한 번 싱크 한 후에는 //db.sequelize.sync()로 변경
                 //return db.sequelize.sync();
             })
             .then(() => {

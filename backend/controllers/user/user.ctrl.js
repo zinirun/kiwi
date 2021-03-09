@@ -20,14 +20,14 @@ const createHashedPassword = (plainPassword) =>
         });
     });
 
-const makePasswordHashed = (userId, plainPassword) =>
+const makePasswordHashed = (userAccount, plainPassword) =>
     new Promise(async (resolve, reject) => {
         const salt = await models.user
             .findOne({
                 attributes: ['salt'],
                 raw: true,
                 where: {
-                    userId,
+                    userAccount,
                 },
             })
             .then((result) => (result ? result.salt : reject(new Error('invalid'))))
@@ -56,17 +56,17 @@ module.exports = {
                 password,
                 salt,
             })
-            .then((result) => res.json({ userId: result.dataValues.userId }))
-            .catch((error) => res.json({ error }));
+            .then((result) => res.json({ userAccount: result.dataValues.userAccount }))
+            .catch((error) => res.status(409).json({ error }));
     },
 
     post_reset_password: async (req, res) => {
-        const { name, userId } = req.body.user;
+        const { name, userAccount } = req.body.user;
 
         const isValidUser = await models.user
             .findOne({
-                attributes: ['id', 'userId'],
-                where: { userId, name },
+                attributes: ['id', 'userAccount'],
+                where: { userAccount, name },
                 raw: true,
             })
             .then((user) => (user ? true : false))
@@ -78,21 +78,21 @@ module.exports = {
         const newPassword = createSixRandomPassword().toString();
         const { password, salt } = await createHashedPassword(newPassword);
         return await models.user
-            .update({ password, salt }, { where: { userId, name } })
+            .update({ password, salt }, { where: { userAccount, name } })
             .then((result) => {
                 if (result[0] === 0) {
                     return res.status(409).json({ error: { name: 'invalid' } });
                 } else {
-                    //sendMailOfResetPassword(name, userId, newPassword);
-                    return res.json({ userId });
+                    //sendMailOfResetPassword(name, userAccount, newPassword);
+                    return res.json({ userAccount });
                 }
             })
             .catch((error) => res.status(409).json({ error }));
     },
 
     post_signin: async (req, res) => {
-        const { userId, password: plainPassword } = req.body.user;
-        const password = await makePasswordHashed(userId, plainPassword).catch(() => false);
+        const { userAccount, password: plainPassword } = req.body.user;
+        const password = await makePasswordHashed(userAccount, plainPassword).catch(() => false);
         if (!password) {
             return res.status(409).json({ error: { name: 'invalid' } });
         }
@@ -100,8 +100,17 @@ module.exports = {
 
         return await models.user
             .findOne({
-                attributes: ['id', 'userId', 'name', 'department', 'tel', 'penalty', 'type'],
-                where: { userId, password },
+                attributes: [
+                    'id',
+                    'userAccount',
+                    'userName',
+                    'departmentId',
+                    'studentNumber',
+                    'studentGradeId',
+                    'companyId',
+                    'status',
+                ],
+                where: { userAccount, password },
                 raw: true,
             })
             .then((user) => {
@@ -114,7 +123,7 @@ module.exports = {
                         secret,
                         {
                             expiresIn: '7d',
-                            issuer: 'sms.dankook.ac.kr',
+                            issuer: 'gwatory.nemobros.com',
                             subject: 'user',
                         },
                         (error, token) => {
@@ -124,7 +133,6 @@ module.exports = {
                             res.json({
                                 message: 'Sign-in Successfully',
                                 token,
-                                type: parseInt(user.type),
                             });
                         },
                     );
