@@ -8,7 +8,7 @@ export const SITE_MENU = [
     {
         key: 2,
         name: '커뮤니티',
-        link: '/free',
+        link: '/community',
         icon: 'ForumIcon',
     },
     {
@@ -20,7 +20,7 @@ export const SITE_MENU = [
     {
         key: 4,
         name: '재능기부',
-        link: '/material',
+        link: '/talent',
         icon: 'StarsIcon',
     },
     {
@@ -35,13 +35,13 @@ export const MY_MENU = [
     {
         key: 1,
         name: '나의 글',
-        link: '/notice',
+        link: '/mypost',
         icon: 'PersonOutlineIcon',
     },
     {
         key: 2,
         name: '나의 댓글',
-        link: '/free',
+        link: '/mycomment',
         icon: 'PersonOutlineIcon',
     },
 ];
