@@ -10,7 +10,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     logoText: {
         margin: '-5px 0 10px',
-        fontSize: '1.025rem',
+        fontSize: '1.15rem',
         color: 'white',
         fontWeight: 'bold',
     },
