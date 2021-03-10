@@ -1,27 +1,29 @@
 import { useStyles } from '../static/logoStyle';
-import SchoolIcon from '@material-ui/icons/School';
 
 export default function Logo() {
     const classes = useStyles();
     return (
         <div className={classes.logoWrapper}>
-            <LogoIcon />
-            <span className={classes.logoText}>과토리</span>
+            <div>
+                <LogoIcon />
+            </div>
+            <p className={classes.logoText}>kiwi</p>
         </div>
     );
 }
 
 export function LogoIcon() {
     const classes = useStyles();
-    return <SchoolIcon className={classes.logoIcon} />;
+    return (
+        <img className={classes.logoImg} width="50px" src="/assets/kiwi-logo.svg" alt="kiwi-logo" />
+    );
 }
 
 export function MobileLogo() {
     const classes = useStyles();
     return (
         <div className={classes.mobileLogoWrapper}>
-            <SchoolIcon className={classes.logoIcon} />
-            <span className={classes.mobileLogoText}>과토리</span>
+            <img className={classes.mobileLogoImg} src="/assets/kiwi-logo.svg" alt="kiwi-logo" />
         </div>
     );
 }

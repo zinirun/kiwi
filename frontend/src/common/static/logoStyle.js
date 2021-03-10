@@ -1,35 +1,24 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const logoHeight = '60px';
-const mobileLogoHeight = '28px';
-
 export const useStyles = makeStyles((theme) => ({
     logoWrapper: {
-        height: logoHeight,
+        marginTop: '10px',
         textAlign: 'center',
     },
-    logoIcon: {
-        color: 'white',
-        fontSize: '25px',
+    logoImg: {
+        width: '45px',
     },
     logoText: {
-        textAlign: 'center',
-        lineHeight: logoHeight,
-        verticalAlign: 'middle',
+        margin: '-5px 0 10px',
         fontSize: '1.025rem',
         color: 'white',
         fontWeight: 'bold',
     },
     mobileLogoWrapper: {
-        height: mobileLogoHeight,
         textAlign: 'center',
+        paddingTop: '6px',
     },
-    mobileLogoText: {
-        textAlign: 'center',
-        lineHeight: mobileLogoHeight,
-        verticalAlign: 'middle',
-        fontSize: '0.925rem',
-        color: 'white',
-        fontWeight: 'bold',
+    mobileLogoImg: {
+        width: '35px',
     },
 }));

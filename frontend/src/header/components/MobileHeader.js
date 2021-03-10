@@ -27,13 +27,7 @@ export default function MobileHeader({ mobileOpen, setMobileOpen }) {
                         </IconButton>
                     </Grid>
                     <Grid item xs align="center">
-                        <IconButton
-                            color="inherit"
-                            className={classes.menuButton}
-                            style={{ margin: 0, marginRight: '-12px' }}
-                        >
-                            <MobileLogo />
-                        </IconButton>
+                        <MobileLogo />
                     </Grid>
                     <Grid item xs align="right">
                         <IconButton

@@ -1,13 +1,9 @@
 {
-  "name": "backend",
+  "name": "kiwi-backend",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "link-pm2": "pm2 link 674nze65f4ab7re u7r11wdgi0vyh07",
-    "start": "pm2 start ./bin/www.js -i 8",
-    "sync-db": "node ./bin/syncDB",
-    "server-db-build": "node ./conf/createServerData",
     "init-before-start": "yarn sync-db; yarn server-db-build",
     "kill": "killall node",
     "dev": "npx nodemon -e js,html ./bin/www"
