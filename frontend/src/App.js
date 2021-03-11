@@ -6,7 +6,7 @@ import Root from './header/Root';
 import TempPage from './TempPage';
 
 // 공통
-import PostPage from './board/common/PostPage';
+import PostContentPage from './board/common/PostContentPage';
 
 // 학과공지
 import NoticePage from './board/notice/NoticePage';
@@ -38,7 +38,7 @@ function App() {
                     <Route path="/question" component={QuestionPage} />
                     <Route path="/talent" component={TalentPage} />
                     <Route path="/market" component={MarketPage} />
-                    <Route path="/post" component={PostPage} />
+                    <Route path="/post" component={PostContentPage} />
                 </Switch>
             </Root>
         </Router>

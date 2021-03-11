@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function BoardContent() {
+export default function Board() {
     const classes = useStyles();
 
     return (
