@@ -4,6 +4,9 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 // temp
 import TempPage from './TempPage';
 
+// 공통
+import PostPage from './board/common/PostPage';
+
 // 학과공지
 import NoticePage from './board/notice/NoticePage';
 
@@ -33,6 +36,7 @@ function App() {
                 <Route path="/question" component={QuestionPage} />
                 <Route path="/talent" component={TalentPage} />
                 <Route path="/market" component={MarketPage} />
+                <Route path="/post" component={PostPage} />
             </Switch>
         </Router>
     );

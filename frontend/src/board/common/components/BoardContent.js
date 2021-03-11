@@ -1,12 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Button, Chip } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
-import Root from '../../header/Root';
 import { isMobile } from 'react-device-detect';
-
-import PageTitle from '../../common/components/PageTitle';
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -74,7 +72,15 @@ export default function BoardContent() {
                 alignItems="center"
                 className={classes.content}
             >
-                <Grid item xs={12} sm={8} className={classes.title}>
+                <Grid
+                    item
+                    xs={12}
+                    sm={8}
+                    className={classes.title}
+                    component={Link}
+                    to={'/post'}
+                    style={{ textDecoration: 'none' }}
+                >
                     <span className={classes.part}>학과질문</span>
                     {isMobile && <br />}
                     <span>자연과학관 5층 화장실에서 냄새나요</span>
@@ -95,7 +101,8 @@ export default function BoardContent() {
                 </Grid>
                 <Grid item xs={12} sm={2} align="right">
                     <Grid>
-                        <span style={{ color: '#999', fontSize: '0.75rem' }}>삼성/4학년</span>신창우
+                        <span style={{ color: '#999', fontSize: '0.75rem' }}>삼성/4학년</span>
+                        <span>신창우</span>
                     </Grid>
                     {!isMobile && (
                         <Grid className={classes.date}>
