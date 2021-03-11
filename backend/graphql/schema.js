@@ -26,6 +26,26 @@ module.exports = buildSchema(`
         updatedAt: Date
     }
 
+    type Comment {
+        id: ID!
+        postId: ID!
+        authorId: ID!
+        content: String!
+        isDeleted: Int!
+        isAnonymous: Int!
+        createdAt: Date!
+        updatedAt: Date
+    }
+
+    type CommentLike {
+        id: ID!
+        userId: ID!
+        commentId: ID!
+        createdAt: Date!
+        updatedAt: Date
+        isDeleted: Int!
+    }
+
     input PostInput {
         boardId: ID!
         categoryId: ID!
