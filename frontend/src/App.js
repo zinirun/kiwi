@@ -6,22 +6,22 @@ import Root from './header/Root';
 import TempPage from './TempPage';
 
 // 공통
-import PostContentPage from './board/common/PostContentPage';
+import PostContentPage from './board/common/pages/PostContentPage';
 
 // 학과공지
-import NoticePage from './board/notice/NoticePage';
+import NoticePage from './board/notice/pages/NoticePage';
 
 // 커뮤니티
-import CommunityPage from './board/community/CommunityPage';
+import CommunityPage from './board/community/pages/CommunityPage';
 
 // Q&A
-import QuestionPage from './board/question/QuestionPage';
+import QuestionPage from './board/question/pages/QuestionPage';
 
 // 재능기부
-import TalentPage from './board/talent/TalentPage';
+import TalentPage from './board/talent/pages/TalentPage';
 
 // 장터
-import MarketPage from './board/market/MarketPage';
+import MarketPage from './board/market/pages/MarketPage';
 
 // 나의 글
 

@@ -1,20 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-    Grid,
-    Chip,
-    Card,
-    CardContent,
-    Typography,
-    Button,
-    FormControlLabel,
-} from '@material-ui/core';
+import { Grid, Chip, Card, CardContent, Typography } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import 'antd/dist/antd.css';
-import { Comment, List, Form, Input, Row, Col } from 'antd';
-import CommentList from './components/CommentList';
-const { TextArea } = Input;
+import CommentList from '../components/CommentList';
 
 const useStyles = makeStyles((theme) => ({
     root: {
