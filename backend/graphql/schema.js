@@ -23,7 +23,7 @@ module.exports = buildSchema(`
         content: String!
         isDeleted: Int!
         createdAt: Date!
-        updatedAt: Date!
+        updatedAt: Date
     }
 
     input PostInput {
@@ -34,6 +34,7 @@ module.exports = buildSchema(`
     }
 
     input PostUpdateInput {
+        id: ID!
         title: String!
         content: String!
     }
@@ -45,7 +46,7 @@ module.exports = buildSchema(`
 
     type Mutation {
         createPost(post: PostInput!): Post
-        updatePost(id: ID!): Boolean
+        updatePost(post: PostUpdateInput!): Boolean
         deletePost(id: ID!): Boolean
     }
 `);

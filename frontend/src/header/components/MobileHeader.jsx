@@ -1,3 +1,4 @@
+import React from 'react';
 import { AppBar, Toolbar, IconButton, Grid } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useStyles } from '../static/style';

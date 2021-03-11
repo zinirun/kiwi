@@ -1,3 +1,4 @@
+import React from 'react';
 import { useStyles } from '../static/logoStyle';
 
 export default function Logo() {

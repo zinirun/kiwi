@@ -1,10 +1,10 @@
+import React from 'react';
 import { CssBaseline, Hidden, Drawer } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import { useState } from 'react';
 import { useStyles } from './static/style';
 import SideDrawer from './components/SideDrawer';
 import MobileHeader from './components/MobileHeader';
-import '../common/theme/style.css';
 
 export default function Root(props) {
     const { window } = props;

@@ -1,13 +1,12 @@
 import React from 'react';
-
 import PageTitle from '../../../common/components/PageTitle';
-import Board from '../../common/components/Board';
+import BoardListContainer from '../../common/containers/BoardListContainer';
 
 export default function CommunityPage() {
     return (
         <>
-            <PageTitle title="장터" />
-            <Board />
+            <PageTitle title="재능기부" />
+            <BoardListContainer />
         </>
     );
 }

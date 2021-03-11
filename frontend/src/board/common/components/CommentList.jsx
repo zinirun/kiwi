@@ -1,61 +1,10 @@
 import React from 'react';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { green } from '@material-ui/core/colors';
-import { Chip, Button, FormControlLabel, Checkbox } from '@material-ui/core';
+import { Chip } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import 'antd/dist/antd.css';
-import { Comment, Tooltip, List, Form, Input, Row, Col } from 'antd';
+import { Comment, Tooltip, List, Row, Col } from 'antd';
 import moment from 'moment';
-const { TextArea } = Input;
-
-const useStyles = makeStyles((theme) => ({
-    upIcon: {
-        fontSize: 15,
-        color: theme.palette.primary.main,
-        cursor: 'pointer',
-    },
-    button: {
-        color: 'white',
-        fontWeight: 'bold',
-        cursor: 'pointer',
-        background: theme.palette.primary.main,
-        borderRadius: 5,
-    },
-    postChip: {
-        marginLeft: 5,
-        background: 'white',
-    },
-    commentChip: {
-        marginTop: 10,
-        background: 'white',
-    },
-    commentField: {
-        maxWidth: 730,
-        background: 'white',
-        border: '1px solid #ddd',
-        paddingLeft: 10,
-        marginBottom: 5,
-    },
-    comment: {
-        marginBottom: 5,
-        fontSize: '1.2rem',
-        fontWeight: 'bold',
-    },
-    addCommentSection: {
-        display: 'flex',
-        flexDirection: 'row-reverse',
-    },
-}));
-
-const GreenCheckbox = withStyles({
-    root: {
-        color: green[400],
-        '&$checked': {
-            color: green[600],
-        },
-    },
-    checked: {},
-})((props) => <Checkbox color="default" {...props} />);
+import { useStyles } from '../styles/commentList.style';
 
 const data = [
     {
@@ -117,17 +66,6 @@ export default function CommentList() {
                     </li>
                 )}
             />
-            <Form.Item>
-                <TextArea rows={4} style={{ maxWidth: 730, marginTop: 15, height: 70 }} />
-            </Form.Item>
-            <Form.Item style={{ maxWidth: 730, marginTop: -15 }}>
-                <div className={classes.addCommentSection}>
-                    <Button type="submit" className={classes.button}>
-                        댓글달기
-                    </Button>
-                    <FormControlLabel control={<GreenCheckbox />} label="익명" />
-                </div>
-            </Form.Item>
         </>
     );
 }

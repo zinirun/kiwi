@@ -1,3 +1,4 @@
+import React from 'react';
 import { Divider, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { useStyles } from '../static/style';
 import { SITE_MENU, MY_MENU } from '../configs';
