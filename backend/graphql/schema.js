@@ -16,21 +16,29 @@ module.exports = buildSchema(`
 
     type Post {
         id: ID!
-        boardId: Int!
-        categoryId: Int!
-        authorId: Int!
+        boardId: ID!
+        categoryId: ID!
+        authorId: ID!
         title: String!
         content: String!
         isDeleted: Int!
         likeCount: Int!
-        dislikeCount: Int!
+        dislikeCont: Int!
+    }
+
+    input PostInput {
+        boardId: ID!
+        categoryId: ID!
+        title: String!
+        content: String!
     }
 
     type Query {
         getUserInfo: User!
+        getPost(boardId: ID!): Post!
     }
 
     type Mutation {
-        createPost: Post!
+        createPost(post: PostInput!): Post
     }
 `);
