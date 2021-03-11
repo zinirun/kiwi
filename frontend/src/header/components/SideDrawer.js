@@ -39,8 +39,8 @@ export default function SideDrawer() {
             <Divider className={classes.sideDivider} />
             <List>
                 {SITE_MENU.map((m) => (
-                    <Link to={m.link} style={{ textDecoration: 'none' }}>
-                        <ListItem className={classes.drawerItem} button key={m.key}>
+                    <Link to={m.link} style={{ textDecoration: 'none' }} key={m.key}>
+                        <ListItem className={classes.drawerItem} button>
                             <ListItemIcon className={classes.drawerIcon}>
                                 <IconViewer icon={m.icon} />
                             </ListItemIcon>

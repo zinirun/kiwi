@@ -122,7 +122,7 @@ export default function CommentList() {
             </Form.Item>
             <Form.Item style={{ maxWidth: 730, marginTop: -15 }}>
                 <div className={classes.addCommentSection}>
-                    <Button htmlType="submit" className={classes.button}>
+                    <Button type="submit" className={classes.button}>
                         댓글달기
                     </Button>
                     <FormControlLabel control={<GreenCheckbox />} label="익명" />
