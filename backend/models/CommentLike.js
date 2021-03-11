@@ -5,7 +5,7 @@ module.exports = function (sequelize, DataTypes) {
         'comment_like',
         {
             userId: { type: DataTypes.INTEGER, allowNull: false },
-            commentId: { type: DataTypes.INTEGER, allowNull: true },
+            commentId: { type: DataTypes.INTEGER, allowNull: false },
         },
         {
             freezeTableName: true,
