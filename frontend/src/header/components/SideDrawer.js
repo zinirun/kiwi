@@ -8,6 +8,7 @@ import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 import StorageIcon from '@material-ui/icons/Storage';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import Logo from '../../common/components/Logo';
+import { Link } from 'react-router-dom';
 
 function IconViewer({ icon }) {
     switch (icon) {
@@ -32,16 +33,20 @@ export default function SideDrawer() {
     const classes = useStyles();
     return (
         <div>
-            <Logo />
+            <Link to={'/'} style={{ textDecoration: 'none' }}>
+                <Logo />
+            </Link>
             <Divider className={classes.sideDivider} />
             <List>
                 {SITE_MENU.map((m) => (
-                    <ListItem className={classes.drawerItem} button key={m.key}>
-                        <ListItemIcon className={classes.drawerIcon}>
-                            <IconViewer icon={m.icon} />
-                        </ListItemIcon>
-                        <ListItemText className={classes.drawerText}>{m.name}</ListItemText>
-                    </ListItem>
+                    <Link to={m.link} style={{ textDecoration: 'none' }}>
+                        <ListItem className={classes.drawerItem} button key={m.key} to={m.link}>
+                            <ListItemIcon className={classes.drawerIcon}>
+                                <IconViewer icon={m.icon} />
+                            </ListItemIcon>
+                            <ListItemText className={classes.drawerText}>{m.name}</ListItemText>
+                        </ListItem>
+                    </Link>
                 ))}
                 <Divider className={classes.sideDivider} />
                 {MY_MENU.map((m) => (
