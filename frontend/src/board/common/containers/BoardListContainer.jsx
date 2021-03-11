@@ -6,7 +6,7 @@ import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineO
 import { isMobile } from 'react-device-detect';
 import { useStyles } from '../styles/board.style';
 
-export default function Board() {
+export default function BoardListContainer() {
     const classes = useStyles();
 
     return (
