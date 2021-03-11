@@ -28,6 +28,9 @@ module.exports = buildSchema(`
 
     type Query {
         getUserInfo: User!
-        getPost: Post!
+    }
+
+    type Mutation {
+        createPost: Post!
     }
 `);
