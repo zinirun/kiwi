@@ -13,7 +13,12 @@ export default function BoardListContainer() {
         <>
             <Grid container justify="center" style={{ maxWidth: 730, marginBottom: 15 }}>
                 <Grid item xs={12} sm={12} align="right">
-                    <Button className={classes.button} size="small">
+                    <Button
+                        component={Link}
+                        to="/write?boardId=1&categoryId=1"
+                        className={classes.button}
+                        size="small"
+                    >
                         글쓰기
                     </Button>
                 </Grid>

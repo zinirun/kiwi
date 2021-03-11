@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import { Button, FormControlLabel, Checkbox } from '@material-ui/core';
 import 'antd/dist/antd.css';
-import { Form, Input } from 'antd';
+import { Form, Input, Space } from 'antd';
 import { useStyles } from '../styles/commentText.style';
 const { TextArea } = Input;
 
@@ -21,18 +21,20 @@ export default function CommentText() {
     const classes = useStyles();
 
     return (
-        <>
-            <Form.Item>
-                <TextArea rows={4} style={{ maxWidth: 730, marginTop: 15, height: 70 }} />
+        <Form className={classes.commentForm}>
+            <Form.Item className={classes.commentTextareaSection}>
+                <TextArea rows={3} />
             </Form.Item>
-            <Form.Item style={{ maxWidth: 730, marginTop: -15 }}>
+            <Form.Item>
                 <div className={classes.addCommentSection}>
-                    <Button type="submit" className={classes.button}>
-                        댓글달기
-                    </Button>
-                    <FormControlLabel control={<GreenCheckbox />} label="익명" />
+                    <Space size={0}>
+                        <FormControlLabel control={<GreenCheckbox />} label="익명" />
+                        <Button type="submit" className={classes.button}>
+                            댓글달기
+                        </Button>
+                    </Space>
                 </div>
             </Form.Item>
-        </>
+        </Form>
     );
 }
