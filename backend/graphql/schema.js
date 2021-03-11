@@ -23,7 +23,9 @@ module.exports = buildSchema(`
         content: String!
         isDeleted: Int!
         likeCount: Int!
-        dislikeCont: Int!
+        dislikeCount: Int!
+        createdAt: Date!
+        updatedAt: Date!
     }
 
     input PostInput {
@@ -35,7 +37,7 @@ module.exports = buildSchema(`
 
     type Query {
         getUserInfo: User!
-        getPost(boardId: ID!): Post!
+        getPostById(id: ID!): Post!
     }
 
     type Mutation {
