@@ -23,6 +23,9 @@ import TalentPage from './board/talent/pages/TalentPage';
 // 장터
 import MarketPage from './board/market/pages/MarketPage';
 
+// 글쓰기
+import PostWritePage from './board/common/pages/PostWritePage';
+
 // 나의 글
 
 // 나의 댓글
@@ -39,6 +42,7 @@ function App() {
                     <Route path="/talent" component={TalentPage} />
                     <Route path="/market" component={MarketPage} />
                     <Route path="/post" component={PostContentPage} />
+                    <Route path="/write" component={PostWritePage} />
                 </Switch>
             </Root>
         </Router>
