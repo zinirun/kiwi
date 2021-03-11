@@ -6,7 +6,6 @@ module.exports = function (sequelize, DataTypes) {
         {
             userId: { type: DataTypes.INTEGER, allowNull: false },
             postId: { type: DataTypes.INTEGER, allowNull: true },
-            isLike: { type: DataTypes.TINYINT, defaultValue: 1 },
         },
         {
             freezeTableName: true,
