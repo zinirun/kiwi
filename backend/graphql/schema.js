@@ -14,7 +14,20 @@ module.exports = buildSchema(`
         status: Int!
     }
 
+    type Post {
+        id: ID!
+        boardId: Int!
+        categoryId: Int!
+        authorId: Int!
+        title: String!
+        content: String!
+        isDeleted: Int!
+        likeCount: Int!
+        dislikeCount: Int!
+    }
+
     type Query {
         getUserInfo: User!
+        getPost: Post!
     }
 `);
