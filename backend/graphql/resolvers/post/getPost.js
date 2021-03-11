@@ -22,7 +22,7 @@ const models = require('../../../models');
 const { BadRequestError } = require('../../errors/errors');
 
 module.exports = async ({ id }, {}) => {
-    const user = await models.post.findOne({
+    const post = await models.post.findOne({
         attributes: [
             'boardId',
             'categoryId',
@@ -38,7 +38,7 @@ module.exports = async ({ id }, {}) => {
         where: { id },
         raw: true,
     });
-    if (!user) {
+    if (!post) {
         throw BadRequestError('Post not exists');
     }
     return user;
