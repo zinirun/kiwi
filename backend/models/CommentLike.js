@@ -6,6 +6,7 @@ module.exports = function (sequelize, DataTypes) {
         {
             userId: { type: DataTypes.INTEGER, allowNull: false },
             commentId: { type: DataTypes.INTEGER, allowNull: false },
+            isDeleted: { type: DataTypes.TINYINT, defaultValue: 0 },
         },
         {
             freezeTableName: true,
