@@ -10,6 +10,7 @@ module.exports = function (sequelize, DataTypes) {
             isDeleted: { type: DataTypes.TINYINT, defaultValue: 0 },
             likeCount: { type: DataTypes.INTEGER, defaultValue: 0 },
             dislikeCount: { type: DataTypes.INTEGER, defaultValue: 0 },
+            isAnonymous: { type: DataTypes.TINYINT, defaultValue: 0 },
         },
         {
             freezeTableName: true,
