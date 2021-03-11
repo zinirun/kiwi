@@ -140,23 +140,7 @@ export default function PostPage() {
                         <span>신창우</span>
                     </Grid>
                     <Typography variant="body2" component="p">
-                        well meaning and kindly.
-                        <br />
-                        well meaning and kindly.
-                        <br />
-                        well meaning and kindly.
-                        <br />
-                        well meaning and kindly.
-                        <br />
-                        well meaning and kindly.
-                        <br />
-                        well meaning and kindly.
-                        <br />
-                        well meaning and kindly.
-                        <br />
-                        well meaning and kindly.
-                        <br />
-                        well meaning and kindly.
+                        안녕하세요. 김상배입니다.
                     </Typography>
                 </CardContent>
                 <Grid align="right">
@@ -204,7 +188,7 @@ export default function PostPage() {
                 )}
             />
             <Form.Item>
-                <TextArea rows={4} style={{ maxWidth: 730, marginTop: 15 }} />
+                <TextArea rows={4} style={{ maxWidth: 730, marginTop: 15, height: 70 }} />
             </Form.Item>
             <Form.Item style={{ maxWidth: 730, marginTop: -15 }}>
                 <div className={classes.addCommentSection}>
