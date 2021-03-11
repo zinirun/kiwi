@@ -10,8 +10,6 @@ module.exports = function (sequelize, DataTypes) {
             title: { type: DataTypes.STRING(20), allowNull: false },
             content: { type: DataTypes.TEXT('long'), allowNull: false },
             isDeleted: { type: DataTypes.TINYINT, defaultValue: 0 },
-            likeCount: { type: DataTypes.INTEGER, defaultValue: 0 },
-            dislikeCount: { type: DataTypes.INTEGER, defaultValue: 0 },
         },
         {
             freezeTableName: true,
@@ -32,6 +30,9 @@ module.exports = function (sequelize, DataTypes) {
             foreignKey: 'categoryId',
         });
         Post.hasMany(models.comment, {
+            foreignKey: 'postId',
+        });
+        Post.hasMany(models.post_like, {
             foreignKey: 'postId',
         });
     };

@@ -8,8 +8,6 @@ module.exports = function (sequelize, DataTypes) {
             authorId: { type: DataTypes.INTEGER, allowNull: false },
             content: { type: DataTypes.STRING(100), allowNull: false },
             isDeleted: { type: DataTypes.TINYINT, defaultValue: 0 },
-            likeCount: { type: DataTypes.INTEGER, defaultValue: 0 },
-            dislikeCount: { type: DataTypes.INTEGER, defaultValue: 0 },
             isAnonymous: { type: DataTypes.TINYINT, defaultValue: 0 },
         },
         {
@@ -23,6 +21,9 @@ module.exports = function (sequelize, DataTypes) {
     Comment.associate = (models) => {
         Comment.belongsTo(models.post, {
             foreignKey: 'postId',
+        });
+        Comment.hasMany(models.comment_like, {
+            foreignKey: 'commentId',
         });
     };
 
