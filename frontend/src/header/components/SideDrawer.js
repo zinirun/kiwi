@@ -40,7 +40,7 @@ export default function SideDrawer() {
             <List>
                 {SITE_MENU.map((m) => (
                     <Link to={m.link} style={{ textDecoration: 'none' }}>
-                        <ListItem className={classes.drawerItem} button key={m.key} to={m.link}>
+                        <ListItem className={classes.drawerItem} button key={m.key}>
                             <ListItemIcon className={classes.drawerIcon}>
                                 <IconViewer icon={m.icon} />
                             </ListItemIcon>
