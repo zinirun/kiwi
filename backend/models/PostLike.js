@@ -5,7 +5,7 @@ module.exports = function (sequelize, DataTypes) {
         'post_like',
         {
             userId: { type: DataTypes.INTEGER, allowNull: false },
-            postId: { type: DataTypes.INTEGER, allowNull: true },
+            postId: { type: DataTypes.INTEGER, allowNull: false },
         },
         {
             freezeTableName: true,
