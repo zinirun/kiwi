@@ -1,9 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Button, Chip, Avatar } from '@material-ui/core';
+import { Grid, Button, Chip } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
-import SchoolIcon from '@material-ui/icons/School';
 import Root from './header/Root';
 import { isMobile } from 'react-device-detect';
 
