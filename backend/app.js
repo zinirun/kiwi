@@ -27,7 +27,7 @@ class App {
             .then(() => {
                 console.log('Connection has been established successfully.');
                 // 한 번 싱크 한 후에는 //db.sequelize.sync()로 변경
-                return db.sequelize.sync();
+                //return db.sequelize.sync();
             })
             .then(() => {
                 console.log('DB Sync complete.');

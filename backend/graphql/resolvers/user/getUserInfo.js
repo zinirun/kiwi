@@ -33,7 +33,7 @@ module.exports = async ({}, { id }) => {
         raw: true,
     });
     if (!user) {
-        throw AuthorizationError;
+        throw AuthorizationError('User not exists');
     }
     return user;
 };
