@@ -16,12 +16,13 @@
         content: String!
         isDeleted: Int!
         createdAt: Date!
-        updatedAt: Date!
+        updatedAt: Date
     }   
 * createPost(post: PostInput!): Post
  */
 
 const models = require('../../../models');
+const { ConflictError } = require('../../errors/errors');
 
 module.exports = async ({ post }, { id: authorId }) => {
     return await models.post
@@ -35,5 +36,7 @@ module.exports = async ({ post }, { id: authorId }) => {
                 ...data,
             };
         })
-        .catch((error) => error);
+        .catch(() => {
+            throw ConflictError('Update error occured');
+        });
 };

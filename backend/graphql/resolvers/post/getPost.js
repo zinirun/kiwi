@@ -12,8 +12,9 @@
         content: String!
         isDeleted: Int!
         createdAt: Date!
-        updatedAt: Date!
+        updatedAt: Date
     }
+* getPostById(id: ID!): Post!
  */
 
 const models = require('../../../models');
