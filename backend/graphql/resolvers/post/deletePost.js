@@ -17,12 +17,12 @@
 
 const models = require('../../../models');
 
-module.exports = async ({ id }, {}) => {
+module.exports = async ({ id }, { id: authorId }) => {
     return await models.Post.update(
         {
             isDeleted: 1,
         },
-        { where: { id } },
+        { where: { id, authorId } },
     )
         .then(() => {
             return true;

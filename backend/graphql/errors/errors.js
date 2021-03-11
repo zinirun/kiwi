@@ -14,6 +14,14 @@ const BadRequestError = (error) => {
     });
 };
 
+const NotFoundError = (error) => {
+    return new Error({
+        message: 'Not Found',
+        status: 404,
+        error,
+    });
+};
+
 module.exports = {
     AuthorizationError,
     BadRequestError,

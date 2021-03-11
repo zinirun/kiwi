@@ -22,9 +22,8 @@
  */
 
 const models = require('../../../models');
-const moment = require('moment');
 
-module.exports = async ({ post }, { authorId }) => {
+module.exports = async ({ post }, { id: authorId }) => {
     return await models.post
         .create({
             authorId,
@@ -33,14 +32,7 @@ module.exports = async ({ post }, { authorId }) => {
         .then((result) => {
             const data = result.get({ plain: true });
             return {
-                id: data.id,
-                boardId: data.boardId,
-                categoryId: data.categoryId,
-                authorId: data.authorId,
-                title: data.title,
-                content: data.content,
-                isDeleted: data.isDeleted,
-                createdAt: moment(data.createdAt).format('YYYY-MM-DD'),
+                ...data,
             };
         })
         .catch((error) => error);
