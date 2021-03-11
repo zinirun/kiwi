@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import Root from './header/Root';
 
 // temp
 import TempPage from './TempPage';
@@ -29,15 +30,17 @@ import MarketPage from './board/market/MarketPage';
 function App() {
     return (
         <Router>
-            <Switch>
-                <Route exact path="/" component={TempPage} />
-                <Route path="/notice" component={NoticePage} />
-                <Route path="/community" component={CommunityPage} />
-                <Route path="/question" component={QuestionPage} />
-                <Route path="/talent" component={TalentPage} />
-                <Route path="/market" component={MarketPage} />
-                <Route path="/post" component={PostPage} />
-            </Switch>
+            <Root>
+                <Switch>
+                    <Route exact path="/" component={TempPage} />
+                    <Route path="/notice" component={NoticePage} />
+                    <Route path="/community" component={CommunityPage} />
+                    <Route path="/question" component={QuestionPage} />
+                    <Route path="/talent" component={TalentPage} />
+                    <Route path="/market" component={MarketPage} />
+                    <Route path="/post" component={PostPage} />
+                </Switch>
+            </Root>
         </Router>
     );
 }

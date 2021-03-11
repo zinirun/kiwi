@@ -1,11 +1,20 @@
 import React from 'react';
-import Root from '../../header/Root';
-import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Chip, Card, CardContent, Typography, Button } from '@material-ui/core';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
+import {
+    Grid,
+    Chip,
+    Card,
+    CardContent,
+    Typography,
+    Button,
+    FormControlLabel,
+    Checkbox,
+} from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import 'antd/dist/antd.css';
-import { Comment, Tooltip, List, Form, Input } from 'antd';
+import { Comment, Tooltip, List, Form, Input, Row, Col } from 'antd';
 import moment from 'moment';
 const { TextArea } = Input;
 
@@ -53,8 +62,12 @@ const useStyles = makeStyles((theme) => ({
         background: theme.palette.primary.main,
         borderRadius: 5,
     },
-    backColor: {
+    postChip: {
         marginLeft: 5,
+        background: 'white',
+    },
+    commentChip: {
+        marginTop: 10,
         background: 'white',
     },
     commentField: {
@@ -65,11 +78,25 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 5,
     },
     comment: {
+        marginBottom: 5,
         fontSize: '1.2rem',
         fontWeight: 'bold',
-        borderBottom: '1px solid #ddd',
+    },
+    addCommentSection: {
+        display: 'flex',
+        flexDirection: 'row-reverse',
     },
 }));
+
+const GreenCheckbox = withStyles({
+    root: {
+        color: green[400],
+        '&$checked': {
+            color: green[600],
+        },
+    },
+    checked: {},
+})((props) => <Checkbox color="default" {...props} />);
 
 const data = [
     {
@@ -83,7 +110,12 @@ const data = [
     },
     {
         author: '이건욱',
-        content: <p>저희가 자주 보죠~! 무야~호~!</p>,
+        content: (
+            <p>
+                저희가 자주 보죠~! 무야~호~!
+                무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!
+            </p>
+        ),
         datetime: (
             <Tooltip title={moment().subtract(2, 'days').format('YYYY-MM-DD HH:mm:ss')}>
                 <span>{moment().subtract(2, 'days').fromNow()}</span>
@@ -96,7 +128,7 @@ export default function PostPage() {
     const classes = useStyles();
 
     return (
-        <Root>
+        <>
             <Card className={classes.root}>
                 <CardContent>
                     <span className={classes.part}>학과질문</span>
@@ -129,43 +161,45 @@ export default function PostPage() {
                 </CardContent>
                 <Grid align="right">
                     <Chip
-                        className={classes.backColor}
+                        className={classes.postChip}
                         size="small"
                         icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
                         label="1888"
                     />
                     <Chip
-                        className={classes.backColor}
+                        className={classes.postChip}
                         size="small"
                         icon={<ChatBubbleOutlineOutlinedIcon className={classes.commentIcon} />}
                         label="181"
                     />
                 </Grid>
             </Card>
-            <Grid>
-                <span className={classes.comment}>댓글</span>
-            </Grid>
+            <div className={classes.comment}>
+                <span>댓글</span>
+            </div>
             <List
                 className="comment-list"
                 itemLayout="horizontal"
                 dataSource={data}
                 renderItem={(item) => (
                     <li className={classes.commentField}>
-                        <Grid item xs={12} sm={10}>
-                            <Comment
-                                author={item.author}
-                                content={item.content}
-                                datetime={item.datetime}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={2}>
-                            <Chip
-                                className={classes.backColor}
-                                size="small"
-                                icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                                label="1888"
-                            />
-                        </Grid>
+                        <Row justify="center" align="center">
+                            <Col span={21}>
+                                <Comment
+                                    author={item.author}
+                                    content={item.content}
+                                    datetime={item.datetime}
+                                />
+                            </Col>
+                            <Col span={3} align="center">
+                                <Chip
+                                    className={classes.commentChip}
+                                    size="small"
+                                    icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
+                                    label="1888"
+                                />
+                            </Col>
+                        </Row>
                     </li>
                 )}
             />
@@ -173,12 +207,13 @@ export default function PostPage() {
                 <TextArea rows={4} style={{ maxWidth: 730, marginTop: 15 }} />
             </Form.Item>
             <Form.Item style={{ maxWidth: 730, marginTop: -15 }}>
-                <Grid item xm={12} sm={12} align="right">
+                <div className={classes.addCommentSection}>
                     <Button htmlType="submit" className={classes.button}>
                         댓글달기
                     </Button>
-                </Grid>
+                    <FormControlLabel control={<GreenCheckbox />} label="익명" />
+                </div>
             </Form.Item>
-        </Root>
+        </>
     );
 }

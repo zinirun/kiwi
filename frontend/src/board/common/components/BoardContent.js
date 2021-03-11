@@ -83,7 +83,7 @@ export default function BoardContent() {
                 >
                     <span className={classes.part}>학과질문</span>
                     {isMobile && <br />}
-                    <span>자연과학관 5층 화장실에서 냄새나요</span>
+                    <span style={{ color: 'black' }}>자연과학관 5층 화장실에서 냄새나요</span>
                 </Grid>
                 <Grid item xs={12} sm={2} align="right" className={classes.icon}>
                     <Chip
