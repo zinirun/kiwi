@@ -1,56 +1,9 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Chip, Card, CardContent, Typography } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import 'antd/dist/antd.css';
-import CommentList from '../components/CommentList';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        maxWidth: 730,
-        border: '1px solid #ddd',
-        boxShadow: 'none',
-        marginBottom: 15,
-    },
-    part: {
-        background: theme.palette.primary.main,
-        width: 70,
-        padding: '2px 6px',
-        fontSize: 12,
-        color: 'white',
-        borderRadius: '10px',
-        marginRight: 5,
-    },
-    title: {
-        fontSize: '1.4rem',
-        fontWeight: 'bold',
-        borderBottom: '1px solid #ddd',
-        width: 700,
-    },
-    upIcon: {
-        fontSize: 15,
-        color: theme.palette.primary.main,
-        cursor: 'pointer',
-    },
-    commentIcon: {
-        fontSize: 15,
-        marginLeft: 15,
-        color: theme.palette.primary.main,
-    },
-    date: {
-        fontSize: 12,
-        color: '#BBBBBB',
-    },
-    postChip: {
-        marginLeft: 5,
-        background: 'white',
-    },
-    commentChip: {
-        marginTop: 10,
-        background: 'white',
-    },
-}));
+import { useStyles } from '../styles/postContent.style';
 
 export default function PostContent() {
     const classes = useStyles();
@@ -86,7 +39,6 @@ export default function PostContent() {
                     />
                 </Grid>
             </Card>
-            <CommentList />
         </>
     );
 }
