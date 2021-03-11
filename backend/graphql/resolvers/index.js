@@ -5,4 +5,8 @@ module.exports = {
     Date: GraphQLDate,
 
     getUserInfo: require('./user/getUserInfo'),
+    getPostById: require('./post/getPost'),
+    createPost: require('./post/createPost'),
+    updatePost: require('./post/updatePost'),
+    deletePost: require('./post/deletePost'),
 };

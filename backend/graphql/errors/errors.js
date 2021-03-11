@@ -22,7 +22,16 @@ const NotFoundError = (error) => {
     });
 };
 
+const ConflictError = (error) => {
+    return new Error({
+        message: 'Confilct occured',
+        status: 409,
+        error,
+    });
+};
 module.exports = {
     AuthorizationError,
     BadRequestError,
+    NotFoundError,
+    ConflictError,
 };
