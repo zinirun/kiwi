@@ -1,13 +1,12 @@
 /**
- * 게시물 생성
+ * 게시물 수정
  * @author 이건욱
- * @param input PostInput {
-        boardId: ID!
-        categoryId: ID!
+ * @param input PostUpdateInput {
+        id: ID!
         title: String!
         content: String!
     }
-* type Post {
+ * type Post {
         id: ID!
         boardId: ID!
         categoryId: ID!
@@ -17,24 +16,23 @@
         isDeleted: Int!
         createdAt: Date!
         updatedAt: Date
-    }   
-* createPost(post: PostInput!): Post
+    }
+* updatePost(post: PostUpdateInput!): Boolean
  */
 
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 
 module.exports = async ({ post }, { id: authorId }) => {
-    return await models.post
-        .create({
-            authorId,
-            ...post,
-        })
-        .then((result) => {
-            const data = result.get({ plain: true });
-            return {
-                ...data,
-            };
+    return await models.Post.update(
+        {
+            title: post.title,
+            content: post.content,
+        },
+        { where: { id: post.id, authorId } },
+    )
+        .then(() => {
+            return true;
         })
         .catch(() => {
             throw ConflictError('Update error occured');

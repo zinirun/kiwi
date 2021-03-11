@@ -12,12 +12,13 @@
         content: String!
         isDeleted: Int!
         createdAt: Date!
-        updatedAt: Date!
+        updatedAt: Date
     }
+* getPostById(id: ID!): Post!
  */
 
 const models = require('../../../models');
-const { BadRequestError } = require('../../errors/errors');
+const { NotFoundError } = require('../../errors/errors');
 
 module.exports = async ({ id }, {}) => {
     const post = await models.post.findOne({
@@ -35,7 +36,7 @@ module.exports = async ({ id }, {}) => {
         raw: true,
     });
     if (!post) {
-        throw BadRequestError('Post not exists');
+        throw NotFoundError('Post not exists');
     }
     return user;
 };

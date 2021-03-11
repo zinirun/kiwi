@@ -14,7 +14,24 @@ const BadRequestError = (error) => {
     });
 };
 
+const NotFoundError = (error) => {
+    return new Error({
+        message: 'Not Found',
+        status: 404,
+        error,
+    });
+};
+
+const ConflictError = (error) => {
+    return new Error({
+        message: 'Confilct occured',
+        status: 409,
+        error,
+    });
+};
 module.exports = {
     AuthorizationError,
     BadRequestError,
+    NotFoundError,
+    ConflictError,
 };
