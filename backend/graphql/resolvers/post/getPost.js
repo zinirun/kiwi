@@ -1,7 +1,7 @@
 /**
  * 게시물 정보 추출
  * @author 이건욱
- * @param (boardId: ID!)
+ * @param (id: ID!)
  * @returns {Post}
  * type Post {
         id: ID!
@@ -11,8 +11,6 @@
         title: String!
         content: String!
         isDeleted: Int!
-        likeCount: Int!
-        dislikeCount: Int!
         createdAt: Date!
         updatedAt: Date!
     }
@@ -30,8 +28,6 @@ module.exports = async ({ id }, {}) => {
             'title',
             'content',
             'isDeleted',
-            'likeCount',
-            'dislikeCount',
             'createdAt',
             'updatedAt',
         ],

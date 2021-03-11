@@ -22,8 +22,6 @@ module.exports = buildSchema(`
         title: String!
         content: String!
         isDeleted: Int!
-        likeCount: Int!
-        dislikeCount: Int!
         createdAt: Date!
         updatedAt: Date!
     }
@@ -35,6 +33,11 @@ module.exports = buildSchema(`
         content: String!
     }
 
+    input PostUpdateInput {
+        title: String!
+        content: String!
+    }
+
     type Query {
         getUserInfo: User!
         getPostById(id: ID!): Post!
@@ -42,5 +45,7 @@ module.exports = buildSchema(`
 
     type Mutation {
         createPost(post: PostInput!): Post
+        updatePost(id: ID!): Boolean
+        deletePost(id: ID!): Boolean
     }
 `);
