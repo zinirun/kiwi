@@ -26,6 +26,12 @@ import MarketPage from './board/market/pages/MarketPage';
 // 글쓰기
 import PostWritePage from './board/common/pages/PostWritePage';
 
+// 로그인
+import SignInPage from './common/pages/SignInPage';
+
+// 회원가입
+import SignUpPage from './common/pages/SignUpPage';
+
 // 나의 글
 
 // 나의 댓글
@@ -36,6 +42,8 @@ function App() {
             <Root>
                 <Switch>
                     <Route exact path="/" component={TempPage} />
+                    <Route path="/signin" component={SignInPage} />
+                    <Route path="/signup" component={SignUpPage} />
                     <Route path="/notice" component={NoticePage} />
                     <Route path="/community" component={CommunityPage} />
                     <Route path="/question" component={QuestionPage} />

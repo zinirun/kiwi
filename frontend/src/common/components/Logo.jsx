@@ -1,7 +1,7 @@
 import React from 'react';
-import { useStyles } from '../static/logoStyle';
+import { useStyles } from '../static/logo.style';
 
-export default function Logo() {
+export default function Logo(props) {
     const classes = useStyles();
     return (
         <div className={classes.logoWrapper}>
