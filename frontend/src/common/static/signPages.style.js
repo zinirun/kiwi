@@ -24,4 +24,13 @@ export const useStyles = makeStyles((theme) => ({
     loginBt: {
         color: 'white',
     },
+    mainBigText: {
+        fontSize: '1.6rem',
+        fontWeight: 'bold',
+        color: '#bbb',
+    },
+    mainLink: {
+        fontWeight: 'extra-bold',
+        color: theme.palette.primary.main,
+    },
 }));

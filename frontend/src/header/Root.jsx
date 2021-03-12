@@ -12,6 +12,19 @@ const isWithoutSider = (pathname) => {
     switch (path) {
         case 'signin':
         case 'signup':
+        case 'needuser':
+        case 'finduser':
+            return true;
+        default:
+            return false;
+    }
+};
+
+const isFullScreen = (pathname) => {
+    const path = pathname.split('/')[1];
+    switch (path) {
+        case 'needuser':
+        case 'finduser':
             return true;
         default:
             return false;
@@ -34,7 +47,11 @@ export default function Root(props) {
     return (
         <>
             {isWithoutSider(pathname) ? (
-                <Container maxWidth="sm">{props.children}</Container>
+                isFullScreen(pathname) ? (
+                    <>{props.children}</>
+                ) : (
+                    <Container maxWidth="sm">{props.children}</Container>
+                )
             ) : (
                 <div className={classes.root}>
                     <CssBaseline />

@@ -11,7 +11,7 @@ import {
 import { LogoIcon } from '../components/Logo';
 import { Link } from 'react-router-dom';
 import { message, Space } from 'antd';
-import { useStyles } from '../static/signInPage.style';
+import { useStyles } from '../static/signPages.style';
 import axios from 'axios';
 import { SignupValidator } from '../validators/signup.validator';
 
