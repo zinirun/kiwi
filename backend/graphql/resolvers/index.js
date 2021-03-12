@@ -9,4 +9,7 @@ module.exports = {
     createPost: require('./post/createPost'),
     updatePost: require('./post/updatePost'),
     deletePost: require('./post/deletePost'),
+    getCommentsByPostId: require('./comment/getCommentsByPostId'),
+    getPostLikeById: require('./postLike/getPostLike'),
+    handlePostLike: require('./postLike/handlePostLike'),
 };

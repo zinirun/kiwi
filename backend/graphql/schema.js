@@ -26,24 +26,26 @@ module.exports = buildSchema(`
         updatedAt: Date
     }
 
-    type Comment {
+    type PostLike {
         id: ID!
+        userId: ID!
         postId: ID!
-        authorId: ID!
-        content: String!
-        isDeleted: Int!
-        isAnonymous: Int!
+        isLike: Int!
         createdAt: Date!
         updatedAt: Date
     }
 
-    type CommentLike {
+    type Comment {
         id: ID!
+        postId: ID!
         userId: ID!
-        commentId: ID!
+        userName: String!
+        content: String!
+        isDeleted: Int!
+        isAnonymous: Int!
+        likeCount: Int!
         createdAt: Date!
         updatedAt: Date
-        isDeleted: Int!
     }
 
     input PostInput {
@@ -62,11 +64,14 @@ module.exports = buildSchema(`
     type Query {
         getUserInfo: User!
         getPostById(id: ID!): Post!
+        getCommentsByPostId(postId: ID!): [Comment]!
+        getPostLikeById(id: ID!): PostLike!
     }
 
     type Mutation {
         createPost(post: PostInput!): Post
         updatePost(post: PostUpdateInput!): Boolean
         deletePost(id: ID!): Boolean
+        handlePostLike(postId: ID!): String
     }
 `);
