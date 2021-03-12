@@ -26,6 +26,15 @@ module.exports = buildSchema(`
         updatedAt: Date
     }
 
+    type PostLike {
+        id: ID!
+        userId: ID!
+        postId: ID!
+        isLike: Int!
+        createdAt: Date!
+        updatedAt: Date
+    }
+
     type Comment {
         id: ID!
         postId: ID!
@@ -56,11 +65,13 @@ module.exports = buildSchema(`
         getUserInfo: User!
         getPostById(id: ID!): Post!
         getCommentsByPostId(postId: ID!): [Comment]!
+        getPostLikeById(id: ID!): PostLike!
     }
 
     type Mutation {
         createPost(post: PostInput!): Post
         updatePost(post: PostUpdateInput!): Boolean
         deletePost(id: ID!): Boolean
+        handlePostLike(postId: ID!): String
     }
 `);
