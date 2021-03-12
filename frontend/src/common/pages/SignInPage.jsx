@@ -6,7 +6,7 @@ import { message, Space } from 'antd';
 import { useStyles } from '../static/signInPage.style';
 import axios from 'axios';
 
-export default function SignInPage() {
+export default function SignInPage(props) {
     const classes = useStyles();
     const idInput = useRef();
     const pwdInput = useRef();
@@ -24,11 +24,11 @@ export default function SignInPage() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!user.userAccount) {
-            message.error('아이디를 입력하세요.');
+            message.error('아이디를 입력하세요');
             idInput.current.focus();
             return;
         } else if (!user.password) {
-            message.error('비밀번호를 입력하세요.');
+            message.error('비밀번호를 입력하세요');
             pwdInput.current.focus();
             return;
         }
@@ -36,8 +36,10 @@ export default function SignInPage() {
             .post('/api/user/signin', {
                 user,
             })
-            .then((response) => {
-                console.log(response);
+            .then(({ data }) => {
+                const { userName } = data.user;
+                message.success(`${userName}님, 오늘도 좋은 하루 되세요🙂`);
+                props.history.push('/');
             })
             .catch(() => {
                 message.error('아이디 또는 비밀번호를 다시 확인하세요.');

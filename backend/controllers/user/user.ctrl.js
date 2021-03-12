@@ -134,6 +134,7 @@ module.exports = {
                             res.json({
                                 message: 'Sign-in Successfully',
                                 token,
+                                user,
                             });
                         },
                     );

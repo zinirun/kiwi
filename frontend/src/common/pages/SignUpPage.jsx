@@ -15,7 +15,7 @@ import { useStyles } from '../static/signInPage.style';
 import axios from 'axios';
 import { SignupValidator } from '../validators/signup.validator';
 
-export default function SignUpPage() {
+export default function SignUpPage(props) {
     const classes = useStyles();
     const [metadata, setMetadata] = useState({
         departments: [],
@@ -68,8 +68,9 @@ export default function SignUpPage() {
                 .post('/api/user/signup', {
                     user: newUser,
                 })
-                .then((response) => {
-                    console.log(response);
+                .then(() => {
+                    message.success('회원가입이 완료되었습니다.');
+                    props.history.push('/signin');
                 })
                 .catch(() => {
                     message.error('회원가입 중 오류가 발생했습니다.');
