@@ -1,6 +1,7 @@
 const models = require('../../models');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const { ConflictError } = require('../../graphql/errors/errors');
 //const { sendMailOfResetPassword } = require('../../api/mailer');
 
 const createSalt = () =>
@@ -98,7 +99,7 @@ module.exports = {
         }
         const secret = req.app.get('jwt-secret');
 
-        return await models.user
+        return models.user
             .findOne({
                 attributes: [
                     'id',
@@ -123,7 +124,7 @@ module.exports = {
                         secret,
                         {
                             expiresIn: '7d',
-                            issuer: 'gwatory.nemobros.com',
+                            issuer: 'kiwi.nemobros.com',
                             subject: 'user',
                         },
                         (error, token) => {
@@ -148,5 +149,29 @@ module.exports = {
         res.json({
             message: 'Logout Successfully',
         });
+    },
+
+    get_signup_metadata: async (_, res) => {
+        try {
+            const departments = await models.department.findAll({
+                attributes: ['id', 'deptName'],
+                raw: true,
+            });
+            const studentGrades = await models.grade.findAll({
+                attributes: ['id', 'gradeName'],
+                raw: true,
+            });
+            const companies = await models.company.findAll({
+                attributes: ['id', 'companyName'],
+                raw: true,
+            });
+            return res.status(200).json({
+                departments,
+                studentGrades,
+                companies,
+            });
+        } catch (err) {
+            return res.status(409).json(ConflictError('Error occured at get signup metadata'));
+        }
     },
 };
