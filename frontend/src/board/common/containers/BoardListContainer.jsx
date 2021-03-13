@@ -43,7 +43,7 @@ export default function BoardListContainer() {
                     {isMobile && <br />}
                     <span style={{ color: 'black' }}>자연과학관 5층 화장실에서 냄새나요</span>
                 </Grid>
-                <Grid item xs={12} sm={2} align="right" className={classes.icon}>
+                <Grid item xs={12} sm={2} align="right">
                     <Chip
                         className={classes.backColor}
                         size="small"

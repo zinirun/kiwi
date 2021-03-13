@@ -32,8 +32,9 @@ import SignInPage from './common/pages/SignInPage';
 // 회원가입
 import SignUpPage from './common/pages/SignUpPage';
 
-// 사이트 메인페이지 (미로그인시 needuser로 연결)
+// 사이트 메인페이지 (미로그인시 needuser로 연결, 로그인시 main으로 연결)
 import SiteMainPage from './common/pages/SiteMainPage';
+import BoardMainPage from './board/common/pages/BoardMainPage';
 
 // 나의 글
 
@@ -45,6 +46,7 @@ function App() {
             <Root>
                 <Switch>
                     <Route exact path="/" component={TempPage} />
+                    <Route path="/main" component={BoardMainPage} />
                     <Route path="/needuser" component={SiteMainPage} />
                     <Route path="/signin" component={SignInPage} />
                     <Route path="/signup" component={SignUpPage} />
