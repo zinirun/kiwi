@@ -13,22 +13,6 @@ export default function BoardMainPage() {
                     <BoardMainContainer />
                 </Grid>
             </Grid>
-            <Grid container justify="center">
-                <Grid item xs={12} sm={6}>
-                    <BoardMainContainer />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <BoardMainContainer />
-                </Grid>
-            </Grid>
-            <Grid container justify="center">
-                <Grid item xs={12} sm={6}>
-                    <BoardMainContainer />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <BoardMainContainer />
-                </Grid>
-            </Grid>
         </>
     );
 }
