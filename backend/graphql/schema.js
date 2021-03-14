@@ -48,6 +48,22 @@ module.exports = buildSchema(`
         updatedAt: Date
     }
 
+    type Board {
+        id: ID!
+        boardName: String!
+        isAnonymous: Int!
+        createdAt: Date!
+        updatedAt: Date
+    }
+
+    type Category {
+        id: ID!
+        boardId: ID!
+        categoryName: String!
+        createdAt: Date!
+        updatedAt: Date
+    }
+
     input PostInput {
         boardId: ID!
         categoryId: ID!
@@ -66,6 +82,8 @@ module.exports = buildSchema(`
         getPostById(id: ID!): Post!
         getCommentsByPostId(postId: ID!): [Comment]!
         getPostLikeById(id: ID!): PostLike!
+        getBoardById(id: ID!): Board!
+        getCategoryById(id: ID!): Category!
     }
 
     type Mutation {
