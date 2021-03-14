@@ -6,6 +6,7 @@ export const useStyles = makeStyles((theme) => ({
         borderBottomColor: '#ddd',
         borderBottomWidth: 2,
         boxShadow: 'none',
+        marginTop: 15,
     },
     titleChipStyle: {
         background: 'white',
@@ -37,12 +38,10 @@ export const useStyles = makeStyles((theme) => ({
         color: theme.palette.primary.main,
         fontSize: 15,
         marginTop: 18,
+        cursor: 'pointer',
     },
     commentChip: {
         marginTop: 6,
         background: 'white',
-    },
-    gridContainer: {
-        paddingTop: 15,
     },
 }));
