@@ -6,12 +6,14 @@
         isAnonymous: Int
         content: String!
     }
-* type type Comment {
+* type Comment {
         id: ID!
         postId: ID!
-        userId: ID!
+        authorId: ID!
         userName: String!
         content: String!
+        gradeName: String!
+        companyName: String!
         isDeleted: Int!
         isAnonymous: Int!
         likeCount: Int!
@@ -40,3 +42,13 @@ module.exports = async ({ comment }, { id: authorId }) => {
             throw ConflictError('Update error occured');
         });
 };
+// mutation createComment($comment: CommentInput!) {
+//     createComment(comment: $comment){
+//         id
+//         postId
+//         userId
+//         content
+//         isAnonymous
+//         createdAt
+//       }
+//     }
