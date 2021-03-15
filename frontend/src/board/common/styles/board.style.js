@@ -34,6 +34,7 @@ export const useStyles = makeStyles((theme) => ({
         fontWeight: 'bold',
         cursor: 'pointer',
         background: theme.palette.primary.main,
+        marginTop: 27,
     },
     title: {
         cursor: 'pointer',
@@ -41,5 +42,9 @@ export const useStyles = makeStyles((theme) => ({
     backColor: {
         marginLeft: -9,
         background: '#fafafa',
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 210,
     },
 }));

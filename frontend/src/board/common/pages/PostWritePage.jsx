@@ -4,6 +4,7 @@ import QueryString from 'query-string';
 import { Button } from '@material-ui/core';
 import { Form, Input } from 'antd';
 import PageTitle from '../../../common/components/PageTitle';
+import SelectCategory from '../components/SelectCategory';
 import { useStyles } from '../styles/postWrite.style';
 
 const { TextArea } = Input;
@@ -17,6 +18,7 @@ export default function PostWritePage() {
     return (
         <Form>
             <PageTitle title="글쓰기" />
+            <SelectCategory />
             <Form.Item>
                 <TextArea className={classes.textarea} rows={13} />
             </Form.Item>
