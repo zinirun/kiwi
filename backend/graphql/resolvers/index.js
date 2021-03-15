@@ -12,4 +12,7 @@ module.exports = {
     getCommentsByPostId: require('./comment/getCommentsByPostId'),
     getPostLikeById: require('./postLike/getPostLike'),
     handlePostLike: require('./postLike/handlePostLike'),
+    getBoardById: require('./board/getBoard'),
+    getCategoryById: require('./category/getCategory'),
+    getDepartmentById: require('./department/getDepartment'),
 };

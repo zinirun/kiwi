@@ -29,7 +29,6 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: 12,
         color: '#BBBBBB',
     },
-    icon: {},
     button: {
         color: 'white',
         fontWeight: 'bold',
