@@ -15,4 +15,5 @@ module.exports = {
     getBoardById: require('./board/getBoard'),
     getCategoryById: require('./category/getCategory'),
     getDepartmentById: require('./department/getDepartment'),
+    createComment: require('./comment/createComment'),
 };

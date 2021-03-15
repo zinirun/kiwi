@@ -54,6 +54,7 @@ module.exports = {
         return await models.user
             .create({
                 ...req.body.user,
+                companyId: req.body.user.companyId || null,
                 password,
                 salt,
             })

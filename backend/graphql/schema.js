@@ -48,6 +48,15 @@ module.exports = buildSchema(`
         updatedAt: Date
     }
 
+    type CommentAfterCreate {
+        id: ID!
+        userId: ID!
+        postId: ID!
+        content: String!
+        isAnonymous: Int!
+        createdAt: Date!
+    }
+
     type Board {
         id: ID!
         boardName: String!
@@ -86,6 +95,12 @@ module.exports = buildSchema(`
         content: String!
     }
 
+    input CommentInput {
+        postId: ID!
+        isAnonymous: Int
+        content: String!
+    }
+
     type Query {
         getUserInfo: User!
         getPostById(id: ID!): Post!
@@ -101,5 +116,6 @@ module.exports = buildSchema(`
         updatePost(post: PostUpdateInput!): Boolean
         deletePost(id: ID!): Boolean
         handlePostLike(postId: ID!): String
+        createComment(comment: CommentInput!): CommentAfterCreate
     }
 `);
