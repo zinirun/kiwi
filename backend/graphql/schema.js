@@ -64,6 +64,15 @@ module.exports = buildSchema(`
         updatedAt: Date
     }
 
+    type Department {
+        id: ID!
+        deptName: String!
+        presidentId: Int!
+        vicePresidentId: Int!
+        createdAt: Date!
+        updatedAt: Date
+    }
+
     input PostInput {
         boardId: ID!
         categoryId: ID!
@@ -84,6 +93,7 @@ module.exports = buildSchema(`
         getPostLikeById(id: ID!): PostLike!
         getBoardById(id: ID!): Board!
         getCategoryById(id: ID!): Category!
+        getDepartmentById(id: ID!): Department!
     }
 
     type Mutation {

@@ -14,4 +14,5 @@ module.exports = {
     handlePostLike: require('./postLike/handlePostLike'),
     getBoardById: require('./board/getBoard'),
     getCategoryById: require('./category/getCategory'),
+    getDepartmentById: require('./department/getDepartment'),
 };
