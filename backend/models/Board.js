@@ -19,6 +19,9 @@ module.exports = function (sequelize, DataTypes) {
         Board.hasMany(models.post, {
             foreignKey: 'boardId',
         });
+        Board.hasMany(models.category, {
+            foreignKey: 'boardId',
+        });
     };
 
     return Board;

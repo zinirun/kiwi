@@ -5,6 +5,7 @@ module.exports = function (sequelize, DataTypes) {
         'category',
         {
             categoryName: { type: DataTypes.STRING(15), allowNull: false, unique: true },
+            boardId: { type: DataTypes.INTEGER, allowNull: true },
         },
         {
             freezeTableName: true,
@@ -17,6 +18,9 @@ module.exports = function (sequelize, DataTypes) {
     Category.associate = (models) => {
         Category.hasMany(models.post, {
             foreignKey: 'categoryId',
+        });
+        Category.belongsTo(models.board, {
+            foreignKey: 'boardId',
         });
     };
 
