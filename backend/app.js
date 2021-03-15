@@ -60,9 +60,7 @@ class App {
                 schema,
                 rootValue: resolvers,
                 graphiql: true, // support GUI
-                context: {
-                    userId: req.decoded.userId,
-                },
+                context: req.decoded,
             })),
         );
     }

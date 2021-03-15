@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Grid, Button, Chip } from '@material-ui/core';
+import { Grid, Button, Chip, FormControl, Select } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import { isMobile } from 'react-device-detect';
 import { useStyles } from '../styles/board.style';
+import SelectCategory from '../components/SelectCategory';
 
 export default function BoardListContainer() {
     const classes = useStyles();
@@ -12,7 +13,10 @@ export default function BoardListContainer() {
     return (
         <>
             <Grid container justify="center" style={{ maxWidth: 730, marginBottom: 15 }}>
-                <Grid item xs={12} sm={12} align="right">
+                <Grid item xs={12} sm={10}>
+                    <SelectCategory />
+                </Grid>
+                <Grid item xs={12} sm={2} align="right">
                     <Button
                         component={Link}
                         to="/write?boardId=1&categoryId=1"
