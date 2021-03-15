@@ -7,11 +7,10 @@ module.exports = buildSchema(`
         id: ID!
         userAccount: String!
         userName: String!
-        departmentId: ID!
         studentNumber: String!
-        studentGradeId: ID!
-        companyId: ID!
-        status: Int!
+        department: String
+        grade: String
+        company: String
     }
 
     type Post {
@@ -113,7 +112,7 @@ module.exports = buildSchema(`
     }
 
     type Query {
-        getUserInfo: User!
+        getUserById(id: ID!): User!
         getPostById(id: ID!): Post!
         getCommentsByPostId(postId: ID!): [Comment]!
         getBoardById(id: ID!): Board!
