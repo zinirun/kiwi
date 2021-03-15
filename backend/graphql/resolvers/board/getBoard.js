@@ -25,5 +25,5 @@ module.exports = async ({ id }, {}) => {
     if (!board) {
         throw NotFoundError('Board not exists');
     }
-    return user;
+    return board;
 };

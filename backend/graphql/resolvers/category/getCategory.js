@@ -25,5 +25,5 @@ module.exports = async ({ id }, {}) => {
     if (!category) {
         throw NotFoundError('Category not exists');
     }
-    return user;
+    return category;
 };
