@@ -34,7 +34,6 @@ module.exports = async ({ comment }, { id: authorId }) => {
             const data = result.get({ plain: true });
             return {
                 ...data,
-                userId: data.authorId,
             };
         })
         .catch(() => {
