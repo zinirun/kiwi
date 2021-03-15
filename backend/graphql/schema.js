@@ -48,9 +48,11 @@ module.exports = buildSchema(`
     type Comment {
         id: ID!
         postId: ID!
-        userId: ID!
+        authorId: ID!
         userName: String!
         content: String!
+        gradeName: String!
+        companyName: String
         isDeleted: Int!
         isAnonymous: Int!
         likeCount: Int!
@@ -60,7 +62,7 @@ module.exports = buildSchema(`
 
     type CommentAfterCreate {
         id: ID!
-        userId: ID!
+        authorId: ID!
         postId: ID!
         content: String!
         isAnonymous: Int!
