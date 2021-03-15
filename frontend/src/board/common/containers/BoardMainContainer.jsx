@@ -11,7 +11,7 @@ import { Chip, Divider, Card, List, ListItem, ListItemText } from '@material-ui/
 import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
 
-export default function BoardMainContainer() {
+export default function BoardMainContainer({ boardId }) {
     const classes = useStyles();
     return (
         <Card className={classes.root}>
