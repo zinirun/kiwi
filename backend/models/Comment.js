@@ -18,6 +18,9 @@ module.exports = function (sequelize, DataTypes) {
     Comment.prototype.dateFormat = (date) => moment(date).format('YYYY-MM-DD HH:mm:ss');
 
     Comment.associate = (models) => {
+        Comment.belongsTo(models.user, {
+            foreignKey: 'authorId',
+        });
         Comment.belongsTo(models.post, {
             foreignKey: 'postId',
         });

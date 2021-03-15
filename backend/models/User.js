@@ -13,6 +13,7 @@ module.exports = function (sequelize, DataTypes) {
             studentGradeId: { type: DataTypes.INTEGER, allowNull: false },
             companyId: { type: DataTypes.INTEGER, allowNull: true },
             status: { type: DataTypes.TINYINT, defaultValue: 0 },
+            type: { type: DataTypes.TINYINT, allowNull: false, defaultValue: 0 },
         },
         {
             freezeTableName: true,
@@ -32,15 +33,10 @@ module.exports = function (sequelize, DataTypes) {
         User.belongsTo(models.company, {
             foreignKey: 'companyId',
         });
-        User.hasOne(models.department, {
-            foreignKey: 'presidentId',
-            constraints: false,
-        });
-        User.hasOne(models.department, {
-            foreignKey: 'vicePresidentId',
-            constraints: false,
-        });
         User.hasMany(models.post, {
+            foreignKey: 'authorId',
+        });
+        User.hasMany(models.comment, {
             foreignKey: 'authorId',
         });
         User.hasMany(models.post_like, {
