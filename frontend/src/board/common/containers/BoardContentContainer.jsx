@@ -16,13 +16,22 @@ export default function PostContent() {
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
                         자연과학관 5층 화장실에서 냄새나요.
                     </Typography>
-                    <Grid align="right">
-                        <span style={{ color: '#999', fontSize: '0.75rem' }}>삼성/4학년</span>
-                        <span>신창우</span>
+                    <Grid container justify="center" className={classes.userInfoSection}>
+                        <Grid item xs={12} sm={6}>
+                            <span style={{ color: '#999', fontSize: '0.75rem' }}>
+                                2020-12-31 14:00
+                            </span>
+                        </Grid>
+                        <Grid item xs={12} sm={6} align="right">
+                            <span style={{ color: '#999', fontSize: '0.75rem' }}>삼성/4학년</span>
+                            <span>신창우</span>
+                        </Grid>
                     </Grid>
-                    <Typography variant="body2" component="p">
-                        안녕하세요. 김상배입니다.
-                    </Typography>
+                    <div>
+                        <Typography variant="body2" component="p">
+                            안녕하세요. 김상배입니다.
+                        </Typography>
+                    </div>
                 </CardContent>
                 <Grid align="right">
                     <Chip

@@ -43,4 +43,7 @@ export const useStyles = makeStyles((theme) => ({
         marginTop: 10,
         background: 'white',
     },
+    userInfoSection: {
+        paddingBottom: 30,
+    },
 }));

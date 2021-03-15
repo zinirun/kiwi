@@ -10,9 +10,9 @@ module.exports = {
     updatePost: require('./post/updatePost'),
     deletePost: require('./post/deletePost'),
     getCommentsByPostId: require('./comment/getCommentsByPostId'),
-    getPostLikeById: require('./postLike/getPostLike'),
     handlePostLike: require('./postLike/handlePostLike'),
     getBoardById: require('./board/getBoard'),
     getCategoryById: require('./category/getCategory'),
     getDepartmentById: require('./department/getDepartment'),
+    createComment: require('./comment/createComment'),
 };
