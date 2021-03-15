@@ -15,6 +15,10 @@ const BOARD_ID = [
         id: 3,
         name: 'Q&A',
     },
+    {
+        id: 4,
+        name: '재능기부',
+    },
 ];
 
 export default function BoardMainPage() {
@@ -22,8 +26,8 @@ export default function BoardMainPage() {
         <>
             <Grid container justify="center">
                 {BOARD_ID.map((board) => (
-                    <Grid item xs={12} sm={6}>
-                        <BoardMainContainer boardId={board.id} />
+                    <Grid key={board.id} item xs={12} sm={6}>
+                        <BoardMainContainer board={board} />
                     </Grid>
                 ))}
             </Grid>

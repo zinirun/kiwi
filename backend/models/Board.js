@@ -5,7 +5,6 @@ module.exports = function (sequelize, DataTypes) {
         'board',
         {
             boardName: { type: DataTypes.STRING(15), allowNull: false, unique: true },
-            isAnonymous: { type: DataTypes.TINYINT, defaultValue: 0 },
         },
         {
             freezeTableName: true,

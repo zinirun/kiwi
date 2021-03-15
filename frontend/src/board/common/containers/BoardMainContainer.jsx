@@ -11,7 +11,7 @@ import { Chip, Divider, Card, List, ListItem, ListItemText } from '@material-ui/
 import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
 
-export default function BoardMainContainer({ boardId }) {
+export default function BoardMainContainer({ board }) {
     const classes = useStyles();
     return (
         <Card className={classes.root}>
@@ -20,7 +20,7 @@ export default function BoardMainContainer({ boardId }) {
                     <Chip
                         className={classes.titleChipStyle}
                         icon={<VolumeUpIcon className={classes.iconColor} />}
-                        label="학과공지"
+                        label={board.name}
                     />
                 </Col>
                 <Col span={2}>
