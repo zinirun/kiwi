@@ -15,7 +15,7 @@ export default function BoardListContainer({ boardId }) {
     const [postList, setPostList] = useState([]);
     const { data: postListData, error: postListError } = useQuery(GET_POST_LIST, {
         variables: {
-            boardId: 1,
+            boardId: boardId,
         },
     });
     useEffect(() => {
