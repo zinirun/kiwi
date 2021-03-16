@@ -12,6 +12,7 @@ export default function SelectCategory() {
             //value={state.age}
             //onChange={handleChange}
             >
+                <MenuItem>전체</MenuItem>
                 <MenuItem value={10}>학과 질문</MenuItem>
                 <MenuItem value={20}>진로 질문</MenuItem>
                 <MenuItem value={30}>학습 질문</MenuItem>
