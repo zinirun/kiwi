@@ -1,21 +1,21 @@
 /**
- * 게시물 Delete (isDeleted = 1)
+ * 유저 정보 Delete (status = 0)
  * @author 이건욱
  * @param (id: ID!)
  *
- * deletePost(id: ID!): Boolean
+ * deleteUser(id: ID!): Boolean
  */
 
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 
-module.exports = async ({ id }, { id: authorId }) => {
+module.exports = async ({}, { id }) => {
     return await models.post
         .update(
             {
-                isDeleted: 1,
+                statue: 0,
             },
-            { where: { id, authorId } },
+            { where: { id } },
         )
         .then(() => {
             return true;

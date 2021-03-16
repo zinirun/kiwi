@@ -4,15 +4,27 @@ const { GraphQLDate } = require('graphql-iso-date');
 module.exports = {
     Date: GraphQLDate,
 
+    // User
     getUser: require('./user/getUser'),
+    updateUser: require('./user/updateUser'),
+    deleteUser: require('./user/deleteUser'),
+
+    // Post
     getPostById: require('./post/getPost'),
     createPost: require('./post/createPost'),
     updatePost: require('./post/updatePost'),
     deletePost: require('./post/deletePost'),
     getCommentsByPostId: require('./comment/getCommentsByPostId'),
+
+    // PostLike
     handlePostLike: require('./postLike/handlePostLike'),
+
+    // Board
     getBoardById: require('./board/getBoard'),
+
+    // Category
     getCategoryById: require('./category/getCategory'),
-    getDepartmentById: require('./department/getDepartment'),
+
+    // Comment
     createComment: require('./comment/createComment'),
 };
