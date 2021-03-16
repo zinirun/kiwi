@@ -66,10 +66,10 @@ export const useStyles = makeStyles((theme) => ({
     userToolButton: {
         cursor: 'pointer',
         '&:hover': {
-            color: 'white',
+            color: theme.palette.primary.light,
         },
     },
     userSectionSmall: {
-        fontSize: '0.8rem',
+        fontSize: '0.75rem',
     },
 }));
