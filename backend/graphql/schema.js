@@ -85,13 +85,13 @@ module.exports = buildSchema(`
         updatedAt: Date
     }
 
-    type Department {
+    input UserUpdateInput {
         id: ID!
-        deptName: String!
-        presidentId: Int!
-        vicePresidentId: Int!
-        createdAt: Date!
-        updatedAt: Date
+        password: String!
+        deparmentId: ID!
+        studentGradeId: ID!
+        companyId: ID
+        updatedAt: Date!
     }
 
     input PostInput {
@@ -119,7 +119,6 @@ module.exports = buildSchema(`
         getCommentsByPostId(postId: ID!): [Comment]!
         getBoardById(id: ID!): Board!
         getCategoryById(id: ID!): Category!
-        getDepartmentById(id: ID!): Department!
     }
 
     type Mutation {
@@ -128,5 +127,7 @@ module.exports = buildSchema(`
         deletePost(id: ID!): Boolean
         handlePostLike(postId: ID!): String
         createComment(comment: CommentInput!): CommentAfterCreate
+        updateUser(user: UserUpdateInput!): Boolean
+        deleteUser(id: ID!): Boolean
     }
 `);
