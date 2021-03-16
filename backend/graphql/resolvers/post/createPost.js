@@ -7,17 +7,6 @@
         title: String!
         content: String!
     }
-* type Post {
-        id: ID!
-        boardId: ID!
-        categoryId: ID!
-        authorId: ID!
-        title: String!
-        content: String!
-        isDeleted: Int!
-        createdAt: Date!
-        updatedAt: Date
-    }   
 * createPost(post: PostInput!): Post
  */
 

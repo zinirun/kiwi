@@ -1,9 +1,8 @@
 import React from 'react';
-import Root from './header/Root';
 
-export default function TempPage() {
+export default function MainLoadPage() {
     return (
-        <Root>
+        <>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent
             elementum facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in
@@ -14,6 +13,6 @@ export default function TempPage() {
             Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus
             at augue. At augue eget arcu dictum varius duis at consectetur lorem. Velit sed
             ullamcorper morbi tincidunt. Lorem donec massa sapien faucibus et molestie ac.
-        </Root>
+        </>
     );
 }
