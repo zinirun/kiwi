@@ -1,5 +1,5 @@
 /**
- * 게시물 좋아요 create, update, delete
+ * 게시물 좋아요 Create, Update, Delete
  * @author 이건욱
  * @param (id: ID!)
  * type PostLike {

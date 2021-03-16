@@ -1,5 +1,5 @@
 /**
- * 게시물 정보 추출
+ * 게시물 Read
  * @author 이건욱
  * @param (id: ID!)
  * @returns {Post}

@@ -7,11 +7,10 @@ module.exports = buildSchema(`
         id: ID!
         userAccount: String!
         userName: String!
-        departmentId: ID!
         studentNumber: String!
-        studentGradeId: ID!
-        companyId: ID!
-        status: Int!
+        department: String
+        grade: String
+        company: String
     }
 
     type Post {
@@ -49,9 +48,11 @@ module.exports = buildSchema(`
     type Comment {
         id: ID!
         postId: ID!
-        userId: ID!
+        authorId: ID!
         userName: String!
         content: String!
+        gradeName: String!
+        companyName: String
         isDeleted: Int!
         isAnonymous: Int!
         likeCount: Int!
@@ -61,7 +62,7 @@ module.exports = buildSchema(`
 
     type CommentAfterCreate {
         id: ID!
-        userId: ID!
+        authorId: ID!
         postId: ID!
         content: String!
         isAnonymous: Int!
@@ -113,7 +114,7 @@ module.exports = buildSchema(`
     }
 
     type Query {
-        getUserInfo: User!
+        getUserById(id: ID!): User!
         getPostById(id: ID!): Post!
         getCommentsByPostId(postId: ID!): [Comment]!
         getBoardById(id: ID!): Board!

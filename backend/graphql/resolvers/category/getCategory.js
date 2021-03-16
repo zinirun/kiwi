@@ -1,5 +1,5 @@
 /**
- * 카테고리 정보 read
+ * 카테고리 정보 Read
  * @author 이건욱
  * @param (id: ID!)
  * @returns {Category}

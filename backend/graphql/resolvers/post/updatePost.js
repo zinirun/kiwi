@@ -1,5 +1,5 @@
 /**
- * 게시물 수정
+ * 게시물 Update
  * @author 이건욱
  * @param input PostUpdateInput {
         id: ID!

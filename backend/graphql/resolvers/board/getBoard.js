@@ -1,5 +1,5 @@
 /**
- * 게시판 정보 read
+ * 게시판 정보 Read
  * @author 이건욱
  * @param (id: ID!)
  * @returns {Board}
