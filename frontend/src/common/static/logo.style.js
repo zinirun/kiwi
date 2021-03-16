@@ -2,16 +2,14 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
     logoWrapper: {
-        marginTop: '10px',
-        textAlign: 'center',
+        padding: '15px 50px',
     },
     logoImg: {
-        width: '45px',
+        width: '40px',
     },
-    logoText: {
-        margin: '-5px 0 10px',
-        fontSize: '1.025rem',
+    textLogo: {
         color: 'white',
+        fontSize: '24px',
         fontWeight: 'bold',
     },
     mobileLogoWrapper: {

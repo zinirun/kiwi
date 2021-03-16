@@ -31,15 +31,15 @@ export default function SideUserSection({ user }) {
     const classes = useStyles();
     return (
         <Row className={classes.userSection}>
-            <Col span={16}>
+            <Col span={20}>
                 <Space direction="vertical" size={1}>
                     <span className={classes.userSectionSmall}>
-                        {user.department}/{user.grade}
+                        {user.department.substr(0, 9)}/{user.grade}
                     </span>
                     <span>{user.userName}</span>
                 </Space>
             </Col>
-            <Col span={8} align="right">
+            <Col span={4} align="right">
                 <Space direction="vertical" size={1}>
                     <Popover content={UserToolContent} trigger="click">
                         <Tooltip title="회원 정보">
