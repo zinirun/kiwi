@@ -5,8 +5,6 @@ module.exports = function (sequelize, DataTypes) {
         'department',
         {
             deptName: { type: DataTypes.STRING(20), allowNull: false, unique: true },
-            presidentId: { type: DataTypes.INTEGER, allowNull: true },
-            vicePresidentId: { type: DataTypes.INTEGER, allowNull: true },
         },
         {
             freezeTableName: true,
@@ -19,14 +17,6 @@ module.exports = function (sequelize, DataTypes) {
     Department.associate = (models) => {
         Department.hasMany(models.user, {
             foreignKey: 'departmentId',
-        });
-        Department.belongsTo(models.user, {
-            foreignKey: 'presidentId',
-            constraints: false,
-        });
-        Department.belongsTo(models.user, {
-            foreignKey: 'vicePresidentId',
-            constraints: false,
         });
     };
     return Department;
