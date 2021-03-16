@@ -114,7 +114,7 @@ module.exports = buildSchema(`
     }
 
     type Query {
-        getUserById(id: ID!): User!
+        getUser: User!
         getPostById(id: ID!): Post!
         getCommentsByPostId(postId: ID!): [Comment]!
         getBoardById(id: ID!): Board!

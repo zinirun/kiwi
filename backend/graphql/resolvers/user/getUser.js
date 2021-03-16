@@ -1,7 +1,6 @@
 /**
  * 유저 정보 Read
- * @author 이건욱
- * @param (id: ID!)
+ * @author 이건욱 - modified by zini
  * @returns {User}
  * type User {
         id: ID!
@@ -12,15 +11,15 @@
         grade: String
         company: String
     }
-* getUserById(id: ID!): User!
+* getUserById: User!
  */
 
 const models = require('../../../models');
 const { NotFoundError } = require('../../errors/errors');
 
-module.exports = async ({ id }, {}) => {
+module.exports = async ({}, { id }) => {
     const user = await models.user.findOne({
-        attributes: ['userAccount', 'userName', 'studentNumber'],
+        attributes: ['id', 'userAccount', 'userName', 'studentNumber'],
         include: [
             {
                 model: models.department,
@@ -39,6 +38,7 @@ module.exports = async ({ id }, {}) => {
         throw NotFoundError('user not exists');
     }
     return {
+        id: user.id,
         userAccount: user.userAccount,
         userName: user.userName,
         studentNumber: user.studentNumber,

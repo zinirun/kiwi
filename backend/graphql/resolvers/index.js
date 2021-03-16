@@ -4,7 +4,7 @@ const { GraphQLDate } = require('graphql-iso-date');
 module.exports = {
     Date: GraphQLDate,
 
-    getUserById: require('./user/getUser'),
+    getUser: require('./user/getUser'),
     getPostById: require('./post/getPost'),
     createPost: require('./post/createPost'),
     updatePost: require('./post/updatePost'),

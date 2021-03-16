@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CssBaseline, Hidden, Drawer, Container } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import { useState } from 'react';
@@ -6,30 +6,9 @@ import { useStyles } from './static/style';
 import SideDrawer from './components/SideDrawer';
 import MobileHeader from './components/MobileHeader';
 import { useLocation } from 'react-router';
-
-const isWithoutSider = (pathname) => {
-    const path = pathname.split('/')[1];
-    switch (path) {
-        case 'signin':
-        case 'signup':
-        case 'needuser':
-        case 'finduser':
-            return true;
-        default:
-            return false;
-    }
-};
-
-const isFullScreen = (pathname) => {
-    const path = pathname.split('/')[1];
-    switch (path) {
-        case 'needuser':
-        case 'finduser':
-            return true;
-        default:
-            return false;
-    }
-};
+import { isFullScreen, isWithoutSider } from './tools/handler';
+import { useQuery } from 'react-apollo';
+import { GET_USER } from '../configs/queries';
 
 export default function Root(props) {
     const { pathname } = useLocation();
@@ -37,6 +16,19 @@ export default function Root(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = useState(false);
+
+    const [user, setUser] = useState(null);
+    const { data, loading, error } = useQuery(GET_USER);
+
+    useEffect(() => {
+        if (data) {
+            setUser(data.getUser);
+        }
+    }, [data]);
+
+    if (error) {
+        console.log(error);
+    }
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
