@@ -36,15 +36,6 @@ module.exports = buildSchema(`
         updatedAt: Date
     }
 
-    type PostLike {
-        id: ID!
-        userId: ID!
-        postId: ID!
-        isLike: Int!
-        createdAt: Date!
-        updatedAt: Date
-    }
-
     type Comment {
         id: ID!
         postId: ID!
@@ -72,7 +63,6 @@ module.exports = buildSchema(`
     type Board {
         id: ID!
         boardName: String!
-        isAnonymous: Int!
         createdAt: Date!
         updatedAt: Date
     }
@@ -86,12 +76,9 @@ module.exports = buildSchema(`
     }
 
     input UserUpdateInput {
-        id: ID!
-        password: String!
-        deparmentId: ID!
+        departmentId: ID!
         studentGradeId: ID!
         companyId: ID
-        updatedAt: Date!
     }
 
     input PostInput {
@@ -102,7 +89,6 @@ module.exports = buildSchema(`
     }
 
     input PostUpdateInput {
-        id: ID!
         title: String!
         content: String!
     }
@@ -128,6 +114,6 @@ module.exports = buildSchema(`
         handlePostLike(postId: ID!): String
         createComment(comment: CommentInput!): CommentAfterCreate
         updateUser(user: UserUpdateInput!): Boolean
-        deleteUser(id: ID!): Boolean
+        updateUserStatus(status: Int!): Boolean
     }
 `);
