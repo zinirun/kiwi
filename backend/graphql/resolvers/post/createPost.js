@@ -1,5 +1,5 @@
 /**
- * 게시물 생성
+ * 게시물 Create
  * @author 이건욱
  * @param input PostInput {
         boardId: ID!

@@ -1,5 +1,5 @@
 /**
- * 게시물 정보 추출
+ * 유저 정보 Read
  * @author 이건욱
  * @param (id: ID!)
  * @returns {User}
@@ -38,7 +38,6 @@ module.exports = async ({ id }, {}) => {
     if (!user) {
         throw NotFoundError('user not exists');
     }
-    console.log(user);
     return {
         userAccount: user.userAccount,
         userName: user.userName,

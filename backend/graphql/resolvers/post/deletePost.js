@@ -1,5 +1,5 @@
 /**
- * 게시물 삭제 (isDeleted = 1)
+ * 게시물 Delete (isDeleted = 1)
  * @author 이건욱
  * @param (id: ID!)
  * type Post {

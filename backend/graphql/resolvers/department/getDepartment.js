@@ -1,5 +1,5 @@
 /**
- * 학과 정보 read
+ * 학과 정보 Read
  * @author 이건욱
  * @param (id: ID!)
  * @returns {Department}
