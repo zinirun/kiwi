@@ -1,8 +1,8 @@
 /**
  * 게시물 Read
  * @author 이건욱
- * @param (id: ID!)
- * @returns {Post}
+ * @param (boardId: ID!)
+ * @returns {[PostList]}
  * type PostList {
         postId: ID!
         title: String!
