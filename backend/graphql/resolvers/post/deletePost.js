@@ -17,7 +17,10 @@ module.exports = async ({ id }, { id: authorId }) => {
             },
             { where: { id, authorId } },
         )
-        .then(() => {
+        .then((result) => {
+            if (result[0] === 0) {
+                return false;
+            }
             return true;
         })
         .catch(() => {

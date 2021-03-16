@@ -15,17 +15,13 @@
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 
-module.exports = async ({}, { user }) => {
+module.exports = async ({ user }, { id }) => {
     return await models.user
         .update(
             {
-                password: user.password,
-                deparmentId: user.deparmentId,
-                studentGradeId: user.studentGradeId,
-                companyId: user.companyId,
-                updatedAt: user.updatedAt,
+                ...user,
             },
-            { where: { id: user.id } },
+            { where: { id } },
         )
         .then(() => {
             return true;

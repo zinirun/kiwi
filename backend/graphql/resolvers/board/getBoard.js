@@ -6,7 +6,6 @@
  * type Board {
         id: ID!
         boardName: String!
-        isAnonymous: Int!
         createdAt: Date!
         updatedAt: Date
     }
@@ -18,7 +17,7 @@ const { NotFoundError } = require('../../errors/errors');
 
 module.exports = async ({ id }, {}) => {
     const board = await models.board.findOne({
-        attributes: ['boardName', 'isAnonymous', 'createdAt', 'updatedAt'],
+        attributes: ['boardName', 'createdAt', 'updatedAt'],
         where: { id },
         raw: true,
     });

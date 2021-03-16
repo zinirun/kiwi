@@ -7,7 +7,7 @@
         title: String!
         content: String!
     }
-* createPost(post: PostInput!): Post
+* createPost(post: PostInput!): PostAfterCreate
  */
 
 const models = require('../../../models');

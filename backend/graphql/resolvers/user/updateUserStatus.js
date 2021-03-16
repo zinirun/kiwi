@@ -3,17 +3,17 @@
  * @author 이건욱
  * @param (id: ID!)
  *
- * deleteUser(id: ID!): Boolean
+ * updateUserStatus(status: Int!): Boolean
  */
 
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 
-module.exports = async ({}, { id }) => {
-    return await models.post
+module.exports = async ({ status }, { id }) => {
+    return await models.user
         .update(
             {
-                statue: 0,
+                status,
             },
             { where: { id } },
         )
