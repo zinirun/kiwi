@@ -24,7 +24,7 @@ export default function BoardListContainer({ boardId }) {
                 postListData.getPostsByBoardId.map((p) => {
                     return {
                         ...p,
-                        createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
+                        updatedAt: new moment(p.updatedAt).format('YYYY-MM-DD HH:mm'),
                     };
                 }),
             );
@@ -75,25 +75,25 @@ export default function BoardListContainer({ boardId }) {
                             className={classes.backColor}
                             size="small"
                             icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                            label="18"
+                            label={post.likeCount}
                         />
                         <Chip
                             className={classes.backColor}
                             size="small"
                             icon={<ChatBubbleOutlineOutlinedIcon className={classes.commentIcon} />}
-                            label="181"
+                            label={post.commentCount}
                         />
                     </Grid>
                     <Grid item xs={12} sm={2} align="right">
                         <Grid>
                             <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                {post.studentGradeId}학년
+                                {post.gradeName}
                             </span>
                             <span>{post.userName}</span>
                         </Grid>
                         {!isMobile && (
                             <Grid className={classes.date}>
-                                <span>{post.createdAt}</span>
+                                <span>{post.updatedAt}</span>
                             </Grid>
                         )}
                     </Grid>

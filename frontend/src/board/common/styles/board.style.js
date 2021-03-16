@@ -40,7 +40,7 @@ export const useStyles = makeStyles((theme) => ({
         cursor: 'pointer',
     },
     backColor: {
-        marginLeft: -9,
+        marginLeft: -8,
         background: '#fafafa',
     },
     formControl: {

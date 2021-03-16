@@ -19,9 +19,13 @@ export const GET_POST_LIST = gql`
         getPostsByBoardId(boardId: $boardId) {
             postId
             title
+            companyName
+            gradeName
             userName
-            studentGradeId
-            createdAt
+            updatedAt
+            categoryName
+            likeCount
+            commentCount
         }
     }
 `;
