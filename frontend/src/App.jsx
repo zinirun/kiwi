@@ -2,9 +2,6 @@ import React from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import Root from './header/Root';
 
-// temp
-import TempPage from './TempPage';
-
 // 공통
 import PostContentPage from './board/common/pages/PostContentPage';
 
@@ -32,8 +29,10 @@ import SignInPage from './common/pages/SignInPage';
 // 회원가입
 import SignUpPage from './common/pages/SignUpPage';
 
-// 사이트 메인페이지 (미로그인시 needuser로 연결, 로그인시 main으로 연결)
+// 사이트 메인페이지 (로그인 전)
 import SiteMainPage from './common/pages/SiteMainPage';
+
+// 보드 메인페이지 (로그인 후)
 import BoardMainPage from './board/common/pages/BoardMainPage';
 
 // 나의 글
@@ -45,9 +44,8 @@ function App() {
         <Router>
             <Root>
                 <Switch>
-                    <Route exact path="/" component={TempPage} />
-                    <Route path="/main" component={BoardMainPage} />
-                    <Route path="/needuser" component={SiteMainPage} />
+                    <Route exact path="/" component={BoardMainPage} />
+                    <Route exact path="/needsign" component={SiteMainPage} />
                     <Route path="/signin" component={SignInPage} />
                     <Route path="/signup" component={SignUpPage} />
                     <Route path="/notice" component={NoticePage} />

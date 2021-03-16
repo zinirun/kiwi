@@ -5,7 +5,7 @@ module.exports = {
     Date: GraphQLDate,
 
     // User
-    getUserById: require('./user/getUser'),
+    getUser: require('./user/getUser'),
     updateUser: require('./user/updateUser'),
     updateUserStatus: require('./user/updateUserStatus'),
 
