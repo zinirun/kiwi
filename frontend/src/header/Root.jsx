@@ -5,13 +5,14 @@ import { useState } from 'react';
 import { useStyles } from './static/style';
 import SideDrawer from './components/SideDrawer';
 import MobileHeader from './components/MobileHeader';
-import { useLocation } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import { isFullScreen, isWithoutSider } from './tools/handler';
 import { useQuery } from 'react-apollo';
 import { GET_USER } from '../configs/queries';
 
 export default function Root(props) {
     const { pathname } = useLocation();
+    const history = useHistory();
     const { window } = props;
     const classes = useStyles();
     const theme = useTheme();
@@ -24,11 +25,10 @@ export default function Root(props) {
         if (data) {
             setUser(data.getUser);
         }
-    }, [data]);
-
-    if (error) {
-        console.log(error);
-    }
+        if (error) {
+            history.push('/needsign');
+        }
+    }, [data, error, history]);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -38,56 +38,62 @@ export default function Root(props) {
 
     return (
         <>
-            {isWithoutSider(pathname) ? (
-                isFullScreen(pathname) ? (
-                    <>{props.children}</>
+            {!loading &&
+                (isWithoutSider(pathname) ? (
+                    isFullScreen(pathname) ? (
+                        <>{props.children}</>
+                    ) : (
+                        <Container maxWidth="sm">{props.children}</Container>
+                    )
                 ) : (
-                    <Container maxWidth="sm">{props.children}</Container>
-                )
-            ) : (
-                <div className={classes.root}>
-                    <CssBaseline />
-                    <Hidden smUp implementation="css">
-                        <MobileHeader mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />
-                    </Hidden>
-                    <nav className={classes.drawer} aria-label="menu">
-                        <Hidden smUp implementation="css">
-                            <Drawer
-                                container={container}
-                                variant="temporary"
-                                anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-                                open={mobileOpen}
-                                onClose={handleDrawerToggle}
-                                classes={{
-                                    paper: classes.drawerPaper,
-                                }}
-                                ModalProps={{
-                                    keepMounted: true,
-                                }}
-                            >
-                                <SideDrawer />
-                            </Drawer>
-                        </Hidden>
-                        <Hidden xsDown implementation="css">
-                            <Drawer
-                                classes={{
-                                    paper: classes.drawerPaper,
-                                }}
-                                variant="permanent"
-                                open
-                            >
-                                <SideDrawer />
-                            </Drawer>
-                        </Hidden>
-                    </nav>
-                    <main className={classes.content}>
-                        <Hidden smUp implementation="css">
-                            <div className={classes.toolbar} />
-                        </Hidden>
-                        {props.children}
-                    </main>
-                </div>
-            )}
+                    user && (
+                        <div className={classes.root}>
+                            <CssBaseline />
+                            <Hidden smUp implementation="css">
+                                <MobileHeader
+                                    mobileOpen={mobileOpen}
+                                    setMobileOpen={setMobileOpen}
+                                />
+                            </Hidden>
+                            <nav className={classes.drawer} aria-label="menu">
+                                <Hidden smUp implementation="css">
+                                    <Drawer
+                                        container={container}
+                                        variant="temporary"
+                                        anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+                                        open={mobileOpen}
+                                        onClose={handleDrawerToggle}
+                                        classes={{
+                                            paper: classes.drawerPaper,
+                                        }}
+                                        ModalProps={{
+                                            keepMounted: true,
+                                        }}
+                                    >
+                                        <SideDrawer user={user} />
+                                    </Drawer>
+                                </Hidden>
+                                <Hidden xsDown implementation="css">
+                                    <Drawer
+                                        classes={{
+                                            paper: classes.drawerPaper,
+                                        }}
+                                        variant="permanent"
+                                        open
+                                    >
+                                        <SideDrawer user={user} />
+                                    </Drawer>
+                                </Hidden>
+                            </nav>
+                            <main className={classes.content}>
+                                <Hidden smUp implementation="css">
+                                    <div className={classes.toolbar} />
+                                </Hidden>
+                                {props.children}
+                            </main>
+                        </div>
+                    )
+                ))}
         </>
     );
 }
