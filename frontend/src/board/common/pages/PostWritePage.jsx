@@ -9,16 +9,16 @@ import { useStyles } from '../styles/postWrite.style';
 
 const { TextArea } = Input;
 
-export default function PostWritePage({ boardId }) {
+export default function PostWritePage() {
     const classes = useStyles();
     const { search } = useLocation();
     const query = QueryString.parse(search);
 
-    console.log(query.boardId, query.categoryId);
+    const boardId = query.boardId;
     return (
         <Form>
             <PageTitle title="글쓰기" />
-            {query.boardId === '3' && <SelectCategory />}
+            {parseInt(query.boardId) === 3 && <SelectCategory />}
             <Form.Item>
                 <TextArea className={classes.textarea} rows={13} />
             </Form.Item>
