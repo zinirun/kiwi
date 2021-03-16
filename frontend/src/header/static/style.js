@@ -11,6 +11,9 @@ export const useStyles = makeStyles((theme) => ({
             flexShrink: 0,
         },
     },
+    sideDrawerWrapper: {
+        color: 'white',
+    },
     sideDrawer: {
         backgroundColor: 'black',
     },
@@ -30,6 +33,7 @@ export const useStyles = makeStyles((theme) => ({
     drawerPaper: {
         width: drawerWidth,
         backgroundColor: theme.palette.primary.main,
+        zIndex: 0,
     },
     drawerIcon: {
         color: 'white',
@@ -55,5 +59,17 @@ export const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         padding: theme.spacing(3),
         maxWidth: 730,
+    },
+    userSection: {
+        padding: '16px 8px',
+    },
+    userToolButton: {
+        cursor: 'pointer',
+        '&:hover': {
+            color: 'white',
+        },
+    },
+    userSectionSmall: {
+        fontSize: '0.8rem',
     },
 }));

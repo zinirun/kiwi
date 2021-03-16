@@ -5,14 +5,17 @@ import { SITE_MENU, MY_MENU } from '../configs';
 import Logo from '../../common/components/Logo';
 import { Link } from 'react-router-dom';
 import { IconViewer } from './IconViewer';
+import SideUserSection from './SideUserSection';
 
-export default function SideDrawer() {
+export default function SideDrawer({ user }) {
     const classes = useStyles();
     return (
-        <div>
+        <div className={classes.sideDrawerWrapper}>
             <Link to={'/'} style={{ textDecoration: 'none' }}>
                 <Logo />
             </Link>
+            <Divider className={classes.sideDivider} />
+            <SideUserSection user={user} />
             <Divider className={classes.sideDivider} />
             <List>
                 {SITE_MENU.map((m) => (

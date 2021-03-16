@@ -36,10 +36,8 @@ export default function SignInPage(props) {
             .post('/api/user/signin', {
                 user,
             })
-            .then(({ data }) => {
-                const { userName } = data.user;
-                message.success(`${userName}님, 오늘도 좋은 하루 되세요🙂`);
-                props.history.push('/');
+            .then(() => {
+                window.location.href = '/';
             })
             .catch(() => {
                 message.error('아이디 또는 비밀번호를 다시 확인하세요.');
