@@ -7,7 +7,7 @@ module.exports = {
     // User
     getUser: require('./user/getUser'),
     updateUser: require('./user/updateUser'),
-    deleteUser: require('./user/deleteUser'),
+    updateUserStatus: require('./user/updateUserStatus'),
 
     // Post
     getPostById: require('./post/getPost'),
