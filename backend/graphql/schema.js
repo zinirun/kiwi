@@ -78,9 +78,13 @@ module.exports = buildSchema(`
     type PostList {
         postId: ID!
         title: String!
+        companyName: String
+        gradeName: String!
         userName: String!
-        studentGradeId: String!
-        createdAt: Date!
+        updatedAt: Date!
+        categoryName: String
+        likeCount: Int!
+        commentCount: Int!
     }
 
     input UserUpdateInput {

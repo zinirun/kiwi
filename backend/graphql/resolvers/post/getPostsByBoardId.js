@@ -1,19 +1,39 @@
 /**
- * 게시글 리스트 Read
- *     type PostList {
-        id: ID!
+ * 게시물 Read
+ * @author 이건욱
+ * @param (id: ID!)
+ * @returns {Post}
+ * type PostList {
+        postId: ID!
         title: String!
+        companyName: String
+        gradeName: String
         userName: String!
-        studentGradeId: String!
-        companyId: String!
+        updatedAt: Date!
+        categoryName: String
+        likeCount: Int!
+        commentCount: Int!
     }
-* getPostsByBoardId(boardId: ID!): [PostList] */
+
+* getPostsByBoardId(boardId: ID!): [PostList]!
+ */
 
 const models = require('../../../models');
-const { ConflictError } = require('../../errors/errors');
+const { NotFoundError } = require('../../errors/errors');
 
 module.exports = async ({ boardId }, {}) => {
-    const query = `select p.id as postId, title, userName, studentGradeId, p.createdAt as createdAt from post p join user u on p.authorId=u.id where p.boardId=:boardId`;
+    const query = `
+                    select p.id as postId, p.title, uc.companyName, ug.gradeName, u.userName, p.updatedAt, cg.categoryName, ifnull(ppl.likeCount, 0) as likeCount, ifnull(pc.commentCount, 0) as commentCount
+                    from post p
+                        join user u on p.authorId = u.id
+                        left join category cg on p.categoryId = cg.id
+                        left join (select count(*) as commentCount, postId from comment c where c.isDeleted = 0 and c.postId = 1) as pc on p.id = pc.postId
+                        left join (select count(*) as likeCount, postId from post_like pl where pl.isDeleted = 0) as ppl on p.id = ppl.postId
+                        join (select g.gradeName from grade g join user u on u.studentGradeId = g.id) as ug
+                        join (select c.companyName from company c left join user u on u.companyId = c.id) as uc
+                    where p.boardId=:boardId
+                    group by p.id;
+                    `;
     return await models.sequelize
         .query(query, {
             replacements: {
@@ -21,7 +41,7 @@ module.exports = async ({ boardId }, {}) => {
             },
         })
         .spread(
-            (results) => JSON.parse(JSON.stringify(results)),
-            (error) => ConflictError('Error occured at Selection'),
+            (result) => JSON.parse(JSON.stringify(result)),
+            () => NotFoundError('There is no board corresponding to the id'),
         );
 };
