@@ -75,6 +75,14 @@ module.exports = buildSchema(`
         updatedAt: Date
     }
 
+    type PostList {
+        postId: ID!
+        title: String!
+        userName: String!
+        studentGradeId: String!
+        createdAt: Date!
+    }
+
     input UserUpdateInput {
         departmentId: ID!
         studentGradeId: ID!
@@ -105,6 +113,7 @@ module.exports = buildSchema(`
         getCommentsByPostId(postId: ID!): [Comment]!
         getBoardById(id: ID!): Board!
         getCategoryById(id: ID!): Category!
+        getPostsByBoardId(boardId: ID!): [PostList]!
     }
 
     type Mutation {

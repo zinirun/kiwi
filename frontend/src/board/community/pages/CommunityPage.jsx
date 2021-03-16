@@ -6,7 +6,7 @@ export default function CommunityPage() {
     return (
         <>
             <PageTitle title="커뮤니티" />
-            <BoardListContainer />
+            <BoardListContainer boardId={2} />
         </>
     );
 }

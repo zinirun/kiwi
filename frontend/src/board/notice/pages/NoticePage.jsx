@@ -6,7 +6,7 @@ export default function CommunityPage() {
     return (
         <>
             <PageTitle title="학과 공지" />
-            <BoardListContainer />
+            <BoardListContainer boardId={1} />
         </>
     );
 }
