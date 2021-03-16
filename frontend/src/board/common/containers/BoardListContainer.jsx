@@ -40,7 +40,7 @@ export default function BoardListContainer({ boardId }) {
                 <Grid item xs={12} sm={2} align="right">
                     <Button
                         component={Link}
-                        to="/write?boardId=1&categoryId=1"
+                        to={`/write?boardId=${boardId}&categoryId=1`}
                         className={classes.button}
                         size="small"
                     >
