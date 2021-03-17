@@ -3,8 +3,10 @@ export const boardCommonStyles = makeStyles((theme) => ({
     button: {
         color: 'white',
         fontWeight: 'bold',
-        cursor: 'pointer',
         background: theme.palette.primary.main,
-        marginTop: 27,
+        '&:hover': {
+            backgroundColor: theme.palette.primary.light,
+            color: 'white',
+        },
     },
 }));
