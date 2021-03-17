@@ -104,7 +104,7 @@ module.exports = buildSchema(`
 
     input PostInput {
         boardId: ID!
-        categoryId: ID!
+        categoryId: ID
         title: String!
         content: String!
     }
