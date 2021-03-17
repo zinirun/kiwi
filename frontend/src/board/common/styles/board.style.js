@@ -37,7 +37,6 @@ export const useStyles = makeStyles((theme) => ({
         background: '#fafafa',
     },
     formControl: {
-        margin: theme.spacing(1),
         minWidth: 210,
     },
 }));

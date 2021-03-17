@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import QueryString from 'query-string';
 import { Button } from '@material-ui/core';
-import { Form, Input, message, Modal } from 'antd';
+import { Form, Input, message, Modal, Space } from 'antd';
 import PageTitle from '../../../common/components/PageTitle';
 import SelectCategory from '../components/SelectCategory';
 import { useStyles } from '../styles/postWrite.style';
@@ -23,6 +23,7 @@ export default function PostWritePage() {
         id: null,
         boardName: '',
     });
+    const [selectedCategoryId, setSelectedCategoryId] = useState('');
     const { data: boardData, error: boardError } = useQuery(GET_BOARD, {
         variables: {
             id: boardId,
@@ -43,7 +44,7 @@ export default function PostWritePage() {
     const triggerCreatePost = (post) => {
         createPost({
             variables: {
-                post: { boardId, ...post },
+                post: { boardId: board.id, ...post },
             },
         })
             .then(({ data }) => {
@@ -73,7 +74,14 @@ export default function PostWritePage() {
             {board.id && (
                 <>
                     <PageTitle title={`글쓰기 - ${board.boardName}`} />
-                    {parseInt(boardId) === 3 && <SelectCategory />}
+                    <Form.Item>
+                        <SelectCategory
+                            boardId={boardId}
+                            value={selectedCategoryId}
+                            setValue={setSelectedCategoryId}
+                            isWrite
+                        />
+                    </Form.Item>
                     <Form.Item
                         name="title"
                         rules={[{ required: true, message: '제목을 입력하세요.' }]}
@@ -85,6 +93,7 @@ export default function PostWritePage() {
                             autoFocus
                         />
                     </Form.Item>
+
                     <Form.Item
                         name="content"
                         rules={[{ required: true, message: '내용을 입력하세요.' }]}

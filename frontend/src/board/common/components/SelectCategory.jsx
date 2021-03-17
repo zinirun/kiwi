@@ -4,7 +4,7 @@ import { useStyles } from '../styles/board.style';
 import { InputLabel, FormControl, Select, MenuItem } from '@material-ui/core';
 import { GET_CATEGORIES } from '../../../configs/queries';
 
-export default function SelectCategory({ boardId, value, setValue }) {
+export default function SelectCategory({ boardId, value, setValue, isWrite }) {
     const classes = useStyles();
     const [categories, setCategories] = useState([]);
     const { data: categoriesData, error: categoriesError } = useQuery(GET_CATEGORIES, {
@@ -14,9 +14,11 @@ export default function SelectCategory({ boardId, value, setValue }) {
     });
     useEffect(() => {
         if (categoriesData) {
-            setCategories(categoriesData.getCategoriesByBoardId);
+            const data = categoriesData.getCategoriesByBoardId;
+            setCategories(data);
+            isWrite && setValue(data[0].categoryId);
         }
-    }, [categoriesData, setCategories]);
+    }, [categoriesData, setCategories, isWrite, setValue]);
 
     const handleChange = useCallback(
         (e) => {
@@ -28,10 +30,10 @@ export default function SelectCategory({ boardId, value, setValue }) {
     return (
         <>
             {categories.length > 0 && (
-                <FormControl className={classes.formControl}>
+                <FormControl size="small" variant="outlined" className={classes.formControl}>
                     <InputLabel>카테고리</InputLabel>
                     <Select value={value} onChange={handleChange}>
-                        <MenuItem value="">전체</MenuItem>
+                        {!isWrite && <MenuItem value="">전체</MenuItem>}
                         {categories.map((c, idx) => (
                             <MenuItem value={c.categoryId} key={idx}>
                                 {c.categoryName}
