@@ -36,7 +36,7 @@ export const useStyles = makeStyles((theme) => ({
         marginLeft: -8,
         background: '#fafafa',
     },
-    formControl: {
-        minWidth: 210,
+    categorySelect: {
+        minWidth: 150,
     },
 }));

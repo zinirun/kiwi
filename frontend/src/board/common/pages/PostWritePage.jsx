@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import QueryString from 'query-string';
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import { Form, Input, message, Modal, Space } from 'antd';
 import PageTitle from '../../../common/components/PageTitle';
 import SelectCategory from '../components/SelectCategory';
@@ -74,14 +74,12 @@ export default function PostWritePage() {
             {board.id && (
                 <>
                     <PageTitle title={`글쓰기 - ${board.boardName}`} />
-                    <Form.Item>
-                        <SelectCategory
-                            boardId={boardId}
-                            value={selectedCategoryId}
-                            setValue={setSelectedCategoryId}
-                            isWrite
-                        />
-                    </Form.Item>
+                    <SelectCategory
+                        boardId={boardId}
+                        value={selectedCategoryId}
+                        setValue={setSelectedCategoryId}
+                        isWrite
+                    />
                     <Form.Item
                         name="title"
                         rules={[{ required: true, message: '제목을 입력하세요.' }]}
