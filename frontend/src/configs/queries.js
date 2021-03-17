@@ -21,7 +21,7 @@ export const GET_POST_LIST = gql`
             title
             companyName
             gradeName
-            userName
+            authorName
             updatedAt
             categoryName
             likeCount
@@ -46,6 +46,23 @@ export const GET_BOARD = gql`
         getBoardById(id: $id) {
             id
             boardName
+        }
+    }
+`;
+
+export const GET_POST = gql`
+    query getPostById($id: ID!) {
+        getPostById(id: $id) {
+            id
+            title
+            content
+            companyName
+            categoryName
+            gradeName
+            authorName
+            updatedAt
+            likeCount
+            commentCount
         }
     }
 `;

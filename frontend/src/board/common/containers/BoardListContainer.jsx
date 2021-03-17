@@ -112,7 +112,7 @@ export default function BoardListContainer({ boardId }) {
                             <span style={{ color: '#999', fontSize: '0.75rem' }}>
                                 {post.gradeName}
                             </span>
-                            <span> {post.userName}</span>
+                            <span> {post.authorName}</span>
                         </Grid>
                         {!isMobile && (
                             <Grid className={classes.date}>
