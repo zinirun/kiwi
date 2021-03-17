@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-apollo';
+import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Grid, Button, Chip } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
@@ -14,6 +15,7 @@ import { message } from 'antd';
 
 export default function BoardListContainer({ boardId }) {
     const classes = { ...useStyles(), ...boardCommonStyles() };
+    const history = useHistory();
     const [selectedCategoryId, setSelectedCategoryId] = useState('');
     const [postList, setPostList] = useState([]);
     const { data: postListData, error: postListError, refetch: postListRefetch } = useQuery(
@@ -28,6 +30,7 @@ export default function BoardListContainer({ boardId }) {
     useEffect(() => {
         postListRefetch();
     }, [selectedCategoryId, postListRefetch]);
+
     useEffect(() => {
         if (postListData) {
             setPostList(
@@ -41,6 +44,7 @@ export default function BoardListContainer({ boardId }) {
         }
         if (postListError) {
             message.error('게시물을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
+            history.push('/');
         }
     }, [postListData, setPostList, postListError]);
 
