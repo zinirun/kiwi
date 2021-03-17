@@ -6,6 +6,7 @@ import { Form, Input, message, Modal } from 'antd';
 import PageTitle from '../../../common/components/PageTitle';
 import SelectCategory from '../components/SelectCategory';
 import { useStyles } from '../styles/postWrite.style';
+import { boardCommonStyles } from '../styles/board.common.style';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { CREATE_POST, GET_BOARD } from '../../../configs/queries';
 import { FileAddOutlined } from '@ant-design/icons';
@@ -14,7 +15,7 @@ const { confirm } = Modal;
 const { TextArea } = Input;
 
 export default function PostWritePage() {
-    const classes = useStyles();
+    const classes = { ...useStyles(), ...boardCommonStyles() };
     const { search } = useLocation();
     const history = useHistory();
     const { boardId } = QueryString.parse(search);
@@ -97,7 +98,7 @@ export default function PostWritePage() {
                     </Form.Item>
                     <Form.Item>
                         <div className={classes.flexReverse}>
-                            <Button type="submit" className={classes.button}>
+                            <Button type="submit" className={classes.button} size="small">
                                 글쓰기
                             </Button>
                         </div>

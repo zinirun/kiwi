@@ -10,12 +10,6 @@ export const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row-reverse',
     },
-    button: {
-        color: 'white',
-        fontWeight: 'bold',
-        cursor: 'pointer',
-        background: theme.palette.primary.main,
-    },
     commentForm: {
         marginTop: 15,
     },

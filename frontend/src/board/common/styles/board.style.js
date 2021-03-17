@@ -29,13 +29,6 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: 12,
         color: '#BBBBBB',
     },
-    button: {
-        color: 'white',
-        fontWeight: 'bold',
-        cursor: 'pointer',
-        background: theme.palette.primary.main,
-        marginTop: 27,
-    },
     title: {
         cursor: 'pointer',
     },
