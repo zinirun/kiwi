@@ -14,6 +14,7 @@ export default function SelectCategory({ boardId }) {
     });
     useEffect(() => {
         if (categoriesData) {
+            console.log(categoriesData.getCategoriesByBoardId);
             setCategories(categoriesData.getCategoriesByBoardId);
         }
     }, [categoriesData, setCategories]);

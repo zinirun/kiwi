@@ -79,6 +79,7 @@ module.exports = buildSchema(`
         categoryId: ID!
         boardId: ID!
         categoryName: String!
+        boardName: String!
         createdAt: Date!
         updatedAt: Date
     }

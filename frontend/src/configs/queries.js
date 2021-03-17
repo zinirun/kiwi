@@ -34,6 +34,8 @@ export const GET_CATEGORIES = gql`
     query getCategoriesByBoardId($boardId: ID!) {
         getCategoriesByBoardId(boardId: $boardId) {
             categoryId
+            boardId
+            boardName
             categoryName
         }
     }
