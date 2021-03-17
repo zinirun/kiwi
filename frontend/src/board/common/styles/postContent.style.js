@@ -36,10 +36,12 @@ export const useStyles = makeStyles((theme) => ({
         color: '#BBBBBB',
     },
     postChip: {
+        marginBottom: 10,
         marginLeft: 5,
         background: 'white',
     },
     commentChip: {
+        marginBottom: 10,
         marginTop: 10,
         background: 'white',
     },
