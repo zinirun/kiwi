@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router';
 import QueryString from 'query-string';
 import { Button } from '@material-ui/core';
@@ -14,8 +14,8 @@ export default function PostWritePage() {
     const { search } = useLocation();
     const { boardId } = QueryString.parse(search);
 
-    const handleFinish = (a, b) => {
-        console.log(a, b);
+    const handleFinish = (form) => {
+        console.log(form);
     };
 
     return (

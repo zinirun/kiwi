@@ -23,8 +23,8 @@ export default function SelectCategory({ boardId }) {
         <FormControl className={classes.formControl}>
             <InputLabel>카테고리</InputLabel>
             <Select
-            //value={state.age}
-            //onChange={handleChange}
+                defaultValue=""
+                //onChange={handleChange}
             >
                 <MenuItem value="">전체</MenuItem>
                 {categories.map((c, idx) => (
