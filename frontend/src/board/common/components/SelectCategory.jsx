@@ -9,7 +9,7 @@ export default function SelectCategory({ boardId, value, setValue }) {
     const [categories, setCategories] = useState([]);
     const { data: categoriesData, error: categoriesError } = useQuery(GET_CATEGORIES, {
         variables: {
-            boardId: boardId,
+            boardId,
         },
     });
     useEffect(() => {
