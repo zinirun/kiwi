@@ -24,6 +24,18 @@ module.exports = buildSchema(`
         likeCount: Int!
     }
 
+    type PostList {
+        postId: ID!
+        title: String!
+        companyName: String
+        gradeName: String!
+        userName: String!
+        updatedAt: Date!
+        categoryName: String
+        likeCount: Int!
+        commentCount: Int!
+    }
+
     type PostAfterCreate {
         id: ID!
         boardId: ID!
@@ -123,6 +135,7 @@ module.exports = buildSchema(`
     type Query {
         getUser: User!
         getPostById(id: ID!): Post!
+        getPostsByBoardId(boardId: ID!): [PostList]!
         getCommentsByPostId(postId: ID!): [Comment]!
         getBoardById(id: ID!): Board!
         getCategoryById(id: ID!): Category!
@@ -131,12 +144,12 @@ module.exports = buildSchema(`
     }
 
     type Mutation {
+        updateUser(user: UserUpdateInput!): Boolean
+        updateUserStatus(status: Int!): Boolean
         createPost(post: PostInput!): PostAfterCreate
         updatePost(post: PostUpdateInput!): Boolean
         deletePost(id: ID!): Boolean
         handlePostLike(postId: ID!): String
         createComment(comment: CommentInput!): CommentAfterCreate
-        updateUser(user: UserUpdateInput!): Boolean
-        updateUserStatus(status: Int!): Boolean
     }
 `);

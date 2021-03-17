@@ -11,11 +11,13 @@ module.exports = {
 
     // Post
     getPostById: require('./post/getPost'),
+    getPostsByBoardId: require('./post/getPostsByBoardId'),
     createPost: require('./post/createPost'),
     updatePost: require('./post/updatePost'),
     deletePost: require('./post/deletePost'),
+
+    // Comments
     getCommentsByPostId: require('./comment/getCommentsByPostId'),
-    getPostsByBoardId: require('./post/getPostsByBoardId'),
 
     // PostLike
     handlePostLike: require('./postLike/handlePostLike'),
