@@ -6,13 +6,14 @@ import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import { isMobile } from 'react-device-detect';
 import { useStyles } from '../styles/board.style';
+import { boardCommonStyles } from '../styles/board.common.style';
 import SelectCategory from '../components/SelectCategory';
 import { GET_POST_LIST } from '../../../configs/queries';
 import moment from 'moment';
 import { message } from 'antd';
 
 export default function BoardListContainer({ boardId }) {
-    const classes = useStyles();
+    const classes = { ...useStyles(), ...boardCommonStyles() };
     const [postList, setPostList] = useState([]);
     const { data: postListData, error: postListError } = useQuery(GET_POST_LIST, {
         variables: {
