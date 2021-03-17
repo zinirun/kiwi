@@ -223,7 +223,19 @@ export default function SignUpPage(props) {
                             회원가입
                         </Button>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={6}>
+                        <Button
+                            component={Link}
+                            to={'/needsign'}
+                            fullWidth
+                            color="primary"
+                            variant="outlined"
+                            size="large"
+                        >
+                            첫 화면으로 이동
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
                         <Button
                             component={Link}
                             to={'/signin'}
