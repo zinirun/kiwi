@@ -9,6 +9,7 @@ import { useStyles } from '../styles/board.style';
 import SelectCategory from '../components/SelectCategory';
 import { GET_POST_LIST } from '../../../configs/queries';
 import moment from 'moment';
+import { message } from 'antd';
 
 export default function BoardListContainer({ boardId }) {
     const classes = useStyles();
@@ -29,11 +30,14 @@ export default function BoardListContainer({ boardId }) {
                 }),
             );
         }
-    }, [postListData, setPostList]);
+        if (postListError) {
+            message.error('게시물을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
+        }
+    }, [postListData, setPostList, postListError]);
 
     return (
         <>
-            <Grid container justify="center" style={{ maxWidth: 730, marginBottom: 15 }}>
+            <Grid container justify="center" style={{ marginBottom: 15 }}>
                 <Grid item xs={12} sm={10}>
                     {boardId === 3 && <SelectCategory />}
                 </Grid>

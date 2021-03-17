@@ -1,4 +1,4 @@
-export const SITE_MENU = [
+export const BOARDS = [
     {
         key: 1,
         name: '학과 공지',
