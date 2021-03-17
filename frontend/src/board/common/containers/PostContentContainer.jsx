@@ -5,7 +5,7 @@ import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineO
 import 'antd/dist/antd.css';
 import { useStyles } from '../styles/postContent.style';
 
-export default function PostContent() {
+export default function PostContentContainer() {
     const classes = useStyles();
 
     return (
