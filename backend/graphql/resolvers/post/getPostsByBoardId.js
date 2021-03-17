@@ -31,7 +31,8 @@ module.exports = async ({ boardId, categoryId }, { departmentId }) => {
                         left join (select count(*) as likeCount, postId from post_like pl where pl.isDeleted = 0) as ppl on p.id = ppl.postId
                         join (select g.gradeName from grade g join user u on u.studentGradeId = g.id) as ug
                         join (select c.companyName from company c left join user u on u.companyId = c.id) as uc
-                    where p.boardId=:boardId
+                    where and u.companyId = uc.id 
+                    and p.boardId=:boardId
                     and p.departmentId=:departmentId
                     ${categoryId && `and p.categoryId=:categoryId`}
                     group by p.id

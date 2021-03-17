@@ -5,13 +5,14 @@
  * @returns {Post}
  * type Post {
         id: ID!
-        authorId: ID!
-        authorName: String!
         title: String!
         content: String!
-        grade: String
-        company: String
+        companyName: String
+        gradeName: String!
+        authorName: String!
+        updatedAt: Date!
         likeCount: Int!
+        commentCount: Int!
     }
 * getPostById(id: ID!): Post!
  */
@@ -21,13 +22,18 @@ const { NotFoundError } = require('../../errors/errors');
 
 module.exports = async ({ id }, { departmentId }) => {
     const query = `
-                    select u.id as authorId, u.userName as authorName, p.id as id, p.title as title, p.content as content, g.gradeName as grade, c.companyName as company, v.likeCount as likeCount
-                    from user u
-                        left join company c on u.companyId = c.id
-                        inner join post p on u.id = p.authorId
-                        inner join grade g on u.studentGradeId = g.id
-                        inner join (select count(*) as likeCount, postId from post_like pl where pl.isDeleted=0) as v on p.id = v.postId
-                    where p.id=:id and p.departmentId=:departmentId;
+                    select p.id, p.title, p.content, uc.companyName, ug.gradeName, u.userName as authorName, p.updatedAt, cg.categoryName, ifnull(ppl.likeCount, 0) as likeCount, ifnull(pc.commentCount, 0) as commentCount
+                    from post p
+                        join user u on p.authorId = u.id
+                        left join category cg on p.categoryId = cg.id
+                        left join (select count(*) as commentCount, postId from comment c where c.isDeleted = 0 and c.postId = 1) as pc on p.id = pc.postId
+                        left join (select count(*) as likeCount, postId from post_like pl where pl.isDeleted = 0) as ppl on p.id = ppl.postId
+                        join (select g.gradeName from grade g join user u on u.studentGradeId = g.id) as ug
+                        join (select c.companyName, c.id from company c left join user u on u.companyId = c.id) as uc
+                    where u.companyId = uc.id
+                    and p.id:=id
+                    and p.departmentId=:departmentId
+                    group by p.id;
                     `;
     return await models.sequelize
         .query(query, {
