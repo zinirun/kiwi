@@ -20,6 +20,7 @@ module.exports = buildSchema(`
         id: ID!
         title: String!
         content: String!
+        categoryName: String!
         companyName: String
         gradeName: String!
         authorName: String!
@@ -44,7 +45,7 @@ module.exports = buildSchema(`
         id: ID!
         postId: ID!
         authorId: ID!
-        userName: String!
+        authorName: String!
         content: String!
         gradeId: ID!
         gradeName: String!
@@ -93,7 +94,7 @@ module.exports = buildSchema(`
         title: String!
         companyName: String
         gradeName: String!
-        userName: String!
+        authorName: String!
         updatedAt: Date!
         categoryName: String
         likeCount: Int!

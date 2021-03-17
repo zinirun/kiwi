@@ -1,34 +1,71 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useQuery } from 'react-apollo';
+import { useHistory } from 'react-router';
 import { Grid, Chip, Card, CardContent, Typography } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import 'antd/dist/antd.css';
 import { useStyles } from '../styles/postContent.style';
+import { GET_POST } from '../../../configs/queries';
+import { message } from 'antd';
+import moment from 'moment';
 
 export default function PostContentContainer({ id }) {
     const classes = useStyles();
+    const history = useHistory();
+    const [post, setPost] = useState([]);
+    const { data: postData, error: postError } = useQuery(GET_POST, {
+        variables: {
+            id,
+        },
+    });
+
+    useEffect(() => {
+        if (postData) {
+            const p = postData.getPostById;
+            console.log(p);
+            setPost({
+                ...p,
+                updatedAt: new moment(p.updatedAt).format('YYYY-MM-DD HH:mm'),
+            });
+        }
+        if (postError) {
+            message.error('게시글을 불러오는 중 오류가 발생했습니다.');
+            history.push('/');
+        }
+    }, [postData, postError, history]);
+
     return (
         <>
             <Card className={classes.root}>
                 <CardContent>
-                    <span className={classes.part}>학과질문</span>
+                    {post.categoryName && <span className={classes.part}>{post.categoryName}</span>}
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
-                        자연과학관 5층 화장실에서 냄새나요.
+                        {post.title}
                     </Typography>
                     <Grid container justify="center" className={classes.userInfoSection}>
                         <Grid item xs={12} sm={6}>
                             <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                2020-12-31 14:00
+                                {post.updatedAt}
                             </span>
                         </Grid>
                         <Grid item xs={12} sm={6} align="right">
-                            <span style={{ color: '#999', fontSize: '0.75rem' }}>삼성/4학년</span>
-                            <span> 신창우</span>
+                            {!post.companyName && (
+                                <span style={{ color: '#999', fontSize: '0.75rem' }}>
+                                    {post.gradeName}
+                                </span>
+                            )}
+                            {!post.gradeName && (
+                                <span style={{ color: '#999', fontSize: '0.75rem' }}>
+                                    {post.companyName}
+                                </span>
+                            )}
+                            <span> {post.authorName}</span>
                         </Grid>
                     </Grid>
                     <div>
                         <Typography variant="body2" component="p">
-                            안녕하세요. 김상배입니다.
+                            {post.content}
                         </Typography>
                     </div>
                 </CardContent>
@@ -37,13 +74,13 @@ export default function PostContentContainer({ id }) {
                         className={classes.postChip}
                         size="small"
                         icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                        label="1888"
+                        label={post.likeCount}
                     />
                     <Chip
                         className={classes.postChip}
                         size="small"
                         icon={<ChatBubbleOutlineOutlinedIcon className={classes.commentIcon} />}
-                        label="181"
+                        label={post.commentCount}
                     />
                 </Grid>
             </Card>
