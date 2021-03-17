@@ -77,7 +77,12 @@ export default function PostWritePage() {
                         name="title"
                         rules={[{ required: true, message: '제목을 입력하세요.' }]}
                     >
-                        <Input name="title" size="large" placeholder="제목을 입력하세요" />
+                        <Input
+                            name="title"
+                            size="large"
+                            placeholder="제목을 입력하세요"
+                            autoFocus
+                        />
                     </Form.Item>
                     <Form.Item
                         name="content"
