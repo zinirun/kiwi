@@ -7,6 +7,9 @@ export const GET_USER = gql`
             userAccount
             userName
             studentNumber
+            studentGradeId
+            departmentId
+            companyId
             department
             grade
             company
@@ -56,5 +59,11 @@ export const CREATE_POST = gql`
             id
             boardId
         }
+    }
+`;
+
+export const UPDATE_USER = gql`
+    mutation updateUser($user: UserUpdateInput!) {
+        updateUser(user: $user)
     }
 `;

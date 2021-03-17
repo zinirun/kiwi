@@ -33,4 +33,23 @@ export const useStyles = makeStyles((theme) => ({
         fontWeight: 'extra-bold',
         color: theme.palette.primary.main,
     },
+    changeFormItem: {
+        marginBottom: 10,
+    },
+    changeItemWrapper: {
+        marginTop: 15,
+    },
+    button: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: '0.925rem',
+        height: 32,
+        padding: '0 14px',
+        borderRadius: 30,
+        background: theme.palette.primary.main,
+        '&:hover': {
+            backgroundColor: theme.palette.primary.light,
+            color: 'white',
+        },
+    },
 }));
