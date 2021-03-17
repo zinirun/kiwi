@@ -39,7 +39,8 @@ from user u
                  group by cl.commentId) as v on c.id = v.commentId
       join grade g on u.studentGradeId = g.id
       left join company cm on u.companyId = cm.id
-where postId = postId;`;
+where postId = postId
+order by c.id desc;`;
     return await models.sequelize
         .query(query, {
             replacements: {

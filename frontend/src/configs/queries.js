@@ -40,3 +40,21 @@ export const GET_CATEGORIES = gql`
         }
     }
 `;
+
+export const GET_BOARD = gql`
+    query getBoardById($id: ID!) {
+        getBoardById(id: $id) {
+            id
+            boardName
+        }
+    }
+`;
+
+export const CREATE_POST = gql`
+    mutation createPost($post: PostInput!) {
+        createPost(post: $post) {
+            id
+            boardId
+        }
+    }
+`;
