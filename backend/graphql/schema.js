@@ -24,18 +24,6 @@ module.exports = buildSchema(`
         likeCount: Int!
     }
 
-    type PostList {
-        postId: ID!
-        title: String!
-        companyName: String
-        gradeName: String!
-        userName: String!
-        updatedAt: Date!
-        categoryName: String
-        likeCount: Int!
-        commentCount: Int!
-    }
-
     type PostAfterCreate {
         id: ID!
         boardId: ID!
@@ -135,7 +123,6 @@ module.exports = buildSchema(`
     type Query {
         getUser: User!
         getPostById(id: ID!): Post!
-        getPostsByBoardId(boardId: ID!): [PostList]!
         getCommentsByPostId(postId: ID!): [Comment]!
         getBoardById(id: ID!): Board!
         getCategoryById(id: ID!): Category!
