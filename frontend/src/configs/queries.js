@@ -29,3 +29,12 @@ export const GET_POST_LIST = gql`
         }
     }
 `;
+
+export const GET_CATEGORIES = gql`
+    query getCategoriesByBoardId($boardId: ID!) {
+        getCategoriesByBoardId(boardId: $boardId) {
+            categoryId
+            categoryName
+        }
+    }
+`;

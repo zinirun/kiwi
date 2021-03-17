@@ -25,6 +25,7 @@ module.exports = {
 
     // Category
     getCategoryById: require('./category/getCategory'),
+    getCategoriesByBoardId: require('./category/getCatogriesByBoardId'),
 
     // Comment
     createComment: require('./comment/createComment'),

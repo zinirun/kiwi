@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useQuery } from 'react-apollo';
 import { useStyles } from '../styles/board.style';
 import { InputLabel, FormControl, Select, MenuItem } from '@material-ui/core';
+import { GET_CATEGORIES } from '../../../configs/queries';
 
-export default function SelectCategory() {
+export default function SelectCategory({ boardId }) {
     const classes = useStyles();
+    const [categories, setCategories] = useState([]);
+    const { data: categoriesData, error: categoriesError } = useQuery(GET_CATEGORIES, {
+        variables: {
+            boardId: boardId,
+        },
+    });
+    useEffect(() => {
+        if (categoriesData) {
+            setCategories(categoriesData.getCategoriesByBoardId);
+        }
+    }, [categoriesData, setCategories]);
+
     return (
         <FormControl className={classes.formControl}>
             <InputLabel>카테고리</InputLabel>
@@ -12,9 +26,11 @@ export default function SelectCategory() {
             //onChange={handleChange}
             >
                 <MenuItem value="">전체</MenuItem>
-                <MenuItem value={10}>학과 질문</MenuItem>
-                <MenuItem value={20}>진로 질문</MenuItem>
-                <MenuItem value={30}>학습 질문</MenuItem>
+                {categories.map((c, idx) => (
+                    <MenuItem value={c.categoryId} key={idx}>
+                        {c.categoryName}
+                    </MenuItem>
+                ))}
             </Select>
         </FormControl>
     );

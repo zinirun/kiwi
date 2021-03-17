@@ -39,7 +39,7 @@ export default function BoardListContainer({ boardId }) {
         <>
             <Grid container justify="center" style={{ marginBottom: 15 }}>
                 <Grid item xs={12} sm={10}>
-                    {boardId === 3 && <SelectCategory />}
+                    {boardId === 3 && <SelectCategory boardId={boardId} />}
                 </Grid>
                 <Grid item xs={12} sm={2} align="right">
                     <Button

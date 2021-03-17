@@ -68,7 +68,15 @@ module.exports = buildSchema(`
     }
 
     type Category {
-        id: ID!
+        categoryId: ID!
+        boardId: ID!
+        categoryName: String!
+        createdAt: Date!
+        updatedAt: Date
+    }
+
+    type CategoryList {
+        categoryId: ID!
         boardId: ID!
         categoryName: String!
         createdAt: Date!
@@ -118,6 +126,7 @@ module.exports = buildSchema(`
         getBoardById(id: ID!): Board!
         getCategoryById(id: ID!): Category!
         getPostsByBoardId(boardId: ID!): [PostList]!
+        getCategoriesByBoardId(boardId: ID!): [CategoryList]!
     }
 
     type Mutation {
