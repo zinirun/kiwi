@@ -5,9 +5,8 @@ import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineO
 import 'antd/dist/antd.css';
 import { useStyles } from '../styles/postContent.style';
 
-export default function PostContentContainer() {
+export default function PostContentContainer({ id }) {
     const classes = useStyles();
-
     return (
         <>
             <Card className={classes.root}>
@@ -24,7 +23,7 @@ export default function PostContentContainer() {
                         </Grid>
                         <Grid item xs={12} sm={6} align="right">
                             <span style={{ color: '#999', fontSize: '0.75rem' }}>삼성/4학년</span>
-                            <span>신창우</span>
+                            <span> 신창우</span>
                         </Grid>
                     </Grid>
                     <div>

@@ -19,7 +19,6 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: '1.4rem',
         fontWeight: 'bold',
         borderBottom: '1px solid #ddd',
-        width: 700,
     },
     upIcon: {
         fontSize: 15,

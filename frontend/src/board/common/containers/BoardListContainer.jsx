@@ -84,7 +84,7 @@ export default function BoardListContainer({ boardId }) {
                         sm={8}
                         className={classes.title}
                         component={Link}
-                        to={'/post'}
+                        to={`/post/${post.id}`}
                         style={{ textDecoration: 'none' }}
                     >
                         {post.categoryName && (
@@ -112,7 +112,7 @@ export default function BoardListContainer({ boardId }) {
                             <span style={{ color: '#999', fontSize: '0.75rem' }}>
                                 {post.gradeName}
                             </span>
-                            <span>{post.userName}</span>
+                            <span> {post.userName}</span>
                         </Grid>
                         {!isMobile && (
                             <Grid className={classes.date}>
