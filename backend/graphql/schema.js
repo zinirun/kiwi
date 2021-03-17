@@ -86,7 +86,7 @@ module.exports = buildSchema(`
     }
 
     type PostList {
-        postId: ID!
+        id: ID!
         title: String!
         companyName: String
         gradeName: String!

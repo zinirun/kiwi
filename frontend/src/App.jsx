@@ -53,7 +53,7 @@ function App() {
                     <Route path="/question" component={QuestionPage} />
                     <Route path="/talent" component={TalentPage} />
                     <Route path="/market" component={MarketPage} />
-                    <Route path="/post" component={PostContentPage} />
+                    <Route path="/post/:id" component={PostContentPage} />
                     <Route path="/write" component={PostWritePage} />
                 </Switch>
             </Root>
