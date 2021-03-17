@@ -17,21 +17,24 @@ export default function SelectCategory({ boardId }) {
             setCategories(categoriesData.getCategoriesByBoardId);
         }
     }, [categoriesData, setCategories]);
-
     return (
-        <FormControl className={classes.formControl}>
-            <InputLabel>카테고리</InputLabel>
-            <Select
-                defaultValue=""
-                //onChange={handleChange}
-            >
-                <MenuItem value="">전체</MenuItem>
-                {categories.map((c, idx) => (
-                    <MenuItem value={c.categoryId} key={idx}>
-                        {c.categoryName}
-                    </MenuItem>
-                ))}
-            </Select>
-        </FormControl>
+        <>
+            {categories.length > 0 && (
+                <FormControl className={classes.formControl}>
+                    <InputLabel>카테고리</InputLabel>
+                    <Select
+                        defaultValue=""
+                        //onChange={handleChange}
+                    >
+                        <MenuItem value="">전체</MenuItem>
+                        {categories.map((c, idx) => (
+                            <MenuItem value={c.categoryId} key={idx}>
+                                {c.categoryName}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+            )}
+        </>
     );
 }
