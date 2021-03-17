@@ -11,4 +11,7 @@ export const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row-reverse',
     },
+    itemWrapper: {
+        marginBottom: 10,
+    },
 }));

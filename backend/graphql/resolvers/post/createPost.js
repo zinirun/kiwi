@@ -18,6 +18,7 @@ module.exports = async ({ post }, { id: authorId, departmentId }) => {
         .create({
             authorId,
             ...post,
+            categoryId: post.categoryId || null,
             departmentId,
         })
         .then((result) => {

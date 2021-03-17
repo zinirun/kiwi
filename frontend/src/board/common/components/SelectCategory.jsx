@@ -20,7 +20,7 @@ export default function SelectCategory({ boardId, value, setValue, isWrite }) {
         if (categoriesData) {
             const data = categoriesData.getCategoriesByBoardId;
             setCategories(data);
-            isWrite && setValue(data[0].categoryId);
+            isWrite && data[0] && setValue(data[0].categoryId);
         }
         if (categoriesError) {
             message.error('카테고리를 불러오는 중 오류가 발생했습니다.');
