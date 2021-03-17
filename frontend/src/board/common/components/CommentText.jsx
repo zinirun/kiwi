@@ -3,10 +3,11 @@ import { Button } from '@material-ui/core';
 import 'antd/dist/antd.css';
 import { Form, Input, Space } from 'antd';
 import { useStyles } from '../styles/commentText.style';
+import { boardCommonStyles } from '../styles/board.common.style';
 const { TextArea } = Input;
 
 export default function CommentText() {
-    const classes = useStyles();
+    const classes = { ...useStyles(), ...boardCommonStyles() };
 
     return (
         <Form className={classes.commentForm}>

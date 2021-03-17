@@ -15,8 +15,8 @@ export const GET_USER = gql`
 `;
 
 export const GET_POST_LIST = gql`
-    query getPostsByBoardId($boardId: ID!) {
-        getPostsByBoardId(boardId: $boardId) {
+    query getPostsByBoardId($boardId: ID!, $categoryId: ID) {
+        getPostsByBoardId(boardId: $boardId, categoryId: $categoryId) {
             postId
             title
             companyName
@@ -26,6 +26,35 @@ export const GET_POST_LIST = gql`
             categoryName
             likeCount
             commentCount
+        }
+    }
+`;
+
+export const GET_CATEGORIES = gql`
+    query getCategoriesByBoardId($boardId: ID!) {
+        getCategoriesByBoardId(boardId: $boardId) {
+            categoryId
+            boardId
+            boardName
+            categoryName
+        }
+    }
+`;
+
+export const GET_BOARD = gql`
+    query getBoardById($id: ID!) {
+        getBoardById(id: $id) {
+            id
+            boardName
+        }
+    }
+`;
+
+export const CREATE_POST = gql`
+    mutation createPost($post: PostInput!) {
+        createPost(post: $post) {
+            id
+            boardId
         }
     }
 `;

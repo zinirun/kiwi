@@ -21,7 +21,7 @@
 const models = require('../../../models');
 const { NotFoundError } = require('../../errors/errors');
 
-module.exports = async ({ boardId }, {}) => {
+module.exports = async ({ boardId, categoryId }, { departmentId }) => {
     const query = `
                     select p.id as postId, p.title, uc.companyName, ug.gradeName, u.userName, p.updatedAt, cg.categoryName, ifnull(ppl.likeCount, 0) as likeCount, ifnull(pc.commentCount, 0) as commentCount
                     from post p
@@ -32,12 +32,17 @@ module.exports = async ({ boardId }, {}) => {
                         join (select g.gradeName from grade g join user u on u.studentGradeId = g.id) as ug
                         join (select c.companyName from company c left join user u on u.companyId = c.id) as uc
                     where p.boardId=:boardId
-                    group by p.id;
+                    and p.departmentId=:departmentId
+                    ${categoryId && `and p.categoryId=:categoryId`}
+                    group by p.id
+                    order by p.id desc;
                     `;
     return await models.sequelize
         .query(query, {
             replacements: {
                 boardId,
+                departmentId,
+                categoryId,
             },
         })
         .spread(

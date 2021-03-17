@@ -4,6 +4,7 @@ module.exports = function (sequelize, DataTypes) {
     const Post = sequelize.define(
         'post',
         {
+            departmentId: { type: DataTypes.INTEGER, allowNull: false },
             boardId: { type: DataTypes.INTEGER, allowNull: false },
             categoryId: { type: DataTypes.INTEGER, allowNull: true },
             authorId: { type: DataTypes.INTEGER, allowNull: false },
@@ -20,6 +21,9 @@ module.exports = function (sequelize, DataTypes) {
     Post.prototype.dateFormat = (date) => moment(date).format('YYYY-MM-DD HH:mm:ss');
 
     Post.associate = (models) => {
+        Post.belongsTo(models.department, {
+            foreignKey: 'departmentId',
+        });
         Post.belongsTo(models.user, {
             foreignKey: 'authorId',
         });

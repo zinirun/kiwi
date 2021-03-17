@@ -1,24 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-apollo';
+import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Grid, Button, Chip } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import { isMobile } from 'react-device-detect';
 import { useStyles } from '../styles/board.style';
+import { boardCommonStyles } from '../styles/board.common.style';
 import SelectCategory from '../components/SelectCategory';
 import { GET_POST_LIST } from '../../../configs/queries';
 import moment from 'moment';
 import { message } from 'antd';
 
 export default function BoardListContainer({ boardId }) {
-    const classes = useStyles();
+    const classes = { ...useStyles(), ...boardCommonStyles() };
+    const history = useHistory();
+    const [selectedCategoryId, setSelectedCategoryId] = useState('');
     const [postList, setPostList] = useState([]);
-    const { data: postListData, error: postListError } = useQuery(GET_POST_LIST, {
-        variables: {
-            boardId: boardId,
+    const { data: postListData, error: postListError, refetch: postListRefetch } = useQuery(
+        GET_POST_LIST,
+        {
+            variables: {
+                boardId: boardId,
+                categoryId: selectedCategoryId,
+            },
         },
-    });
+    );
+    useEffect(() => {
+        postListRefetch();
+    }, [selectedCategoryId, postListRefetch]);
+
     useEffect(() => {
         if (postListData) {
             setPostList(
@@ -32,14 +44,19 @@ export default function BoardListContainer({ boardId }) {
         }
         if (postListError) {
             message.error('게시물을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
+            history.push('/');
         }
-    }, [postListData, setPostList, postListError]);
+    }, [postListData, setPostList, postListError, history]);
 
     return (
         <>
             <Grid container justify="center" style={{ marginBottom: 15 }}>
                 <Grid item xs={12} sm={10}>
-                    {boardId === 3 && <SelectCategory />}
+                    <SelectCategory
+                        boardId={boardId}
+                        value={selectedCategoryId}
+                        setValue={setSelectedCategoryId}
+                    />
                 </Grid>
                 <Grid item xs={12} sm={2} align="right">
                     <Button
@@ -70,7 +87,9 @@ export default function BoardListContainer({ boardId }) {
                         to={'/post'}
                         style={{ textDecoration: 'none' }}
                     >
-                        <span className={classes.part}>학과질문</span>
+                        {post.categoryName && (
+                            <span className={classes.part}>{post.categoryName}</span>
+                        )}
                         {isMobile && <br />}
                         <span style={{ color: 'black' }}>{post.title}</span>
                     </Grid>

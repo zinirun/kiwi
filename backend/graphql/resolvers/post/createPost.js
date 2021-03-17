@@ -13,11 +13,12 @@
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 
-module.exports = async ({ post }, { id: authorId }) => {
+module.exports = async ({ post }, { id: authorId, departmentId }) => {
     return await models.post
         .create({
             authorId,
             ...post,
+            departmentId,
         })
         .then((result) => {
             const data = result.get({ plain: true });

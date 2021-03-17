@@ -80,11 +80,32 @@ module.exports = buildSchema(`
     }
 
     type Category {
-        id: ID!
+        categoryId: ID!
         boardId: ID!
         categoryName: String!
         createdAt: Date!
         updatedAt: Date
+    }
+
+    type CategoryList {
+        categoryId: ID!
+        boardId: ID!
+        categoryName: String!
+        boardName: String!
+        createdAt: Date!
+        updatedAt: Date
+    }
+
+    type PostList {
+        postId: ID!
+        title: String!
+        companyName: String
+        gradeName: String!
+        userName: String!
+        updatedAt: Date!
+        categoryName: String
+        likeCount: Int!
+        commentCount: Int!
     }
 
     input UserUpdateInput {
@@ -95,7 +116,7 @@ module.exports = buildSchema(`
 
     input PostInput {
         boardId: ID!
-        categoryId: ID!
+        categoryId: ID
         title: String!
         content: String!
     }
@@ -118,6 +139,8 @@ module.exports = buildSchema(`
         getCommentsByPostId(postId: ID!): [Comment]!
         getBoardById(id: ID!): Board!
         getCategoryById(id: ID!): Category!
+        getPostsByBoardId(boardId: ID!, categoryId: ID): [PostList]!
+        getCategoriesByBoardId(boardId: ID!): [CategoryList]!
     }
 
     type Mutation {
