@@ -20,7 +20,7 @@ module.exports = buildSchema(`
         id: ID!
         title: String!
         content: String!
-        categoryName: String!
+        categoryName: String
         companyName: String
         gradeName: String!
         authorName: String!
@@ -127,7 +127,7 @@ module.exports = buildSchema(`
     type Query {
         getUser: User!
         getPostById(id: ID!): Post!
-        getCommentsByPostId(postId: ID!): [Comment]!
+        getCommentsByPostId(id: ID!): [Comment]!
         getBoardById(id: ID!): Board!
         getCategoryById(id: ID!): Category!
         getPostsByBoardId(boardId: ID!, categoryId: ID): [PostList]!

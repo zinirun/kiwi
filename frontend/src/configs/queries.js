@@ -67,6 +67,10 @@ export const GET_POST = gql`
     }
 `;
 
+export const GET_POSTS = gql`
+    query getCommentsByPostId()
+`;
+
 export const CREATE_POST = gql`
     mutation createPost($post: PostInput!) {
         createPost(post: $post) {
