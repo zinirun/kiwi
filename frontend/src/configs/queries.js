@@ -70,8 +70,22 @@ export const GET_POST = gql`
     }
 `;
 
-export const GET_POSTS = gql`
-    query getCommentsByPostId()
+export const GET_COMMENTS = gql`
+    query getCommentsByPostId($id: ID!) {
+        getCommentsByPostId(id: $id) {
+            id
+            postId
+            authorId
+            authorName
+            content
+            gradeId
+            gradeName
+            companyId
+            companyName
+            likeCount
+            createdAt
+        }
+    }
 `;
 
 export const CREATE_POST = gql`

@@ -4,8 +4,9 @@ import { useHistory } from 'react-router';
 import { Chip } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import 'antd/dist/antd.css';
-import { Comment, Tooltip, List, Row, Col, message } from 'antd';
-import moment from 'moment';
+import { Comment, List, Row, Col, message } from 'antd';
+//import moment from 'moment';
+//Tooltip
 import { useStyles } from '../styles/commentList.style';
 import { GET_COMMENTS } from '../../../configs/queries';
 
@@ -21,10 +22,9 @@ export default function CommentList({ id }) {
     useEffect(() => {
         if (commentsData) {
             setComments(
-                commentsData.getPostsByBoardId.map((p) => {
+                commentsData.getCommentsByPostId.map((c) => {
                     return {
-                        ...p,
-                        updatedAt: new moment(p.updatedAt).format('YYYY-MM-DD HH:mm'),
+                        ...c,
                     };
                 }),
             );
@@ -35,24 +35,23 @@ export default function CommentList({ id }) {
         }
     }, [commentsData, setComments, commentsError, history]);
 
-    console.log(comments);
     return (
         <>
             <div className={classes.comment}>
                 <span>댓글</span>
             </div>
-            {/* <List
+            <List
                 className="comment-list"
                 itemLayout="horizontal"
-                dataSource={data}
+                dataSource={comments}
                 renderItem={(item) => (
                     <li className={classes.commentField}>
                         <Row justify="center" align="center">
                             <Col span={21}>
                                 <Comment
-                                    author={item.author}
+                                    author={item.authorName}
                                     content={item.content}
-                                    datetime={item.datetime}
+                                    //datetime={item.createdAt}
                                 />
                             </Col>
                             <Col span={3} align="center">
@@ -60,13 +59,13 @@ export default function CommentList({ id }) {
                                     className={classes.commentChip}
                                     size="small"
                                     icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                                    label="1888"
+                                    label={item.likeCount}
                                 />
                             </Col>
                         </Row>
                     </li>
                 )}
-            /> */}
+            />
         </>
     );
 }

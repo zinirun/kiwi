@@ -49,7 +49,7 @@ module.exports = buildSchema(`
         content: String!
         gradeId: ID!
         gradeName: String!
-        companyId: ID!
+        companyId: ID
         companyName: String
         isDeleted: Int!
         likeCount: Int!
