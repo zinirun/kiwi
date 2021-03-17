@@ -1,6 +1,7 @@
 import React from 'react';
 import { useStyles } from '../static/style';
 import { Button, Col, Popover, Row, Space, Tooltip } from 'antd';
+import { Link } from 'react-router-dom';
 import { SettingFilled, BellFilled, LogoutOutlined, ToolOutlined } from '@ant-design/icons';
 import axios from 'axios';
 
@@ -16,9 +17,11 @@ function UserToolContent() {
             <Button icon={<LogoutOutlined />} block onClick={handleLogout}>
                 로그아웃
             </Button>
-            <Button icon={<ToolOutlined />} block>
-                회원정보 수정
-            </Button>
+            <Link to="/my/info">
+                <Button icon={<ToolOutlined />} block>
+                    회원정보 수정
+                </Button>
+            </Link>
         </Space>
     );
 }

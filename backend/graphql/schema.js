@@ -8,6 +8,9 @@ module.exports = buildSchema(`
         userAccount: String!
         userName: String!
         studentNumber: String!
+        studentGradeId: ID!
+        departmentId: ID!
+        companyId: ID
         department: String
         grade: String
         company: String
@@ -97,7 +100,6 @@ module.exports = buildSchema(`
     }
 
     input UserUpdateInput {
-        departmentId: ID!
         studentGradeId: ID!
         companyId: ID
     }

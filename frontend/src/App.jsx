@@ -35,6 +35,9 @@ import SiteMainPage from './common/pages/SiteMainPage';
 // 보드 메인페이지 (로그인 후)
 import BoardMainPage from './board/common/pages/BoardMainPage';
 
+// 회원정보 수정
+import ChangeUserInfoPage from './common/pages/ChangeUserInfoPage';
+
 // 나의 글
 
 // 나의 댓글
@@ -55,6 +58,7 @@ function App() {
                     <Route path="/market" component={MarketPage} />
                     <Route path="/post/:id" component={PostContentPage} />
                     <Route path="/write" component={PostWritePage} />
+                    <Route path="/my/info" component={ChangeUserInfoPage} />
                 </Switch>
             </Root>
         </Router>

@@ -7,6 +7,9 @@
         userAccount: String!
         userName: String!
         studentNumber: String!
+        studentGradeId: ID!
+        departmentId: ID!
+        companyId: ID
         department: String
         grade: String
         company: String
@@ -19,7 +22,15 @@ const { NotFoundError } = require('../../errors/errors');
 
 module.exports = async ({}, { id }) => {
     const user = await models.user.findOne({
-        attributes: ['id', 'userAccount', 'userName', 'studentNumber'],
+        attributes: [
+            'id',
+            'userAccount',
+            'userName',
+            'studentNumber',
+            'studentGradeId',
+            'departmentId',
+            'companyId',
+        ],
         include: [
             {
                 model: models.department,
