@@ -18,6 +18,9 @@ module.exports = function (sequelize, DataTypes) {
         Department.hasMany(models.user, {
             foreignKey: 'departmentId',
         });
+        Department.hasMany(models.post, {
+            foreignKey: 'departmentId',
+        });
     };
     return Department;
 };

@@ -19,7 +19,7 @@
 const models = require('../../../models');
 const { NotFoundError } = require('../../errors/errors');
 
-module.exports = async ({ id }, {}) => {
+module.exports = async ({ id }, { departmentId }) => {
     const query = `
                     select u.id as authorId, u.userName as authorName, p.id as id, p.title as title, p.content as content, g.gradeName as grade, c.companyName as company, v.likeCount as likeCount
                     from user u
@@ -27,12 +27,13 @@ module.exports = async ({ id }, {}) => {
                         inner join post p on u.id = p.authorId
                         inner join grade g on u.studentGradeId = g.id
                         inner join (select count(*) as likeCount, postId from post_like pl where pl.isDeleted=0) as v on p.id = v.postId
-                    where p.id=:id;
+                    where p.id=:id and p.departmentId=:departmentId;
                     `;
     return await models.sequelize
         .query(query, {
             replacements: {
                 id,
+                departmentId,
             },
         })
         .spread(
