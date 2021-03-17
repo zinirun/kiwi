@@ -14,12 +14,17 @@ import { message } from 'antd';
 
 export default function BoardListContainer({ boardId }) {
     const classes = { ...useStyles(), ...boardCommonStyles() };
+    const [selectedCategoryId, setSelectedCategoryId] = useState('');
     const [postList, setPostList] = useState([]);
-    const { data: postListData, error: postListError } = useQuery(GET_POST_LIST, {
+    const { data: postListData, error: postListError, refetch } = useQuery(GET_POST_LIST, {
         variables: {
             boardId: boardId,
         },
     });
+    useEffect(() => {
+        // refetch 여기서
+        console.log(selectedCategoryId);
+    }, [selectedCategoryId]);
     useEffect(() => {
         if (postListData) {
             setPostList(
@@ -40,7 +45,11 @@ export default function BoardListContainer({ boardId }) {
         <>
             <Grid container justify="center" style={{ marginBottom: 15 }}>
                 <Grid item xs={12} sm={10}>
-                    <SelectCategory boardId={boardId} />
+                    <SelectCategory
+                        boardId={boardId}
+                        value={selectedCategoryId}
+                        setValue={setSelectedCategoryId}
+                    />
                 </Grid>
                 <Grid item xs={12} sm={2} align="right">
                     <Button
