@@ -16,15 +16,18 @@ export default function BoardListContainer({ boardId }) {
     const classes = { ...useStyles(), ...boardCommonStyles() };
     const [selectedCategoryId, setSelectedCategoryId] = useState('');
     const [postList, setPostList] = useState([]);
-    const { data: postListData, error: postListError, refetch } = useQuery(GET_POST_LIST, {
-        variables: {
-            boardId: boardId,
+    const { data: postListData, error: postListError, refetch: postListRefetch } = useQuery(
+        GET_POST_LIST,
+        {
+            variables: {
+                boardId: boardId,
+                categoryId: selectedCategoryId,
+            },
         },
-    });
+    );
     useEffect(() => {
-        // refetch 여기서
-        console.log(selectedCategoryId);
-    }, [selectedCategoryId]);
+        postListRefetch();
+    }, [selectedCategoryId, postListRefetch]);
     useEffect(() => {
         if (postListData) {
             setPostList(

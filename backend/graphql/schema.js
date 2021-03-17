@@ -126,7 +126,7 @@ module.exports = buildSchema(`
         getCommentsByPostId(postId: ID!): [Comment]!
         getBoardById(id: ID!): Board!
         getCategoryById(id: ID!): Category!
-        getPostsByBoardId(boardId: ID!): [PostList]!
+        getPostsByBoardId(boardId: ID!, categoryId: ID): [PostList]!
         getCategoriesByBoardId(boardId: ID!): [CategoryList]!
     }
 
