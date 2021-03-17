@@ -131,12 +131,12 @@ module.exports = buildSchema(`
     }
 
     type Mutation {
+        updateUser(user: UserUpdateInput!): Boolean
+        updateUserStatus(status: Int!): Boolean
         createPost(post: PostInput!): PostAfterCreate
         updatePost(post: PostUpdateInput!): Boolean
         deletePost(id: ID!): Boolean
         handlePostLike(postId: ID!): String
         createComment(comment: CommentInput!): CommentAfterCreate
-        updateUser(user: UserUpdateInput!): Boolean
-        updateUserStatus(status: Int!): Boolean
     }
 `);
