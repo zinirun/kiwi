@@ -33,7 +33,8 @@ module.exports = async ({ boardId }, { departmentId }) => {
                         join (select c.companyName from company c left join user u on u.companyId = c.id) as uc
                     where p.boardId=:boardId
                     and p.departmentId=:departmentId
-                    group by p.id;
+                    group by p.id
+                    order by p.id desc;
                     `;
     return await models.sequelize
         .query(query, {
