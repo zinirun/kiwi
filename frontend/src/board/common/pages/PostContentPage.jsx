@@ -1,12 +1,12 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import BoardContentContainer from '../containers/BoardContentContainer';
+import PostContentContainer from '../containers/PostContentContainer';
 import CommentContainer from '../containers/CommentContainer';
 
-export default function PostContent() {
+export default function PostContentPage() {
     return (
         <>
-            <BoardContentContainer />
+            <PostContentContainer />
             <CommentContainer />
         </>
     );
