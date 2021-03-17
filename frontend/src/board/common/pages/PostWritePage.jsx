@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { useLocation } from 'react-router';
 import QueryString from 'query-string';
 import { Button } from '@material-ui/core';
@@ -12,15 +12,26 @@ const { TextArea } = Input;
 export default function PostWritePage() {
     const classes = useStyles();
     const { search } = useLocation();
-    const query = QueryString.parse(search);
+    const { boardId } = QueryString.parse(search);
 
-    const boardId = query.boardId;
+    const handleFinish = (a, b) => {
+        console.log(a, b);
+    };
+
     return (
-        <Form>
-            <PageTitle title="글쓰기" />
-            {parseInt(query.boardId) === 3 && <SelectCategory />}
-            <Form.Item>
-                <TextArea className={classes.textarea} rows={13} />
+        <Form onFinish={handleFinish}>
+            <PageTitle title="글쓰기 - 커뮤니티" />
+            {parseInt(boardId) === 3 && <SelectCategory />}
+            <Form.Item name="title" rules={[{ required: true, message: '제목을 입력하세요.' }]}>
+                <Input name="title" size="large" placeholder="제목을 입력하세요" />
+            </Form.Item>
+            <Form.Item name="content" rules={[{ required: true, message: '내용을 입력하세요.' }]}>
+                <TextArea
+                    name="content"
+                    placeholder="내용을 입력하세요"
+                    className={classes.textarea}
+                    rows={13}
+                />
             </Form.Item>
             <Form.Item>
                 <div className={classes.flexReverse}>
