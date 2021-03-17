@@ -46,7 +46,7 @@ export default function BoardListContainer({ boardId }) {
             message.error('게시물을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
             history.push('/');
         }
-    }, [postListData, setPostList, postListError]);
+    }, [postListData, setPostList, postListError, history]);
 
     return (
         <>
