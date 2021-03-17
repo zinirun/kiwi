@@ -20,6 +20,7 @@ module.exports = buildSchema(`
         id: ID!
         title: String!
         content: String!
+        categoryName: String!
         companyName: String
         gradeName: String!
         authorName: String!
@@ -44,12 +45,13 @@ module.exports = buildSchema(`
         id: ID!
         postId: ID!
         authorId: ID!
-        userName: String!
+        authorName: String!
         content: String!
+        gradeId: ID!
         gradeName: String!
+        companyId: ID!
         companyName: String
         isDeleted: Int!
-        isAnonymous: Int!
         likeCount: Int!
         createdAt: Date!
         updatedAt: Date
@@ -60,7 +62,6 @@ module.exports = buildSchema(`
         authorId: ID!
         postId: ID!
         content: String!
-        isAnonymous: Int!
         createdAt: Date!
     }
 
@@ -93,7 +94,7 @@ module.exports = buildSchema(`
         title: String!
         companyName: String
         gradeName: String!
-        userName: String!
+        authorName: String!
         updatedAt: Date!
         categoryName: String
         likeCount: Int!
@@ -119,7 +120,6 @@ module.exports = buildSchema(`
 
     input CommentInput {
         postId: ID!
-        isAnonymous: Int
         content: String!
     }
 
