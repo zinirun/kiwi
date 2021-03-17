@@ -87,7 +87,9 @@ export default function BoardListContainer({ boardId }) {
                         to={'/post'}
                         style={{ textDecoration: 'none' }}
                     >
-                        <span className={classes.part}>학과질문</span>
+                        {post.categoryName && (
+                            <span className={classes.part}>{post.categoryName}</span>
+                        )}
                         {isMobile && <br />}
                         <span style={{ color: 'black' }}>{post.title}</span>
                     </Grid>
