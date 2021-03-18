@@ -125,14 +125,13 @@ module.exports = buildSchema(`
     type Query {
         getUser: User!
         getPostById(id: ID!): Post!
-        getPostsByBoardId(boardId: ID!, categoryId: ID): [PostList]!
-        getCommentsByPostId(id: ID!): [Comment]!
+        getPostsByBoardId(boardId: ID!, categoryId: ID): [PostList]
+        getCommentsByPostId(id: ID!): [Comment]
         getBoardById(id: ID!): Board!
         getCategoryById(id: ID!): Category!
-        getCategoriesByBoardId(boardId: ID!): [CategoryList]!
-        getMyPostsById: [Post]!
-        getMyComments: [Comment]!
-        
+        getCategoriesByBoardId(boardId: ID!): [CategoryList]
+        getMyPostsById: [Post]
+        getMyComments: [Comment]
     }
 
     type Mutation {
