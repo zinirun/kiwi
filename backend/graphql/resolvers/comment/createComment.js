@@ -3,7 +3,6 @@
  * @author 신창우
  * @param input CommentInput {
         postId: ID!
-        isAnonymous: Int
         content: String!
     }
 * type Comment {
@@ -15,7 +14,6 @@
         gradeName: String!
         companyName: String!
         isDeleted: Int!
-        isAnonymous: Int!
         likeCount: Int!
         createdAt: Date!
         updatedAt: Date

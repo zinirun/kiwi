@@ -5,29 +5,31 @@ import { Link } from 'react-router-dom';
 import { Grid, Button, Chip } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
-import EllipsisOutlined from '@material-ui/icons/EllipsisOutlined';
 import { isMobile } from 'react-device-detect';
 import { useStyles } from '../styles/board.style';
 import { boardCommonStyles } from '../styles/board.common.style';
 import SelectCategory from '../components/SelectCategory';
 import { GET_POST_LIST } from '../../../configs/queries';
 import moment from 'moment';
-import { message, Result } from 'antd';
+import { message } from 'antd';
+import NoResult from '../components/NoResult';
 
 export default function BoardListContainer({ boardId }) {
     const classes = { ...useStyles(), ...boardCommonStyles() };
     const history = useHistory();
     const [selectedCategoryId, setSelectedCategoryId] = useState('');
     const [postList, setPostList] = useState([]);
-    const { data: postListData, error: postListError, refetch: postListRefetch } = useQuery(
-        GET_POST_LIST,
-        {
-            variables: {
-                boardId: boardId,
-                categoryId: selectedCategoryId,
-            },
+    const {
+        data: postListData,
+        error: postListError,
+        loading: postListLoading,
+        refetch: postListRefetch,
+    } = useQuery(GET_POST_LIST, {
+        variables: {
+            boardId: boardId,
+            categoryId: selectedCategoryId,
         },
-    );
+    });
     useEffect(() => {
         postListRefetch();
     }, [selectedCategoryId, postListRefetch]);
@@ -70,16 +72,7 @@ export default function BoardListContainer({ boardId }) {
                     </Button>
                 </Grid>
             </Grid>
-            {postList.length === 0 && (
-                <Result
-                    icon={<EllipsisOutlined className={classes.noResultIcon} />}
-                    title={
-                        <span style={{ fontSize: 16, fontWeight: 'bold', color: '#999' }}>
-                            등록된 게시글이 없습니다.
-                        </span>
-                    }
-                />
-            )}
+            {!postListLoading && postList.length === 0 && <NoResult />}
             {postList.map((post, idx) => (
                 <Grid
                     container

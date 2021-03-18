@@ -89,6 +89,20 @@ export const GET_MY_POSTS = gql`
     }
 `;
 
+export const GET_MY_COMMENTS = gql`
+    query getMyComments {
+        getMyComments {
+            id
+            postId
+            authorId
+            authorName
+            content
+            likeCount
+            createdAt
+        }
+    }
+`;
+
 export const GET_COMMENTS = gql`
     query getCommentsByPostId($id: ID!) {
         getCommentsByPostId(id: $id) {
@@ -113,6 +127,27 @@ export const CREATE_POST = gql`
             id
             boardId
         }
+    }
+`;
+
+export const CREATE_COMMENT = gql`
+    mutation createComment($comment: CommentInput!) {
+        createComment(comment: $comment) {
+            id
+            postId
+        }
+    }
+`;
+
+export const HANDLE_POST_LIKE = gql`
+    mutation handlePostLike($postId: ID!) {
+        handlePostLike(postId: $postId)
+    }
+`;
+
+export const HANDLE_COMMENT_LIKE = gql`
+    mutation handlePostLike($commentId: ID!) {
+        handleCommentLike(commentId: $commentId)
     }
 `;
 

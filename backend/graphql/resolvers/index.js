@@ -27,6 +27,9 @@ module.exports = {
     // PostLike
     handlePostLike: require('./postLike/handlePostLike'),
 
+    // CommentLike
+    handleCommentLike: require('./commentLike/handleCommentLike'),
+
     // Board
     getBoardById: require('./board/getBoard'),
 

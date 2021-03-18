@@ -160,5 +160,6 @@ module.exports = buildSchema(`
         handlePostLike(postId: ID!): String
         createComment(comment: CommentInput!): CommentAfterCreate
         deleteComment(id: ID!): Boolean
+        handleCommentLike(commentId: ID!): String
     }
 `);

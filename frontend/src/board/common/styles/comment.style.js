@@ -21,4 +21,14 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: '1.2rem',
         fontWeight: 'bold',
     },
+    addCommentSection: {
+        display: 'flex',
+        flexDirection: 'row-reverse',
+    },
+    commentForm: {
+        marginTop: 15,
+    },
+    commentTextareaSection: {
+        marginBottom: 10,
+    },
 }));

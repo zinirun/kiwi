@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery, useMutation } from 'react-apollo';
 import { useHistory } from 'react-router';
 import { Grid, Chip, Card, CardContent, Typography } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import 'antd/dist/antd.css';
 import { useStyles } from '../styles/postContent.style';
-import { GET_POST } from '../../../configs/queries';
+import { GET_POST, HANDLE_POST_LIKE } from '../../../configs/queries';
 import { message } from 'antd';
 import moment from 'moment';
 import PageTitle from '../../../common/components/PageTitle';
@@ -15,11 +15,13 @@ export default function PostContentContainer({ id }) {
     const classes = useStyles();
     const history = useHistory();
     const [post, setPost] = useState(null);
-    const { data: postData, error: postError } = useQuery(GET_POST, {
+    const { data: postData, error: postError, refetch: postRefetch } = useQuery(GET_POST, {
         variables: {
             id,
         },
     });
+
+    const [handlePostLike] = useMutation(HANDLE_POST_LIKE);
 
     useEffect(() => {
         if (postData) {
@@ -34,6 +36,24 @@ export default function PostContentContainer({ id }) {
             history.push('/');
         }
     }, [postData, postError, history]);
+
+    const handleLike = () => {
+        handlePostLike({
+            variables: {
+                postId: post.id,
+            },
+        })
+            .then(({ data }) => {
+                const { handlePostLike: result } = data;
+                if (result === 'Up') {
+                    message.success('좋아요!');
+                } else {
+                    message.success('좋아요가 취소되었습니다.');
+                }
+                postRefetch();
+            })
+            .catch(() => message.error('게시글 좋아요 중 문제가 발생했습니다.'));
+    };
 
     return (
         <>
@@ -59,30 +79,32 @@ export default function PostContentContainer({ id }) {
                                     </span>
                                 </Grid>
                                 <Grid item xs={12} sm={6} align="right">
-                                    {!post.companyName && (
+                                    {post.companyName && (
                                         <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                            {post.gradeName}
+                                            {post.companyName}/
                                         </span>
                                     )}
-                                    {!post.gradeName && (
-                                        <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                            {post.companyName}
-                                        </span>
-                                    )}
+                                    <span style={{ color: '#999', fontSize: '0.75rem' }}>
+                                        {post.gradeName}
+                                    </span>
                                     <span> {post.authorName}</span>
                                 </Grid>
                             </Grid>
-                            <div>
-                                <Typography variant="body2" component="p">
-                                    {post.content}
-                                </Typography>
-                            </div>
+                            <Typography variant="body2" component="p">
+                                {post.content}
+                            </Typography>
                         </CardContent>
                         <Grid align="right">
                             <Chip
                                 className={classes.postChip}
                                 size="small"
-                                icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
+                                icon={
+                                    <ThumbUpOutlinedIcon
+                                        value={post.id}
+                                        onClick={handleLike}
+                                        className={classes.upIcon}
+                                    />
+                                }
                                 label={post.likeCount}
                             />
                             <Chip
