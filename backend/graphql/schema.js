@@ -131,6 +131,7 @@ module.exports = buildSchema(`
         getCategoryById(id: ID!): Category!
         getPostsByBoardId(boardId: ID!, categoryId: ID): [PostList]!
         getCategoriesByBoardId(boardId: ID!): [CategoryList]!
+        getMyPostsById: [Post]!
     }
 
     type Mutation {
