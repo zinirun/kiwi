@@ -1,56 +1,48 @@
 import React from 'react';
 import { useStyles } from '../styles/boardMain.style';
-import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import { Link } from 'react-router-dom';
-// import ForumIcon from '@material-ui/icons/Forum';
-// import StarsIcon from '@material-ui/icons/Stars';
-// import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
-// import StorageIcon from '@material-ui/icons/Storage';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
-import AddCircleOutlineSharpIcon from '@material-ui/icons/AddCircleOutlineSharp';
 import { Chip, Divider, Card, List, ListItem, ListItemText } from '@material-ui/core';
 import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
+import { IconViewer } from '../../../header/components/IconViewer';
 
 export default function BoardMainContainer({ data }) {
     const classes = useStyles();
     return (
-        <Card className={classes.root}>
-            <Row justify="center" align="center">
-                <Col span={22}>
-                    <Chip
-                        className={classes.titleChipStyle}
-                        icon={<VolumeUpIcon className={classes.iconColor} />}
-                        label={data.boardName}
-                    />
-                </Col>
-                <Col span={2}>
-                    <Link>
-                        <AddCircleOutlineSharpIcon className={classes.addIcon} />
-                    </Link>
-                </Col>
-            </Row>
+        <Card className={classes.paper}>
+            <div>
+                <Chip
+                    component={Link}
+                    to={`/${data.boardLink}`}
+                    className={classes.titleChip}
+                    icon={<IconViewer icon={data.boardIcon} classes={classes.iconColor} />}
+                    label={data.boardName}
+                />
+            </div>
             <Divider />
             <List>
                 {data.posts.map((post, idx) => (
-                    <Row key={idx} justify="center" align="center">
-                        <Col span={20}>
-                            <ListItem classes={{ root: classes.listItem }} button>
-                                <ListItemText
-                                    classes={{ primary: classes.listItemText }}
-                                    primary={post.title}
+                    <Link key={idx} className={classes.postLink} to={`/post/${post.postId}`}>
+                        <Row>
+                            <Col span={20}>
+                                <ListItem classes={{ root: classes.listItem }}>
+                                    <ListItemText
+                                        classes={{ primary: classes.listItemText }}
+                                        primary={post.title}
+                                    />
+                                </ListItem>
+                            </Col>
+                            <Col span={4} align="right">
+                                <Chip
+                                    className={classes.commentChip}
+                                    size="small"
+                                    icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
+                                    label={post.likeCount}
                                 />
-                            </ListItem>
-                        </Col>
-                        <Col span={4}>
-                            <Chip
-                                className={classes.commentChip}
-                                size="small"
-                                icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                                label={post.likeCount}
-                            />
-                        </Col>
-                    </Row>
+                            </Col>
+                        </Row>
+                    </Link>
                 ))}
             </List>
         </Card>

@@ -50,6 +50,8 @@ export const GET_BOARD = gql`
         getBoardById(id: $id) {
             id
             boardName
+            link
+            icon
         }
     }
 `;
@@ -126,6 +128,8 @@ export const GET_RECENT_POSTS = gql`
     query getRecentPosts {
         getRecentPosts {
             boardId
+            boardLink
+            boardIcon
             boardName
             posts {
                 postId

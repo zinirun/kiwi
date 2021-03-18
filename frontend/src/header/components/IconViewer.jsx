@@ -6,20 +6,20 @@ import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 import StorageIcon from '@material-ui/icons/Storage';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
-export function IconViewer({ icon }) {
+export function IconViewer({ icon, classes }) {
     switch (icon) {
         case 'VolumeUpIcon':
-            return <VolumeUpIcon />;
+            return <VolumeUpIcon className={classes && classes} />;
         case 'ForumIcon':
-            return <ForumIcon />;
+            return <ForumIcon className={classes && classes} />;
         case 'StorageIcon':
-            return <StorageIcon />;
+            return <StorageIcon className={classes && classes} />;
         case 'StarsIcon':
-            return <StarsIcon />;
+            return <StarsIcon className={classes && classes} />;
         case 'LocalGroceryStoreIcon':
-            return <LocalGroceryStoreIcon />;
+            return <LocalGroceryStoreIcon className={classes && classes} />;
         case 'PersonOutlineIcon':
-            return <PersonOutlineIcon />;
+            return <PersonOutlineIcon className={classes && classes} />;
         default:
             return <></>;
     }

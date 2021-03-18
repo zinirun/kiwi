@@ -22,7 +22,7 @@ const { NotFoundError } = require('../../errors/errors');
 
 module.exports = async ({}, {}) => {
     const query = `
-                    select b.id as boardId, b.boardName, b.link as boardLink,  s.id as postId, s.title, ifnull(ppl.likeCount, 0) as likeCount
+                    select b.id as boardId, b.boardName, b.link as boardLink, b.icon as boardIcon, s.id as postId, s.title, ifnull(ppl.likeCount, 0) as likeCount
                     from (select id, boardId, title, ROW_NUMBER() OVER (PARTITION BY boardId ORDER BY id desc) as rn from post) as s
                         join board b on b.id = s.boardId
                         left join (select count(*) as likeCount, postId from post_like pl where pl.isDeleted = 0) as ppl on s.id = ppl.postId
@@ -45,6 +45,8 @@ module.exports = async ({}, {}) => {
                     recentPosts[arrayIndex] = {
                         boardId: d.boardId,
                         boardName: d.boardName,
+                        boardLink: d.boardLink,
+                        boardIcon: d.boardIcon,
                         posts: [
                             {
                                 postId: d.postId,

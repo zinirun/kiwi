@@ -34,8 +34,9 @@ module.exports = buildSchema(`
 
     type RecentPosts {
          boardId: ID!
-         boardName: String! 
+         boardName: String!
          boardLink: String!
+         boardIcon: String!
          posts: [RecentPost]
     }
 
@@ -84,6 +85,7 @@ module.exports = buildSchema(`
         id: ID!
         boardName: String!
         link: String!
+        icon: String
         createdAt: Date!
         updatedAt: Date
     }

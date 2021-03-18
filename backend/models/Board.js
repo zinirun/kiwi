@@ -5,9 +5,8 @@ module.exports = function (sequelize, DataTypes) {
         'board',
         {
             boardName: { type: DataTypes.STRING(15), allowNull: false, unique: true },
-        },
-        {
             link: { type: DataTypes.STRING(15), allowNull: false, unique: true },
+            icon: { type: DataTypes.STRING(25), allowNull: false },
         },
         {
             freezeTableName: true,

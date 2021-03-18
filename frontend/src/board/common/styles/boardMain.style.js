@@ -1,22 +1,28 @@
 import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
-    root: {
+    paper: {
         maxWidth: 330,
+        minHeight: 235,
         border: '1px solid #ddd',
         borderBottomColor: '#ddd',
         borderBottomWidth: 2,
         boxShadow: 'none',
         marginTop: 15,
     },
-    titleChipStyle: {
-        background: 'white',
+    titleChip: {
+        cursor: 'pointer',
+        background: 'transparent',
         color: '#777777',
         fontSize: '1rem',
         fontWeight: 'bold',
         padding: '25px 8px',
+        '&:hover': {
+            color: theme.palette.primary.main,
+        },
     },
     iconColor: {
         color: theme.palette.primary.main,
+        fontSize: '1.2rem',
     },
     title: {
         fontSize: '1rem',
@@ -43,5 +49,11 @@ export const useStyles = makeStyles((theme) => ({
     commentChip: {
         marginTop: 6,
         background: 'white',
+    },
+    postLink: {
+        color: 'inherit',
+        '&:hover': {
+            color: theme.palette.primary.main,
+        },
     },
 }));
