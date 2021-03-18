@@ -79,7 +79,9 @@ export default function BoardListContainer({ boardId }) {
                     justify="center"
                     spacing={0}
                     alignItems="center"
-                    className={classes.content}
+                    className={classes.postWrapper}
+                    component={Link}
+                    to={`/post/${post.id}`}
                     key={idx}
                 >
                     <Grid
@@ -87,8 +89,6 @@ export default function BoardListContainer({ boardId }) {
                         xs={12}
                         sm={8}
                         className={classes.title}
-                        component={Link}
-                        to={`/post/${post.id}`}
                         style={{ textDecoration: 'none' }}
                     >
                         {post.categoryName && (
