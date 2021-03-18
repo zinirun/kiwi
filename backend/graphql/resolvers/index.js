@@ -8,6 +8,7 @@ module.exports = {
     getUser: require('./user/getUser'),
     updateUser: require('./user/updateUser'),
     updateUserStatus: require('./user/updateUserStatus'),
+    updateUserPassword: require('./user/updateUserPassword'),
 
     // Post
     getPostById: require('./post/getPost'),
@@ -15,6 +16,7 @@ module.exports = {
     createPost: require('./post/createPost'),
     updatePost: require('./post/updatePost'),
     deletePost: require('./post/deletePost'),
+    getMyPostsById: require('./post/getMyPosts'),
 
     // Comments
     getCommentsByPostId: require('./comment/getCommentsByPostId'),
