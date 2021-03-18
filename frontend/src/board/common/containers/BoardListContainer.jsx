@@ -87,7 +87,7 @@ export default function BoardListContainer({ boardId }) {
                     <Grid
                         item
                         xs={12}
-                        sm={8}
+                        sm={7}
                         className={classes.title}
                         style={{ textDecoration: 'none' }}
                     >
@@ -99,33 +99,30 @@ export default function BoardListContainer({ boardId }) {
                     </Grid>
 
                     <Grid item xs={12} sm={2} align="right">
-                        {post.likeCount > 0 && (
-                            <Chip
-                                className={classes.backColor}
-                                size="small"
-                                icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                                label={post.likeCount}
-                            />
-                        )}
-                        {post.commentCount > 0 && (
-                            <Chip
-                                className={classes.backColor}
-                                size="small"
-                                icon={
-                                    <ChatBubbleOutlineOutlinedIcon
-                                        className={classes.commentIcon}
-                                    />
-                                }
-                                label={post.commentCount}
-                            />
-                        )}
+                        <Chip
+                            className={classes.backColor}
+                            size="small"
+                            icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
+                            label={post.likeCount}
+                        />
+                        <Chip
+                            className={classes.backColor}
+                            size="small"
+                            icon={<ChatBubbleOutlineOutlinedIcon className={classes.commentIcon} />}
+                            label={post.commentCount}
+                        />
                     </Grid>
-                    <Grid item xs={12} sm={2} align="right">
+                    <Grid item xs={12} sm={3} align="right">
                         <Grid>
+                            {post.companyName && (
+                                <span style={{ color: '#999', fontSize: '0.75rem' }}>
+                                    {post.companyName}/
+                                </span>
+                            )}
                             <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                {post.gradeName}
+                                {post.gradeName}&nbsp;
                             </span>
-                            <span> {post.authorName}</span>
+                            <span>{post.authorName}</span>
                         </Grid>
                         {!isMobile && (
                             <Grid className={classes.date}>

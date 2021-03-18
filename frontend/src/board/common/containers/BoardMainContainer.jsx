@@ -33,16 +33,14 @@ export default function BoardMainContainer({ data }) {
                                     />
                                 </ListItem>
                             </Col>
-                            {post.likeCount > 0 && (
-                                <Col span={4} align="right">
-                                    <Chip
-                                        className={classes.commentChip}
-                                        size="small"
-                                        icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                                        label={post.likeCount}
-                                    />
-                                </Col>
-                            )}
+                            <Col span={4} align="right">
+                                <Chip
+                                    className={classes.commentChip}
+                                    size="small"
+                                    icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
+                                    label={post.likeCount}
+                                />
+                            </Col>
                         </Row>
                     </Link>
                 ))}
