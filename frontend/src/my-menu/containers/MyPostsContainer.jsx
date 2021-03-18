@@ -27,7 +27,7 @@ export default function MyPostsContainer() {
                 postListData.getMyPosts.map((p) => {
                     return {
                         ...p,
-                        updatedAt: new moment(p.updatedAt).format('YYYY-MM-DD HH:mm'),
+                        createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
                     };
                 }),
             );
@@ -88,7 +88,7 @@ export default function MyPostsContainer() {
                         </Grid>
                         {!isMobile && (
                             <Grid className={classes.date}>
-                                <span>{post.updatedAt}</span>
+                                <span>{post.createdAt}</span>
                             </Grid>
                         )}
                     </Grid>
