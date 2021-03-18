@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Grid, Button, Chip } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
-import EllipsisOutlined from '@material-ui/icons/EllipsisOutlined';
+import { EllipsisOutlined } from '@ant-design/icons';
 import { isMobile } from 'react-device-detect';
 import { useStyles } from '../styles/board.style';
 import { boardCommonStyles } from '../styles/board.common.style';
@@ -75,7 +75,7 @@ export default function BoardListContainer({ boardId }) {
                     icon={<EllipsisOutlined className={classes.noResultIcon} />}
                     title={
                         <span style={{ fontSize: 16, fontWeight: 'bold', color: '#999' }}>
-                            등록된 게시글이 없습니다.
+                            아직 게시글이 없습니다.
                         </span>
                     }
                 />

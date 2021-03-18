@@ -59,24 +59,20 @@ export default function PostContentContainer({ id }) {
                                     </span>
                                 </Grid>
                                 <Grid item xs={12} sm={6} align="right">
-                                    {!post.companyName && (
+                                    {post.companyName && (
                                         <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                            {post.gradeName}
+                                            {post.companyName}/
                                         </span>
                                     )}
-                                    {!post.gradeName && (
-                                        <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                            {post.companyName}
-                                        </span>
-                                    )}
+                                    <span style={{ color: '#999', fontSize: '0.75rem' }}>
+                                        {post.gradeName}
+                                    </span>
                                     <span> {post.authorName}</span>
                                 </Grid>
                             </Grid>
-                            <div>
-                                <Typography variant="body2" component="p">
-                                    {post.content}
-                                </Typography>
-                            </div>
+                            <Typography variant="body2" component="p">
+                                {post.content}
+                            </Typography>
                         </CardContent>
                         <Grid align="right">
                             <Chip

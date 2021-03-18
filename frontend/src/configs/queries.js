@@ -116,6 +116,15 @@ export const CREATE_POST = gql`
     }
 `;
 
+export const CREATE_COMMENT = gql`
+    mutation createComment($comment: CommentInput!) {
+        createComment(comment: $comment) {
+            id
+            postId
+        }
+    }
+`;
+
 export const UPDATE_USER = gql`
     mutation updateUser($user: UserUpdateInput!) {
         updateUser(user: $user)

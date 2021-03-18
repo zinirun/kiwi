@@ -40,7 +40,9 @@ export const useStyles = makeStyles((theme) => ({
         minWidth: 150,
     },
     noResultIcon: {
-        fontSize: 50,
-        color: theme.palette.primary.light,
+        '& svg': {
+            fontSize: '3rem',
+            color: theme.palette.primary.light,
+        },
     },
 }));
