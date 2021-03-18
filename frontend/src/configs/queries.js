@@ -7,6 +7,9 @@ export const GET_USER = gql`
             userAccount
             userName
             studentNumber
+            studentGradeId
+            departmentId
+            companyId
             department
             grade
             company
@@ -21,7 +24,7 @@ export const GET_POST_LIST = gql`
             title
             companyName
             gradeName
-            userName
+            authorName
             updatedAt
             categoryName
             likeCount
@@ -50,11 +53,52 @@ export const GET_BOARD = gql`
     }
 `;
 
+export const GET_POST = gql`
+    query getPostById($id: ID!) {
+        getPostById(id: $id) {
+            id
+            title
+            content
+            companyName
+            categoryName
+            gradeName
+            authorName
+            updatedAt
+            likeCount
+            commentCount
+        }
+    }
+`;
+
+export const GET_COMMENTS = gql`
+    query getCommentsByPostId($id: ID!) {
+        getCommentsByPostId(id: $id) {
+            id
+            postId
+            authorId
+            authorName
+            content
+            gradeId
+            gradeName
+            companyId
+            companyName
+            likeCount
+            createdAt
+        }
+    }
+`;
+
 export const CREATE_POST = gql`
     mutation createPost($post: PostInput!) {
         createPost(post: $post) {
             id
             boardId
         }
+    }
+`;
+
+export const UPDATE_USER = gql`
+    mutation updateUser($user: UserUpdateInput!) {
+        updateUser(user: $user)
     }
 `;

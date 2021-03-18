@@ -1,39 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useQuery } from 'react-apollo';
+import { useHistory } from 'react-router';
 import { Chip } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import 'antd/dist/antd.css';
-import { Comment, Tooltip, List, Row, Col } from 'antd';
-import moment from 'moment';
+import { Comment, List, Row, Col, message } from 'antd';
+//import moment from 'moment';
+//Tooltip
 import { useStyles } from '../styles/commentList.style';
+import { GET_COMMENTS } from '../../../configs/queries';
 
-const data = [
-    {
-        author: '허전진',
-        content: <p>혹시 우리 프로그램 자주 보세요??</p>,
-        datetime: (
-            <Tooltip title={moment().subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss')}>
-                <span>{moment().subtract(1, 'days').fromNow()}</span>
-            </Tooltip>
-        ),
-    },
-    {
-        author: '이건욱',
-        content: (
-            <p>
-                저희가 자주 보죠~! 무야~호~!
-                무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!무야~호~!
-            </p>
-        ),
-        datetime: (
-            <Tooltip title={moment().subtract(2, 'days').format('YYYY-MM-DD HH:mm:ss')}>
-                <span>{moment().subtract(2, 'days').fromNow()}</span>
-            </Tooltip>
-        ),
-    },
-];
-
-export default function CommentList() {
+export default function CommentList({ id }) {
     const classes = useStyles();
+    const history = useHistory();
+    const [comments, setComments] = useState([]);
+    const { data: commentsData, error: commentsError } = useQuery(GET_COMMENTS, {
+        variables: {
+            id,
+        },
+    });
+    useEffect(() => {
+        if (commentsData) {
+            setComments(
+                commentsData.getCommentsByPostId.map((c) => {
+                    return {
+                        ...c,
+                    };
+                }),
+            );
+        }
+        if (commentsError) {
+            message.error('게시물을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
+            history.push('/');
+        }
+    }, [commentsData, setComments, commentsError, history]);
 
     return (
         <>
@@ -43,15 +43,15 @@ export default function CommentList() {
             <List
                 className="comment-list"
                 itemLayout="horizontal"
-                dataSource={data}
+                dataSource={comments}
                 renderItem={(item) => (
                     <li className={classes.commentField}>
                         <Row justify="center" align="center">
                             <Col span={21}>
                                 <Comment
-                                    author={item.author}
+                                    author={item.authorName}
                                     content={item.content}
-                                    datetime={item.datetime}
+                                    //datetime={item.createdAt}
                                 />
                             </Col>
                             <Col span={3} align="center">
@@ -59,7 +59,7 @@ export default function CommentList() {
                                     className={classes.commentChip}
                                     size="small"
                                     icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                                    label="1888"
+                                    label={item.likeCount}
                                 />
                             </Col>
                         </Row>

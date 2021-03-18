@@ -23,7 +23,7 @@ const { NotFoundError } = require('../../errors/errors');
 
 module.exports = async ({ boardId, categoryId }, { departmentId }) => {
     const query = `
-                    select p.id as postId, p.title, c.companyName, g.gradeName, u.userName as authorName, p.updatedAt, cg.categoryName, ifnull(ppl.likeCount, 0) as likeCount, ifnull(pc.commentCount, 0) as commentCount
+                    select p.id, p.title, c.companyName, g.gradeName, u.userName as authorName, p.updatedAt, cg.categoryName, ifnull(ppl.likeCount, 0) as likeCount, ifnull(pc.commentCount, 0) as commentCount
                     from post p
                         left join category cg on p.categoryId = cg.id
                         left join (select count(*) as commentCount, postId from comment c where c.isDeleted = 0 and c.postId = 1) as pc on p.id = pc.postId
