@@ -70,6 +70,24 @@ export const GET_POST = gql`
     }
 `;
 
+export const GET_COMMENTS = gql`
+    query getCommentsByPostId($id: ID!) {
+        getCommentsByPostId(id: $id) {
+            id
+            postId
+            authorId
+            authorName
+            content
+            gradeId
+            gradeName
+            companyId
+            companyName
+            likeCount
+            createdAt
+        }
+    }
+`;
+
 export const CREATE_POST = gql`
     mutation createPost($post: PostInput!) {
         createPost(post: $post) {

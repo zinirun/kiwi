@@ -23,7 +23,6 @@ export default function PostContentContainer({ id }) {
     useEffect(() => {
         if (postData) {
             const p = postData.getPostById;
-            console.log(p);
             setPost({
                 ...p,
                 updatedAt: new moment(p.updatedAt).format('YYYY-MM-DD HH:mm'),

@@ -23,12 +23,12 @@
 
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
-module.exports = async ({ postId }, {}) => {
-    const query = `select u.id                          as userId,
-    u.userName,
+module.exports = async ({ id }, {}) => {
+    const query = `select c.id, u.id as authorId,
+    postId,
+    u.userName as authorName,
     c.content,
     c.createdAt,
-    c.id                          as commentId,
     g.id as gradeId,
     g.gradeName,
     cm.id as companyId,
@@ -42,12 +42,12 @@ from user u
                  group by cl.commentId) as v on c.id = v.commentId
       left join grade g on u.studentGradeId = g.id
       left join company cm on u.companyId = cm.id
-where postId = postId;
-order by c.id desc;`;
+where postId = :id
+order by c.id;`;
     return await models.sequelize
         .query(query, {
             replacements: {
-                postId,
+                id,
             },
         })
         .spread(
