@@ -38,7 +38,6 @@ export default function PostContentContainer({ id }) {
     }, [postData, postError, history]);
 
     const handleLike = () => {
-        console.log(post.id);
         handlePostLike({
             variables: {
                 postId: post.id,
