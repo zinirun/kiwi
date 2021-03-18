@@ -6,7 +6,7 @@ import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import { Comment, List, Row, Col, message, Form, Input, Space } from 'antd';
 import { useStyles } from '../styles/comment.style';
 import { boardCommonStyles } from '../styles/board.common.style';
-import { CREATE_COMMENT, GET_COMMENTS } from '../../../configs/queries';
+import { CREATE_COMMENT, GET_COMMENTS, HANDLE_COMMENT_LIKE } from '../../../configs/queries';
 import { commentTimeFormatter } from '../tools/formatter';
 const { TextArea } = Input;
 
@@ -24,6 +24,7 @@ export default function CommentList({ id }) {
         },
     );
     const [createComment] = useMutation(CREATE_COMMENT);
+    const [handleCommentLike] = useMutation(HANDLE_COMMENT_LIKE);
 
     useEffect(() => {
         if (commentsData) {
@@ -59,6 +60,25 @@ export default function CommentList({ id }) {
             .catch(() => message.error('댓글 등록 중 오류가 발생했습니다.'));
     };
 
+    const handleLike = (e) => {
+        e.preventDefault();
+        handleCommentLike({
+            variables: {
+                commentId: e.currentTarget.getAttribute('value'),
+            },
+        })
+            .then(({ data }) => {
+                const { handleCommentLike: result } = data;
+                if (result === 'Up') {
+                    message.success('좋아요!');
+                } else {
+                    message.success('좋아요가 취소되었습니다.');
+                }
+                commentsRefetch();
+            })
+            .catch(() => message.error('댓글 좋아요 중 문제가 발생했습니다.'));
+    };
+
     return (
         <>
             <div className={classes.comment}>
@@ -83,7 +103,13 @@ export default function CommentList({ id }) {
                                     <Chip
                                         className={classes.commentChip}
                                         size="small"
-                                        icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
+                                        icon={
+                                            <ThumbUpOutlinedIcon
+                                                value={item.id}
+                                                onClick={handleLike}
+                                                className={classes.upIcon}
+                                            />
+                                        }
                                         label={item.likeCount}
                                     />
                                 </Col>

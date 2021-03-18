@@ -131,6 +131,12 @@ export const HANDLE_POST_LIKE = gql`
     }
 `;
 
+export const HANDLE_COMMENT_LIKE = gql`
+    mutation handlePostLike($commentId: ID!) {
+        handleCommentLike(commentId: $commentId)
+    }
+`;
+
 export const UPDATE_USER = gql`
     mutation updateUser($user: UserUpdateInput!) {
         updateUser(user: $user)
