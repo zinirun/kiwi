@@ -19,15 +19,17 @@ export default function BoardListContainer({ boardId }) {
     const history = useHistory();
     const [selectedCategoryId, setSelectedCategoryId] = useState('');
     const [postList, setPostList] = useState([]);
-    const { data: postListData, error: postListError, refetch: postListRefetch } = useQuery(
-        GET_POST_LIST,
-        {
-            variables: {
-                boardId: boardId,
-                categoryId: selectedCategoryId,
-            },
+    const {
+        data: postListData,
+        error: postListError,
+        loading: postListLoading,
+        refetch: postListRefetch,
+    } = useQuery(GET_POST_LIST, {
+        variables: {
+            boardId: boardId,
+            categoryId: selectedCategoryId,
         },
-    );
+    });
     useEffect(() => {
         postListRefetch();
     }, [selectedCategoryId, postListRefetch]);
@@ -70,7 +72,7 @@ export default function BoardListContainer({ boardId }) {
                     </Button>
                 </Grid>
             </Grid>
-            {postList.length === 0 && (
+            {!postListLoading && postList.length === 0 && (
                 <Result
                     icon={<EllipsisOutlined className={classes.noResultIcon} />}
                     title={
