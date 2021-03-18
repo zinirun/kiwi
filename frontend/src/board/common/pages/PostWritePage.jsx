@@ -91,6 +91,7 @@ export default function PostWritePage() {
                             size="large"
                             placeholder="제목을 입력하세요"
                             autoFocus
+                            maxLength={25}
                         />
                     </Form.Item>
 

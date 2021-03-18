@@ -45,7 +45,9 @@ export default function MyCommentsContainer() {
                     justify="center"
                     spacing={0}
                     alignItems="center"
-                    className={classes.content}
+                    className={classes.postWrapper}
+                    component={Link}
+                    to={`/post/${comment.postId}`}
                     key={idx}
                 >
                     <Grid
@@ -53,8 +55,6 @@ export default function MyCommentsContainer() {
                         xs={12}
                         sm={10}
                         className={classes.title}
-                        component={Link}
-                        to={`/post/${comment.postId}`}
                         style={{ textDecoration: 'none' }}
                     >
                         <span style={{ color: 'black' }}>{comment.content}</span>

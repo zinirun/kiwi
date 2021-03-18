@@ -8,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
             boardId: { type: DataTypes.INTEGER, allowNull: false },
             categoryId: { type: DataTypes.INTEGER, allowNull: true },
             authorId: { type: DataTypes.INTEGER, allowNull: false },
-            title: { type: DataTypes.STRING(20), allowNull: false },
+            title: { type: DataTypes.STRING(25), allowNull: false },
             content: { type: DataTypes.TEXT('long'), allowNull: false },
             isDeleted: { type: DataTypes.TINYINT, defaultValue: 0 },
         },

@@ -1,11 +1,15 @@
 import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
-    content: {
-        maxWidth: 730,
+    postWrapper: {
         border: '1px solid #ddd',
         borderRadius: '5px',
         marginBottom: 5,
         padding: '13px 15px',
+        color: 'inherit',
+        '&:hover': {
+            backgroundColor: '#eee',
+            color: 'inherit',
+        },
     },
     part: {
         background: theme.palette.primary.main,
@@ -34,7 +38,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     backColor: {
         marginLeft: -8,
-        background: '#fafafa',
+        background: 'transparent',
     },
     categorySelect: {
         minWidth: 150,
