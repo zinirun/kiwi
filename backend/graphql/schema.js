@@ -18,13 +18,14 @@ module.exports = buildSchema(`
 
     type Post {
         id: ID!
+        boardId: ID!
+        boardName: String!
         title: String!
         content: String!
-        categoryName: String
         companyName: String
         gradeName: String!
         authorName: String!
-        createdAt: Date!
+        createdAt: Done!
         updatedAt: Date!
         likeCount: Int!
         commentCount: Int!
