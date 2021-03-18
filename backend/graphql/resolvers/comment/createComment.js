@@ -20,7 +20,7 @@
         createdAt: Date!
         updatedAt: Date
     }   
-* createComment(comment: CommentInput!): Comment
+* createComment(comment: CommentInput!): CommentAfterCreate
  */
 
 const models = require('../../../models');
