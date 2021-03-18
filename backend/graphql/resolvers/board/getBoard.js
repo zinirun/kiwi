@@ -17,7 +17,7 @@ const { NotFoundError } = require('../../errors/errors');
 
 module.exports = async ({ id }, {}) => {
     const board = await models.board.findOne({
-        attributes: ['id', 'boardName', 'createdAt', 'updatedAt'],
+        attributes: ['id', 'boardName', 'link', 'createdAt', 'updatedAt'],
         where: { id },
         raw: true,
     });

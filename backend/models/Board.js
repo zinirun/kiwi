@@ -7,6 +7,9 @@ module.exports = function (sequelize, DataTypes) {
             boardName: { type: DataTypes.STRING(15), allowNull: false, unique: true },
         },
         {
+            link: { type: DataTypes.STRING(15), allowNull: false, unique: true },
+        },
+        {
             freezeTableName: true,
             tableName: 'board',
         },

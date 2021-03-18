@@ -1,3 +1,10 @@
+export const EXTRA_BOARDS = [
+    {
+        key: 1,
+        name: 'HOT 게시판',
+    },
+];
+
 export const BOARDS = [
     {
         key: 1,
