@@ -11,7 +11,8 @@ import { Chip, Divider, Card, List, ListItem, ListItemText } from '@material-ui/
 import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
 
-export default function BoardMainContainer({ board }) {
+export default function BoardMainContainer({ data }) {
+    console.log(data);
     const classes = useStyles();
     return (
         <Card className={classes.root}>
@@ -20,7 +21,7 @@ export default function BoardMainContainer({ board }) {
                     <Chip
                         className={classes.titleChipStyle}
                         icon={<VolumeUpIcon className={classes.iconColor} />}
-                        label={board.name}
+                        //label={board.name}
                     />
                 </Col>
                 <Col span={2}>

@@ -55,7 +55,6 @@ module.exports = async ({}, {}) => {
                     };
                 }
             });
-            console.log(recentPosts);
             return recentPosts;
         },
         () => NotFoundError('There is no post corresponding to the id'),

@@ -1,33 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useQuery } from 'react-apollo';
+import { useHistory } from 'react-router';
 import { Grid } from '@material-ui/core';
 import BoardMainContainer from '../containers/BoardMainContainer';
-
-const BOARD_ID = [
-    {
-        id: 1,
-        name: '학과 공지',
-    },
-    {
-        id: 2,
-        name: '커뮤니티',
-    },
-    {
-        id: 3,
-        name: 'Q&A',
-    },
-    {
-        id: 4,
-        name: '재능기부',
-    },
-];
+import { GET_RECENT_POSTS } from '../../../configs/queries';
+import { message } from 'antd';
 
 export default function BoardMainPage() {
+    const history = useHistory();
+    const [posts, setPosts] = useState([]);
+    const { data, error } = useQuery(GET_RECENT_POSTS);
+    useEffect(() => {
+        if (data) {
+            setPosts(data.getRecentPosts);
+        }
+    }, [data, error, history]);
     return (
         <>
             <Grid container justify="center">
-                {BOARD_ID.map((board) => (
-                    <Grid key={board.id} item xs={12} sm={6}>
-                        <BoardMainContainer board={board} />
+                {posts.map((p, idx) => (
+                    <Grid key={idx} item xs={12} sm={6}>
+                        <BoardMainContainer data={p} />
                     </Grid>
                 ))}
             </Grid>

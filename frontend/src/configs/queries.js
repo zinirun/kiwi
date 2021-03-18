@@ -122,6 +122,20 @@ export const GET_COMMENTS = gql`
     }
 `;
 
+export const GET_RECENT_POSTS = gql`
+    query getRecentPosts {
+        getRecentPosts {
+            boardId
+            boardName
+            posts {
+                postId
+                title
+                likeCount
+            }
+        }
+    }
+`;
+
 export const CREATE_POST = gql`
     mutation createPost($post: PostInput!) {
         createPost(post: $post) {
