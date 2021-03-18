@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Grid, Button, Chip } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
-import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfied';
+import EllipsisOutlined from '@material-ui/icons/EllipsisOutlined';
 import { isMobile } from 'react-device-detect';
 import { useStyles } from '../styles/board.style';
 import { boardCommonStyles } from '../styles/board.common.style';
@@ -38,7 +38,7 @@ export default function BoardListContainer({ boardId }) {
                 postListData.getPostsByBoardId.map((p) => {
                     return {
                         ...p,
-                        updatedAt: new moment(p.updatedAt).format('YYYY-MM-DD HH:mm'),
+                        createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
                     };
                 }),
             );
@@ -72,9 +72,9 @@ export default function BoardListContainer({ boardId }) {
             </Grid>
             {postList.length === 0 && (
                 <Result
-                    icon={<SentimentSatisfiedIcon className={classes.noResultIcon} />}
+                    icon={<EllipsisOutlined className={classes.noResultIcon} />}
                     title={
-                        <span style={{ fontSize: 20, fontWeight: 'bold' }}>
+                        <span style={{ fontSize: 16, fontWeight: 'bold', color: '#999' }}>
                             등록된 게시글이 없습니다.
                         </span>
                     }
@@ -127,7 +127,7 @@ export default function BoardListContainer({ boardId }) {
                         </Grid>
                         {!isMobile && (
                             <Grid className={classes.date}>
-                                <span>{post.updatedAt}</span>
+                                <span>{post.createdAt}</span>
                             </Grid>
                         )}
                     </Grid>

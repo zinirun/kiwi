@@ -9,6 +9,7 @@ import { useStyles } from '../styles/postContent.style';
 import { GET_POST } from '../../../configs/queries';
 import { message } from 'antd';
 import moment from 'moment';
+import PageTitle from '../../../common/components/PageTitle';
 
 export default function PostContentContainer({ id }) {
     const classes = useStyles();
@@ -25,7 +26,7 @@ export default function PostContentContainer({ id }) {
             const post = postData.getPostById;
             setPost({
                 ...post,
-                updatedAt: new moment(post.updatedAt).format('YYYY-MM-DD HH:mm'),
+                createdAt: new moment(post.createdAt).format('YYYY-MM-DD HH:mm'),
             });
         }
         if (postError) {
@@ -37,55 +38,66 @@ export default function PostContentContainer({ id }) {
     return (
         <>
             {post && (
-                <Card className={classes.root}>
-                    <CardContent>
-                        {post.categoryName && (
-                            <span className={classes.part}>{post.categoryName}</span>
-                        )}
-                        <Typography className={classes.title} color="textSecondary" gutterBottom>
-                            {post.title}
-                        </Typography>
-                        <Grid container justify="center" className={classes.userInfoSection}>
-                            <Grid item xs={12} sm={6}>
-                                <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                    {post.updatedAt}
-                                </span>
-                            </Grid>
-                            <Grid item xs={12} sm={6} align="right">
-                                {!post.companyName && (
-                                    <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                        {post.gradeName}
-                                    </span>
-                                )}
-                                {!post.gradeName && (
-                                    <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                        {post.companyName}
-                                    </span>
-                                )}
-                                <span> {post.authorName}</span>
-                            </Grid>
-                        </Grid>
-                        <div>
-                            <Typography variant="body2" component="p">
-                                {post.content}
+                <>
+                    <PageTitle title={post.boardName} />
+                    <Card className={classes.root}>
+                        <CardContent>
+                            {post.categoryName && (
+                                <span className={classes.part}>{post.categoryName}</span>
+                            )}
+                            <Typography
+                                className={classes.title}
+                                color="textSecondary"
+                                gutterBottom
+                            >
+                                {post.title}
                             </Typography>
-                        </div>
-                    </CardContent>
-                    <Grid align="right">
-                        <Chip
-                            className={classes.postChip}
-                            size="small"
-                            icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                            label={post.likeCount}
-                        />
-                        <Chip
-                            className={classes.postChip}
-                            size="small"
-                            icon={<ChatBubbleOutlineOutlinedIcon className={classes.commentIcon} />}
-                            label={post.commentCount}
-                        />
-                    </Grid>
-                </Card>
+                            <Grid container justify="center" className={classes.userInfoSection}>
+                                <Grid item xs={12} sm={6}>
+                                    <span style={{ color: '#999', fontSize: '0.75rem' }}>
+                                        {post.createdAt}
+                                    </span>
+                                </Grid>
+                                <Grid item xs={12} sm={6} align="right">
+                                    {!post.companyName && (
+                                        <span style={{ color: '#999', fontSize: '0.75rem' }}>
+                                            {post.gradeName}
+                                        </span>
+                                    )}
+                                    {!post.gradeName && (
+                                        <span style={{ color: '#999', fontSize: '0.75rem' }}>
+                                            {post.companyName}
+                                        </span>
+                                    )}
+                                    <span> {post.authorName}</span>
+                                </Grid>
+                            </Grid>
+                            <div>
+                                <Typography variant="body2" component="p">
+                                    {post.content}
+                                </Typography>
+                            </div>
+                        </CardContent>
+                        <Grid align="right">
+                            <Chip
+                                className={classes.postChip}
+                                size="small"
+                                icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
+                                label={post.likeCount}
+                            />
+                            <Chip
+                                className={classes.postChip}
+                                size="small"
+                                icon={
+                                    <ChatBubbleOutlineOutlinedIcon
+                                        className={classes.commentIcon}
+                                    />
+                                }
+                                label={post.commentCount}
+                            />
+                        </Grid>
+                    </Card>
+                </>
             )}
         </>
     );
