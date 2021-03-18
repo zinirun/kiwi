@@ -11,12 +11,15 @@ import { boardCommonStyles } from '../../board/common/styles/board.common.style'
 import moment from 'moment';
 import { message } from 'antd';
 import { GET_MY_POSTS } from '../../configs/queries';
+import NoResult from '../../board/common/components/NoResult';
 
 export default function MyPostsContainer() {
     const classes = { ...useStyles(), ...boardCommonStyles() };
     const history = useHistory();
     const [postList, setPostList] = useState([]);
-    const { data: postListData, error: postListError } = useQuery(GET_MY_POSTS);
+    const { data: postListData, error: postListError, loading: postListLoading } = useQuery(
+        GET_MY_POSTS,
+    );
 
     useEffect(() => {
         if (postListData) {
@@ -37,6 +40,7 @@ export default function MyPostsContainer() {
 
     return (
         <>
+            {!postListLoading && postList.length === 0 && <NoResult title="나의 게시물" />}
             {postList.map((post, idx) => (
                 <Grid
                     container
