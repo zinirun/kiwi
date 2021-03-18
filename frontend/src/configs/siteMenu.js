@@ -35,13 +35,13 @@ export const MY_MENU = [
     {
         key: 1,
         name: '나의 글',
-        link: '/mypost',
+        link: '/my/post',
         icon: 'PersonOutlineIcon',
     },
     {
         key: 2,
         name: '나의 댓글',
-        link: '/mycomment',
+        link: '/my/comment',
         icon: 'PersonOutlineIcon',
     },
 ];
