@@ -61,32 +61,34 @@ export default function CommentList({ id }) {
             <div className={classes.comment}>
                 <span>댓글</span>
             </div>
-            <List
-                className="comment-list"
-                itemLayout="horizontal"
-                dataSource={comments}
-                renderItem={(item) => (
-                    <li className={classes.commentField}>
-                        <Row justify="center" align="center">
-                            <Col span={21}>
-                                <Comment
-                                    author={item.authorName}
-                                    content={item.content}
-                                    datetime={item.createdAt}
-                                />
-                            </Col>
-                            <Col span={3} align="center">
-                                <Chip
-                                    className={classes.commentChip}
-                                    size="small"
-                                    icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                                    label={item.likeCount}
-                                />
-                            </Col>
-                        </Row>
-                    </li>
-                )}
-            />
+            {comments.length > 0 && (
+                <List
+                    className="comment-list"
+                    itemLayout="horizontal"
+                    dataSource={comments}
+                    renderItem={(item) => (
+                        <li className={classes.commentField}>
+                            <Row justify="center" align="center">
+                                <Col span={21}>
+                                    <Comment
+                                        author={item.authorName}
+                                        content={item.content}
+                                        datetime={item.createdAt}
+                                    />
+                                </Col>
+                                <Col span={3} align="center">
+                                    <Chip
+                                        className={classes.commentChip}
+                                        size="small"
+                                        icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
+                                        label={item.likeCount}
+                                    />
+                                </Col>
+                            </Row>
+                        </li>
+                    )}
+                />
+            )}
         </>
     );
 }
