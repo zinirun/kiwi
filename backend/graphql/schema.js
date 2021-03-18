@@ -51,7 +51,6 @@ module.exports = buildSchema(`
         gradeName: String!
         companyId: ID
         companyName: String
-        isDeleted: Int!
         likeCount: Int!
         createdAt: Date!
         updatedAt: Date
@@ -132,6 +131,7 @@ module.exports = buildSchema(`
         getPostsByBoardId(boardId: ID!, categoryId: ID): [PostList]!
         getCategoriesByBoardId(boardId: ID!): [CategoryList]!
         getMyPostsById: [Post]!
+        getMyComments: [Comment]!
     }
 
     type Mutation {
