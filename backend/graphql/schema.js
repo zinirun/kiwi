@@ -25,7 +25,7 @@ module.exports = buildSchema(`
         companyName: String
         gradeName: String!
         authorName: String!
-        createdAt: Done!
+        createdAt: Date!
         updatedAt: Date!
         likeCount: Int!
         commentCount: Int!
