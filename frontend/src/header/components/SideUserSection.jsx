@@ -15,7 +15,7 @@ export const handleLogout = (query = '') => {
 function UserToolContent() {
     return (
         <Space direction="vertical" style={{ width: '100%' }}>
-            <Button icon={<LogoutOutlined />} block onClick={handleLogout}>
+            <Button icon={<LogoutOutlined />} block onClick={() => handleLogout()}>
                 로그아웃
             </Button>
             <Link to="/my/info">

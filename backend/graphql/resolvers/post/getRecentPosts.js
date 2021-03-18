@@ -57,6 +57,6 @@ module.exports = async ({}, {}) => {
             });
             return recentPosts.filter((p) => p !== null);
         },
-        () => NotFoundError('There is no post corresponding to the id'),
+        () => NotFoundError('There is no posts'),
     );
 };
