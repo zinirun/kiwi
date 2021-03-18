@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom';
 import { SettingFilled, BellFilled, LogoutOutlined, ToolOutlined } from '@ant-design/icons';
 import axios from 'axios';
 
+export const handleLogout = (query = '') => {
+    axios
+        .post('/api/user/logout')
+        .then(() => (window.location.href = `/needsign?${query}`))
+        .catch(() => (window.location.href = '/'));
+};
+
 function UserToolContent() {
-    const handleLogout = () => {
-        axios
-            .post('/api/user/logout')
-            .then(() => (window.location.href = '/'))
-            .catch(() => (window.location.href = '/'));
-    };
     return (
         <Space direction="vertical" style={{ width: '100%' }}>
             <Button icon={<LogoutOutlined />} block onClick={handleLogout}>

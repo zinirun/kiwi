@@ -8,6 +8,7 @@ module.exports = {
     getUser: require('./user/getUser'),
     updateUser: require('./user/updateUser'),
     updateUserStatus: require('./user/updateUserStatus'),
+    updateUserPassword: require('./user/updateUserPassword'),
 
     // Post
     getPostById: require('./post/getPost'),

@@ -102,3 +102,9 @@ export const UPDATE_USER = gql`
         updateUser(user: $user)
     }
 `;
+
+export const UPDATE_USER_PASSWORD = gql`
+    mutation updateUserPassword($currentPassword: String!, $newPassword: String!) {
+        updateUserPassword(currentPassword: $currentPassword, newPassword: $newPassword)
+    }
+`;

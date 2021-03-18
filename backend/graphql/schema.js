@@ -136,6 +136,7 @@ module.exports = buildSchema(`
     type Mutation {
         updateUser(user: UserUpdateInput!): Boolean
         updateUserStatus(status: Int!): Boolean
+        updateUserPassword(currentPassword: String!, newPassword: String!): Boolean
         createPost(post: PostInput!): PostAfterCreate
         updatePost(post: PostUpdateInput!): Boolean
         deletePost(id: ID!): Boolean
