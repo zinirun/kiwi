@@ -97,19 +97,28 @@ export default function BoardListContainer({ boardId }) {
                         {isMobile && <br />}
                         <span style={{ color: 'black' }}>{post.title}</span>
                     </Grid>
+
                     <Grid item xs={12} sm={2} align="right">
-                        <Chip
-                            className={classes.backColor}
-                            size="small"
-                            icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                            label={post.likeCount}
-                        />
-                        <Chip
-                            className={classes.backColor}
-                            size="small"
-                            icon={<ChatBubbleOutlineOutlinedIcon className={classes.commentIcon} />}
-                            label={post.commentCount}
-                        />
+                        {post.likeCount > 0 && (
+                            <Chip
+                                className={classes.backColor}
+                                size="small"
+                                icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
+                                label={post.likeCount}
+                            />
+                        )}
+                        {post.commentCount > 0 && (
+                            <Chip
+                                className={classes.backColor}
+                                size="small"
+                                icon={
+                                    <ChatBubbleOutlineOutlinedIcon
+                                        className={classes.commentIcon}
+                                    />
+                                }
+                                label={post.commentCount}
+                            />
+                        )}
                     </Grid>
                     <Grid item xs={12} sm={2} align="right">
                         <Grid>
