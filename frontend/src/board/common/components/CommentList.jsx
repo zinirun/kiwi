@@ -5,8 +5,6 @@ import { Chip } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import 'antd/dist/antd.css';
 import { Comment, List, Row, Col, message } from 'antd';
-//import moment from 'moment';
-//Tooltip
 import { useStyles } from '../styles/commentList.style';
 import { GET_COMMENTS } from '../../../configs/queries';
 
@@ -19,12 +17,35 @@ export default function CommentList({ id }) {
             id,
         },
     });
+    function timeForToday(value) {
+        const today = new Date();
+        const timeValue = new Date(value);
+
+        const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+        if (betweenTime < 1) return '방금';
+        if (betweenTime < 60) {
+            return `${betweenTime}분 전`;
+        }
+
+        const betweenTimeHour = Math.floor(betweenTime / 60);
+        if (betweenTimeHour < 24) {
+            return `${betweenTimeHour}시간 전`;
+        }
+
+        const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+        if (betweenTimeDay < 365) {
+            return `${betweenTimeDay}일 전`;
+        }
+
+        return `${Math.floor(betweenTimeDay / 365)}년 전`;
+    }
     useEffect(() => {
         if (commentsData) {
             setComments(
                 commentsData.getCommentsByPostId.map((c) => {
                     return {
                         ...c,
+                        createdAt: timeForToday(c.createdAt),
                     };
                 }),
             );
@@ -51,7 +72,7 @@ export default function CommentList({ id }) {
                                 <Comment
                                     author={item.authorName}
                                     content={item.content}
-                                    //datetime={item.createdAt}
+                                    datetime={item.createdAt}
                                 />
                             </Col>
                             <Col span={3} align="center">
