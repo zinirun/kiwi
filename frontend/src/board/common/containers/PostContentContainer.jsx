@@ -13,7 +13,7 @@ import moment from 'moment';
 export default function PostContentContainer({ id }) {
     const classes = useStyles();
     const history = useHistory();
-    const [post, setPost] = useState([]);
+    const [post, setPost] = useState(null);
     const { data: postData, error: postError } = useQuery(GET_POST, {
         variables: {
             id,
@@ -22,10 +22,10 @@ export default function PostContentContainer({ id }) {
 
     useEffect(() => {
         if (postData) {
-            const p = postData.getPostById;
+            const post = postData.getPostById;
             setPost({
-                ...p,
-                updatedAt: new moment(p.updatedAt).format('YYYY-MM-DD HH:mm'),
+                ...post,
+                updatedAt: new moment(post.updatedAt).format('YYYY-MM-DD HH:mm'),
             });
         }
         if (postError) {
@@ -36,53 +36,57 @@ export default function PostContentContainer({ id }) {
 
     return (
         <>
-            <Card className={classes.root}>
-                <CardContent>
-                    {post.categoryName && <span className={classes.part}>{post.categoryName}</span>}
-                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                        {post.title}
-                    </Typography>
-                    <Grid container justify="center" className={classes.userInfoSection}>
-                        <Grid item xs={12} sm={6}>
-                            <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                {post.updatedAt}
-                            </span>
-                        </Grid>
-                        <Grid item xs={12} sm={6} align="right">
-                            {!post.companyName && (
-                                <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                    {post.gradeName}
-                                </span>
-                            )}
-                            {!post.gradeName && (
-                                <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                    {post.companyName}
-                                </span>
-                            )}
-                            <span> {post.authorName}</span>
-                        </Grid>
-                    </Grid>
-                    <div>
-                        <Typography variant="body2" component="p">
-                            {post.content}
+            {post && (
+                <Card className={classes.root}>
+                    <CardContent>
+                        {post.categoryName && (
+                            <span className={classes.part}>{post.categoryName}</span>
+                        )}
+                        <Typography className={classes.title} color="textSecondary" gutterBottom>
+                            {post.title}
                         </Typography>
-                    </div>
-                </CardContent>
-                <Grid align="right">
-                    <Chip
-                        className={classes.postChip}
-                        size="small"
-                        icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                        label={post.likeCount}
-                    />
-                    <Chip
-                        className={classes.postChip}
-                        size="small"
-                        icon={<ChatBubbleOutlineOutlinedIcon className={classes.commentIcon} />}
-                        label={post.commentCount}
-                    />
-                </Grid>
-            </Card>
+                        <Grid container justify="center" className={classes.userInfoSection}>
+                            <Grid item xs={12} sm={6}>
+                                <span style={{ color: '#999', fontSize: '0.75rem' }}>
+                                    {post.updatedAt}
+                                </span>
+                            </Grid>
+                            <Grid item xs={12} sm={6} align="right">
+                                {!post.companyName && (
+                                    <span style={{ color: '#999', fontSize: '0.75rem' }}>
+                                        {post.gradeName}
+                                    </span>
+                                )}
+                                {!post.gradeName && (
+                                    <span style={{ color: '#999', fontSize: '0.75rem' }}>
+                                        {post.companyName}
+                                    </span>
+                                )}
+                                <span> {post.authorName}</span>
+                            </Grid>
+                        </Grid>
+                        <div>
+                            <Typography variant="body2" component="p">
+                                {post.content}
+                            </Typography>
+                        </div>
+                    </CardContent>
+                    <Grid align="right">
+                        <Chip
+                            className={classes.postChip}
+                            size="small"
+                            icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
+                            label={post.likeCount}
+                        />
+                        <Chip
+                            className={classes.postChip}
+                            size="small"
+                            icon={<ChatBubbleOutlineOutlinedIcon className={classes.commentIcon} />}
+                            label={post.commentCount}
+                        />
+                    </Grid>
+                </Card>
+            )}
         </>
     );
 }

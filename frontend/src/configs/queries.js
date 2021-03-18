@@ -58,6 +58,8 @@ export const GET_POST = gql`
         getPostById(id: $id) {
             id
             title
+            boardId
+            boardName
             content
             companyName
             categoryName
