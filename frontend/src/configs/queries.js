@@ -21,6 +21,7 @@ export const GET_POST_LIST = gql`
     query getPostsByBoardId($boardId: ID!, $categoryId: ID) {
         getPostsByBoardId(boardId: $boardId, categoryId: $categoryId) {
             id
+            __typename @skip(if: true)
             title
             companyName
             gradeName

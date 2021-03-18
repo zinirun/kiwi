@@ -38,6 +38,7 @@ export default function PostContentContainer({ id }) {
     }, [postData, postError, history]);
 
     const handleLike = () => {
+        console.log(post.id);
         handlePostLike({
             variables: {
                 postId: post.id,
@@ -81,7 +82,7 @@ export default function PostContentContainer({ id }) {
                                 <Grid item xs={12} sm={6} align="right">
                                     {post.companyName && (
                                         <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                            {post.companyName}/
+                                            {post.companyName}
                                         </span>
                                     )}
                                     <span style={{ color: '#999', fontSize: '0.75rem' }}>
