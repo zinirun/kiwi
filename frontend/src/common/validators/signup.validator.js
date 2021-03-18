@@ -31,7 +31,7 @@ const emptyValidator = (user) => {
     return required ? `${required}을(를) 입력 또는 선택하세요` : null;
 };
 
-const passwordValidator = (password, passwordAgain) => {
+export const passwordValidator = (password, passwordAgain) => {
     if (password.length < 8) {
         return '비밀번호는 8자 이상으로 입력하세요.';
     }

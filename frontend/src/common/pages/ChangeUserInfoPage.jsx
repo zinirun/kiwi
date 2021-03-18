@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Form, message, Row, Select, Collapse } from 'antd';
+import { Col, Form, message, Row, Select, Collapse, Input } from 'antd';
 import { useStyles } from '../static/signPages.style';
 import axios from 'axios';
 import PageTitle from '../components/PageTitle';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import { GET_USER, UPDATE_USER } from '../../configs/queries';
+import { GET_USER, UPDATE_USER, UPDATE_USER_PASSWORD } from '../../configs/queries';
 import { Button } from '@material-ui/core';
+import { passwordValidator } from '../validators/signup.validator';
+import { handleLogout } from '../../header/components/SideUserSection';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -43,10 +45,6 @@ export default function ChangeUserInfoPage(props) {
             );
     }, []);
 
-    const handlePasswordSubmit = (user) => {
-        console.log(user);
-    };
-
     return (
         <>
             <PageTitle title="회원정보 수정" />
@@ -71,11 +69,58 @@ export default function ChangeUserInfoPage(props) {
                         <ChangeUserInfo user={user} metadata={metadata} />
                     </Panel>
                     <Panel header="비밀번호 변경" key="change-user-password">
-                        <Form onFinish={handlePasswordSubmit}></Form>
+                        <ChangeUserPassword />
                     </Panel>
                 </Collapse>
             )}
         </>
+    );
+}
+
+function ChangeUserPassword() {
+    const classes = useStyles();
+    const [updateUserPassword] = useMutation(UPDATE_USER_PASSWORD);
+    const handlePasswordSubmit = (form) => {
+        const { currentPassword, newPassword, newPasswordAgain } = form;
+        const msg = passwordValidator(newPassword, newPasswordAgain);
+        msg
+            ? message.error(msg)
+            : updateUserPassword({
+                  variables: {
+                      currentPassword,
+                      newPassword,
+                  },
+              })
+                  .then(() => {
+                      handleLogout('changed');
+                  })
+                  .catch(() => message.error('현재 비밀번호가 일치하지 않습니다.'));
+    };
+    return (
+        <Form onFinish={handlePasswordSubmit}>
+            <Form.Item
+                name="currentPassword"
+                className={classes.changeFormItem}
+                label="현재 비밀번호"
+            >
+                <Input name="currentPassword" type="password" />
+            </Form.Item>
+            <Form.Item name="newPassword" className={classes.changeFormItem} label="변경 비밀번호">
+                <Input name="newPassword" type="password" />
+            </Form.Item>
+            <Form.Item
+                name="newPasswordAgain"
+                className={classes.changeFormItem}
+                label="비밀번호 확인"
+            >
+                <Input name="newPasswordAgain" type="password" />
+            </Form.Item>
+            <Form.Item className={classes.changeFormItem}>
+                <Button type="submit" color="primary" className={classes.button} fullWidth>
+                    비밀번호 변경
+                </Button>
+            </Form.Item>
+        </Form>
     );
 }
 
@@ -101,11 +146,13 @@ function ChangeUserInfo({ user, metadata }) {
                 name="studentGradeId"
                 className={classes.changeFormItem}
                 label="학년/졸업여부"
-                initialValue={user.studentGradeId}
+                initialValue={+user.studentGradeId}
             >
                 <Select name="studentGradeId">
                     {metadata.studentGrades.map((d, idx) => (
-                        <Option key={idx}>{d.gradeName}</Option>
+                        <Option key={idx} value={d.id}>
+                            {d.gradeName}
+                        </Option>
                     ))}
                 </Select>
             </Form.Item>

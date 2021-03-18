@@ -125,18 +125,20 @@ module.exports = buildSchema(`
     type Query {
         getUser: User!
         getPostById(id: ID!): Post!
+        getPostsByBoardId(boardId: ID!, categoryId: ID): [PostList]!
         getCommentsByPostId(id: ID!): [Comment]!
         getBoardById(id: ID!): Board!
         getCategoryById(id: ID!): Category!
-        getPostsByBoardId(boardId: ID!, categoryId: ID): [PostList]!
         getCategoriesByBoardId(boardId: ID!): [CategoryList]!
         getMyPostsById: [Post]!
         getMyComments: [Comment]!
+        
     }
 
     type Mutation {
         updateUser(user: UserUpdateInput!): Boolean
         updateUserStatus(status: Int!): Boolean
+        updateUserPassword(currentPassword: String!, newPassword: String!): Boolean
         createPost(post: PostInput!): PostAfterCreate
         updatePost(post: PostUpdateInput!): Boolean
         deletePost(id: ID!): Boolean
