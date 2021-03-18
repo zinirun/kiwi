@@ -18,8 +18,11 @@ module.exports = {
     deletePost: require('./post/deletePost'),
     getMyPosts: require('./post/getMyPosts'),
 
-    // Comments
+    // Comment
     getCommentsByPostId: require('./comment/getCommentsByPostId'),
+    getMyComments: require('./comment/getMyComments'),
+    createComment: require('./comment/createComment'),
+    deleteComment: require('./comment/deleteComment'),
 
     // PostLike
     handlePostLike: require('./postLike/handlePostLike'),
@@ -30,7 +33,4 @@ module.exports = {
     // Category
     getCategoryById: require('./category/getCategory'),
     getCategoriesByBoardId: require('./category/getCatogriesByBoardId'),
-
-    // Comment
-    createComment: require('./comment/createComment'),
 };
