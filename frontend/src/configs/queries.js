@@ -58,6 +58,25 @@ export const GET_POST = gql`
         getPostById(id: $id) {
             id
             title
+            boardId
+            boardName
+            content
+            companyName
+            categoryName
+            gradeName
+            authorName
+            updatedAt
+            likeCount
+            commentCount
+        }
+    }
+`;
+
+export const GET_MY_POSTS = gql`
+    query getMyPosts {
+        getMyPosts {
+            id
+            title
             content
             companyName
             categoryName

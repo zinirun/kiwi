@@ -5,12 +5,14 @@
  * @returns {Post}
  * type Post {
         id: ID!
+        boardId: ID!
+        boardName: String!
         title: String!
         content: String!
         companyName: String
         gradeName: String!
         authorName: String!
-        createdAt: Done!
+        createdAt: Date!
         updatedAt: Date!
         likeCount: Int!
         commentCount: Int!
@@ -23,9 +25,10 @@ const { NotFoundError } = require('../../errors/errors');
 
 module.exports = async ({ id }, { departmentId }) => {
     const query = `
-                    select p.id, p.title, p.content, c.companyName, g.gradeName, u.userName as authorName, p.createdAt, p.updatedAt, cg.categoryName, ifnull(ppl.likeCount, 0) as likeCount, ifnull(pc.commentCount, 0) as commentCount
+                    select p.id, b.id as boardId, b.boardName, p.title, p.content, c.companyName, g.gradeName, u.userName as authorName, p.createdAt, p.updatedAt, cg.categoryName, ifnull(ppl.likeCount, 0) as likeCount, ifnull(pc.commentCount, 0) as commentCount
                     from post p
                         left join category cg on p.categoryId = cg.id
+                        left join board b on b.id = p.boardId
                         left join (select count(*) as commentCount, postId from comment c where c.isDeleted = 0 and c.postId = 1) as pc on p.id = pc.postId
                         left join (select count(*) as likeCount, postId from post_like pl where pl.isDeleted = 0) as ppl on p.id = ppl.postId,
                         user u

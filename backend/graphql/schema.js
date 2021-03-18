@@ -18,9 +18,11 @@ module.exports = buildSchema(`
 
     type Post {
         id: ID!
+        boardId: ID!
+        boardName: String!
+        categoryName: String
         title: String!
         content: String!
-        categoryName: String
         companyName: String
         gradeName: String!
         authorName: String!
@@ -131,7 +133,7 @@ module.exports = buildSchema(`
         getBoardById(id: ID!): Board!
         getCategoryById(id: ID!): Category!
         getCategoriesByBoardId(boardId: ID!): [CategoryList]
-        getMyPostsById: [Post]
+        getMyPosts: [Post]
         getMyComments: [Comment]
     }
 
