@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom';
 import { Grid, Button, Chip } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
+import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfied';
 import { isMobile } from 'react-device-detect';
 import { useStyles } from '../styles/board.style';
 import { boardCommonStyles } from '../styles/board.common.style';
 import SelectCategory from '../components/SelectCategory';
 import { GET_POST_LIST } from '../../../configs/queries';
 import moment from 'moment';
-import { message } from 'antd';
+import { message, Result } from 'antd';
 
 export default function BoardListContainer({ boardId }) {
     const classes = { ...useStyles(), ...boardCommonStyles() };
@@ -69,6 +70,16 @@ export default function BoardListContainer({ boardId }) {
                     </Button>
                 </Grid>
             </Grid>
+            {postList.length === 0 && (
+                <Result
+                    icon={<SentimentSatisfiedIcon className={classes.noResultIcon} />}
+                    title={
+                        <span style={{ fontSize: 20, fontWeight: 'bold' }}>
+                            등록된 게시글이 없습니다.
+                        </span>
+                    }
+                />
+            )}
             {postList.map((post, idx) => (
                 <Grid
                     container

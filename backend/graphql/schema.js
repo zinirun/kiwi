@@ -24,6 +24,7 @@ module.exports = buildSchema(`
         companyName: String
         gradeName: String!
         authorName: String!
+        createdAt: Date!
         updatedAt: Date!
         likeCount: Int!
         commentCount: Int!
@@ -51,7 +52,6 @@ module.exports = buildSchema(`
         gradeName: String!
         companyId: ID
         companyName: String
-        isDeleted: Int!
         likeCount: Int!
         createdAt: Date!
         updatedAt: Date
@@ -126,12 +126,13 @@ module.exports = buildSchema(`
     type Query {
         getUser: User!
         getPostById(id: ID!): Post!
-        getPostsByBoardId(boardId: ID!, categoryId: ID): [PostList]!
-        getMyPosts: [Post]
-        getCommentsByPostId(id: ID!): [Comment]!
+        getPostsByBoardId(boardId: ID!, categoryId: ID): [PostList]
+        getCommentsByPostId(id: ID!): [Comment]
         getBoardById(id: ID!): Board!
         getCategoryById(id: ID!): Category!
-        getCategoriesByBoardId(boardId: ID!): [CategoryList]!
+        getCategoriesByBoardId(boardId: ID!): [CategoryList]
+        getMyPosts: [Post]
+        getMyComments: [Comment]
     }
 
     type Mutation {

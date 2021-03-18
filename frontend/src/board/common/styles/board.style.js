@@ -39,4 +39,8 @@ export const useStyles = makeStyles((theme) => ({
     categorySelect: {
         minWidth: 150,
     },
+    noResultIcon: {
+        fontSize: 50,
+        color: theme.palette.primary.light,
+    },
 }));
