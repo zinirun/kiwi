@@ -1,5 +1,5 @@
 /**
- * 게시물 Read
+ * 게시판별 게시물 Read
  * @author 이건욱
  * @param (boardId: ID!)
  * @returns {[PostList]}

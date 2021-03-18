@@ -1,5 +1,5 @@
 /**
- * 게시물 Read
+ * 내가 쓴 게시물 Read
  * @author 이건욱
  * @param
  * @returns {[Post]}

@@ -1,5 +1,5 @@
 /**
- * 게시물 Read
+ * 게시판별 최근 게시물 5개 Read
  * @author 이건욱
  * @param
  * @returns {[RecentPosts]}
