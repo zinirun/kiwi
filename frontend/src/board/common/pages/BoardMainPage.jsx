@@ -14,6 +14,10 @@ export default function BoardMainPage() {
         if (data) {
             setPosts(data.getRecentPosts);
         }
+        if (error) {
+            message.error('메인페이지를 불러오는 중 오류가 발생했습니다.');
+            history.push('/needsign');
+        }
     }, [data, error, history]);
     return (
         <>
