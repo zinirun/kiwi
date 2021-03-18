@@ -14,7 +14,7 @@
         likeCount: Int!
         commentCount: Int!
     }
-* getPostById(id: ID!): Post!
+* getPostById(id: ID!): [Post]
  */
 
 const models = require('../../../models');
