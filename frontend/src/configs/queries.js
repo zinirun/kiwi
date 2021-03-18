@@ -89,6 +89,20 @@ export const GET_MY_POSTS = gql`
     }
 `;
 
+export const GET_MY_COMMENTS = gql`
+    query getMyComments {
+        getMyComments {
+            id
+            postId
+            authorId
+            authorName
+            content
+            likeCount
+            createdAt
+        }
+    }
+`;
+
 export const GET_COMMENTS = gql`
     query getCommentsByPostId($id: ID!) {
         getCommentsByPostId(id: $id) {

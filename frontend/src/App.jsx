@@ -37,11 +37,12 @@ import BoardMainPage from './board/common/pages/BoardMainPage';
 
 // 회원정보 수정
 import ChangeUserInfoPage from './common/pages/ChangeUserInfoPage';
-import MyPostsPage from './my-menu/pages/MyPostsPage';
 
 // 나의 글
+import MyPostsPage from './my-menu/pages/MyPostsPage';
 
 // 나의 댓글
+import MyCommentsPage from './my-menu/pages/MyCommentsPage';
 
 function App() {
     return (
@@ -61,6 +62,7 @@ function App() {
                     <Route path="/write" component={PostWritePage} />
                     <Route path="/my/info" component={ChangeUserInfoPage} />
                     <Route path="/my/post" component={MyPostsPage} />
+                    <Route path="/my/comment" component={MyCommentsPage} />
                 </Switch>
             </Root>
         </Router>
