@@ -30,12 +30,14 @@ export default function SideDrawer({ user }) {
                 ))}
                 <Divider className={classes.sideDivider} />
                 {MY_MENU.map((m) => (
-                    <ListItem className={classes.drawerItem} button key={m.key}>
-                        <ListItemIcon className={classes.drawerIcon}>
-                            <IconViewer icon={m.icon} />
-                        </ListItemIcon>
-                        <ListItemText className={classes.drawerText}>{m.name}</ListItemText>
-                    </ListItem>
+                    <Link to={m.link} style={{ textDecoration: 'none' }} key={m.key}>
+                        <ListItem className={classes.drawerItem} button key={m.key}>
+                            <ListItemIcon className={classes.drawerIcon}>
+                                <IconViewer icon={m.icon} />
+                            </ListItemIcon>
+                            <ListItemText className={classes.drawerText}>{m.name}</ListItemText>
+                        </ListItem>
+                    </Link>
                 ))}
             </List>
         </div>

@@ -70,6 +70,23 @@ export const GET_POST = gql`
     }
 `;
 
+export const GET_MY_POSTS = gql`
+    query getMyPosts {
+        getMyPosts {
+            id
+            title
+            content
+            companyName
+            categoryName
+            gradeName
+            authorName
+            updatedAt
+            likeCount
+            commentCount
+        }
+    }
+`;
+
 export const GET_COMMENTS = gql`
     query getCommentsByPostId($id: ID!) {
         getCommentsByPostId(id: $id) {
