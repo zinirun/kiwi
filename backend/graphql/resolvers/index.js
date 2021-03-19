@@ -33,6 +33,7 @@ module.exports = {
 
     // Board
     getBoardById: require('./board/getBoard'),
+    getBoards: require('./board/getBoards'),
 
     // Category
     getCategoryById: require('./category/getCategory'),

@@ -55,6 +55,9 @@ export const useStyles = makeStyles((theme) => ({
     sideDivider: {
         backgroundColor: theme.palette.primary.dark,
     },
+    menuList: {
+        padding: 0,
+    },
     content: {
         flexGrow: 1,
         padding: theme.spacing(3),
