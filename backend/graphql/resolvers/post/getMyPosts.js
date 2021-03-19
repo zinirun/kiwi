@@ -29,8 +29,8 @@ module.exports = async ({}, { id }) => {
                     from post p
                         left join category cg on p.categoryId = cg.id
                         left join board b on p.boardId = b.id
-                        left join (select count(*) as commentCount, postId from comment c where c.isDeleted = 0 and c.postId = 1) as pc on p.id = pc.postId
-                        left join (select count(*) as likeCount, postId from post_like pl where pl.isDeleted = 0) as ppl on p.id = ppl.postId,
+                        left join (select c.id, count(c.id) as commentCount, postId from comment c where c.isDeleted = 0 group by c.postId) as pc on p.id = pc.postId
+                        left join (select pl.id, count(pl.id) as likeCount, postId from post_like pl where pl.isDeleted = 0 group by pl.postId) as ppl on p.id = ppl.postId,
                         user u
                         left join company c on u.companyId = c.id
                         left join grade g on u.studentGradeId = g.id
