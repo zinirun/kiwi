@@ -111,12 +111,37 @@ module.exports = {
                     'studentGradeId',
                     'companyId',
                     'status',
+                    'createdAt',
+                    'updatedAt',
                 ],
                 where: { userAccount, password },
                 raw: true,
             })
             .then((user) => {
                 if (user) {
+                    const { status } = user;
+                    switch (
+                        status // 1: 인증됨
+                    ) {
+                        case 0: // 미인증
+                            return res.json({
+                                success: false,
+                                message: 'NO_STUDENT_CARD',
+                                user,
+                            });
+                        case 2: // 정지
+                            return res.json({
+                                success: false,
+                                message: 'BLOCKED',
+                                user,
+                            });
+                        case 3: // 탈퇴
+                            return res.json({
+                                success: false,
+                                message: 'SECESSION',
+                                user,
+                            });
+                    }
                     // Success signin, generate jwt
                     jwt.sign(
                         {
@@ -130,13 +155,14 @@ module.exports = {
                         },
                         (error, token) => {
                             if (error) res.status(409).json({ error });
-                            // send final user info
-                            res.cookie('x-access-token', token, { httpOnly: true });
-                            res.json({
-                                message: 'Sign-in Successfully',
-                                token,
-                                user,
-                            });
+                            if (token) {
+                                res.cookie('x-access-token', token, { httpOnly: true });
+                                res.json({
+                                    success: true,
+                                    message: 'SIGNED',
+                                    user,
+                                });
+                            }
                         },
                     );
                 } else {

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { message, Space } from 'antd';
 import { useStyles } from '../static/signPages.style';
 import axios from 'axios';
+import moment from 'moment';
 
 export default function SignInPage(props) {
     const classes = useStyles();
@@ -36,8 +37,34 @@ export default function SignInPage(props) {
             .post('/api/user/signin', {
                 user,
             })
-            .then(() => {
-                window.location.href = '/';
+            .then(({ data }) => {
+                const { success, message: signMessage, user } = data;
+                console.log(data);
+                if (success) {
+                    window.location.href = '/';
+                } else {
+                    switch (signMessage) {
+                        case 'NO_STUDENT_CARD':
+                            // 학생증 인증 파트로 이동
+                            return;
+                        case 'BLOCKED':
+                            message.error(
+                                `${moment(user.updatedAt).format(
+                                    'YYYY-MM-DD HH:mm',
+                                )}부로 정지된 회원입니다.`,
+                            );
+                            break;
+                        case 'SECESSION':
+                            message.error(
+                                `${moment(user.updatedAt).format(
+                                    'YYYY-MM-DD HH:mm',
+                                )}부로 탈퇴된 회원입니다.`,
+                            );
+                            break;
+                        default:
+                            return;
+                    }
+                }
             })
             .catch(() => {
                 message.error('아이디 또는 비밀번호를 다시 확인하세요.');
