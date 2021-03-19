@@ -40,4 +40,12 @@ export const useStyles = makeStyles((theme) => ({
     commentTextareaSection: {
         marginBottom: 10,
     },
+    authorInfo: {
+        color: '#999',
+        fontSize: '0.5rem',
+    },
+    author: {
+        color: '#000000DE',
+        fontSize: '0.78rem',
+    },
 }));

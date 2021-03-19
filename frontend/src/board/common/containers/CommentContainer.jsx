@@ -137,30 +137,14 @@ export default function CommentList({ id }) {
                                                 author={
                                                     <>
                                                         {item.companyName && (
-                                                            <span
-                                                                style={{
-                                                                    color: '#999',
-                                                                    fontSize: '0.5rem',
-                                                                }}
-                                                            >
+                                                            <span className={classes.authorInfo}>
                                                                 {item.companyName}/
                                                             </span>
                                                         )}
-                                                        <span
-                                                            style={{
-                                                                color: '#999',
-                                                                fontSize: '0.5rem',
-                                                            }}
-                                                        >
-                                                            {item.gradeName}
+                                                        <span className={classes.authorInfo}>
+                                                            {item.gradeName}&nbsp;
                                                         </span>
-                                                        <span
-                                                            style={{
-                                                                color: '#000000DE',
-                                                                fontSize: '0.78rem',
-                                                            }}
-                                                        >
-                                                            {' '}
+                                                        <span className={classes.author}>
                                                             {item.authorName}
                                                         </span>
                                                     </>
