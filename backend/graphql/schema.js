@@ -63,7 +63,6 @@ module.exports = buildSchema(`
 
     type Comment {
         id: ID!
-        userId: ID!
         postId: ID!
         authorId: ID!
         authorName: String!
@@ -149,14 +148,13 @@ module.exports = buildSchema(`
         getUser: User!
         getPostById(id: ID!): Post!
         getPostsByBoardId(boardId: ID!, categoryId: ID): [PostList]
-        getPostsByLikeCount(likeCount: Int!): [PostList]
+        getPostsByLikecount(likeCount: Int!, categoryId: ID): [PostList]
         getRecentPosts: [RecentPosts]
         getCommentsByPostId(id: ID!): [Comment]
         getBoardById(id: ID!): Board!
-        getBoards: [Board]
         getCategoryById(id: ID!): Category!
         getCategoriesByBoardId(boardId: ID!): [CategoryList]
-        getMyPosts: [PostList]
+        getMyPosts: [Post]
         getMyComments: [Comment]
     }
 
