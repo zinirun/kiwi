@@ -7,8 +7,8 @@ import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineO
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import 'antd/dist/antd.css';
 import { useStyles } from '../styles/postContent.style';
-import { GET_POST, HANDLE_POST_LIKE } from '../../../configs/queries';
-import { message, Modal } from 'antd';
+import { GET_POST, HANDLE_POST_LIKE, DELETE_POST } from '../../../configs/queries';
+import { message, Modal, Tooltip } from 'antd';
 import moment from 'moment';
 import PageTitle from '../../../common/components/PageTitle';
 import { PostContentSkeleton } from '../components/Skeletons';
@@ -31,6 +31,7 @@ export default function PostContentContainer({ id }) {
     });
 
     const [handlePostLike] = useMutation(HANDLE_POST_LIKE);
+    const [deletePost] = useMutation(DELETE_POST);
 
     useEffect(() => {
         if (postData) {
@@ -45,6 +46,20 @@ export default function PostContentContainer({ id }) {
             history.push('/');
         }
     }, [postData, postError, history]);
+
+    const triggerDeletePost = () => {
+        deletePost({
+            variables: {
+                id: post.id,
+            },
+        })
+            .then(() => {
+                history.push('/');
+            })
+            .catch(() => {
+                message.error('게시글 삭제 중 오류가 발생했습니다.');
+            });
+    };
 
     const handleLike = () => {
         handlePostLike({
@@ -71,11 +86,10 @@ export default function PostContentContainer({ id }) {
             okText: '삭제',
             cancelText: '취소',
             onOk() {
-                console.log('abc');
+                triggerDeletePost();
             },
         });
     };
-
     return (
         <>
             {postLoading && <PostContentSkeleton />}
@@ -91,12 +105,16 @@ export default function PostContentContainer({ id }) {
                                 <Grid item xs={12} sm={6}>
                                     {post.title}
                                 </Grid>
-                                <Grid item xs={12} sm={6} align="right">
-                                    <DeleteOutlinedIcon
-                                        onClick={handleDelete}
-                                        className={classes.deleteIcon}
-                                    />
-                                </Grid>
+                                {post.userId === post.authorId && (
+                                    <Grid item xs={12} sm={6} align="right">
+                                        <Tooltip title="게시글 삭제">
+                                            <DeleteOutlinedIcon
+                                                onClick={handleDelete}
+                                                className={classes.deleteIcon}
+                                            />
+                                        </Tooltip>
+                                    </Grid>
+                                )}
                             </Grid>
                             <Grid container justify="center" className={classes.userInfoSection}>
                                 <Grid item xs={12} sm={6}>

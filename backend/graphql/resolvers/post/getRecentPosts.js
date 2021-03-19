@@ -5,7 +5,9 @@
  * @returns {[RecentPosts]}
  * type RecentPosts {
          boardId: ID!
-         boardName: String! 
+         boardName: String!
+         boardLink: String!
+         boardIcon: String!
          posts: [RecentPost]
     }
 
@@ -23,7 +25,7 @@ const { ConflictError } = require('../../errors/errors');
 module.exports = async ({}, {}) => {
     const query = `
                     select b.id as boardId, b.boardName, b.link as boardLink, b.icon as boardIcon, s.id as postId, s.title, ifnull(ppl.likeCount, 0) as likeCount
-                    from (select id, boardId, title, ROW_NUMBER() OVER (PARTITION BY boardId ORDER BY id desc) as rn from post) as s
+                    from (select id, boardId, title, ROW_NUMBER() OVER (PARTITION BY boardId ORDER BY id desc) as rn from post where isDeleted = 0) as s
                         join board b on b.id = s.boardId
                         left join (select pl.id, count(pl.id) as likeCount, postId from post_like pl where pl.isDeleted = 0 group by pl.postId) as ppl on s.id = ppl.postId
                     where s.rn <= 5

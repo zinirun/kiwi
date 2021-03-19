@@ -38,6 +38,7 @@ module.exports = async ({ likeCount }, { departmentId }) => {
                             left join company c on u.companyId = c.id
                             left join grade g on u.studentGradeId = g.id
                     where p.authorId = u.id
+                    and p.isDeleted = 0
                     and v.postLikeCount >= :likeCount
                     and p.departmentId = :departmentId
                     order by p.id desc;

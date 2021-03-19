@@ -39,6 +39,7 @@ module.exports = async ({ boardId, categoryId }, { departmentId }) => {
                             left join company c on u.companyId = c.id
                             left join grade g on u.studentGradeId = g.id
                     where p.authorId = u.id
+                    and p.isDeleted = 0
                     and p.boardId = :boardId
                     and p.departmentId = :departmentId
                     ${categoryId && `and p.categoryId=:categoryId`}
