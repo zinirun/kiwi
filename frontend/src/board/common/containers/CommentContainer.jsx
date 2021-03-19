@@ -70,7 +70,7 @@ export default function CommentList({ id }) {
     };
 
     const handleCommentSubmit = ({ content }) => {
-        if (!content) return;
+        if (!content.replaceAll(' ', '')) return;
         createComment({
             variables: {
                 comment: {
