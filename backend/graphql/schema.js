@@ -36,11 +36,11 @@ module.exports = buildSchema(`
     }
 
     type RecentPosts {
-         boardId: ID!
-         boardName: String!
-         boardLink: String!
-         boardIcon: String!
-         posts: [RecentPost]
+        boardId: ID!
+        boardName: String!
+        boardLink: String!
+        boardIcon: String!
+        posts: [RecentPost]
     }
 
     type RecentPost {
@@ -149,7 +149,7 @@ module.exports = buildSchema(`
         getUser: User!
         getPostById(id: ID!): Post!
         getPostsByBoardId(boardId: ID!, categoryId: ID): [PostList]
-        getPostsByLikeCount(likeCount: Int!): [PostList]
+        getPostsByLikecount(likeCount: Int!): [PostList]
         getRecentPosts: [RecentPosts]
         getCommentsByPostId(id: ID!): [Comment]
         getBoardById(id: ID!): Board!
