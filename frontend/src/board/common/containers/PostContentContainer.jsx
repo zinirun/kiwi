@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery, useMutation } from 'react-apollo';
 import { useHistory } from 'react-router';
-import { Grid, Chip, Card, CardContent, Typography } from '@material-ui/core';
+import { Grid, Chip, Card, CardContent } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
@@ -152,9 +152,11 @@ export default function PostContentContainer({ id }) {
                                     <span> {post.authorName}</span>
                                 </Grid>
                             </Grid>
-                            <Typography variant="body2" component="p">
-                                {post.content}
-                            </Typography>
+                            {post.content.split('\n').map((text, idx) => (
+                                <p key={idx} className={classes.contentLine}>
+                                    {text}
+                                </p>
+                            ))}
                         </CardContent>
                         <Grid align="right">
                             <Chip

@@ -64,4 +64,7 @@ export const useStyles = makeStyles((theme) => ({
             color: theme.palette.primary.main,
         },
     },
+    contentLine: {
+        margin: '3px 0',
+    },
 }));
