@@ -18,7 +18,7 @@
  */
 
 const models = require('../../../models');
-const { NotFoundError } = require('../../errors/errors');
+const { ConflictError } = require('../../errors/errors');
 
 module.exports = async ({}, {}) => {
     const query = `
@@ -59,6 +59,6 @@ module.exports = async ({}, {}) => {
             });
             return recentPosts.filter((p) => p !== null);
         },
-        () => NotFoundError('There is no posts'),
+        () => ConflictError('Database error'),
     );
 };
