@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { CONTENT_MAX_WIDTH } from '../../configs/variables';
 
 const drawerWidth = 200;
 export const useStyles = makeStyles((theme) => ({
@@ -61,7 +62,7 @@ export const useStyles = makeStyles((theme) => ({
     content: {
         flexGrow: 1,
         padding: theme.spacing(3),
-        maxWidth: 800,
+        maxWidth: CONTENT_MAX_WIDTH,
     },
     userSection: {
         padding: '16px 8px',
