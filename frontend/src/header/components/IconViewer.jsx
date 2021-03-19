@@ -5,6 +5,8 @@ import StarsIcon from '@material-ui/icons/Stars';
 import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 import StorageIcon from '@material-ui/icons/Storage';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
+import LooksOneIcon from '@material-ui/icons/LooksOne';
 
 export function IconViewer({ icon, classes }) {
     switch (icon) {
@@ -20,6 +22,10 @@ export function IconViewer({ icon, classes }) {
             return <LocalGroceryStoreIcon className={classes && classes} />;
         case 'PersonOutlineIcon':
             return <PersonOutlineIcon className={classes && classes} />;
+        case 'WhatshotIcon':
+            return <WhatshotIcon className={classes && classes} />;
+        case 'LooksOneIcon':
+            return <LooksOneIcon className={classes && classes} />;
         default:
             return <></>;
     }

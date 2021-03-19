@@ -56,6 +56,17 @@ export const GET_BOARD = gql`
     }
 `;
 
+export const GET_BOARDS = gql`
+    query getBoards {
+        getBoards {
+            id
+            boardName
+            link
+            icon
+        }
+    }
+`;
+
 export const GET_POST = gql`
     query getPostById($id: ID!) {
         getPostById(id: $id) {

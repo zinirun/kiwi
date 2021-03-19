@@ -149,6 +149,7 @@ module.exports = buildSchema(`
         getRecentPosts: [RecentPosts]
         getCommentsByPostId(id: ID!): [Comment]
         getBoardById(id: ID!): Board!
+        getBoards: [Board]
         getCategoryById(id: ID!): Category!
         getCategoriesByBoardId(boardId: ID!): [CategoryList]
         getMyPosts: [Post]
