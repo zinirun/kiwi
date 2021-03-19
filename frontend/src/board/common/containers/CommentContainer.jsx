@@ -3,13 +3,20 @@ import { useMutation, useQuery } from 'react-apollo';
 import { useHistory } from 'react-router';
 import { Chip, Button } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
-import { Comment, List, Row, Col, message, Form, Input, Space } from 'antd';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import { Comment, List, Row, Col, message, Form, Input, Space, Modal, Tooltip } from 'antd';
 import { useStyles } from '../styles/comment.style';
 import { boardCommonStyles } from '../styles/board.common.style';
-import { CREATE_COMMENT, GET_COMMENTS, HANDLE_COMMENT_LIKE } from '../../../configs/queries';
+import {
+    CREATE_COMMENT,
+    GET_COMMENTS,
+    HANDLE_COMMENT_LIKE,
+    DELETE_COMMENT,
+} from '../../../configs/queries';
 import { commentTimeFormatter } from '../tools/formatter';
 import { PostCommentSkeleton } from '../components/Skeletons';
 const { TextArea } = Input;
+const { confirm } = Modal;
 
 export default function CommentList({ id }) {
     const classes = { ...useStyles(), ...boardCommonStyles() };
@@ -28,6 +35,7 @@ export default function CommentList({ id }) {
     });
     const [createComment] = useMutation(CREATE_COMMENT);
     const [handleCommentLike] = useMutation(HANDLE_COMMENT_LIKE);
+    const [deleteComment] = useMutation(DELETE_COMMENT);
 
     useEffect(() => {
         if (commentsData) {
@@ -45,6 +53,21 @@ export default function CommentList({ id }) {
             history.push('/');
         }
     }, [commentsData, setComments, commentsError, history]);
+
+    const triggerDeleteComment = (id) => {
+        deleteComment({
+            variables: {
+                id,
+            },
+        })
+            .then(() => {
+                message.success('댓글이 삭제되었습니다.');
+                commentsRefetch();
+            })
+            .catch(() => {
+                message.error('게시글 삭제 중 오류가 발생했습니다.');
+            });
+    };
 
     const handleCommentSubmit = ({ content }) => {
         if (!content) return;
@@ -81,7 +104,18 @@ export default function CommentList({ id }) {
             })
             .catch(() => message.error('댓글 좋아요 중 문제가 발생했습니다.'));
     };
-
+    const handleDelete = (e) => {
+        const id = e.currentTarget.getAttribute('value');
+        confirm({
+            title: '댓글을 삭제할까요?',
+            content: '삭제된 댓글은 복구할 수 없습니다.',
+            okText: '삭제',
+            cancelText: '취소',
+            onOk() {
+                triggerDeleteComment(id);
+            },
+        });
+    };
     return (
         <>
             {commentsLoading && <PostCommentSkeleton />}
@@ -98,11 +132,25 @@ export default function CommentList({ id }) {
                             renderItem={(item) => (
                                 <li className={classes.commentField}>
                                     <Row justify="center" align="center">
-                                        <Col span={21}>
+                                        <Col span={20}>
                                             <Comment
                                                 author={item.authorName}
                                                 content={item.content}
-                                                datetime={item.createdAt}
+                                                datetime={
+                                                    <>
+                                                        <span>{item.createdAt}</span>
+                                                        {item.authorId === item.userId && (
+                                                            <Tooltip title="댓글 삭제">
+                                                                <DeleteOutlinedIcon
+                                                                    value={item.id}
+                                                                    post={item.postId}
+                                                                    onClick={handleDelete}
+                                                                    className={classes.deleteIcon}
+                                                                />
+                                                            </Tooltip>
+                                                        )}
+                                                    </>
+                                                }
                                             />
                                         </Col>
                                         <Col span={3} align="center">

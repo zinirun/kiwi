@@ -81,7 +81,7 @@ export default function PostContentContainer({ id }) {
 
     const handleDelete = () => {
         confirm({
-            title: '게시물을 삭제할까요?',
+            title: '게시글을 삭제할까요?',
             content: '삭제된 게시글은 복구할 수 없습니다.',
             okText: '삭제',
             cancelText: '취소',
@@ -105,16 +105,17 @@ export default function PostContentContainer({ id }) {
                                 <Grid item xs={12} sm={6}>
                                     {post.title}
                                 </Grid>
-                                {post.userId === post.authorId && (
-                                    <Grid item xs={12} sm={6} align="right">
+
+                                <Grid item xs={12} sm={6} align="right">
+                                    {post.userId === post.authorId && (
                                         <Tooltip title="게시글 삭제">
                                             <DeleteOutlinedIcon
                                                 onClick={handleDelete}
                                                 className={classes.deleteIcon}
                                             />
                                         </Tooltip>
-                                    </Grid>
-                                )}
+                                    )}
+                                </Grid>
                             </Grid>
                             <Grid container justify="center" className={classes.userInfoSection}>
                                 <Grid item xs={12} sm={6}>
