@@ -1,28 +1,27 @@
 /**
- * 게시판별 게시물 Read
+ * 좋아요 갯수 param이상인 게시물 Read
  * @author 이건욱
- * @param (boardId: ID!)
+ * @param (likeCount: Int!)
  * @returns {[PostList]}
  * type PostList {
-        postId: ID!
+        id: ID!
         title: String!
         companyName: String
-        gradeName: String
-        userName: String!
-        createdAt: Date!
+        gradeName: String!
+        authorName: String!
         updatedAt: Date!
         categoryName: String
         likeCount: Int!
         commentCount: Int!
     }
 
-* getPostsByBoardId(boardId: ID!): [PostList]!
+* getPostsByLikecount(likeCount: Int!): [PostList]
  */
 
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 
-module.exports = async ({ boardId, categoryId }, { departmentId }) => {
+module.exports = async ({ likeCount }, { departmentId }) => {
     const query = `
                     select p.id, p.title, c.companyName, g.gradeName, u.userName as authorName, p.createdAt, p.updatedAt, cg.categoryName, ifnull(v.postLikeCount, 0) as likeCount, ifnull(z.commentCount, 0) as commentCount
                     from post p
@@ -39,21 +38,21 @@ module.exports = async ({ boardId, categoryId }, { departmentId }) => {
                             left join company c on u.companyId = c.id
                             left join grade g on u.studentGradeId = g.id
                     where p.authorId = u.id
-                    and p.boardId = :boardId
+                    and v.postLikeCount >= :likeCount
                     and p.departmentId = :departmentId
-                    ${categoryId && `and p.categoryId=:categoryId`}
                     order by p.id desc;
                     `;
     return await models.sequelize
         .query(query, {
             replacements: {
-                boardId,
+                likeCount,
                 departmentId,
-                categoryId,
             },
         })
         .spread(
-            (result) => JSON.parse(JSON.stringify(result)),
+            (result) => {
+                return JSON.parse(JSON.stringify(result));
+            },
             () => ConflictError('Database error'),
         );
 };

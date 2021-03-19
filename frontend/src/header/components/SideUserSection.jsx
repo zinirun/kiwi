@@ -45,7 +45,7 @@ export default function SideUserSection({ user }) {
             </Col>
             <Col span={4} align="right">
                 <Space direction="vertical" size={1}>
-                    <Popover content={UserToolContent} trigger="click">
+                    <Popover title="회원 정보" content={UserToolContent} trigger="click">
                         <Tooltip title="회원 정보">
                             <SettingFilled className={classes.userToolButton} />
                         </Tooltip>

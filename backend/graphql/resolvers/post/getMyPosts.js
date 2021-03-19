@@ -21,7 +21,7 @@
  */
 
 const models = require('../../../models');
-const { NotFoundError } = require('../../errors/errors');
+const { ConflictError } = require('../../errors/errors');
 
 module.exports = async ({}, { id }) => {
     const query = `
@@ -45,6 +45,6 @@ module.exports = async ({}, { id }) => {
         })
         .spread(
             (result) => JSON.parse(JSON.stringify(result)),
-            () => NotFoundError('There is no post corresponding to the id'),
+            () => ConflictError('Database error'),
         );
 };
