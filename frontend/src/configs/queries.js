@@ -72,7 +72,9 @@ export const GET_POST = gql`
         getPostById(id: $id) {
             id
             title
+            userId
             boardId
+            authorId
             boardName
             content
             companyName
@@ -122,6 +124,7 @@ export const GET_COMMENTS = gql`
         getCommentsByPostId(id: $id) {
             id
             postId
+            userId
             authorId
             authorName
             content

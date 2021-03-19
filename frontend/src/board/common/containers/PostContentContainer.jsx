@@ -8,7 +8,7 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import 'antd/dist/antd.css';
 import { useStyles } from '../styles/postContent.style';
 import { GET_POST, HANDLE_POST_LIKE } from '../../../configs/queries';
-import { message, Modal } from 'antd';
+import { message, Modal, Tooltip } from 'antd';
 import moment from 'moment';
 import PageTitle from '../../../common/components/PageTitle';
 
@@ -84,12 +84,16 @@ export default function PostContentContainer({ id }) {
                                 <Grid item xs={12} sm={6}>
                                     {post.title}
                                 </Grid>
-                                <Grid item xs={12} sm={6} align="right">
-                                    <DeleteOutlinedIcon
-                                        onClick={handleDelete}
-                                        className={classes.deleteIcon}
-                                    />
-                                </Grid>
+                                {post.userId === post.authorId && (
+                                    <Grid item xs={12} sm={6} align="right">
+                                        <Tooltip title="게시글 삭제">
+                                            <DeleteOutlinedIcon
+                                                onClick={handleDelete}
+                                                className={classes.deleteIcon}
+                                            />
+                                        </Tooltip>
+                                    </Grid>
+                                )}
                             </Grid>
                             <Grid container justify="center" className={classes.userInfoSection}>
                                 <Grid item xs={12} sm={6}>

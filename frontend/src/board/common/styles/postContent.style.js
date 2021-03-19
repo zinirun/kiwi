@@ -22,9 +22,11 @@ export const useStyles = makeStyles((theme) => ({
         color: '#0000008A',
     },
     deleteIcon: {
+        fontSize: '1.2rem',
+        color: '#ccc',
         cursor: 'pointer',
         '&:hover': {
-            color: 'indianRed',
+            color: '#F86A6A',
         },
     },
     upIcon: {
