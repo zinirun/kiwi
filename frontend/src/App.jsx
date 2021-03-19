@@ -43,6 +43,7 @@ import MyPostsPage from './my-menu/pages/MyPostsPage';
 
 // 나의 댓글
 import MyCommentsPage from './my-menu/pages/MyCommentsPage';
+import TopPage from './board/top/pages/TopPage';
 
 function App() {
     return (
@@ -58,6 +59,7 @@ function App() {
                     <Route path="/question" component={QuestionPage} />
                     <Route path="/talent" component={TalentPage} />
                     <Route path="/market" component={MarketPage} />
+                    <Route path="/top" component={TopPage} />
                     <Route path="/post/:id" component={PostContentPage} />
                     <Route path="/write" component={PostWritePage} />
                     <Route path="/my/info" component={ChangeUserInfoPage} />

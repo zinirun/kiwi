@@ -149,14 +149,14 @@ module.exports = buildSchema(`
         getUser: User!
         getPostById(id: ID!): Post!
         getPostsByBoardId(boardId: ID!, categoryId: ID): [PostList]
-        getPostsByLikecount(likeCount: Int!, categoryId: ID): [Post]
+        getPostsByLikeCount(likeCount: Int!): [PostList]
         getRecentPosts: [RecentPosts]
         getCommentsByPostId(id: ID!): [Comment]
         getBoardById(id: ID!): Board!
         getBoards: [Board]
         getCategoryById(id: ID!): Category!
         getCategoriesByBoardId(boardId: ID!): [CategoryList]
-        getMyPosts: [Post]
+        getMyPosts: [PostList]
         getMyComments: [Comment]
     }
 
