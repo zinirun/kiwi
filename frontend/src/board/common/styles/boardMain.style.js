@@ -1,13 +1,11 @@
 import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
     paper: {
-        maxWidth: 330,
         minHeight: 235,
         border: '1px solid #ddd',
         borderBottomColor: '#ddd',
         borderBottomWidth: 2,
         boxShadow: 'none',
-        marginTop: 15,
     },
     titleChip: {
         cursor: 'pointer',

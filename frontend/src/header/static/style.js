@@ -61,7 +61,7 @@ export const useStyles = makeStyles((theme) => ({
     content: {
         flexGrow: 1,
         padding: theme.spacing(3),
-        maxWidth: 730,
+        maxWidth: 800,
     },
     userSection: {
         padding: '16px 8px',

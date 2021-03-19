@@ -21,6 +21,15 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: '1.2rem',
         fontWeight: 'bold',
     },
+    deleteIcon: {
+        marginLeft: 5,
+        fontSize: '0.9rem',
+        color: '#ccc',
+        cursor: 'pointer',
+        '&:hover': {
+            color: '#F86A6A',
+        },
+    },
     addCommentSection: {
         display: 'flex',
         flexDirection: 'row-reverse',
