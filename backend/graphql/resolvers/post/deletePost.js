@@ -10,6 +10,23 @@ const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 
 module.exports = async ({ id }, { id: authorId }) => {
+    await models.comment
+        .update(
+            {
+                isDeleted: 1,
+            },
+            { where: { postId: id } },
+        )
+        .then((result) => {
+            console.log(result);
+            if (result[0] === 0) {
+                return false;
+            }
+            return true;
+        })
+        .catch(() => {
+            throw ConflictError('Delete(Update) error occured');
+        });
     return await models.post
         .update(
             {
