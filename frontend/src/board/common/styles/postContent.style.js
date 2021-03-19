@@ -57,7 +57,6 @@ export const useStyles = makeStyles((theme) => ({
         paddingBottom: 30,
     },
     modifyIcon: {
-        marginRight: 20,
         fontSize: '1.2rem',
         color: '#ccc',
         cursor: 'pointer',

@@ -20,6 +20,12 @@ import TalentPage from './board/talent/pages/TalentPage';
 // 장터
 import MarketPage from './board/market/pages/MarketPage';
 
+// TOP 게시판
+import TopPage from './board/top/pages/TopPage';
+
+// 글 수정
+import PostModifyPage from './board/common/pages/PostModifyPage';
+
 // 글쓰기
 import PostWritePage from './board/common/pages/PostWritePage';
 
@@ -43,7 +49,6 @@ import MyPostsPage from './my-menu/pages/MyPostsPage';
 
 // 나의 댓글
 import MyCommentsPage from './my-menu/pages/MyCommentsPage';
-import TopPage from './board/top/pages/TopPage';
 
 function App() {
     return (
@@ -61,6 +66,7 @@ function App() {
                     <Route path="/market" component={MarketPage} />
                     <Route path="/top" component={TopPage} />
                     <Route path="/post/:id" component={PostContentPage} />
+                    <Route path="/modify" component={PostModifyPage} />
                     <Route path="/write" component={PostWritePage} />
                     <Route path="/my/info" component={ChangeUserInfoPage} />
                     <Route path="/my/post" component={MyPostsPage} />

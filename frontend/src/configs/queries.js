@@ -180,6 +180,12 @@ export const CREATE_POST = gql`
     }
 `;
 
+export const UPDATE_POST = gql`
+    mutation updatePost($id: ID!, $post: PostUpdateInput!) {
+        updatePost(id: $id, post: $post)
+    }
+`;
+
 export const CREATE_COMMENT = gql`
     mutation createComment($comment: CommentInput!) {
         createComment(comment: $comment) {

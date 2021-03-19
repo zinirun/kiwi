@@ -5,19 +5,19 @@
         title: String!
         content: String!
     }
- * updatePost(post: PostUpdateInput!): Boolean
+ * updatePost(id: ID!, post: PostUpdateInput!): Boolean
  */
 
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 
-module.exports = async ({ post }, { id }) => {
+module.exports = async ({ id, post }, { id: authorId }) => {
     return await models.post
         .update(
             {
                 ...post,
             },
-            { where: { authorId: id } },
+            { where: { id, authorId } },
         )
         .then(() => {
             return true;

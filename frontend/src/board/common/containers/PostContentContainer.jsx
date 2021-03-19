@@ -6,10 +6,9 @@ import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
-import 'antd/dist/antd.css';
 import { useStyles } from '../styles/postContent.style';
 import { GET_POST, HANDLE_POST_LIKE, DELETE_POST } from '../../../configs/queries';
-import { message, Modal, Tooltip } from 'antd';
+import { message, Modal, Tooltip, Space } from 'antd';
 import moment from 'moment';
 import PageTitle from '../../../common/components/PageTitle';
 import { PostContentSkeleton } from '../components/Skeletons';
@@ -33,6 +32,10 @@ export default function PostContentContainer({ id }) {
 
     const [handlePostLike] = useMutation(HANDLE_POST_LIKE);
     const [deletePost] = useMutation(DELETE_POST);
+
+    useEffect(() => {
+        postRefetch();
+    }, [postRefetch]);
 
     useEffect(() => {
         if (postData) {
@@ -91,6 +94,11 @@ export default function PostContentContainer({ id }) {
             },
         });
     };
+
+    const handleModify = () => {
+        history.push(`/modify?postId=${post.id}`);
+    };
+
     return (
         <>
             {postLoading && <PostContentSkeleton />}
@@ -109,10 +117,11 @@ export default function PostContentContainer({ id }) {
 
                                 <Grid item xs={12} sm={6} align="right">
                                     {post.userId === post.authorId && (
-                                        <>
+                                        <Space size="small">
                                             <Tooltip title="게시글 수정">
                                                 <CreateOutlinedIcon
                                                     className={classes.modifyIcon}
+                                                    onClick={handleModify}
                                                 />
                                             </Tooltip>
                                             <Tooltip title="게시글 삭제">
@@ -121,7 +130,7 @@ export default function PostContentContainer({ id }) {
                                                     className={classes.deleteIcon}
                                                 />
                                             </Tooltip>
-                                        </>
+                                        </Space>
                                     )}
                                 </Grid>
                             </Grid>
