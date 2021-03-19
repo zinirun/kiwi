@@ -13,6 +13,7 @@ import { GET_POST_LIST } from '../../../configs/queries';
 import moment from 'moment';
 import { message } from 'antd';
 import NoResult from '../components/NoResult';
+import { BoardListSkeleton } from '../components/Skeletons';
 
 export default function BoardListContainer({ boardId }) {
     const classes = { ...useStyles(), ...boardCommonStyles() };
@@ -72,6 +73,7 @@ export default function BoardListContainer({ boardId }) {
                     </Button>
                 </Grid>
             </Grid>
+            {postListLoading && <BoardListSkeleton />}
             {!postListLoading && postList.length === 0 && <NoResult />}
             {postList.map((post, idx) => (
                 <Grid
