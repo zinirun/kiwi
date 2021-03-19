@@ -8,6 +8,7 @@ import { useStyles } from '../styles/comment.style';
 import { boardCommonStyles } from '../styles/board.common.style';
 import { CREATE_COMMENT, GET_COMMENTS, HANDLE_COMMENT_LIKE } from '../../../configs/queries';
 import { commentTimeFormatter } from '../tools/formatter';
+import { PostCommentSkeleton } from '../components/Skeletons';
 const { TextArea } = Input;
 
 export default function CommentList({ id }) {
@@ -83,6 +84,7 @@ export default function CommentList({ id }) {
 
     return (
         <>
+            {commentsLoading && <PostCommentSkeleton />}
             {!commentsLoading && (
                 <>
                     <div className={classes.comment}>

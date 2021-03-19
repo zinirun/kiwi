@@ -12,6 +12,7 @@ import moment from 'moment';
 import { message } from 'antd';
 import { GET_MY_POSTS } from '../../configs/queries';
 import NoResult from '../../board/common/components/NoResult';
+import { BoardListSkeleton } from '../../board/common/components/Skeletons';
 
 export default function MyPostsContainer() {
     const classes = { ...useStyles(), ...boardCommonStyles() };
@@ -40,6 +41,7 @@ export default function MyPostsContainer() {
 
     return (
         <>
+            {postListLoading && <BoardListSkeleton />}
             {!postListLoading && postList.length === 0 && <NoResult title="나의 게시물" />}
             {postList.map((post, idx) => (
                 <Grid

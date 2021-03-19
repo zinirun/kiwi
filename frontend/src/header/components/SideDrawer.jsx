@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Divider, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { useStyles } from '../static/style';
 import Logo from '../../common/components/Logo';
@@ -10,13 +10,23 @@ import { GET_BOARDS } from '../../configs/queries';
 import { useQuery } from '@apollo/react-hooks';
 import { message, Tooltip } from 'antd';
 import { useDarkreader, Switch } from 'react-darkreader';
+import { withCookies } from 'react-cookie';
 
-export default function SideDrawer({ user }) {
+export default withCookies(function SideDrawer({ user, cookies }) {
     const classes = useStyles();
     const [isDark, { toggle }] = useDarkreader(false);
     const history = useHistory();
     const [boards, setBoards] = useState([]);
     const { data: boardsData, loading: boardsLoading, error: boardsError } = useQuery(GET_BOARDS);
+    const [darkFromCookie, setDarkFromCookie] = useState(false);
+
+    useEffect(() => {
+        if (!darkFromCookie) {
+            const isDark = cookies.get('darkmode');
+            isDark === 'true' && toggle();
+            setDarkFromCookie(true);
+        }
+    }, [darkFromCookie, cookies, toggle]);
 
     useEffect(() => {
         if (boardsData) {
@@ -28,11 +38,16 @@ export default function SideDrawer({ user }) {
         }
     }, [boardsData, boardsError, history]);
 
+    const handleDarkToggle = useCallback(() => {
+        toggle();
+        cookies.set('darkmode', !isDark);
+    }, [isDark, cookies, toggle]);
+
     return (
         <div className={classes.sideDrawerWrapper}>
             <Tooltip title="다크모드">
                 <div className={classes.darkReader}>
-                    <Switch checked={isDark} onChange={toggle} styling="fluent" />
+                    <Switch checked={isDark} onChange={handleDarkToggle} styling="fluent" />
                 </div>
             </Tooltip>
             <Link to={'/'} style={{ textDecoration: 'none' }}>
@@ -85,4 +100,4 @@ export default function SideDrawer({ user }) {
             )}
         </div>
     );
-}
+});
