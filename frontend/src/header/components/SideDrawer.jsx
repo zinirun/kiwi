@@ -57,7 +57,7 @@ export default function SideDrawer({ user }) {
                     ))}
                     <Divider className={classes.sideDivider} />
                     {boards.map((m) => (
-                        <Link to={m.link} style={{ textDecoration: 'none' }} key={m.id}>
+                        <Link to={`/${m.link}`} style={{ textDecoration: 'none' }} key={m.id}>
                             <ListItem className={classes.drawerItem} button>
                                 <ListItemIcon className={classes.drawerIcon}>
                                     <IconViewer icon={m.icon} />
@@ -68,6 +68,7 @@ export default function SideDrawer({ user }) {
                             </ListItem>
                         </Link>
                     ))}
+                    <Divider className={classes.sideDivider} />
                     {MY_MENU.map((m) => (
                         <Link to={m.link} style={{ textDecoration: 'none' }} key={m.id}>
                             <ListItem className={classes.drawerItem} button>

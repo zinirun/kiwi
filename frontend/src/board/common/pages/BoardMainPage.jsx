@@ -5,11 +5,12 @@ import { Grid } from '@material-ui/core';
 import BoardMainContainer from '../containers/BoardMainContainer';
 import { GET_RECENT_POSTS } from '../../../configs/queries';
 import { message } from 'antd';
+import { BoardMainSkeleton } from '../components/Skeletons';
 
 export default function BoardMainPage() {
     const history = useHistory();
     const [posts, setPosts] = useState([]);
-    const { data, error, refetch } = useQuery(GET_RECENT_POSTS);
+    const { data, error, refetch, loading } = useQuery(GET_RECENT_POSTS);
     useEffect(() => {
         if (data) {
             setPosts(data.getRecentPosts);
@@ -23,12 +24,15 @@ export default function BoardMainPage() {
         refetch();
     }, [refetch]);
     return (
-        <Grid container>
-            {posts.map((p, idx) => (
-                <Grid key={idx} item xs={12} sm={6}>
-                    <BoardMainContainer data={p} />
-                </Grid>
-            ))}
-        </Grid>
+        <>
+            {loading && <BoardMainSkeleton />}
+            <Grid container>
+                {posts.map((p, idx) => (
+                    <Grid key={idx} item xs={12} sm={6}>
+                        <BoardMainContainer data={p} />
+                    </Grid>
+                ))}
+            </Grid>
+        </>
     );
 }

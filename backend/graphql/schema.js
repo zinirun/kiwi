@@ -18,6 +18,8 @@ module.exports = buildSchema(`
 
     type Post {
         id: ID!
+        userId: ID!
+        authorId: ID!
         boardId: ID!
         boardName: String!
         categoryName: String
@@ -60,6 +62,7 @@ module.exports = buildSchema(`
 
     type Comment {
         id: ID!
+        userId: ID!
         postId: ID!
         authorId: ID!
         authorName: String!
