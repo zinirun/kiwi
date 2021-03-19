@@ -123,6 +123,17 @@ module.exports = buildSchema(`
         commentCount: Int!
     }
 
+    type SearchPostList {
+        id: ID!
+        title: String!
+        companyName: String
+        gradeName: String!
+        authorName: String!
+        updatedAt: Date!
+        likeCount: Int!
+        commentCount: Int!
+    }
+
     input UserUpdateInput {
         studentGradeId: ID!
         companyId: ID
@@ -158,6 +169,7 @@ module.exports = buildSchema(`
         getCategoriesByBoardId(boardId: ID!): [CategoryList]
         getMyPosts: [PostList]
         getMyComments: [Comment]
+        searchPostsByBoardId(boardId: ID!, searchValue: String!): [SearchPostList]
     }
 
     type Mutation {
@@ -171,5 +183,6 @@ module.exports = buildSchema(`
         createComment(comment: CommentInput!): CommentAfterCreate
         deleteComment(id: ID!): Boolean
         handleCommentLike(commentId: ID!): String
+        searchPostsByBoardId(boardId: ID!, searchValue: String!): [SearchPostList]
     }
 `);

@@ -230,3 +230,19 @@ export const DELETE_COMMENT = gql`
         deleteComment(id: $id)
     }
 `;
+
+export const SEARCH_POST_LIST = gql`
+    mutation searchPostsByBoardId($boardId: ID!, $searchValue: String!) {
+        searchPostsByBoardId(boardId: $boardId, searchValue: $searchValue) {
+            id
+            __typename @skip(if: true)
+            title
+            companyName
+            gradeName
+            authorName
+            updatedAt
+            likeCount
+            commentCount
+        }
+    }
+`;
