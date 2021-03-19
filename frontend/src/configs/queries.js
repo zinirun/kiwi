@@ -76,6 +76,7 @@ export const GET_POST = gql`
             boardId
             authorId
             boardName
+            boardLink
             content
             companyName
             categoryName
@@ -93,7 +94,6 @@ export const GET_MY_POSTS = gql`
         getMyPosts {
             id
             title
-            content
             companyName
             categoryName
             gradeName
@@ -150,6 +150,23 @@ export const GET_RECENT_POSTS = gql`
                 title
                 likeCount
             }
+        }
+    }
+`;
+
+export const GET_POSTS_BY_LIKE_COUNT = gql`
+    query getPostsByLikeCount($likeCount: Int!) {
+        getPostsByLikeCount(likeCount: $likeCount) {
+            id
+            __typename @skip(if: true)
+            title
+            companyName
+            gradeName
+            authorName
+            updatedAt
+            categoryName
+            likeCount
+            commentCount
         }
     }
 `;

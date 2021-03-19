@@ -10,6 +10,7 @@ import moment from 'moment';
 import { message } from 'antd';
 import { GET_MY_COMMENTS } from '../../configs/queries';
 import NoResult from '../../board/common/components/NoResult';
+import { BoardListSkeleton } from '../../board/common/components/Skeletons';
 
 export default function MyCommentsContainer() {
     const classes = { ...useStyles(), ...boardCommonStyles() };
@@ -38,6 +39,7 @@ export default function MyCommentsContainer() {
 
     return (
         <>
+            {commentsLoading && <BoardListSkeleton />}
             {!commentsLoading && comments.length === 0 && <NoResult title="내가 쓴 댓글" />}
             {comments.map((comment, idx) => (
                 <Grid

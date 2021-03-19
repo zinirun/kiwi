@@ -13,7 +13,7 @@ module.exports = {
     // Post
     getPostById: require('./post/getPost'),
     getPostsByBoardId: require('./post/getPostsByBoardId'),
-    getPostsByLikecount: require('./post/getPostsByLikecount'),
+    getPostsByLikeCount: require('./post/getPostsByLikeCount'),
     createPost: require('./post/createPost'),
     updatePost: require('./post/updatePost'),
     deletePost: require('./post/deletePost'),
