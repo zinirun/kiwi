@@ -61,7 +61,8 @@ export default function CommentList({ id }) {
             },
         })
             .then(() => {
-                history.push(`post/${comments.postId}`);
+                message.success('댓글이 삭제되었습니다.');
+                commentsRefetch();
             })
             .catch(() => {
                 message.error('게시글 삭제 중 오류가 발생했습니다.');
@@ -142,6 +143,7 @@ export default function CommentList({ id }) {
                                                             <Tooltip title="댓글 삭제">
                                                                 <DeleteOutlinedIcon
                                                                     value={item.id}
+                                                                    post={item.postId}
                                                                     onClick={handleDelete}
                                                                     className={classes.deleteIcon}
                                                                 />
