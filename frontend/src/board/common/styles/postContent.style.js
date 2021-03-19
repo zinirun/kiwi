@@ -19,6 +19,15 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: '1.4rem',
         fontWeight: 'bold',
         borderBottom: '1px solid #ddd',
+        color: '#0000008A',
+    },
+    deleteIcon: {
+        fontSize: '1.2rem',
+        color: '#ccc',
+        cursor: 'pointer',
+        '&:hover': {
+            color: '#F86A6A',
+        },
     },
     upIcon: {
         fontSize: 15,

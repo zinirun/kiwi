@@ -5,6 +5,8 @@
  * @returns {Post}
  * type Post {
         id: ID!
+        userId: ID!
+        authorId: ID!
         boardId: ID!
         boardName: String!
         boardLink: String!
@@ -25,7 +27,7 @@
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 
-module.exports = async ({ id }, { departmentId }) => {
+module.exports = async ({ id }, { departmentId, id: userId }) => {
     const query = `
                     select p.id, b.id as boardId, b.boardName, b.link as boardLink, p.title, p.content, c.companyName, g.gradeName, u.userName as authorName, p.createdAt, p.updatedAt, cg.categoryName, ifnull(ppl.likeCount, 0) as likeCount, ifnull(pc.commentCount, 0) as commentCount
                     from post p
@@ -49,7 +51,11 @@ module.exports = async ({ id }, { departmentId }) => {
             },
         })
         .spread(
-            (result) => JSON.parse(JSON.stringify(result[0])),
-            () => ConflictError('Database error'),
+            (result) => {
+                const post = JSON.parse(JSON.stringify(result[0]));
+                post.userId = userId;
+                return post;
+            },
+            () => NotFoundError('There is no post corresponding to the id'),
         );
 };
