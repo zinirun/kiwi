@@ -75,4 +75,9 @@ export const useStyles = makeStyles((theme) => ({
     userSectionSmall: {
         fontSize: '0.75rem',
     },
+    darkReader: {
+        position: 'absolute',
+        bottom: 10,
+        left: 10,
+    },
 }));
