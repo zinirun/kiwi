@@ -27,7 +27,7 @@ const { ConflictError } = require('../../errors/errors');
 
 module.exports = async ({}, { id }) => {
     const query = `
-                    select p.id, b.id as boardId, b.boardName, b.link as boardLink, p.title, p.content, c.companyName, g.gradeName, u.userName as authorName, p.createdAt, p.updatedAt, cg.categoryName, ifnull(ppl.likeCount, 0) as likeCount, ifnull(pc.commentCount, 0) as commentCount
+                    select p.id, p.title, c.companyName, g.gradeName, u.userName as authorName, p.createdAt, p.updatedAt, cg.categoryName, ifnull(ppl.likeCount, 0) as likeCount, ifnull(pc.commentCount, 0) as commentCount
                     from post p
                         left join category cg on p.categoryId = cg.id
                         left join board b on p.boardId = b.id
