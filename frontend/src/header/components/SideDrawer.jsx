@@ -8,7 +8,7 @@ import SideUserSection from './SideUserSection';
 import { EXTRA_BOARDS, MY_MENU } from '../../configs/siteMenu';
 import { GET_BOARDS } from '../../configs/queries';
 import { useQuery } from '@apollo/react-hooks';
-import { message } from 'antd';
+import { message, Tooltip } from 'antd';
 import { useDarkreader, Switch } from 'react-darkreader';
 
 export default function SideDrawer({ user }) {
@@ -30,9 +30,11 @@ export default function SideDrawer({ user }) {
 
     return (
         <div className={classes.sideDrawerWrapper}>
-            <div className={classes.darkReader}>
-                <Switch checked={isDark} onChange={toggle} styling="fluent" />
-            </div>
+            <Tooltip title="다크모드">
+                <div className={classes.darkReader}>
+                    <Switch checked={isDark} onChange={toggle} styling="fluent" />
+                </div>
+            </Tooltip>
             <Link to={'/'} style={{ textDecoration: 'none' }}>
                 <Logo />
             </Link>
