@@ -4,12 +4,15 @@ import { useHistory } from 'react-router';
 import { Grid, Chip, Card, CardContent, Typography } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import 'antd/dist/antd.css';
 import { useStyles } from '../styles/postContent.style';
 import { GET_POST, HANDLE_POST_LIKE } from '../../../configs/queries';
-import { message } from 'antd';
+import { message, Modal } from 'antd';
 import moment from 'moment';
 import PageTitle from '../../../common/components/PageTitle';
+
+const { confirm } = Modal;
 
 export default function PostContentContainer({ id }) {
     const classes = useStyles();
@@ -55,6 +58,18 @@ export default function PostContentContainer({ id }) {
             .catch(() => message.error('게시글 좋아요 중 문제가 발생했습니다.'));
     };
 
+    const handleDelete = () => {
+        confirm({
+            title: '게시물을 삭제할까요?',
+            content: '삭제된 게시글은 복구할 수 없습니다.',
+            okText: '삭제',
+            cancelText: '취소',
+            onOk() {
+                console.log('abc');
+            },
+        });
+    };
+
     return (
         <>
             {post && (
@@ -65,13 +80,17 @@ export default function PostContentContainer({ id }) {
                             {post.categoryName && (
                                 <span className={classes.part}>{post.categoryName}</span>
                             )}
-                            <Typography
-                                className={classes.title}
-                                color="textSecondary"
-                                gutterBottom
-                            >
-                                {post.title}
-                            </Typography>
+                            <Grid container justify="center" className={classes.title}>
+                                <Grid item xs={12} sm={6}>
+                                    {post.title}
+                                </Grid>
+                                <Grid item xs={12} sm={6} align="right">
+                                    <DeleteOutlinedIcon
+                                        onClick={handleDelete}
+                                        className={classes.deleteIcon}
+                                    />
+                                </Grid>
+                            </Grid>
                             <Grid container justify="center" className={classes.userInfoSection}>
                                 <Grid item xs={12} sm={6}>
                                     <span style={{ color: '#999', fontSize: '0.75rem' }}>
