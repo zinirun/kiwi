@@ -16,9 +16,16 @@ export default function MyCommentsContainer() {
     const classes = { ...useStyles(), ...boardCommonStyles() };
     const history = useHistory();
     const [comments, setComments] = useState([]);
-    const { data: commentsData, error: commentsError, loading: commentsLoading } = useQuery(
-        GET_MY_COMMENTS,
-    );
+    const {
+        data: commentsData,
+        error: commentsError,
+        loading: commentsLoading,
+        refetch: commentsRefetch,
+    } = useQuery(GET_MY_COMMENTS);
+
+    useEffect(() => {
+        commentsRefetch();
+    }, [commentsRefetch]);
 
     useEffect(() => {
         if (commentsData) {

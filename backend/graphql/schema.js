@@ -36,11 +36,11 @@ module.exports = buildSchema(`
     }
 
     type RecentPosts {
-         boardId: ID!
-         boardName: String!
-         boardLink: String!
-         boardIcon: String!
-         posts: [RecentPost]
+        boardId: ID!
+        boardName: String!
+        boardLink: String!
+        boardIcon: String!
+        posts: [RecentPost]
     }
 
     type RecentPost {

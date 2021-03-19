@@ -18,9 +18,16 @@ export default function MyPostsContainer() {
     const classes = { ...useStyles(), ...boardCommonStyles() };
     const history = useHistory();
     const [postList, setPostList] = useState([]);
-    const { data: postListData, error: postListError, loading: postListLoading } = useQuery(
-        GET_MY_POSTS,
-    );
+    const {
+        data: postListData,
+        error: postListError,
+        loading: postListLoading,
+        refetch: postListRefetch,
+    } = useQuery(GET_MY_POSTS);
+
+    useEffect(() => {
+        postListRefetch();
+    }, [postListRefetch]);
 
     useEffect(() => {
         if (postListData) {
