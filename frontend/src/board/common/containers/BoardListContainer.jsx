@@ -80,6 +80,7 @@ export default function BoardListContainer({ boardId }) {
                 },
             })
                 .then((result) => {
+                    setSelectedCategoryId('');
                     form.resetFields();
                     setPostList(
                         result.data.searchPostsByBoardId.map((p) => {
@@ -104,28 +105,34 @@ export default function BoardListContainer({ boardId }) {
 
     return (
         <>
-            <Grid container justify="center" style={{ marginBottom: 15 }}>
+            <Grid spacing={2} container justify="center" style={{ marginBottom: 15 }}>
                 <Grid item xs={12} sm={10}>
-                    <SelectCategory
-                        boardId={boardId}
-                        value={selectedCategoryId}
-                        setValue={setSelectedCategoryId}
-                    />
-                    <Form form={form}>
-                        <Form.Item name="search" style={{ marginBottom: 0 }}>
-                            <Search
-                                name="search"
-                                className={classes.searchSection}
-                                placeholder="검색할 제목을 입력하세요"
-                                onSearch={onSearch}
-                                suffix={
-                                    <Tooltip title="검색 결과 초기화">
-                                        <ReloadOutlined onClick={handleReloadClick} />
-                                    </Tooltip>
-                                }
+                    <Grid container spacing={1}>
+                        <Grid item>
+                            <SelectCategory
+                                boardId={boardId}
+                                value={selectedCategoryId}
+                                setValue={setSelectedCategoryId}
                             />
-                        </Form.Item>
-                    </Form>
+                        </Grid>
+                        <Grid item>
+                            <Form form={form}>
+                                <Form.Item name="search" style={{ marginBottom: 0 }}>
+                                    <Search
+                                        name="search"
+                                        className={classes.searchSection}
+                                        placeholder="검색할 제목을 입력하세요"
+                                        onSearch={onSearch}
+                                        suffix={
+                                            <Tooltip title="검색 결과 초기화">
+                                                <ReloadOutlined onClick={handleReloadClick} />
+                                            </Tooltip>
+                                        }
+                                    />
+                                </Form.Item>
+                            </Form>
+                        </Grid>
+                    </Grid>
                 </Grid>
                 <Grid item xs={12} sm={2} align="right">
                     <Button
