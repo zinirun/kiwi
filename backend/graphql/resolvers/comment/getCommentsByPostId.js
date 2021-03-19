@@ -5,6 +5,7 @@
  * @returns {Comment}
  * type Comment {
         id: ID!
+        userId: ID!
         postId: ID!
         authorId: ID!
         authorName: String!
@@ -23,7 +24,7 @@
 
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
-module.exports = async ({ id }, {}) => {
+module.exports = async ({ id }, { id: userId }) => {
     const query = `select c.id, u.id as authorId,
     postId,
     u.userName as authorName,
@@ -51,8 +52,16 @@ order by c.id;`;
             },
         })
         .spread(
-            (result) => JSON.parse(JSON.stringify(result)),
-            (error) => ConflictError('Error occured at Selection'),
+            (result) => {
+                const comments = JSON.parse(JSON.stringify(result));
+                return comments.map((c) => {
+                    return {
+                        ...c,
+                        userId,
+                    };
+                });
+            },
+            () => ConflictError('Error occured at Selection'),
         );
 };
 // query getCommentsByPostId {

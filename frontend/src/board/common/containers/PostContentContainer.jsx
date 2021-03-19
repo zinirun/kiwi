@@ -10,12 +10,18 @@ import { GET_POST, HANDLE_POST_LIKE } from '../../../configs/queries';
 import { message } from 'antd';
 import moment from 'moment';
 import PageTitle from '../../../common/components/PageTitle';
+import { PostContentSkeleton } from '../components/Skeletons';
 
 export default function PostContentContainer({ id }) {
     const classes = useStyles();
     const history = useHistory();
     const [post, setPost] = useState(null);
-    const { data: postData, error: postError, refetch: postRefetch } = useQuery(GET_POST, {
+    const {
+        data: postData,
+        error: postError,
+        refetch: postRefetch,
+        loading: postLoading,
+    } = useQuery(GET_POST, {
         variables: {
             id,
         },
@@ -57,6 +63,7 @@ export default function PostContentContainer({ id }) {
 
     return (
         <>
+            {postLoading && <PostContentSkeleton />}
             {post && (
                 <>
                     <PageTitle title={post.boardName} />

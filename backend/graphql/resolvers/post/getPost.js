@@ -5,6 +5,8 @@
  * @returns {Post}
  * type Post {
         id: ID!
+        userId: ID!
+        authorId: ID!
         boardId: ID!
         boardName: String!
         title: String!
@@ -23,9 +25,9 @@
 const models = require('../../../models');
 const { NotFoundError } = require('../../errors/errors');
 
-module.exports = async ({ id }, { departmentId }) => {
+module.exports = async ({ id }, { departmentId, id: userId }) => {
     const query = `
-                    select p.id, b.id as boardId, b.boardName, p.title, p.content, c.companyName, g.gradeName, u.userName as authorName, p.createdAt, p.updatedAt, cg.categoryName, ifnull(ppl.likeCount, 0) as likeCount, ifnull(pc.commentCount, 0) as commentCount
+                    select p.id, b.id as boardId, b.boardName, p.title, p.content, c.companyName, g.gradeName, u.userName as authorName, p.authorId, p.createdAt, p.updatedAt, cg.categoryName, ifnull(ppl.likeCount, 0) as likeCount, ifnull(pc.commentCount, 0) as commentCount
                     from post p
                         left join category cg on p.categoryId = cg.id
                         left join board b on b.id = p.boardId
@@ -46,7 +48,11 @@ module.exports = async ({ id }, { departmentId }) => {
             },
         })
         .spread(
-            (result) => JSON.parse(JSON.stringify(result[0])),
+            (result) => {
+                const post = JSON.parse(JSON.stringify(result[0]));
+                post.userId = userId;
+                return post;
+            },
             () => NotFoundError('There is no post corresponding to the id'),
         );
 };
