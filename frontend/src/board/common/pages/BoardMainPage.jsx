@@ -26,7 +26,7 @@ export default function BoardMainPage() {
     return (
         <>
             {loading && <BoardMainSkeleton />}
-            <Grid container>
+            <Grid container spacing={1}>
                 {posts.map((p, idx) => (
                     <Grid key={idx} item xs={12} sm={6}>
                         <BoardMainContainer data={p} />
