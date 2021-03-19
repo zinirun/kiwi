@@ -19,6 +19,7 @@ module.exports = {
     deletePost: require('./post/deletePost'),
     getMyPosts: require('./post/getMyPosts'),
     getRecentPosts: require('./post/getRecentPosts'),
+    searchPostsByBoardId: require('./post/searchPostsByBoardId'),
 
     // Comment
     getCommentsByPostId: require('./comment/getCommentsByPostId'),

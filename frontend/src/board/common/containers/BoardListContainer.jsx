@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery, useMutation } from 'react-apollo';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Grid, Button, Chip } from '@material-ui/core';
@@ -9,17 +9,22 @@ import { isMobile } from 'react-device-detect';
 import { useStyles } from '../styles/board.style';
 import { boardCommonStyles } from '../styles/board.common.style';
 import SelectCategory from '../components/SelectCategory';
-import { GET_POST_LIST } from '../../../configs/queries';
+import { GET_POST_LIST, SEARCH_POST_LIST } from '../../../configs/queries';
 import moment from 'moment';
-import { message } from 'antd';
+import { Input, message } from 'antd';
 import NoResult from '../components/NoResult';
 import { BoardListSkeleton } from '../components/Skeletons';
+
+const { Search } = Input;
 
 export default function BoardListContainer({ boardId }) {
     const classes = { ...useStyles(), ...boardCommonStyles() };
     const history = useHistory();
     const [selectedCategoryId, setSelectedCategoryId] = useState('');
     const [postList, setPostList] = useState([]);
+
+    const [searchPostsByBoardId] = useMutation(SEARCH_POST_LIST);
+
     const {
         data: postListData,
         error: postListError,
@@ -52,6 +57,28 @@ export default function BoardListContainer({ boardId }) {
         }
     }, [postListData, setPostList, postListError, history]);
 
+    const onSearch = (value) => {
+        searchPostsByBoardId({
+            variables: {
+                boardId,
+                searchValue: '%' + value + '%',
+            },
+        })
+            .then((result) => {
+                setPostList(
+                    result.data.searchPostsByBoardId.map((p) => {
+                        return {
+                            ...p,
+                            createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
+                        };
+                    }),
+                );
+            })
+            .catch(() => {
+                message.error('게시글 검색 중 오류가 발생했습니다.');
+            });
+    };
+
     return (
         <>
             <Grid container justify="center" style={{ marginBottom: 15 }}>
@@ -60,6 +87,11 @@ export default function BoardListContainer({ boardId }) {
                         boardId={boardId}
                         value={selectedCategoryId}
                         setValue={setSelectedCategoryId}
+                    />
+                    <Search
+                        className={classes.searchSection}
+                        placeholder="검색할 제목을 입력하세요"
+                        onSearch={onSearch}
                     />
                 </Grid>
                 <Grid item xs={12} sm={2} align="right">

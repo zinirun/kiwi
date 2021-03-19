@@ -13,4 +13,7 @@ export const boardCommonStyles = makeStyles((theme) => ({
             color: 'white',
         },
     },
+    searchSection: {
+        width: 300,
+    },
 }));
