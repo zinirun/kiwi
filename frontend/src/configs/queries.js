@@ -202,3 +202,9 @@ export const DELETE_POST = gql`
         deletePost(id: $id)
     }
 `;
+
+export const DELETE_COMMENT = gql`
+    mutation deleteComment($id: ID!) {
+        deleteComment(id: $id)
+    }
+`;
