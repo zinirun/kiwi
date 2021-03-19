@@ -76,6 +76,7 @@ export const GET_POST = gql`
             boardId
             authorId
             boardName
+            boardLink
             content
             companyName
             categoryName

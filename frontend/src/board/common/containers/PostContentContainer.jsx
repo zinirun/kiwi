@@ -54,7 +54,7 @@ export default function PostContentContainer({ id }) {
             },
         })
             .then(() => {
-                history.push('/');
+                history.push(`/${post.boardLink}`);
             })
             .catch(() => {
                 message.error('게시글 삭제 중 오류가 발생했습니다.');

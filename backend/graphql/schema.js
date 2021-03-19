@@ -22,6 +22,7 @@ module.exports = buildSchema(`
         authorId: ID!
         boardId: ID!
         boardName: String!
+        boardLink: String
         categoryName: String
         title: String!
         content: String!
