@@ -5,6 +5,7 @@ import { Grid, Chip, Card, CardContent, Typography } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import 'antd/dist/antd.css';
 import { useStyles } from '../styles/postContent.style';
 import { GET_POST, HANDLE_POST_LIKE, DELETE_POST } from '../../../configs/queries';
@@ -108,12 +109,19 @@ export default function PostContentContainer({ id }) {
 
                                 <Grid item xs={12} sm={6} align="right">
                                     {post.userId === post.authorId && (
-                                        <Tooltip title="게시글 삭제">
-                                            <DeleteOutlinedIcon
-                                                onClick={handleDelete}
-                                                className={classes.deleteIcon}
-                                            />
-                                        </Tooltip>
+                                        <>
+                                            <Tooltip title="게시글 수정">
+                                                <CreateOutlinedIcon
+                                                    className={classes.modifyIcon}
+                                                />
+                                            </Tooltip>
+                                            <Tooltip title="게시글 삭제">
+                                                <DeleteOutlinedIcon
+                                                    onClick={handleDelete}
+                                                    className={classes.deleteIcon}
+                                                />
+                                            </Tooltip>
+                                        </>
                                     )}
                                 </Grid>
                             </Grid>

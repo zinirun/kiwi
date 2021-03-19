@@ -19,7 +19,7 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: '1.4rem',
         fontWeight: 'bold',
         borderBottom: '1px solid #ddd',
-        color: '#0000008A',
+        color: '#444',
     },
     deleteIcon: {
         fontSize: '1.2rem',
@@ -55,5 +55,14 @@ export const useStyles = makeStyles((theme) => ({
     },
     userInfoSection: {
         paddingBottom: 30,
+    },
+    modifyIcon: {
+        marginRight: 20,
+        fontSize: '1.2rem',
+        color: '#ccc',
+        cursor: 'pointer',
+        '&:hover': {
+            color: theme.palette.primary.main,
+        },
     },
 }));
