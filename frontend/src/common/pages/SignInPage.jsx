@@ -39,7 +39,6 @@ export default function SignInPage(props) {
             })
             .then(({ data }) => {
                 const { success, message: signMessage, user } = data;
-                console.log(data);
                 if (success) {
                     window.location.href = '/';
                 } else {
