@@ -195,3 +195,9 @@ export const UPDATE_USER_PASSWORD = gql`
         updateUserPassword(currentPassword: $currentPassword, newPassword: $newPassword)
     }
 `;
+
+export const DELETE_POST = gql`
+    mutation deletePost($id: ID!) {
+        deletePost(id: $id)
+    }
+`;
