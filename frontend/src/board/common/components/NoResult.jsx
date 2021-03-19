@@ -18,7 +18,7 @@ export default function NoResult({ title = '게시글' }) {
             icon={<EllipsisOutlined className={classes.noResultIcon} />}
             title={
                 <span style={{ fontSize: 16, fontWeight: 'bold', color: '#999' }}>
-                    아직 {title}이 없습니다.
+                    {title}이 없습니다.
                 </span>
             }
         />
