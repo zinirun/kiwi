@@ -7,6 +7,8 @@
         id: ID!
         boardId: ID!
         boardName: String!
+        boardLink: String!
+        categoryName: String
         title: String!
         content: String!
         companyName: String
@@ -25,7 +27,7 @@ const { ConflictError } = require('../../errors/errors');
 
 module.exports = async ({ id }, { departmentId }) => {
     const query = `
-                    select p.id, b.id as boardId, b.boardName, p.title, p.content, c.companyName, g.gradeName, u.userName as authorName, p.createdAt, p.updatedAt, cg.categoryName, ifnull(ppl.likeCount, 0) as likeCount, ifnull(pc.commentCount, 0) as commentCount
+                    select p.id, b.id as boardId, b.boardName, b.link as boardLink, p.title, p.content, c.companyName, g.gradeName, u.userName as authorName, p.createdAt, p.updatedAt, cg.categoryName, ifnull(ppl.likeCount, 0) as likeCount, ifnull(pc.commentCount, 0) as commentCount
                     from post p
                         left join category cg on p.categoryId = cg.id
                         left join board b on b.id = p.boardId
@@ -35,6 +37,7 @@ module.exports = async ({ id }, { departmentId }) => {
                         left join company c on u.companyId = c.id
                         left join grade g on u.studentGradeId = g.id
                     where p.authorId = u.id
+                    and p.isDeleted = 0
                     and p.id=:id
                     and p.departmentId=:departmentId;
                     `;
