@@ -134,7 +134,21 @@ export default function CommentList({ id }) {
                                     <Row justify="center" align="center">
                                         <Col span={20}>
                                             <Comment
-                                                author={item.authorName}
+                                                author={
+                                                    <>
+                                                        {item.companyName && (
+                                                            <span className={classes.authorInfo}>
+                                                                {item.companyName}/
+                                                            </span>
+                                                        )}
+                                                        <span className={classes.authorInfo}>
+                                                            {item.gradeName}&nbsp;
+                                                        </span>
+                                                        <span className={classes.author}>
+                                                            {item.authorName}
+                                                        </span>
+                                                    </>
+                                                }
                                                 content={item.content}
                                                 datetime={
                                                     <>

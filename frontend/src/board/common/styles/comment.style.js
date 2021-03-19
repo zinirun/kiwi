@@ -13,13 +13,13 @@ export const useStyles = makeStyles((theme) => ({
     commentField: {
         background: 'white',
         border: '1px solid #ddd',
-        paddingLeft: 10,
         marginBottom: 5,
     },
     comment: {
         marginBottom: 5,
-        fontSize: '1.2rem',
+        fontSize: '1.05rem',
         fontWeight: 'bold',
+        color: '#999',
     },
     deleteIcon: {
         marginLeft: 5,
@@ -39,5 +39,13 @@ export const useStyles = makeStyles((theme) => ({
     },
     commentTextareaSection: {
         marginBottom: 10,
+    },
+    authorInfo: {
+        color: '#999',
+        fontSize: '0.5rem',
+    },
+    author: {
+        color: '#000000DE',
+        fontSize: '0.78rem',
     },
 }));
