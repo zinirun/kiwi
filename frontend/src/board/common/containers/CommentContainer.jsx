@@ -134,7 +134,37 @@ export default function CommentList({ id }) {
                                     <Row justify="center" align="center">
                                         <Col span={20}>
                                             <Comment
-                                                author={item.authorName}
+                                                author={
+                                                    <>
+                                                        {item.companyName && (
+                                                            <span
+                                                                style={{
+                                                                    color: '#999',
+                                                                    fontSize: '0.5rem',
+                                                                }}
+                                                            >
+                                                                {item.companyName}/
+                                                            </span>
+                                                        )}
+                                                        <span
+                                                            style={{
+                                                                color: '#999',
+                                                                fontSize: '0.5rem',
+                                                            }}
+                                                        >
+                                                            {item.gradeName}
+                                                        </span>
+                                                        <span
+                                                            style={{
+                                                                color: '#000000DE',
+                                                                fontSize: '0.78rem',
+                                                            }}
+                                                        >
+                                                            {' '}
+                                                            {item.authorName}
+                                                        </span>
+                                                    </>
+                                                }
                                                 content={item.content}
                                                 datetime={
                                                     <>
