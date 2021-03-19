@@ -5,10 +5,13 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: 15,
         color: theme.palette.primary.main,
         cursor: 'pointer',
+        '&:hover': {
+            color: theme.palette.primary.light,
+        },
     },
     commentChip: {
         marginTop: 10,
-        background: 'white',
+        background: 'transparent',
     },
     commentField: {
         background: 'white',

@@ -104,8 +104,7 @@ export default function CommentList({ id }) {
             })
             .catch(() => message.error('댓글 좋아요 중 문제가 발생했습니다.'));
     };
-    const handleDelete = (e) => {
-        const id = e.currentTarget.getAttribute('value');
+    const handleDelete = (id) => {
         confirm({
             title: '댓글을 삭제할까요?',
             content: '삭제된 댓글은 복구할 수 없습니다.',
@@ -130,7 +129,12 @@ export default function CommentList({ id }) {
                             itemLayout="horizontal"
                             dataSource={comments}
                             renderItem={(item) => (
-                                <li className={classes.commentField}>
+                                <li
+                                    className={classes.commentField}
+                                    style={{
+                                        backgroundColor: item.authorId === item.userId && '#f1fff4',
+                                    }}
+                                >
                                     <Row justify="center" align="center">
                                         <Col span={20}>
                                             <Comment
@@ -156,9 +160,10 @@ export default function CommentList({ id }) {
                                                         {item.authorId === item.userId && (
                                                             <Tooltip title="댓글 삭제">
                                                                 <DeleteOutlinedIcon
-                                                                    value={item.id}
                                                                     post={item.postId}
-                                                                    onClick={handleDelete}
+                                                                    onClick={() =>
+                                                                        handleDelete(item.id)
+                                                                    }
                                                                     className={classes.deleteIcon}
                                                                 />
                                                             </Tooltip>

@@ -33,6 +33,9 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: 15,
         color: theme.palette.primary.main,
         cursor: 'pointer',
+        '&:hover': {
+            color: theme.palette.primary.light,
+        },
     },
     commentIcon: {
         fontSize: 15,
@@ -46,12 +49,11 @@ export const useStyles = makeStyles((theme) => ({
     postChip: {
         marginBottom: 10,
         marginLeft: 5,
-        background: 'white',
+        background: 'transparent',
     },
     commentChip: {
-        marginBottom: 10,
         marginTop: 10,
-        background: 'white',
+        background: 'transparent',
     },
     userInfoSection: {
         paddingBottom: 30,
