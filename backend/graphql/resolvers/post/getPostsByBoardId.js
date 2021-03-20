@@ -22,7 +22,7 @@
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 
-module.exports = async ({ boardId, categoryId, pageNumber }, { departmentId }) => {
+module.exports = async ({ boardId, categoryId, pageNumber, elementCount }, { departmentId }) => {
     const query = `
                     select p.id, p.title, c.companyName, g.gradeName, u.userName as authorName, p.createdAt, p.updatedAt, cg.categoryName, ifnull(v.postLikeCount, 0) as likeCount, ifnull(z.commentCount, 0) as commentCount
                     from post p
@@ -43,7 +43,7 @@ module.exports = async ({ boardId, categoryId, pageNumber }, { departmentId }) =
                     and p.boardId = :boardId
                     and p.departmentId = :departmentId
                     ${categoryId && `and p.categoryId=:categoryId`}
-                    order by p.id desc limit :pages, 10;
+                    order by p.id desc limit :pages, :elementCount;
                     `;
     return await models.sequelize
         .query(query, {
@@ -51,7 +51,8 @@ module.exports = async ({ boardId, categoryId, pageNumber }, { departmentId }) =
                 boardId,
                 departmentId,
                 categoryId,
-                pages: 10 * (+pageNumber - 1),
+                pages: 13 * (+pageNumber - 1),
+                elementCount,
             },
         })
         .spread(

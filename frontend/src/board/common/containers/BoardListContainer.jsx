@@ -15,6 +15,11 @@ import moment from 'moment';
 import { Form, Input, message, Tooltip } from 'antd';
 import NoResult from '../components/NoResult';
 import { BoardListSkeleton } from '../components/Skeletons';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import {
+    DESKTOP_BOARD_HEAD_HEIGHT,
+    DESKTOP_BOARD_LIST_ELM_HEIGHT,
+} from '../../../configs/variables';
 
 const { Search } = Input;
 
@@ -27,16 +32,20 @@ export default function BoardListContainer({ boardId }) {
     const [postListBeforeSearch, setPostListBeforeSearch] = useState(null);
 
     const [searchPostsByBoardId] = useMutation(SEARCH_POST_LIST);
-
     const {
         data: postListData,
         error: postListError,
         loading: postListLoading,
         refetch: postListRefetch,
+        fetchMore,
     } = useQuery(GET_POST_LIST, {
         variables: {
             boardId: boardId,
             categoryId: selectedCategoryId,
+            pageNumber: 1,
+            elementCount: parseInt(
+                (window.screen.height - DESKTOP_BOARD_HEAD_HEIGHT) / DESKTOP_BOARD_LIST_ELM_HEIGHT,
+            ),
         },
     });
     useEffect(() => {
@@ -83,7 +92,7 @@ export default function BoardListContainer({ boardId }) {
                     setSelectedCategoryId('');
                     form.resetFields();
                     setPostList(
-                        result.data.searchPostsByBoardId.map((p) => {
+                        result.searchPostsByBoardId.map((p) => {
                             return {
                                 ...p,
                                 createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
@@ -102,6 +111,43 @@ export default function BoardListContainer({ boardId }) {
         message.success('검색 결과가 초기화되었습니다.');
         setPostList(postListBeforeSearch);
     }, [postListBeforeSearch]);
+
+    const onLoadMore = () => {
+        fetchMore({
+            variables: {
+                pageNumber:
+                    parseInt(
+                        postList.length /
+                            parseInt(
+                                (window.screen.height - DESKTOP_BOARD_HEAD_HEIGHT) /
+                                    DESKTOP_BOARD_LIST_ELM_HEIGHT,
+                            ),
+                    ) + 1,
+            },
+            updateQuery: (prev, { fetchMoreResult }) => {
+                if (!fetchMoreResult) return prev;
+                const { getPostsByBoardId: prevData } = prev;
+                const { getPostsByBoardId: moreData } = fetchMoreResult;
+                setPostList(
+                    prevData
+                        .map((p) => {
+                            return {
+                                ...p,
+                                createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
+                            };
+                        })
+                        .concat(
+                            moreData.map((p) => {
+                                return {
+                                    ...p,
+                                    createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
+                                };
+                            }),
+                        ),
+                );
+            },
+        });
+    };
 
     return (
         <>
@@ -147,6 +193,7 @@ export default function BoardListContainer({ boardId }) {
             </Grid>
             {postListLoading && <BoardListSkeleton />}
             {!postListLoading && postList.length === 0 && <NoResult />}
+            <InfiniteScroll dataLength={postList.length} next={onLoadMore} hasMore={true} />
             {postList.map((post, idx) => (
                 <Grid
                     container
