@@ -33,6 +33,9 @@ export default function BoardListContainer({ boardId }) {
     const [isSearched, setIsSearched] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [searchPostsByBoardId] = useMutation(SEARCH_POST_LIST);
+    const itemsByHeight = parseInt(
+        (window.innerHeight - DESKTOP_BOARD_HEAD_HEIGHT) / DESKTOP_BOARD_LIST_ELM_HEIGHT,
+    );
     const {
         data: postListData,
         error: postListError,
@@ -44,19 +47,22 @@ export default function BoardListContainer({ boardId }) {
             boardId: boardId,
             categoryId: selectedCategoryId,
             pageNumber: 1,
-            elementCount: parseInt(
-                (window.innerHeight - DESKTOP_BOARD_HEAD_HEIGHT) / DESKTOP_BOARD_LIST_ELM_HEIGHT,
-            ),
+            elementCount: itemsByHeight,
         },
     });
+
     useEffect(() => {
         postListRefetch();
     }, [selectedCategoryId, postListRefetch]);
 
     useEffect(() => {
         if (postListData) {
+            const posts = postListData.getPostsByBoardId;
+            if (posts.length < itemsByHeight) {
+                setHasMore(false);
+            }
             setPostList(
-                postListData.getPostsByBoardId.map((p) => {
+                posts.map((p) => {
                     return {
                         ...p,
                         createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
@@ -64,7 +70,7 @@ export default function BoardListContainer({ boardId }) {
                 }),
             );
             setPostListBeforeSearch(
-                postListData.getPostsByBoardId.map((p) => {
+                posts.map((p) => {
                     return {
                         ...p,
                         createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
@@ -76,7 +82,7 @@ export default function BoardListContainer({ boardId }) {
             message.error('게시물을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
             history.push('/');
         }
-    }, [postListData, setPostList, postListError, history]);
+    }, [postListData, setPostList, postListError, history, itemsByHeight]);
 
     const onSearch = useCallback(
         (value) => {
@@ -117,25 +123,13 @@ export default function BoardListContainer({ boardId }) {
 
     const onLoadMore = () => {
         if (isSearched) return;
-        if (
-            postList.length <
-            parseInt(
-                (window.innerHeight - DESKTOP_BOARD_HEAD_HEIGHT) / DESKTOP_BOARD_LIST_ELM_HEIGHT,
-            )
-        ) {
+        if (postList.length < itemsByHeight) {
             setHasMore(false);
             return;
         }
         fetchMore({
             variables: {
-                pageNumber:
-                    parseInt(
-                        postList.length /
-                            parseInt(
-                                (window.innerHeight - DESKTOP_BOARD_HEAD_HEIGHT) /
-                                    DESKTOP_BOARD_LIST_ELM_HEIGHT,
-                            ),
-                    ) + 1,
+                pageNumber: parseInt(postList.length / itemsByHeight) + 1,
             },
             updateQuery: (prev, { fetchMoreResult }) => {
                 const { getPostsByBoardId: moreData } = fetchMoreResult;
@@ -205,7 +199,7 @@ export default function BoardListContainer({ boardId }) {
                 dataLength={postList.length}
                 next={onLoadMore}
                 hasMore={hasMore}
-                loader={<BoardListSkeleton />}
+                loader={!isSearched && postList.length > itemsByHeight && <BoardListSkeleton />}
             >
                 {!postListLoading &&
                     postList.map((post, idx) => (
