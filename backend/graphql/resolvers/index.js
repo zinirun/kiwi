@@ -14,6 +14,7 @@ module.exports = {
     getPostById: require('./post/getPost'),
     getPostsByBoardId: require('./post/getPostsByBoardId'),
     getPostsByLikeCount: require('./post/getPostsByLikeCount'),
+    getPostsByLikeCountWithDay: require('./post/getPostsByLikeCountWithDay'),
     createPost: require('./post/createPost'),
     updatePost: require('./post/updatePost'),
     deletePost: require('./post/deletePost'),
