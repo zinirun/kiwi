@@ -31,7 +31,7 @@ export default function BoardListContainer({ boardId }) {
     const [form] = Form.useForm();
     const [postListBeforeSearch, setPostListBeforeSearch] = useState(null);
     const [isSearched, setIsSearched] = useState(false);
-
+    const [hasMore, setHasMore] = useState(true);
     const [searchPostsByBoardId] = useMutation(SEARCH_POST_LIST);
     const {
         data: postListData,
@@ -45,7 +45,7 @@ export default function BoardListContainer({ boardId }) {
             categoryId: selectedCategoryId,
             pageNumber: 1,
             elementCount: parseInt(
-                (window.screen.height - DESKTOP_BOARD_HEAD_HEIGHT) / DESKTOP_BOARD_LIST_ELM_HEIGHT,
+                (window.innerHeight - DESKTOP_BOARD_HEAD_HEIGHT) / DESKTOP_BOARD_LIST_ELM_HEIGHT,
             ),
         },
     });
@@ -117,20 +117,32 @@ export default function BoardListContainer({ boardId }) {
 
     const onLoadMore = () => {
         if (isSearched) return;
+        if (
+            postList.length <
+            parseInt(
+                (window.innerHeight - DESKTOP_BOARD_HEAD_HEIGHT) / DESKTOP_BOARD_LIST_ELM_HEIGHT,
+            )
+        ) {
+            setHasMore(false);
+            return;
+        }
         fetchMore({
             variables: {
                 pageNumber:
                     parseInt(
                         postList.length /
                             parseInt(
-                                (window.screen.height - DESKTOP_BOARD_HEAD_HEIGHT) /
+                                (window.innerHeight - DESKTOP_BOARD_HEAD_HEIGHT) /
                                     DESKTOP_BOARD_LIST_ELM_HEIGHT,
                             ),
                     ) + 1,
             },
             updateQuery: (prev, { fetchMoreResult }) => {
-                if (!fetchMoreResult) return prev;
                 const { getPostsByBoardId: moreData } = fetchMoreResult;
+                if (moreData.length === 0) {
+                    setHasMore(false);
+                    return prev;
+                }
                 setPostList(
                     postList.concat(
                         moreData.map((p) => {
@@ -192,13 +204,8 @@ export default function BoardListContainer({ boardId }) {
             <InfiniteScroll
                 dataLength={postList.length}
                 next={onLoadMore}
-                hasMore={true}
+                hasMore={hasMore}
                 loader={<BoardListSkeleton />}
-                endMessage={
-                    <p style={{ textAlign: 'center' }}>
-                        <b>Yay! You have seen it all</b>
-                    </p>
-                }
             >
                 {!postListLoading &&
                     postList.map((post, idx) => (
