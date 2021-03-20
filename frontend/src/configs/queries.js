@@ -18,8 +18,18 @@ export const GET_USER = gql`
 `;
 
 export const GET_POST_LIST = gql`
-    query getPostsByBoardId($boardId: ID!, $categoryId: ID) {
-        getPostsByBoardId(boardId: $boardId, categoryId: $categoryId) {
+    query getPostsByBoardId(
+        $boardId: ID!
+        $categoryId: ID
+        $pageNumber: Int!
+        $elementCount: Int!
+    ) {
+        getPostsByBoardId(
+            boardId: $boardId
+            categoryId: $categoryId
+            pageNumber: $pageNumber
+            elementCount: $elementCount
+        ) {
             id
             __typename @skip(if: true)
             title
