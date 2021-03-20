@@ -45,13 +45,14 @@ module.exports = async ({ boardId, categoryId, pageNumber, elementCount }, { dep
                     ${categoryId && `and p.categoryId=:categoryId`}
                     order by p.id desc limit :pages, :elementCount;
                     `;
+    console.log(elementCount);
     return await models.sequelize
         .query(query, {
             replacements: {
                 boardId,
                 departmentId,
                 categoryId,
-                pages: 13 * (+pageNumber - 1),
+                pages: elementCount * (+pageNumber - 1),
                 elementCount,
             },
         })

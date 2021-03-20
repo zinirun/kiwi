@@ -30,6 +30,7 @@ export default function BoardListContainer({ boardId }) {
     const [postList, setPostList] = useState([]);
     const [form] = Form.useForm();
     const [postListBeforeSearch, setPostListBeforeSearch] = useState(null);
+    const [isSearched, setIsSearched] = useState(false);
 
     const [searchPostsByBoardId] = useMutation(SEARCH_POST_LIST);
     const {
@@ -88,11 +89,12 @@ export default function BoardListContainer({ boardId }) {
                     searchValue: '%' + value + '%',
                 },
             })
-                .then((result) => {
+                .then(({ data }) => {
                     setSelectedCategoryId('');
                     form.resetFields();
+                    setIsSearched(true);
                     setPostList(
-                        result.searchPostsByBoardId.map((p) => {
+                        data.searchPostsByBoardId.map((p) => {
                             return {
                                 ...p,
                                 createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
@@ -109,10 +111,12 @@ export default function BoardListContainer({ boardId }) {
 
     const handleReloadClick = useCallback(() => {
         message.success('검색 결과가 초기화되었습니다.');
+        setIsSearched(false);
         setPostList(postListBeforeSearch);
     }, [postListBeforeSearch]);
 
     const onLoadMore = () => {
+        if (isSearched) return;
         fetchMore({
             variables: {
                 pageNumber:
@@ -126,25 +130,19 @@ export default function BoardListContainer({ boardId }) {
             },
             updateQuery: (prev, { fetchMoreResult }) => {
                 if (!fetchMoreResult) return prev;
-                const { getPostsByBoardId: prevData } = prev;
                 const { getPostsByBoardId: moreData } = fetchMoreResult;
                 setPostList(
-                    prevData
-                        .map((p) => {
+                    postList.concat(
+                        moreData.map((p) => {
                             return {
                                 ...p,
                                 createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
                             };
-                        })
-                        .concat(
-                            moreData.map((p) => {
-                                return {
-                                    ...p,
-                                    createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
-                                };
-                            }),
-                        ),
+                        }),
+                    ),
                 );
+
+                console.log(postList);
             },
         });
     };
@@ -193,66 +191,82 @@ export default function BoardListContainer({ boardId }) {
             </Grid>
             {postListLoading && <BoardListSkeleton />}
             {!postListLoading && postList.length === 0 && <NoResult />}
-            <InfiniteScroll dataLength={postList.length} next={onLoadMore} hasMore={true} />
-            {postList.map((post, idx) => (
-                <Grid
-                    container
-                    justify="center"
-                    spacing={0}
-                    alignItems="center"
-                    className={classes.postWrapper}
-                    component={Link}
-                    to={`/post/${post.id}`}
-                    key={idx}
-                >
-                    <Grid
-                        item
-                        xs={12}
-                        sm={7}
-                        className={classes.title}
-                        style={{ textDecoration: 'none' }}
-                    >
-                        {post.categoryName && (
-                            <span className={classes.part}>{post.categoryName}</span>
-                        )}
-                        {isMobile && <br />}
-                        <span style={{ color: 'black' }}>{post.title}</span>
-                    </Grid>
-
-                    <Grid item xs={12} sm={2} align="right">
-                        <Chip
-                            className={classes.backColor}
-                            size="small"
-                            icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                            label={post.likeCount}
-                        />
-                        <Chip
-                            className={classes.backColor}
-                            size="small"
-                            icon={<ChatBubbleOutlineOutlinedIcon className={classes.commentIcon} />}
-                            label={post.commentCount}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={3} align="right">
-                        <Grid>
-                            {post.companyName && (
-                                <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                    {post.companyName}/
-                                </span>
-                            )}
-                            <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                {post.gradeName}&nbsp;
-                            </span>
-                            <span>{post.authorName}</span>
-                        </Grid>
-                        {!isMobile && (
-                            <Grid className={classes.date}>
-                                <span>{post.createdAt}</span>
+            <InfiniteScroll
+                dataLength={postList.length}
+                next={onLoadMore}
+                hasMore={true}
+                loader={<BoardListSkeleton />}
+                endMessage={
+                    <p style={{ textAlign: 'center' }}>
+                        <b>Yay! You have seen it all</b>
+                    </p>
+                }
+            >
+                {!postListLoading &&
+                    postList.map((post, idx) => (
+                        <Grid
+                            container
+                            justify="center"
+                            spacing={0}
+                            alignItems="center"
+                            className={classes.postWrapper}
+                            component={Link}
+                            to={`/post/${post.id}`}
+                            key={idx}
+                        >
+                            <Grid
+                                item
+                                xs={12}
+                                sm={7}
+                                className={classes.title}
+                                style={{ textDecoration: 'none' }}
+                            >
+                                {post.categoryName && (
+                                    <span className={classes.part}>{post.categoryName}</span>
+                                )}
+                                {isMobile && <br />}
+                                <span style={{ color: 'black' }}>{post.title}</span>
                             </Grid>
-                        )}
-                    </Grid>
-                </Grid>
-            ))}
+
+                            <Grid item xs={12} sm={2} align="right">
+                                <Chip
+                                    className={classes.backColor}
+                                    size="small"
+                                    icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
+                                    label={post.likeCount}
+                                />
+                                <Chip
+                                    className={classes.backColor}
+                                    size="small"
+                                    icon={
+                                        <ChatBubbleOutlineOutlinedIcon
+                                            className={classes.commentIcon}
+                                        />
+                                    }
+                                    label={post.commentCount}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={3} align="right">
+                                <Grid>
+                                    {post.companyName && (
+                                        <span style={{ color: '#999', fontSize: '0.75rem' }}>
+                                            {post.companyName}/
+                                        </span>
+                                    )}
+                                    <span style={{ color: '#999', fontSize: '0.75rem' }}>
+                                        {post.gradeName}&nbsp;
+                                    </span>
+                                    <span>{post.authorName}</span>
+                                </Grid>
+                                {!isMobile && (
+                                    <Grid className={classes.date}>
+                                        <span>{post.createdAt}</span>
+                                    </Grid>
+                                )}
+                            </Grid>
+                        </Grid>
+                    ))}
+            </InfiniteScroll>
         </>
     );
 }
