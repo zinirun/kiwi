@@ -52,4 +52,33 @@ export const useStyles = makeStyles((theme) => ({
             color: 'white',
         },
     },
+    authFormWrapper: {
+        marginTop: 10,
+    },
+    uploader: {
+        '& .ant-upload': {
+            width: '100%',
+            height: 300,
+        },
+    },
+    authInfo: {
+        padding: 10,
+        color: '#999',
+    },
+    authInfoSmall: {
+        padding: 10,
+        color: '#999',
+        marginBottom: 0,
+    },
+    typeWrapper: {
+        marginBottom: 0,
+    },
+    exampleWrapper: {
+        marginTop: -10,
+        marginBottom: 15,
+        backgroundColor: '#fafafa',
+        border: '1px solid #ddd',
+        borderRadius: 5,
+        padding: 10,
+    },
 }));

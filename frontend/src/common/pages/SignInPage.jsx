@@ -6,6 +6,7 @@ import { message, Space } from 'antd';
 import { useStyles } from '../static/signPages.style';
 import axios from 'axios';
 import moment from 'moment';
+import StudentAuthContainer from '../containers/StudentAuthContainer';
 
 export default function SignInPage(props) {
     const classes = useStyles();
@@ -15,6 +16,7 @@ export default function SignInPage(props) {
         userAccount: '',
         password: '',
     });
+    const [showAuthContainer, setShowAuthContainer] = useState(false);
     const handleChange = useCallback(
         (e) => {
             const { name, value } = e.target;
@@ -44,7 +46,9 @@ export default function SignInPage(props) {
                 } else {
                     switch (signMessage) {
                         case 'NO_STUDENT_CARD':
-                            // 학생증 인증 파트로 이동
+                            // 학생증 인증 파트
+                            message.info('학생증 인증 후 서비스를 이용하세요.');
+                            setShowAuthContainer(true);
                             return;
                         case 'BLOCKED':
                             message.error(
@@ -72,76 +76,87 @@ export default function SignInPage(props) {
 
     return (
         <div className={classes.paper}>
-            <Space>
-                <LogoIcon />
-                <span className={classes.loginTitle}>
-                    <span className={classes.loginTitleGreen}>Kiwi</span>ful Day
-                </span>
-            </Space>
-            <form className={classes.form} onSubmit={handleSubmit} noValidate>
-                <Grid container className={classes.loginFormContainer} spacing={2} justify="center">
-                    <Grid item xs={12} align="center">
-                        <TextField
-                            name="userAccount"
-                            variant="outlined"
-                            fullWidth
-                            label="아이디를 입력하세요."
-                            onChange={handleChange}
-                            value={user.userAccount}
-                            inputRef={idInput}
-                            autoFocus
-                        />
-                    </Grid>
-                    <Grid item xs={12} align="center">
-                        <TextField
-                            type="password"
-                            name="password"
-                            variant="outlined"
-                            fullWidth
-                            label="비밀번호를 입력하세요."
-                            onChange={handleChange}
-                            value={user.password}
-                            inputRef={pwdInput}
-                        />
-                    </Grid>
-                    <Grid item xs={12} align="center">
-                        <Button
-                            fullWidth
-                            type="submit"
-                            color="primary"
-                            variant="contained"
-                            size="large"
-                            className={classes.loginBt}
+            {showAuthContainer && <StudentAuthContainer />}
+            {!showAuthContainer && (
+                <>
+                    {' '}
+                    <Space>
+                        <LogoIcon />
+                        <span className={classes.loginTitle}>
+                            <span className={classes.loginTitleGreen}>Kiwi</span>ful Day
+                        </span>
+                    </Space>
+                    <form className={classes.form} onSubmit={handleSubmit} noValidate>
+                        <Grid
+                            container
+                            className={classes.loginFormContainer}
+                            spacing={2}
+                            justify="center"
                         >
-                            로그인
-                        </Button>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <Button
-                            component={Link}
-                            to={'/signup'}
-                            fullWidth
-                            color="primary"
-                            variant="outlined"
-                            size="large"
-                        >
-                            회원가입
-                        </Button>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <Button
-                            component={Link}
-                            to={'/finduser'}
-                            fullWidth
-                            color="primary"
-                            variant="outlined"
-                            size="large"
-                        >
-                            아이디/비밀번호 찾기
-                        </Button>
-                    </Grid>
-                </Grid>
-            </form>
+                            <Grid item xs={12} align="center">
+                                <TextField
+                                    name="userAccount"
+                                    variant="outlined"
+                                    fullWidth
+                                    label="아이디를 입력하세요."
+                                    onChange={handleChange}
+                                    value={user.userAccount}
+                                    inputRef={idInput}
+                                    autoFocus
+                                />
+                            </Grid>
+                            <Grid item xs={12} align="center">
+                                <TextField
+                                    type="password"
+                                    name="password"
+                                    variant="outlined"
+                                    fullWidth
+                                    label="비밀번호를 입력하세요."
+                                    onChange={handleChange}
+                                    value={user.password}
+                                    inputRef={pwdInput}
+                                />
+                            </Grid>
+                            <Grid item xs={12} align="center">
+                                <Button
+                                    fullWidth
+                                    type="submit"
+                                    color="primary"
+                                    variant="contained"
+                                    size="large"
+                                    className={classes.loginBt}
+                                >
+                                    로그인
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Button
+                                    component={Link}
+                                    to={'/signup'}
+                                    fullWidth
+                                    color="primary"
+                                    variant="outlined"
+                                    size="large"
+                                >
+                                    회원가입
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Button
+                                    component={Link}
+                                    to={'/finduser'}
+                                    fullWidth
+                                    color="primary"
+                                    variant="outlined"
+                                    size="large"
+                                >
+                                    아이디/비밀번호 찾기
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </form>
+                </>
+            )}
         </div>
     );
 }
