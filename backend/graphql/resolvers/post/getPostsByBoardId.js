@@ -43,7 +43,7 @@ module.exports = async ({ boardId, categoryId, pageNumber }, { departmentId }) =
                     and p.boardId = :boardId
                     and p.departmentId = :departmentId
                     ${categoryId && `and p.categoryId=:categoryId`}
-                    order by p.id desc limit 15(:pageNumber-1), 15;
+                    order by p.id desc limit :pages, 10;
                     `;
     return await models.sequelize
         .query(query, {
@@ -51,7 +51,7 @@ module.exports = async ({ boardId, categoryId, pageNumber }, { departmentId }) =
                 boardId,
                 departmentId,
                 categoryId,
-                pageNumber,
+                pages: 10 * (+pageNumber - 1),
             },
         })
         .spread(
