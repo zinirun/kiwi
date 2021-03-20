@@ -141,8 +141,6 @@ export default function BoardListContainer({ boardId }) {
                         }),
                     ),
                 );
-
-                console.log(postList);
             },
         });
     };

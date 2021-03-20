@@ -45,7 +45,6 @@ module.exports = async ({ boardId, categoryId, pageNumber, elementCount }, { dep
                     ${categoryId && `and p.categoryId=:categoryId`}
                     order by p.id desc limit :pages, :elementCount;
                     `;
-    console.log(elementCount);
     return await models.sequelize
         .query(query, {
             replacements: {
