@@ -13,23 +13,45 @@ import moment from 'moment';
 import { message } from 'antd';
 import NoResult from '../../common/components/NoResult';
 import { BoardListSkeleton } from '../../common/components/Skeletons';
-import { TOP_BOARD_LIKE_COUNT } from '../../../configs/variables';
+import {
+    TOP_BOARD_LIKE_COUNT,
+    DESKTOP_BOARD_HEAD_HEIGHT,
+    DESKTOP_BOARD_LIST_ELM_HEIGHT,
+} from '../../../configs/variables';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function TopListContainer() {
     const classes = { ...useStyles(), ...boardCommonStyles() };
     const history = useHistory();
     const [postList, setPostList] = useState([]);
-    const { data: postListData, error: postListError, loading: postListLoading } = useQuery(
-        GET_POSTS_BY_LIKE_COUNT,
-        {
-            variables: {
-                likeCount: TOP_BOARD_LIKE_COUNT,
-            },
-        },
+    const [hasMore, setHasMore] = useState(true);
+    const itemsByHeight = parseInt(
+        (window.innerHeight - DESKTOP_BOARD_HEAD_HEIGHT) / DESKTOP_BOARD_LIST_ELM_HEIGHT,
     );
+    const {
+        data: postListData,
+        error: postListError,
+        loading: postListLoading,
+        refetch: postListRefetch,
+        fetchMore,
+    } = useQuery(GET_POSTS_BY_LIKE_COUNT, {
+        variables: {
+            likeCount: TOP_BOARD_LIKE_COUNT,
+            pageNumber: 1,
+            elementCount: itemsByHeight,
+        },
+    });
+
+    useEffect(() => {
+        postListRefetch();
+    }, [postListRefetch]);
 
     useEffect(() => {
         if (postListData) {
+            const posts = postListData.getPostsByLikeCount;
+            if (posts.length < itemsByHeight) {
+                setHasMore(false);
+            }
             setPostList(
                 postListData.getPostsByLikeCount.map((p) => {
                     return {
@@ -43,71 +65,111 @@ export default function TopListContainer() {
             message.error('게시물을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
             history.push('/');
         }
-    }, [postListData, setPostList, postListError, history]);
+    }, [postListData, setPostList, postListError, history, itemsByHeight]);
+
+    const onLoadMore = () => {
+        if (postList.length < itemsByHeight) {
+            setHasMore(false);
+            return;
+        }
+        fetchMore({
+            variables: {
+                pageNumber: parseInt(postList.length / itemsByHeight) + 1,
+            },
+            updateQuery: (prev, { fetchMoreResult }) => {
+                const { getPostsByLikeCount: moreData } = fetchMoreResult;
+                if (moreData.length === 0) {
+                    setHasMore(false);
+                    return prev;
+                }
+                setPostList(
+                    postList.concat(
+                        moreData.map((p) => {
+                            return {
+                                ...p,
+                                createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
+                            };
+                        }),
+                    ),
+                );
+            },
+        });
+    };
 
     return (
         <>
             {postListLoading && <BoardListSkeleton />}
             {!postListLoading && postList.length === 0 && <NoResult />}
-            {postList.map((post, idx) => (
-                <Grid
-                    container
-                    justify="center"
-                    spacing={0}
-                    alignItems="center"
-                    className={classes.postWrapper}
-                    component={Link}
-                    to={`/post/${post.id}`}
-                    key={idx}
-                >
+            <InfiniteScroll
+                dataLength={postList.length}
+                next={onLoadMore}
+                hasMore={hasMore}
+                loader={postList.length > itemsByHeight && <BoardListSkeleton />}
+            >
+                {postList.map((post, idx) => (
                     <Grid
-                        item
-                        xs={12}
-                        sm={7}
-                        className={classes.title}
-                        style={{ textDecoration: 'none' }}
+                        container
+                        justify="center"
+                        spacing={0}
+                        alignItems="center"
+                        className={classes.postWrapper}
+                        component={Link}
+                        to={`/post/${post.id}`}
+                        key={idx}
                     >
-                        {post.categoryName && (
-                            <span className={classes.part}>{post.categoryName}</span>
-                        )}
-                        {isMobile && <br />}
-                        <span style={{ color: 'black' }}>{post.title}</span>
-                    </Grid>
-
-                    <Grid item xs={12} sm={2} align="right">
-                        <Chip
-                            className={classes.backColor}
-                            size="small"
-                            icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                            label={post.likeCount}
-                        />
-                        <Chip
-                            className={classes.backColor}
-                            size="small"
-                            icon={<ChatBubbleOutlineOutlinedIcon className={classes.commentIcon} />}
-                            label={post.commentCount}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={3} align="right">
-                        <Grid>
-                            {post.companyName && (
-                                <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                    {post.companyName}/
-                                </span>
+                        <Grid
+                            item
+                            xs={12}
+                            sm={7}
+                            className={classes.title}
+                            style={{ textDecoration: 'none' }}
+                        >
+                            {post.categoryName && (
+                                <span className={classes.part}>{post.categoryName}</span>
                             )}
-                            <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                {post.gradeName}&nbsp;
-                            </span>
-                            <span>{post.authorName}</span>
+                            {isMobile && <br />}
+                            <span style={{ color: 'black' }}>{post.title}</span>
                         </Grid>
-                        {!isMobile && (
-                            <Grid className={classes.date}>
-                                <span>{post.createdAt}</span>
+
+                        <Grid item xs={12} sm={2} align="right">
+                            <Chip
+                                className={classes.backColor}
+                                size="small"
+                                icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
+                                label={post.likeCount}
+                            />
+                            <Chip
+                                className={classes.backColor}
+                                size="small"
+                                icon={
+                                    <ChatBubbleOutlineOutlinedIcon
+                                        className={classes.commentIcon}
+                                    />
+                                }
+                                label={post.commentCount}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={3} align="right">
+                            <Grid>
+                                {post.companyName && (
+                                    <span style={{ color: '#999', fontSize: '0.75rem' }}>
+                                        {post.companyName}/
+                                    </span>
+                                )}
+                                <span style={{ color: '#999', fontSize: '0.75rem' }}>
+                                    {post.gradeName}&nbsp;
+                                </span>
+                                <span>{post.authorName}</span>
                             </Grid>
-                        )}
+                            {!isMobile && (
+                                <Grid className={classes.date}>
+                                    <span>{post.createdAt}</span>
+                                </Grid>
+                            )}
+                        </Grid>
                     </Grid>
-                </Grid>
-            ))}
+                ))}
+            </InfiniteScroll>
         </>
     );
 }
