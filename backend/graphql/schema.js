@@ -169,8 +169,12 @@ module.exports = buildSchema(`
         getCategoryById(id: ID!): Category!
         getCategoriesByBoardId(boardId: ID!): [CategoryList]
         getMyPosts(pageNumber: Int!, elementCount: Int!): [PostList]
-        getMyComments: [Comment]
+        getMyComments(pageNumber: Int!, elementCount: Int!): [Comment]
         searchPostsByBoardId(boardId: ID!, searchValue: String!): [SearchPostList]
+        getPostsCountByBoardId(boardId: ID!, categoryId: ID): Int
+        getPostsCountByLikeCount(likeCount: Int!): Int
+        getMyPostsCount: Int
+        getMyCommentsCount: Int
     }
 
     type Mutation {

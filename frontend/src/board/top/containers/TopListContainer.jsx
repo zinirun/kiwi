@@ -8,9 +8,9 @@ import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineO
 import { isMobile } from 'react-device-detect';
 import { useStyles } from '../../common/styles/board.style';
 import { boardCommonStyles } from '../../common/styles/board.common.style';
-import { GET_POSTS_BY_LIKE_COUNT } from '../../../configs/queries';
+import { GET_POSTS_BY_LIKE_COUNT, GET_TOP_POSTS_COUNT } from '../../../configs/queries';
 import moment from 'moment';
-import { message } from 'antd';
+import { message, Pagination } from 'antd';
 import NoResult from '../../common/components/NoResult';
 import { BoardListSkeleton } from '../../common/components/Skeletons';
 import {
@@ -18,16 +18,20 @@ import {
     DESKTOP_BOARD_HEAD_HEIGHT,
     DESKTOP_BOARD_LIST_ELM_HEIGHT,
 } from '../../../configs/variables';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function TopListContainer() {
     const classes = { ...useStyles(), ...boardCommonStyles() };
     const history = useHistory();
+    const [postsCount, setPostsCount] = useState();
     const [postList, setPostList] = useState([]);
-    const [hasMore, setHasMore] = useState(true);
     const itemsByHeight = parseInt(
         (window.innerHeight - DESKTOP_BOARD_HEAD_HEIGHT) / DESKTOP_BOARD_LIST_ELM_HEIGHT,
     );
+    const { data: postsCountData, error: postsCountError } = useQuery(GET_TOP_POSTS_COUNT, {
+        variables: {
+            likeCount: TOP_BOARD_LIKE_COUNT,
+        },
+    });
     const {
         data: postListData,
         error: postListError,
@@ -40,7 +44,18 @@ export default function TopListContainer() {
             pageNumber: 1,
             elementCount: itemsByHeight,
         },
+        skip: postsCountData === 0,
     });
+
+    useEffect(() => {
+        if (postsCountData) {
+            setPostsCount(postsCountData.getPostsCountByLikeCount);
+        }
+        if (postsCountError) {
+            message.error('게시물을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
+            history.push('/');
+        }
+    }, [postsCountData, postsCountError, history]);
 
     useEffect(() => {
         postListRefetch();
@@ -48,10 +63,6 @@ export default function TopListContainer() {
 
     useEffect(() => {
         if (postListData) {
-            const posts = postListData.getPostsByLikeCount;
-            if (posts.length < itemsByHeight) {
-                setHasMore(false);
-            }
             setPostList(
                 postListData.getPostsByLikeCount.map((p) => {
                     return {
@@ -65,32 +76,22 @@ export default function TopListContainer() {
             message.error('게시물을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
             history.push('/');
         }
-    }, [postListData, setPostList, postListError, history, itemsByHeight]);
+    }, [postListData, setPostList, postListError, history]);
 
-    const onLoadMore = () => {
-        if (postList.length < itemsByHeight) {
-            setHasMore(false);
-            return;
-        }
+    const handlePage = (page) => {
         fetchMore({
             variables: {
-                pageNumber: parseInt(postList.length / itemsByHeight) + 1,
+                pageNumber: page,
             },
-            updateQuery: (prev, { fetchMoreResult }) => {
-                const { getPostsByLikeCount: moreData } = fetchMoreResult;
-                if (moreData.length === 0) {
-                    setHasMore(false);
-                    return prev;
-                }
+            updateQuery: (_, { fetchMoreResult }) => {
+                const { getPostsByLikeCount: nextData } = fetchMoreResult;
                 setPostList(
-                    postList.concat(
-                        moreData.map((p) => {
-                            return {
-                                ...p,
-                                createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
-                            };
-                        }),
-                    ),
+                    nextData.map((p) => {
+                        return {
+                            ...p,
+                            createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
+                        };
+                    }),
                 );
             },
         });
@@ -100,76 +101,81 @@ export default function TopListContainer() {
         <>
             {postListLoading && <BoardListSkeleton />}
             {!postListLoading && postList.length === 0 && <NoResult />}
-            <InfiniteScroll
-                dataLength={postList.length}
-                next={onLoadMore}
-                hasMore={hasMore}
-                loader={postList.length > itemsByHeight && <BoardListSkeleton />}
-            >
-                {postList.map((post, idx) => (
-                    <Grid
-                        container
-                        justify="center"
-                        spacing={0}
-                        alignItems="center"
-                        className={classes.postWrapper}
-                        component={Link}
-                        to={`/post/${post.id}`}
-                        key={idx}
-                    >
+            {!postListLoading && postList.length > 0 && (
+                <>
+                    {postList.map((post, idx) => (
                         <Grid
-                            item
-                            xs={12}
-                            sm={7}
-                            className={classes.title}
-                            style={{ textDecoration: 'none' }}
+                            container
+                            justify="center"
+                            spacing={0}
+                            alignItems="center"
+                            className={classes.postWrapper}
+                            component={Link}
+                            to={`/post/${post.id}`}
+                            key={idx}
                         >
-                            {post.categoryName && (
-                                <span className={classes.part}>{post.categoryName}</span>
-                            )}
-                            {isMobile && <br />}
-                            <span style={{ color: 'black' }}>{post.title}</span>
-                        </Grid>
-
-                        <Grid item xs={12} sm={2} align="right">
-                            <Chip
-                                className={classes.backColor}
-                                size="small"
-                                icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                                label={post.likeCount}
-                            />
-                            <Chip
-                                className={classes.backColor}
-                                size="small"
-                                icon={
-                                    <ChatBubbleOutlineOutlinedIcon
-                                        className={classes.commentIcon}
-                                    />
-                                }
-                                label={post.commentCount}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={3} align="right">
-                            <Grid>
-                                {post.companyName && (
-                                    <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                        {post.companyName}/
-                                    </span>
+                            <Grid
+                                item
+                                xs={12}
+                                sm={7}
+                                className={classes.title}
+                                style={{ textDecoration: 'none' }}
+                            >
+                                {post.categoryName && (
+                                    <span className={classes.part}>{post.categoryName}</span>
                                 )}
-                                <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                    {post.gradeName}&nbsp;
-                                </span>
-                                <span>{post.authorName}</span>
+                                {isMobile && <br />}
+                                <span style={{ color: 'black' }}>{post.title}</span>
                             </Grid>
-                            {!isMobile && (
-                                <Grid className={classes.date}>
-                                    <span>{post.createdAt}</span>
+
+                            <Grid item xs={12} sm={2} align="right">
+                                <Chip
+                                    className={classes.backColor}
+                                    size="small"
+                                    icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
+                                    label={post.likeCount}
+                                />
+                                <Chip
+                                    className={classes.backColor}
+                                    size="small"
+                                    icon={
+                                        <ChatBubbleOutlineOutlinedIcon
+                                            className={classes.commentIcon}
+                                        />
+                                    }
+                                    label={post.commentCount}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={3} align="right">
+                                <Grid>
+                                    {post.companyName && (
+                                        <span style={{ color: '#999', fontSize: '0.75rem' }}>
+                                            {post.companyName}/
+                                        </span>
+                                    )}
+                                    <span style={{ color: '#999', fontSize: '0.75rem' }}>
+                                        {post.gradeName}&nbsp;
+                                    </span>
+                                    <span>{post.authorName}</span>
                                 </Grid>
-                            )}
+                                {!isMobile && (
+                                    <Grid className={classes.date}>
+                                        <span>{post.createdAt}</span>
+                                    </Grid>
+                                )}
+                            </Grid>
                         </Grid>
-                    </Grid>
-                ))}
-            </InfiniteScroll>
+                    ))}
+                    <Pagination
+                        defaultPageSize={itemsByHeight}
+                        total={postsCount}
+                        onChange={handlePage}
+                        showQuickJumper
+                        hideOnSinglePage
+                        showSizeChanger={false}
+                    />
+                </>
+            )}
         </>
     );
 }

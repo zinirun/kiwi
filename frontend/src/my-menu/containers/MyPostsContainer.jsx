@@ -9,21 +9,21 @@ import { isMobile } from 'react-device-detect';
 import { useStyles } from '../../board/common/styles/board.style';
 import { boardCommonStyles } from '../../board/common/styles/board.common.style';
 import moment from 'moment';
-import { message } from 'antd';
-import { GET_MY_POSTS } from '../../configs/queries';
+import { message, Pagination } from 'antd';
+import { GET_MY_POSTS, GET_MY_POSTS_COUNT } from '../../configs/queries';
 import NoResult from '../../board/common/components/NoResult';
 import { BoardListSkeleton } from '../../board/common/components/Skeletons';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { DESKTOP_BOARD_HEAD_HEIGHT, DESKTOP_BOARD_LIST_ELM_HEIGHT } from '../../configs/variables';
 
 export default function MyPostsContainer() {
     const classes = { ...useStyles(), ...boardCommonStyles() };
     const history = useHistory();
     const [postList, setPostList] = useState([]);
-    const [hasMore, setHasMore] = useState(true);
+    const [postsCount, setPostsCount] = useState();
     const itemsByHeight = parseInt(
         (window.innerHeight - DESKTOP_BOARD_HEAD_HEIGHT) / DESKTOP_BOARD_LIST_ELM_HEIGHT,
     );
+    const { data: postsCountData, error: postsCountError } = useQuery(GET_MY_POSTS_COUNT);
     const {
         data: postListData,
         error: postListError,
@@ -38,15 +38,22 @@ export default function MyPostsContainer() {
     });
 
     useEffect(() => {
+        if (postsCountData) {
+            setPostsCount(postsCountData.getMyPostsCount);
+        }
+        if (postsCountError) {
+            message.error('게시물을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
+            history.push('/');
+        }
+    }, [postsCountData, postsCountError, history]);
+
+    useEffect(() => {
         postListRefetch();
     }, [postListRefetch]);
 
     useEffect(() => {
         if (postListData) {
             const posts = postListData.getMyPosts;
-            if (posts.length < itemsByHeight) {
-                setHasMore(false);
-            }
             setPostList(
                 posts.map((p) => {
                     return {
@@ -62,30 +69,20 @@ export default function MyPostsContainer() {
         }
     }, [postListData, setPostList, postListError, history, itemsByHeight]);
 
-    const onLoadMore = () => {
-        if (postList.length < itemsByHeight) {
-            setHasMore(false);
-            return;
-        }
+    const handlePage = (page) => {
         fetchMore({
             variables: {
-                pageNumber: parseInt(postList.length / itemsByHeight) + 1,
+                pageNumber: page,
             },
-            updateQuery: (prev, { fetchMoreResult }) => {
-                const { getMyPosts: moreData } = fetchMoreResult;
-                if (moreData.length === 0) {
-                    setHasMore(false);
-                    return prev;
-                }
+            updateQuery: (_, { fetchMoreResult }) => {
+                const { getMyPosts: nextData } = fetchMoreResult;
                 setPostList(
-                    postList.concat(
-                        moreData.map((p) => {
-                            return {
-                                ...p,
-                                createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
-                            };
-                        }),
-                    ),
+                    nextData.map((p) => {
+                        return {
+                            ...p,
+                            createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
+                        };
+                    }),
                 );
             },
         });
@@ -95,14 +92,10 @@ export default function MyPostsContainer() {
         <>
             {postListLoading && <BoardListSkeleton />}
             {!postListLoading && postList.length === 0 && <NoResult title="나의 게시글" />}
-            <InfiniteScroll
-                dataLength={postList.length}
-                next={onLoadMore}
-                hasMore={hasMore}
-                loader={postList.length > itemsByHeight && <BoardListSkeleton />}
-            >
-                {!postListLoading &&
-                    postList.map((post, idx) => (
+
+            {!postListLoading && (
+                <>
+                    {postList.map((post, idx) => (
                         <Grid
                             container
                             justify="center"
@@ -159,7 +152,16 @@ export default function MyPostsContainer() {
                             </Grid>
                         </Grid>
                     ))}
-            </InfiniteScroll>
+                    <Pagination
+                        defaultPageSize={itemsByHeight}
+                        total={postsCount}
+                        onChange={handlePage}
+                        showQuickJumper
+                        hideOnSinglePage
+                        showSizeChanger={false}
+                    />
+                </>
+            )}
         </>
     );
 }

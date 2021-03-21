@@ -24,7 +24,7 @@
 const models = require('../../../models');
 const { NotFoundError } = require('../../errors/errors');
 
-module.exports = async ({}, { id }) => {
+module.exports = async ({ pageNumber, elementCount }, { id }) => {
     const query = `
                     select c.id, u.id as authorId, postId, u.userName as authorName, c.content, c.createdAt, g.id as gradeId, g.gradeName, cm.id as companyId, cm.companyName, ifnull(v.commentLikeCount, 0) as likeCount
                     from user u
@@ -34,12 +34,15 @@ module.exports = async ({}, { id }) => {
                         left join company cm on u.companyId = cm.id
                     where c.authorId = :id
                     and c.isDeleted = 0
-                    order by c.id;
+                    order by c.id                     limit :pages, :elementCount;
+                    ;
                     `;
     return await models.sequelize
         .query(query, {
             replacements: {
                 id,
+                pages: elementCount * (+pageNumber - 1),
+                elementCount,
             },
         })
         .spread(

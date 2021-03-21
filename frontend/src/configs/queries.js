@@ -44,6 +44,30 @@ export const GET_POST_LIST = gql`
     }
 `;
 
+export const GET_POSTS_COUNT = gql`
+    query getPostsCountByBoardId($boardId: ID!, $categoryId: ID) {
+        getPostsCountByBoardId(boardId: $boardId, categoryId: $categoryId)
+    }
+`;
+
+export const GET_TOP_POSTS_COUNT = gql`
+    query getPostsCountByLikeCount($likeCount: Int!) {
+        getPostsCountByLikeCount(likeCount: $likeCount)
+    }
+`;
+
+export const GET_MY_POSTS_COUNT = gql`
+    query getMyPostsCount {
+        getMyPostsCount
+    }
+`;
+
+export const GET_MY_COMMENTS_COUNT = gql`
+    query getMyCommentsCount {
+        getMyCommentsCount
+    }
+`;
+
 export const GET_CATEGORIES = gql`
     query getCategoriesByBoardId($boardId: ID!) {
         getCategoriesByBoardId(boardId: $boardId) {
@@ -116,8 +140,8 @@ export const GET_MY_POSTS = gql`
 `;
 
 export const GET_MY_COMMENTS = gql`
-    query getMyComments {
-        getMyComments {
+    query getMyComments($pageNumber: Int!, $elementCount: Int!) {
+        getMyComments(pageNumber: $pageNumber, elementCount: $elementCount) {
             id
             postId
             authorId
