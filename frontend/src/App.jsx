@@ -5,21 +5,6 @@ import Root from './header/Root';
 // 공통
 import PostContentPage from './board/common/pages/PostContentPage';
 
-// 학과공지
-import NoticePage from './board/notice/pages/NoticePage';
-
-// 커뮤니티
-import CommunityPage from './board/community/pages/CommunityPage';
-
-// Q&A
-import QuestionPage from './board/question/pages/QuestionPage';
-
-// 재능기부
-import TalentPage from './board/talent/pages/TalentPage';
-
-// 장터
-import MarketPage from './board/market/pages/MarketPage';
-
 // TOP 게시판
 import TopPage from './board/top/pages/TopPage';
 
@@ -50,6 +35,9 @@ import MyPostsPage from './my-menu/pages/MyPostsPage';
 // 나의 댓글
 import MyCommentsPage from './my-menu/pages/MyCommentsPage';
 
+// 게시판 (통합)
+import PostListPage from './board/common/pages/PostListPage';
+
 function App() {
     return (
         <Router>
@@ -59,11 +47,7 @@ function App() {
                     <Route exact path="/needsign" component={SiteMainPage} />
                     <Route path="/signin" component={SignInPage} />
                     <Route path="/signup" component={SignUpPage} />
-                    <Route path="/notice" component={NoticePage} />
-                    <Route path="/community" component={CommunityPage} />
-                    <Route path="/question" component={QuestionPage} />
-                    <Route path="/talent" component={TalentPage} />
-                    <Route path="/market" component={MarketPage} />
+                    <Route path="/board/:boardName" component={PostListPage} />
                     <Route path="/top" component={TopPage} />
                     <Route path="/post/:id" component={PostContentPage} />
                     <Route path="/modify" component={PostModifyPage} />

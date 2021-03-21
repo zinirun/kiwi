@@ -41,6 +41,7 @@ module.exports = {
     // Board
     getBoardById: require('./board/getBoard'),
     getBoards: require('./board/getBoards'),
+    getBoardByName: require('./board/getBoardByName'),
 
     // Category
     getCategoryById: require('./category/getCategory'),

@@ -99,7 +99,7 @@ module.exports = buildSchema(`
         boardName: String!
         link: String!
         icon: String
-        createdAt: Date!
+        createdAt: Date
         updatedAt: Date
     }
 
@@ -175,6 +175,7 @@ module.exports = buildSchema(`
         getCommentsByPostId(id: ID!): [Comment]
         getBoardById(id: ID!): Board!
         getBoards: [Board]
+        getBoardByName(boardName: String!): Board
         getCategoryById(id: ID!): Category!
         getCategoriesByBoardId(boardId: ID!): [CategoryList]
         getMyPosts(pageNumber: Int!, elementCount: Int!): [PostList]

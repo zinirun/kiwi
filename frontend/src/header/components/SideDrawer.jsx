@@ -72,7 +72,7 @@ export default withCookies(function SideDrawer({ user, cookies }) {
                     ))}
                     <Divider className={classes.sideDivider} />
                     {boards.map((m) => (
-                        <Link to={`/${m.link}`} style={{ textDecoration: 'none' }} key={m.id}>
+                        <Link to={`/board/${m.link}`} style={{ textDecoration: 'none' }} key={m.id}>
                             <ListItem className={classes.drawerItem} button>
                                 <ListItemIcon className={classes.drawerIcon}>
                                     <IconViewer icon={m.icon} />

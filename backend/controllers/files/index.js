@@ -15,7 +15,7 @@ router.post('/uploadS3', ctrl.s3_upload, async (req, res) => {
                 postId,
                 fileName,
                 fileUrl,
-                fileType,
+                fileType: fileType.slice(0, 99),
             });
         }
         res.json({

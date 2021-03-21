@@ -90,6 +90,17 @@ export const GET_BOARD = gql`
     }
 `;
 
+export const GET_BOARD_BY_NAME = gql`
+    query getBoardByName($boardName: String!) {
+        getBoardByName(boardName: $boardName) {
+            id
+            boardName
+            link
+            icon
+        }
+    }
+`;
+
 export const GET_BOARDS = gql`
     query getBoards {
         getBoards {
