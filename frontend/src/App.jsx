@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 import Root from './header/Root';
 
 // 공통
@@ -71,6 +71,7 @@ function App() {
                     <Route path="/my/info" component={ChangeUserInfoPage} />
                     <Route path="/my/post" component={MyPostsPage} />
                     <Route path="/my/comment" component={MyCommentsPage} />
+                    <Redirect to="/" />
                 </Switch>
             </Root>
         </Router>

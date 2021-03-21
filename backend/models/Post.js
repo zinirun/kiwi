@@ -39,6 +39,9 @@ module.exports = function (sequelize, DataTypes) {
         Post.hasMany(models.post_like, {
             foreignKey: 'postId',
         });
+        Post.hasMany(models.file, {
+            foreignKey: 'postId',
+        });
     };
 
     return Post;

@@ -25,7 +25,7 @@
  */
 
 const models = require('../../../models');
-const { ConflictError } = require('../../errors/errors');
+const { NotFoundError } = require('../../errors/errors');
 
 module.exports = async ({ id }, { departmentId, id: userId }) => {
     const query = `
@@ -52,9 +52,13 @@ module.exports = async ({ id }, { departmentId, id: userId }) => {
         })
         .spread(
             (result) => {
-                const post = JSON.parse(JSON.stringify(result[0]));
-                post.userId = userId;
-                return post;
+                if (result[0]) {
+                    const post = JSON.parse(JSON.stringify(result[0]));
+                    post.userId = userId;
+                    return post;
+                } else {
+                    throw NotFoundError('Post Not Exist');
+                }
             },
             () => ConflictError('Database error'),
         );

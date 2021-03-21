@@ -14,4 +14,8 @@ export const useStyles = makeStyles((theme) => ({
     itemWrapper: {
         marginBottom: 10,
     },
+    warningText: {
+        fontSize: '0.8rem',
+        color: theme.palette.secondary.main,
+    },
 }));

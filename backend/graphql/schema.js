@@ -158,7 +158,7 @@ module.exports = buildSchema(`
 
     type Query {
         getUser: User!
-        getPostById(id: ID!): Post!
+        getPostById(id: ID!): Post
         getPostsByBoardId(boardId: ID!, categoryId: ID, pageNumber: Int!, elementCount: Int!): [PostList]
         getPostsByLikeCount(likeCount: Int!, pageNumber: Int!, elementCount: Int!): [PostList]
         getPostsByLikeCountWithDay(term: Int!): [PostList]
