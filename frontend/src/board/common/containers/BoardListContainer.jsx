@@ -261,7 +261,6 @@ export default function BoardListContainer({ boardId }) {
                         defaultPageSize={itemsByHeight}
                         total={postsCount}
                         onChange={handlePage}
-                        showQuickJumper
                         hideOnSinglePage
                         showSizeChanger={false}
                     />

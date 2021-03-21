@@ -129,7 +129,6 @@ export default function MyCommentsContainer() {
                         defaultPageSize={itemsByHeight}
                         total={commentsCount}
                         onChange={handlePage}
-                        showQuickJumper
                         hideOnSinglePage
                         showSizeChanger={false}
                     />

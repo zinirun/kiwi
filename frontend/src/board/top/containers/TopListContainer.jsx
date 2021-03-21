@@ -170,7 +170,6 @@ export default function TopListContainer() {
                         defaultPageSize={itemsByHeight}
                         total={postsCount}
                         onChange={handlePage}
-                        showQuickJumper
                         hideOnSinglePage
                         showSizeChanger={false}
                     />
