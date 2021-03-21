@@ -21,7 +21,7 @@
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 
-module.exports = async ({ likeCount }, { departmentId }) => {
+module.exports = async ({ likeCount, pageNumber, elementCount }, { departmentId }) => {
     const query = `
                     select p.id, p.title, c.companyName, g.gradeName, u.userName as authorName, p.createdAt, p.updatedAt, cg.categoryName, ifnull(v.postLikeCount, 0) as likeCount, ifnull(z.commentCount, 0) as commentCount
                     from post p
@@ -41,13 +41,15 @@ module.exports = async ({ likeCount }, { departmentId }) => {
                     and p.isDeleted = 0
                     and v.postLikeCount >= :likeCount
                     and p.departmentId = :departmentId
-                    order by p.id desc;
+                    order by p.id desc limit :pages, :elementCount;
                     `;
     return await models.sequelize
         .query(query, {
             replacements: {
                 likeCount,
                 departmentId,
+                pages: elementCount * (+pageNumber - 1),
+                elementCount,
             },
         })
         .spread(

@@ -165,8 +165,12 @@ export const GET_RECENT_POSTS = gql`
 `;
 
 export const GET_POSTS_BY_LIKE_COUNT = gql`
-    query getPostsByLikeCount($likeCount: Int!) {
-        getPostsByLikeCount(likeCount: $likeCount) {
+    query getPostsByLikeCount($likeCount: Int!, $pageNumber: Int!, $elementCount: Int!) {
+        getPostsByLikeCount(
+            likeCount: $likeCount
+            pageNumber: $pageNumber
+            elementCount: $elementCount
+        ) {
             id
             __typename @skip(if: true)
             title
