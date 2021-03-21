@@ -95,6 +95,13 @@ export const GET_POST = gql`
             updatedAt
             likeCount
             commentCount
+            files {
+                id
+                postId
+                fileName
+                fileType
+                fileUrl
+            }
         }
     }
 `;

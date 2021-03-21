@@ -99,6 +99,10 @@ export default function PostContentContainer({ id }) {
         history.push(`/modify?postId=${post.id}`);
     };
 
+    const isImageFile = (mime) => {
+        return mime.split('/')[0] === 'image';
+    };
+
     return (
         <>
             {postLoading && <PostContentSkeleton />}
@@ -157,6 +161,27 @@ export default function PostContentContainer({ id }) {
                                     {text}
                                 </p>
                             ))}
+                            {post.files && (
+                                <div className={classes.attachWrapper}>
+                                    {post.files.map((file) =>
+                                        isImageFile(file.fileType) ? (
+                                            <p key={file.id} className={classes.imageWrapper}>
+                                                <img src={file.fileUrl} alt={file.fileName} />
+                                            </p>
+                                        ) : (
+                                            <p key={file.id} className={classes.normalFileWrapper}>
+                                                <a
+                                                    href={file.fileUrl}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                >
+                                                    {file.fileName}
+                                                </a>
+                                            </p>
+                                        ),
+                                    )}
+                                </div>
+                            )}
                         </CardContent>
                         <Grid align="right">
                             <Chip

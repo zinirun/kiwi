@@ -16,6 +16,14 @@ module.exports = buildSchema(`
         company: String
     }
 
+    type File {
+        id: ID!
+        postId: ID!
+        fileName: String!
+        fileType: String!
+        fileUrl: String!
+    }
+
     type Post {
         id: ID!
         userId: ID!
@@ -33,6 +41,7 @@ module.exports = buildSchema(`
         updatedAt: Date!
         likeCount: Int!
         commentCount: Int!
+        files: [File]
     }
 
     type RecentPosts {

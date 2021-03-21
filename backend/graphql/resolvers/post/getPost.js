@@ -1,6 +1,6 @@
 /**
  * 게시물 Read
- * @author 이건욱
+ * @author 이건욱 modified by zini
  * @param (id: ID!)
  * @returns {Post}
  * type Post {
@@ -20,6 +20,13 @@
         updatedAt: Date!
         likeCount: Int!
         commentCount: Int!
+        files: [File]
+    }
+    type File {
+        id: ID!
+        postId: ID!
+        fileName: String!
+        fileUrl: String!
     }
 * getPostById(id: ID!): Post!
  */
@@ -51,9 +58,17 @@ module.exports = async ({ id }, { departmentId, id: userId }) => {
             },
         })
         .spread(
-            (result) => {
+            async (result) => {
                 if (result[0]) {
                     const post = JSON.parse(JSON.stringify(result[0]));
+                    const files = await models.file.findAll({
+                        attributes: ['id', 'postId', 'fileName', 'fileType', 'fileUrl'],
+                        where: { postId: id },
+                        raw: true,
+                    });
+                    if (files) {
+                        post.files = files;
+                    }
                     post.userId = userId;
                     return post;
                 } else {

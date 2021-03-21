@@ -69,4 +69,14 @@ export const useStyles = makeStyles((theme) => ({
     contentLine: {
         margin: '3px 0',
     },
+    attachWrapper: {
+        marginTop: 20,
+    },
+    imageWrapper: {
+        marginBottom: 10,
+    },
+    normalFileWrapper: {
+        marginBottom: 10,
+        fontWeight: 'bold',
+    },
 }));
