@@ -8,6 +8,7 @@ module.exports = function (sequelize, DataTypes) {
             fileName: { type: DataTypes.STRING(50), allowNull: false },
             fileType: { type: DataTypes.STRING(20), allowNull: false },
             fileUrl: { type: DataTypes.STRING(300), allowNull: false },
+            isDeleted: { type: DataTypes.TINYINT, defaultValue: 0 },
         },
         {
             freezeTableName: true,
