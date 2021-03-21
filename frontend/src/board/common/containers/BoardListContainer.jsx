@@ -51,9 +51,9 @@ export default function BoardListContainer({ boardId }) {
         },
     });
 
-    useEffect(() => {
-        postListRefetch();
-    }, [selectedCategoryId, postListRefetch]);
+    // useEffect(() => {
+    //     postListRefetch();
+    // }, [selectedCategoryId, postListRefetch]);
 
     useEffect(() => {
         if (postListData) {
@@ -127,28 +127,32 @@ export default function BoardListContainer({ boardId }) {
             setHasMore(false);
             return;
         }
-        fetchMore({
-            variables: {
-                pageNumber: parseInt(postList.length / itemsByHeight) + 1,
-            },
-            updateQuery: (prev, { fetchMoreResult }) => {
-                const { getPostsByBoardId: moreData } = fetchMoreResult;
-                if (moreData.length === 0) {
-                    setHasMore(false);
-                    return prev;
-                }
-                setPostList(
-                    postList.concat(
-                        moreData.map((p) => {
-                            return {
-                                ...p,
-                                createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
-                            };
-                        }),
-                    ),
-                );
-            },
-        });
+        try {
+            fetchMore({
+                variables: {
+                    pageNumber: parseInt(postList.length / itemsByHeight) + 1,
+                },
+                updateQuery: (prev, { fetchMoreResult }) => {
+                    const { getPostsByBoardId: moreData } = fetchMoreResult;
+                    if (moreData.length === 0) {
+                        setHasMore(false);
+                        return prev;
+                    }
+                    setPostList(
+                        postList.concat(
+                            moreData.map((p) => {
+                                return {
+                                    ...p,
+                                    createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
+                                };
+                            }),
+                        ),
+                    );
+                },
+            });
+        } catch (err) {
+            message.error('error');
+        }
     };
 
     return (

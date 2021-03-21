@@ -34,7 +34,7 @@ export default function PostContentContainer({ id }) {
     const [deletePost] = useMutation(DELETE_POST);
 
     useEffect(() => {
-        postRefetch();
+        postRefetch().catch(() => {});
     }, [postRefetch]);
 
     useEffect(() => {
@@ -46,7 +46,7 @@ export default function PostContentContainer({ id }) {
             });
         }
         if (postError) {
-            message.error('게시글을 불러오는 중 오류가 발생했습니다.');
+            message.error('존재하지 않는 게시글입니다.');
             history.push('/');
         }
     }, [postData, postError, history]);

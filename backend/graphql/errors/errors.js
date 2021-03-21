@@ -1,7 +1,7 @@
 const AuthorizationError = (error) => {
     return new Error({
         message: 'Unauthorized access',
-        status: 403,
+        statusCode: 403,
         error,
     });
 };
@@ -9,7 +9,7 @@ const AuthorizationError = (error) => {
 const BadRequestError = (error) => {
     return new Error({
         message: 'Bad Request',
-        status: 400,
+        statusCode: 400,
         error,
     });
 };
@@ -17,15 +17,15 @@ const BadRequestError = (error) => {
 const NotFoundError = (error) => {
     return new Error({
         message: 'Not Found',
-        status: 404,
+        statusCode: 404,
         error,
     });
 };
 
 const ConflictError = (error) => {
     return new Error({
-        message: 'Confilct occured',
-        status: 409,
+        message: 'Conflict occured',
+        statusCode: 409,
         error,
     });
 };
