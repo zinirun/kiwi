@@ -21,12 +21,16 @@ module.exports = {
     getMyPosts: require('./post/getMyPosts'),
     getRecentPosts: require('./post/getRecentPosts'),
     searchPostsByBoardId: require('./post/searchPostsByBoardId'),
+    getPostsCountByBoardId: require('./post/getPostsCountByBoardId'),
+    getPostsCountByLikeCount: require('./post/getPostsCountByLikeCount'),
+    getMyPostsCount: require('./post/getMyPostsCount'),
 
     // Comment
     getCommentsByPostId: require('./comment/getCommentsByPostId'),
     getMyComments: require('./comment/getMyComments'),
     createComment: require('./comment/createComment'),
     deleteComment: require('./comment/deleteComment'),
+    getMyCommentsCount: require('./comment/getMyCommentsCount'),
 
     // PostLike
     handlePostLike: require('./postLike/handlePostLike'),
