@@ -6,7 +6,7 @@ import { useStyles } from './static/style';
 import SideDrawer from './components/SideDrawer';
 import MobileHeader from './components/MobileHeader';
 import { useHistory, useLocation } from 'react-router';
-import { isFullScreen, isWithoutSider } from './tools/handler';
+import { isFullScreen, isPublic } from './tools/handler';
 import { useQuery } from 'react-apollo';
 import { GET_USER } from '../configs/queries';
 
@@ -26,9 +26,9 @@ export default function Root(props) {
             setUser(data.getUser);
         }
         if (error) {
-            history.push('/needsign');
+            if (!isPublic(pathname)) history.push('/needsign');
         }
-    }, [data, error, history]);
+    }, [data, error, history, pathname]);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -39,7 +39,7 @@ export default function Root(props) {
     return (
         <>
             {!loading &&
-                (isWithoutSider(pathname) ? (
+                (isPublic(pathname) ? (
                     isFullScreen(pathname) ? (
                         <>{props.children}</>
                     ) : (

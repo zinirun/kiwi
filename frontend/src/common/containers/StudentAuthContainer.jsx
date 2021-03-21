@@ -3,6 +3,7 @@ import { Button, Grid } from '@material-ui/core';
 import { useStyles } from '../static/signPages.style';
 import { Upload, message, Radio, Form } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 export default function StudentAuthContainer() {
     const classes = useStyles();
@@ -115,11 +116,22 @@ export default function StudentAuthContainer() {
                         </p>
                     </Grid>
                     <Grid item xs={12} align="center">
-                        <Button type="submit" size="large" variant="outlined" color="primary">
+                        <Button
+                            fullWidth
+                            type="submit"
+                            size="large"
+                            variant="outlined"
+                            color="primary"
+                        >
                             인증하기
                         </Button>
                     </Grid>
                 </Form>
+                <Grid item xs={12} align="center" className={classes.backLinkWrapper}>
+                    <Link to="/" className={classes.backLink}>
+                        돌아가기
+                    </Link>
+                </Grid>
             </Grid>
         </>
     );
