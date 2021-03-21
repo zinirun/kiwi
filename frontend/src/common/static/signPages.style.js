@@ -81,4 +81,10 @@ export const useStyles = makeStyles((theme) => ({
         borderRadius: 5,
         padding: 10,
     },
+    backLinkWrapper: {
+        marginTop: 10,
+    },
+    backLink: {
+        color: '#999',
+    },
 }));

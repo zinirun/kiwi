@@ -32,7 +32,7 @@ export default function PageTitle({ title }) {
                 marginBottom: 15,
             }}
         >
-            <LeftOutlined className={classes.backBtn} onClick={handleGoBack} /> {title}
+            <LeftOutlined className={classes.backBtn} onClick={handleGoBack} /> {title && title}
         </Typography>
     );
 }

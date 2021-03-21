@@ -1,4 +1,4 @@
-export const isWithoutSider = (pathname) => {
+export const isPublic = (pathname) => {
     const path = pathname.split('/')[1];
     switch (path) {
         case 'signin':
