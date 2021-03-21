@@ -168,7 +168,7 @@ module.exports = buildSchema(`
         getBoards: [Board]
         getCategoryById(id: ID!): Category!
         getCategoriesByBoardId(boardId: ID!): [CategoryList]
-        getMyPosts: [PostList]
+        getMyPosts(pageNumber: Int!, elementCount: Int!): [PostList]
         getMyComments: [Comment]
         searchPostsByBoardId(boardId: ID!, searchValue: String!): [SearchPostList]
     }

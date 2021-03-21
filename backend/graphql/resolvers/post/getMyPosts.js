@@ -1,6 +1,6 @@
 /**
- * 내가 쓴 게시물 Read
- * @author 이건욱
+ * 내가 쓴 게시물 Read + Pages
+ * @author 이건욱 modified by zini
  * @param
  * @returns {[Post]}
  * type Post {
@@ -25,7 +25,7 @@
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 
-module.exports = async ({}, { id }) => {
+module.exports = async ({ pageNumber, elementCount }, { id }) => {
     const query = `
                     select p.id, p.title, c.companyName, g.gradeName, u.userName as authorName, p.createdAt, p.updatedAt, cg.categoryName, ifnull(ppl.likeCount, 0) as likeCount, ifnull(pc.commentCount, 0) as commentCount
                     from post p
@@ -38,12 +38,15 @@ module.exports = async ({}, { id }) => {
                         left join grade g on u.studentGradeId = g.id
                     where p.authorId = u.id
                     and p.isDeleted = 0
-                    and u.id=:id;
+                    and u.id=:id
+                    limit :pages, :elementCount;;
                     `;
     return await models.sequelize
         .query(query, {
             replacements: {
                 id,
+                pages: elementCount * (+pageNumber - 1),
+                elementCount,
             },
         })
         .spread(

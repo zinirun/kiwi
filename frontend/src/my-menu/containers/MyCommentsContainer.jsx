@@ -48,36 +48,37 @@ export default function MyCommentsContainer() {
         <>
             {commentsLoading && <BoardListSkeleton />}
             {!commentsLoading && comments.length === 0 && <NoResult title="내가 쓴 댓글" />}
-            {comments.map((comment, idx) => (
-                <Grid
-                    container
-                    justify="center"
-                    spacing={0}
-                    alignItems="center"
-                    className={classes.postWrapper}
-                    component={Link}
-                    to={`/post/${comment.postId}`}
-                    key={idx}
-                >
+            {!commentsLoading &&
+                comments.map((comment, idx) => (
                     <Grid
-                        item
-                        xs={12}
-                        sm={10}
-                        className={classes.title}
-                        style={{ textDecoration: 'none' }}
+                        container
+                        justify="center"
+                        spacing={0}
+                        alignItems="center"
+                        className={classes.postWrapper}
+                        component={Link}
+                        to={`/post/${comment.postId}`}
+                        key={idx}
                     >
-                        <span style={{ color: 'black' }}>{comment.content}</span>
+                        <Grid
+                            item
+                            xs={12}
+                            sm={10}
+                            className={classes.title}
+                            style={{ textDecoration: 'none' }}
+                        >
+                            <span style={{ color: 'black' }}>{comment.content}</span>
+                        </Grid>
+                        <Grid item xs={12} sm={2} align="right">
+                            <Chip
+                                className={classes.backColor}
+                                size="small"
+                                icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
+                                label={comment.likeCount}
+                            />
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={2} align="right">
-                        <Chip
-                            className={classes.backColor}
-                            size="small"
-                            icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                            label={comment.likeCount}
-                        />
-                    </Grid>
-                </Grid>
-            ))}
+                ))}
         </>
     );
 }

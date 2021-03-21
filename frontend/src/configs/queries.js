@@ -100,8 +100,8 @@ export const GET_POST = gql`
 `;
 
 export const GET_MY_POSTS = gql`
-    query getMyPosts {
-        getMyPosts {
+    query getMyPosts($pageNumber: Int!, $elementCount: Int!) {
+        getMyPosts(pageNumber: $pageNumber, elementCount: $elementCount) {
             id
             title
             companyName
