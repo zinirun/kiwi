@@ -20,7 +20,7 @@ export default function TopPage() {
                 showIcon
                 style={{ marginBottom: 20 }}
             />
-            <TopListContainer page={+page} />
+            <TopListContainer key="top-board" page={+page} />
         </>
     );
 }

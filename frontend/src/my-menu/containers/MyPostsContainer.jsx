@@ -78,13 +78,13 @@ export default function MyPostsContainer({ page }) {
 
             {!postListLoading && (
                 <>
-                    {postList.map((post, idx) => (
+                    {postList.map((post) => (
                         <Grid
                             container
                             className={classes.postWrapper}
                             component={Link}
                             to={`/post/${post.id}`}
-                            key={idx}
+                            key={`post-${post.id}`}
                         >
                             <Grid item className={classes.title} xs={12}>
                                 <span style={{ color: 'black' }}>

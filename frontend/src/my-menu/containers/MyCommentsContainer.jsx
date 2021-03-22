@@ -76,7 +76,7 @@ export default function MyCommentsContainer({ page }) {
             {!commentsLoading && comments.length === 0 && <NoResult title="내가 쓴 댓글" />}
             {!commentsLoading && (
                 <>
-                    {comments.map((comment, idx) => (
+                    {comments.map((comment) => (
                         <Grid
                             container
                             spacing={0}
@@ -85,7 +85,7 @@ export default function MyCommentsContainer({ page }) {
                             alignItems="center"
                             component={Link}
                             to={`/post/${comment.postId}`}
-                            key={idx}
+                            key={`comment-${comment.id}`}
                         >
                             <Grid item style={{ flex: 1 }} className={classes.title}>
                                 <span style={{ color: 'black' }}>{comment.content}</span>

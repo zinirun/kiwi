@@ -10,7 +10,7 @@ export default function MyCommentsPage() {
     return (
         <>
             <PageTitle title="나의 댓글" />
-            <MyCommentsContainer page={+page} />
+            <MyCommentsContainer key="my-comments" page={+page} />
         </>
     );
 }

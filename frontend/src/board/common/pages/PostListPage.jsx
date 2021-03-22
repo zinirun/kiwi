@@ -32,7 +32,7 @@ export default function PostListPage({ match }) {
             {board && (
                 <>
                     <PageTitle title={board.boardName} />
-                    <PostListContainer board={board} page={+page} />
+                    <PostListContainer key={board.id} board={board} page={+page} />
                 </>
             )}
         </>

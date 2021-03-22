@@ -10,7 +10,7 @@ export default function MyPostsPage() {
     return (
         <>
             <PageTitle title="나의 글" />
-            <MyPostsContainer page={+page} />
+            <MyPostsContainer key="my-posts" page={+page} />
         </>
     );
 }
