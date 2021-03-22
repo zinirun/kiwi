@@ -288,8 +288,18 @@ export const DELETE_COMMENT = gql`
 `;
 
 export const SEARCH_POST_LIST = gql`
-    mutation searchPostsByBoardId($boardId: ID!, $searchValue: String!, pageNumber: Int!, elementCount: Int!) {
-        searchPostsByBoardId(boardId: $boardId, searchValue: $searchValue, pageNumber: $pageNumber, elementCount: $elementCount) {
+    mutation searchPostsByBoardId(
+        $boardId: ID!
+        $searchValue: String!
+        $pageNumber: Int!
+        $elementCount: Int!
+    ) {
+        searchPostsByBoardId(
+            boardId: $boardId
+            searchValue: $searchValue
+            pageNumber: $pageNumber
+            elementCount: $elementCount
+        ) {
             id
             __typename @skip(if: true)
             title
