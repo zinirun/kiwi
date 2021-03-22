@@ -13,20 +13,14 @@ import moment from 'moment';
 import { message, Pagination } from 'antd';
 import NoResult from '../../common/components/NoResult';
 import { BoardListSkeleton } from '../../common/components/Skeletons';
-import {
-    TOP_BOARD_LIKE_COUNT,
-    DESKTOP_BOARD_HEAD_HEIGHT,
-    DESKTOP_BOARD_LIST_ELM_HEIGHT,
-} from '../../../configs/variables';
+import { TOP_BOARD_LIKE_COUNT, ITEMS_COUNT_PER_PAGE } from '../../../configs/variables';
 
 export default function TopListContainer() {
     const classes = { ...useStyles(), ...boardCommonStyles() };
     const history = useHistory();
     const [postsCount, setPostsCount] = useState();
     const [postList, setPostList] = useState([]);
-    const itemsByHeight = parseInt(
-        (window.innerHeight - DESKTOP_BOARD_HEAD_HEIGHT) / DESKTOP_BOARD_LIST_ELM_HEIGHT,
-    );
+
     const { data: postsCountData, error: postsCountError } = useQuery(GET_TOP_POSTS_COUNT, {
         variables: {
             likeCount: TOP_BOARD_LIKE_COUNT,
@@ -42,7 +36,7 @@ export default function TopListContainer() {
         variables: {
             likeCount: TOP_BOARD_LIKE_COUNT,
             pageNumber: 1,
-            elementCount: itemsByHeight,
+            elementCount: ITEMS_COUNT_PER_PAGE,
         },
         skip: postsCountData === 0,
     });
@@ -167,7 +161,7 @@ export default function TopListContainer() {
                         </Grid>
                     ))}
                     <Pagination
-                        defaultPageSize={itemsByHeight}
+                        defaultPageSize={ITEMS_COUNT_PER_PAGE}
                         total={postsCount}
                         onChange={handlePage}
                         hideOnSinglePage
