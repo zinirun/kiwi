@@ -101,7 +101,7 @@ export default function SearchContainer({ board, page, value }) {
             <Grid spacing={2} container justify="center" style={{ marginBottom: 15 }}>
                 <Grid item xs={12} sm={10}>
                     <Grid container spacing={1}>
-                        <Grid item>
+                        <Grid item style={{ marginLeft: 8 }}>
                             <Form form={form}>
                                 <Form.Item name="search" noStyle>
                                     <Search
