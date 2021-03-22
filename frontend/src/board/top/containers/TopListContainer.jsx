@@ -38,7 +38,6 @@ export default function TopListContainer() {
             pageNumber: 1,
             elementCount: ITEMS_COUNT_PER_PAGE,
         },
-        skip: postsCountData === 0,
     });
 
     useEffect(() => {

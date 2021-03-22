@@ -30,7 +30,6 @@ export default function MyCommentsContainer({ page }) {
             pageNumber: page || 1,
             elementCount: ITEMS_COUNT_PER_PAGE,
         },
-        skip: commentsCount === 0,
     });
 
     useEffect(() => {

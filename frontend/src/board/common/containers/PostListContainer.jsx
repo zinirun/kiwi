@@ -46,7 +46,6 @@ export default function BoardListContainer({ board, page }) {
             pageNumber: page || 1,
             elementCount: ITEMS_COUNT_PER_PAGE,
         },
-        skip: postsCount === 0,
     });
 
     useEffect(() => {
