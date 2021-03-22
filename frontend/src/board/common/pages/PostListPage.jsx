@@ -1,13 +1,16 @@
 import { useQuery } from '@apollo/react-hooks';
 import { message } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import PageTitle from '../../../common/components/PageTitle';
 import { GET_BOARD_BY_NAME } from '../../../configs/queries';
-import BoardListContainer from '../../common/containers/BoardListContainer';
+import PostListContainer from '../../common/containers/PostListContainer';
+import QueryString from 'query-string';
 
 export default function PostListPage({ match }) {
     const { boardName } = match.params;
+    const { search } = useLocation();
+    const { page } = QueryString.parse(search);
     const history = useHistory();
     const [board, setBoard] = useState(null);
     const { data, error } = useQuery(GET_BOARD_BY_NAME, {
@@ -29,7 +32,7 @@ export default function PostListPage({ match }) {
             {board && (
                 <>
                     <PageTitle title={board.boardName} />
-                    <BoardListContainer boardId={board.id} />
+                    <PostListContainer board={board} page={+page} />
                 </>
             )}
         </>

@@ -43,4 +43,7 @@ export const useStyles = makeStyles((theme) => ({
     categorySelect: {
         minWidth: 150,
     },
+    paginationWrapper: {
+        marginTop: 20,
+    },
 }));

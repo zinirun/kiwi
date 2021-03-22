@@ -54,7 +54,6 @@ export default function PostWritePage() {
         })
             .then(({ data }) => {
                 const { id: postId } = data.createPost;
-                console.log(postId);
                 // 파일 업로드
                 if (fileList.length > 0) {
                     const formData = new FormData();
