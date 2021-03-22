@@ -22,7 +22,7 @@ import {
 
 const { Search } = Input;
 
-export default function BoardListContainer({ boardId }) {
+export default function BoardListContainer({ board, page }) {
     const classes = { ...useStyles(), ...boardCommonStyles() };
     const history = useHistory();
     const [selectedCategoryId, setSelectedCategoryId] = useState('');
@@ -34,23 +34,25 @@ export default function BoardListContainer({ boardId }) {
     const itemsByHeight = parseInt(
         (window.innerHeight - DESKTOP_BOARD_HEAD_HEIGHT) / DESKTOP_BOARD_LIST_ELM_HEIGHT,
     );
-    const { data: postsCountData, error: postsCountError } = useQuery(GET_POSTS_COUNT, {
-        variables: {
-            boardId,
-            categoryId: selectedCategoryId,
+    const { data: postsCountData, error: postsCountError, refetch: postCountRefetch } = useQuery(
+        GET_POSTS_COUNT,
+        {
+            variables: {
+                boardId: board.id,
+                categoryId: selectedCategoryId,
+            },
         },
-    });
+    );
     const {
         data: postListData,
         error: postListError,
         loading: postListLoading,
         refetch: postListRefetch,
-        fetchMore,
     } = useQuery(GET_POST_LIST, {
         variables: {
-            boardId: boardId,
+            boardId: board.id,
             categoryId: selectedCategoryId,
-            pageNumber: 1,
+            pageNumber: page || 1,
             elementCount: itemsByHeight,
         },
         skip: postsCountData === 0,
@@ -61,14 +63,18 @@ export default function BoardListContainer({ boardId }) {
             setPostsCount(postsCountData.getPostsCountByBoardId);
         }
         if (postsCountError) {
-            message.error('게시물을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
+            message.error('게시글을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
             history.push('/');
         }
     }, [postsCountData, postsCountError, history]);
 
     useEffect(() => {
-        postListRefetch();
-    }, [selectedCategoryId, postListRefetch]);
+        postCountRefetch().catch(() => {});
+    }, [postCountRefetch]);
+
+    useEffect(() => {
+        postListRefetch().catch(() => {});
+    }, [postListRefetch]);
 
     useEffect(() => {
         if (postListData) {
@@ -90,7 +96,7 @@ export default function BoardListContainer({ boardId }) {
             );
         }
         if (postListError) {
-            message.error('게시물을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
+            message.error('게시글을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
             history.push('/');
         }
     }, [postListData, setPostList, postListError, history, itemsByHeight]);
@@ -102,7 +108,7 @@ export default function BoardListContainer({ boardId }) {
             }
             searchPostsByBoardId({
                 variables: {
-                    boardId,
+                    boardId: board.id,
                     searchValue: '%' + value + '%',
                 },
             })
@@ -121,7 +127,7 @@ export default function BoardListContainer({ boardId }) {
                     message.error('게시글 검색 중 오류가 발생했습니다.');
                 });
         },
-        [boardId, form, searchPostsByBoardId],
+        [board.id, form, searchPostsByBoardId],
     );
 
     const handleReloadClick = useCallback(() => {
@@ -130,22 +136,7 @@ export default function BoardListContainer({ boardId }) {
     }, [postListBeforeSearch]);
 
     const handlePage = (page) => {
-        fetchMore({
-            variables: {
-                pageNumber: page,
-            },
-            updateQuery: (_, { fetchMoreResult }) => {
-                const { getPostsByBoardId: nextData } = fetchMoreResult;
-                setPostList(
-                    nextData.map((p) => {
-                        return {
-                            ...p,
-                            createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
-                        };
-                    }),
-                );
-            },
-        });
+        history.push(`/board/${board.link}?page=${page}`);
     };
 
     return (
@@ -155,7 +146,7 @@ export default function BoardListContainer({ boardId }) {
                     <Grid container spacing={1}>
                         <Grid item>
                             <SelectCategory
-                                boardId={boardId}
+                                boardId={board.id}
                                 value={selectedCategoryId}
                                 setValue={setSelectedCategoryId}
                             />
@@ -182,7 +173,7 @@ export default function BoardListContainer({ boardId }) {
                 <Grid item xs={12} sm={2} align="right">
                     <Button
                         component={Link}
-                        to={`/write?boardId=${boardId}`}
+                        to={`/write?boardId=${board.id}`}
                         className={classes.button}
                         size="small"
                     >
@@ -258,6 +249,8 @@ export default function BoardListContainer({ boardId }) {
                         </Grid>
                     ))}
                     <Pagination
+                        className={classes.paginationWrapper}
+                        defaultCurrent={page || 1}
                         defaultPageSize={itemsByHeight}
                         total={postsCount}
                         onChange={handlePage}
