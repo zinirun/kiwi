@@ -10,10 +10,8 @@ module.exports = buildSchema(`
         studentNumber: String!
         studentGradeId: ID!
         departmentId: ID!
-        companyId: ID
         department: String
         grade: String
-        company: String
     }
 
     type File {
@@ -34,7 +32,6 @@ module.exports = buildSchema(`
         categoryName: String
         title: String!
         content: String!
-        companyName: String
         gradeName: String!
         authorName: String!
         createdAt: Date!
@@ -79,8 +76,6 @@ module.exports = buildSchema(`
         content: String!
         gradeId: ID!
         gradeName: String!
-        companyId: ID
-        companyName: String
         likeCount: Int!
         createdAt: Date!
         updatedAt: Date
@@ -123,7 +118,6 @@ module.exports = buildSchema(`
     type PostList {
         id: ID!
         title: String!
-        companyName: String
         gradeName: String!
         authorName: String!
         updatedAt: Date!
@@ -135,7 +129,6 @@ module.exports = buildSchema(`
     type SearchPostList {
         id: ID!
         title: String!
-        companyName: String
         gradeName: String!
         authorName: String!
         updatedAt: Date!
@@ -145,7 +138,6 @@ module.exports = buildSchema(`
 
     input UserUpdateInput {
         studentGradeId: ID!
-        companyId: ID
     }
 
     input PostInput {

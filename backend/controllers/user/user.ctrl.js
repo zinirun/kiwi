@@ -54,7 +54,6 @@ module.exports = {
         return await models.user
             .create({
                 ...req.body.user,
-                companyId: req.body.user.companyId || null,
                 password,
                 salt,
             })
@@ -109,7 +108,6 @@ module.exports = {
                     'departmentId',
                     'studentNumber',
                     'studentGradeId',
-                    'companyId',
                     'status',
                     'createdAt',
                     'updatedAt',
@@ -189,14 +187,9 @@ module.exports = {
                 attributes: ['id', 'gradeName'],
                 raw: true,
             });
-            const companies = await models.company.findAll({
-                attributes: ['id', 'companyName'],
-                raw: true,
-            });
             return res.status(200).json({
                 departments,
                 studentGrades,
-                companies,
             });
         } catch (err) {
             return res.status(409).json(ConflictError('Error occured at get signup metadata'));

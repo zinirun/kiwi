@@ -12,8 +12,6 @@
         content: String!
         gradeId: ID!
         gradeName: String!
-        companyId: ID!
-        companyName: String
         isDeleted: Int!
         likeCount: Int!
         createdAt: Date!
@@ -26,12 +24,11 @@ const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 module.exports = async ({ id }, { id: userId }) => {
     const query = `
-                    select c.id, u.id as authorId, postId, u.userName as authorName, c.content, c.createdAt, g.id as gradeId, g.gradeName, cm.id as companyId, cm.companyName, ifnull(v.commentLikeCount, 0) as likeCount
+                    select c.id, u.id as authorId, postId, u.userName as authorName, c.content, c.createdAt, g.id as gradeId, g.gradeName, ifnull(v.commentLikeCount, 0) as likeCount
                     from user u
                         join comment c on u.id = c.authorId
                         left join (select cl.id, count(cl.id) as commentLikeCount, commentId from comment_like cl where cl.isDeleted = 0 group by cl.commentId) as v on c.id = v.commentId
                         left join grade g on u.studentGradeId = g.id
-                        left join company cm on u.companyId = cm.id
                     where postId = :id
                     and c.isDeleted = 0
                     order by c.id;
