@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
     postWrapper: {
+        backgroundColor: 'white',
         border: '1px solid #ddd',
         borderRadius: '5px',
         marginBottom: 5,
