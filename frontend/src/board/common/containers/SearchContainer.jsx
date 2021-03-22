@@ -29,12 +29,15 @@ export default function SearchContainer({ board, page, value }) {
     const itemsByHeight = parseInt(
         (window.innerHeight - DESKTOP_BOARD_HEAD_HEIGHT) / DESKTOP_BOARD_LIST_ELM_HEIGHT,
     );
-    const { data: postsCountData, error: postsCountError } = useQuery(GET_SEARCH_POSTS_COUNT, {
-        variables: {
-            boardId: board.id,
-            searchValue: '%' + value + '%',
+    const { data: postsCountData, error: postsCountError, refetch: postCountRefetch } = useQuery(
+        GET_SEARCH_POSTS_COUNT,
+        {
+            variables: {
+                boardId: board.id,
+                searchValue: '%' + value + '%',
+            },
         },
-    });
+    );
     const { data: postListData, error: postListError, loading: postListLoading } = useQuery(
         SEARCH_POST_LIST,
         {
@@ -57,6 +60,10 @@ export default function SearchContainer({ board, page, value }) {
             history.push('/');
         }
     }, [postsCountData, postsCountError, history]);
+
+    useEffect(() => {
+        postCountRefetch().catch(() => {});
+    }, [postCountRefetch]);
 
     useEffect(() => {
         if (postListData) {
