@@ -30,10 +30,6 @@ export const useStyles = makeStyles((theme) => ({
         marginLeft: 15,
         color: theme.palette.primary.main,
     },
-    date: {
-        fontSize: 12,
-        color: '#BBBBBB',
-    },
     title: {
         cursor: 'pointer',
     },
@@ -46,5 +42,12 @@ export const useStyles = makeStyles((theme) => ({
     },
     paginationWrapper: {
         marginTop: 20,
+    },
+    infoWrapper: {
+        color: '#bbb',
+        fontSize: '0.75rem',
+    },
+    author: {
+        color: '#777',
     },
 }));

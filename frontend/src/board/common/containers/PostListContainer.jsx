@@ -11,10 +11,11 @@ import { boardCommonStyles } from '../styles/board.common.style';
 import SelectCategory from '../components/SelectCategory';
 import { GET_POST_LIST, GET_POSTS_COUNT } from '../../../configs/queries';
 import moment from 'moment';
-import { Form, Input, message, Pagination } from 'antd';
+import { Form, Input, message, Pagination, Space } from 'antd';
 import NoResult from '../components/NoResult';
 import { BoardListSkeleton } from '../components/Skeletons';
 import { ITEMS_COUNT_PER_PAGE } from '../../../configs/variables';
+import { commentTimeFormatter } from '../tools/formatter';
 
 const { Search } = Input;
 
@@ -147,17 +148,27 @@ export default function BoardListContainer({ board, page }) {
                             <Grid
                                 item
                                 xs={12}
-                                sm={7}
+                                sm={10}
                                 className={classes.title}
                                 style={{ textDecoration: 'none' }}
                             >
-                                {post.categoryName && (
-                                    <span className={classes.part}>{post.categoryName}</span>
-                                )}
-                                {isMobile && <br />}
-                                <span style={{ color: 'black' }}>{post.title}</span>
+                                <Space size={1} direction="vertical">
+                                    <span style={{ color: 'black' }}>
+                                        {post.categoryName && (
+                                            <span className={classes.part}>
+                                                {post.categoryName}
+                                            </span>
+                                        )}{' '}
+                                        {post.title}
+                                    </span>
+                                    <span className={classes.infoWrapper}>
+                                        {commentTimeFormatter(post.createdAt)}&nbsp;
+                                        <span className={classes.author}>
+                                            {post.gradeName}/{post.authorName}
+                                        </span>
+                                    </span>
+                                </Space>
                             </Grid>
-
                             <Grid item xs={12} sm={2} align="right">
                                 <Chip
                                     className={classes.backColor}
@@ -175,19 +186,6 @@ export default function BoardListContainer({ board, page }) {
                                     }
                                     label={post.commentCount}
                                 />
-                            </Grid>
-                            <Grid item xs={12} sm={3} align="right">
-                                <Grid>
-                                    <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                        {post.gradeName}&nbsp;
-                                    </span>
-                                    <span>{post.authorName}</span>
-                                </Grid>
-                                {!isMobile && (
-                                    <Grid className={classes.date}>
-                                        <span>{post.createdAt}</span>
-                                    </Grid>
-                                )}
                             </Grid>
                         </Grid>
                     ))}
