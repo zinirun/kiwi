@@ -6,7 +6,8 @@ module.exports = function (sequelize, DataTypes) {
         {
             postId: { type: DataTypes.INTEGER, allowNull: false },
             fileName: { type: DataTypes.STRING(50), allowNull: false },
-            fileType: { type: DataTypes.STRING(100), allowNull: false },
+            fileType: { type: DataTypes.STRING(150), allowNull: false },
+            key: { type: DataTypes.STRING(50), allowNull: false },
             fileUrl: { type: DataTypes.STRING(300), allowNull: false },
             isDeleted: { type: DataTypes.TINYINT, defaultValue: 0 },
         },

@@ -42,6 +42,9 @@ module.exports = function (sequelize, DataTypes) {
         Post.hasMany(models.file, {
             foreignKey: 'postId',
         });
+        Post.hasMany(models.notification, {
+            foreignKey: 'postId',
+        });
     };
 
     return Post;

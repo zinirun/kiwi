@@ -27,6 +27,9 @@ module.exports = function (sequelize, DataTypes) {
         Comment.hasMany(models.comment_like, {
             foreignKey: 'commentId',
         });
+        Comment.hasMany(models.notification, {
+            foreignKey: 'commentId',
+        });
     };
 
     return Comment;
