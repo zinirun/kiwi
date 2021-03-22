@@ -54,6 +54,7 @@ export default function TopListContainer({ page }) {
     }, [postListRefetch]);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         if (postListData) {
             setPostList(
                 postListData.getPostsByLikeCount.map((p) => {

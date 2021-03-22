@@ -126,6 +126,7 @@ export default function CommentList({ id }) {
                     {comments.length > 0 &&
                         comments.map((item) => (
                             <Grid
+                                key={item.id}
                                 container
                                 className={classes.commentField}
                                 style={{

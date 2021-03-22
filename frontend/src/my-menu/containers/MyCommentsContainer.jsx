@@ -48,6 +48,7 @@ export default function MyCommentsContainer({ page }) {
     }, [commentsRefetch]);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         if (commentsData) {
             const comments = commentsData.getMyComments;
             setComments(

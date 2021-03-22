@@ -49,6 +49,7 @@ export default function MyPostsContainer({ page }) {
     }, [postListRefetch]);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         if (postListData) {
             const posts = postListData.getMyPosts;
             setPostList(
