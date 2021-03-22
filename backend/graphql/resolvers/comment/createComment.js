@@ -12,7 +12,6 @@
         userName: String!
         content: String!
         gradeName: String!
-        companyName: String!
         isDeleted: Int!
         likeCount: Int!
         createdAt: Date!
@@ -40,13 +39,3 @@ module.exports = async ({ comment }, { id: authorId }) => {
             throw ConflictError('Update error occured');
         });
 };
-// mutation createComment($comment: CommentInput!) {
-//     createComment(comment: $comment){
-//         id
-//         postId
-//         userId
-//         content
-//         isAnonymous
-//         createdAt
-//       }
-//     }

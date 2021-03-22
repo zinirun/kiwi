@@ -30,9 +30,6 @@ module.exports = function (sequelize, DataTypes) {
         User.belongsTo(models.grade, {
             foreignKey: 'studentGradeId',
         });
-        User.belongsTo(models.company, {
-            foreignKey: 'companyId',
-        });
         User.hasMany(models.post, {
             foreignKey: 'authorId',
         });

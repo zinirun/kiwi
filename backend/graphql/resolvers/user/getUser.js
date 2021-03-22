@@ -9,10 +9,8 @@
         studentNumber: String!
         studentGradeId: ID!
         departmentId: ID!
-        companyId: ID
         department: String
         grade: String
-        company: String
     }
 * getUserById: User!
  */
@@ -29,7 +27,6 @@ module.exports = async ({}, { id }) => {
             'studentNumber',
             'studentGradeId',
             'departmentId',
-            'companyId',
         ],
         include: [
             {
@@ -40,7 +37,6 @@ module.exports = async ({}, { id }) => {
                 model: models.grade,
                 attributes: [['gradeName', 'grade']],
             },
-            { model: models.company, attributes: [['companyName', 'company']] },
         ],
         where: { id },
         raw: true,
@@ -55,9 +51,7 @@ module.exports = async ({}, { id }) => {
         studentNumber: user.studentNumber,
         studentGradeId: user.studentGradeId,
         departmentId: user.departmentId,
-        companyId: user.companyId,
         department: user['department.department'],
         grade: user['grade.grade'],
-        company: user['company.company'],
     };
 };

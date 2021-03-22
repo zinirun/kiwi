@@ -3,7 +3,6 @@
  * @author 이건욱
  * @param input UserUpdateInput {
         studentGradeId: ID!
-        companyId: ID
     }
  * updateUser(user: UserUpdateInput!): Boolean
  */

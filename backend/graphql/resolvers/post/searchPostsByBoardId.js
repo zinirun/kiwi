@@ -6,7 +6,6 @@
  * type PostList {
         postId: ID!
         title: String!
-        companyName: String
         gradeName: String
         userName: String!
         createdAt: Date!
@@ -35,7 +34,6 @@ module.exports = async ({ boardId, searchValue, pageNumber, elementCount }, { de
                                     where pl.isDeleted = 0
                                     group by pl.postId) as v on p.id = v.postId,
                         user u
-                            left join company c on u.companyId = c.id
                             left join grade g on u.studentGradeId = g.id
                     where p.authorId = u.id
                     and p.isDeleted = 0
