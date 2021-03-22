@@ -52,7 +52,7 @@ export default function BoardListContainer({ board, page }) {
             pageNumber: page || 1,
             elementCount: itemsByHeight,
         },
-        skip: postsCountData === 0,
+        skip: postsCount === 0,
     });
 
     useEffect(() => {

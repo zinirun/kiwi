@@ -39,6 +39,7 @@ module.exports = async ({ pageNumber, elementCount }, { id }) => {
                     where p.authorId = u.id
                     and p.isDeleted = 0
                     and u.id=:id
+                    order by p.id desc
                     limit :pages, :elementCount;
                     `;
     return await models.sequelize

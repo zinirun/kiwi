@@ -9,13 +9,13 @@ import { isMobile } from 'react-device-detect';
 import { useStyles } from '../../board/common/styles/board.style';
 import { boardCommonStyles } from '../../board/common/styles/board.common.style';
 import moment from 'moment';
-import { message, Pagination } from 'antd';
+import { message, Pagination, Space } from 'antd';
 import { GET_MY_POSTS, GET_MY_POSTS_COUNT } from '../../configs/queries';
 import NoResult from '../../board/common/components/NoResult';
 import { BoardListSkeleton } from '../../board/common/components/Skeletons';
 import { DESKTOP_BOARD_HEAD_HEIGHT, DESKTOP_BOARD_LIST_ELM_HEIGHT } from '../../configs/variables';
 
-export default function MyPostsContainer() {
+export default function MyPostsContainer({ page }) {
     const classes = { ...useStyles(), ...boardCommonStyles() };
     const history = useHistory();
     const [postList, setPostList] = useState([]);
@@ -29,12 +29,12 @@ export default function MyPostsContainer() {
         error: postListError,
         loading: postListLoading,
         refetch: postListRefetch,
-        fetchMore,
     } = useQuery(GET_MY_POSTS, {
         variables: {
-            pageNumber: 1,
+            pageNumber: page || 1,
             elementCount: itemsByHeight,
         },
+        skip: postsCount === 0,
     });
 
     useEffect(() => {
@@ -42,13 +42,13 @@ export default function MyPostsContainer() {
             setPostsCount(postsCountData.getMyPostsCount);
         }
         if (postsCountError) {
-            message.error('게시물을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
+            message.error('게시글을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
             history.push('/');
         }
     }, [postsCountData, postsCountError, history]);
 
     useEffect(() => {
-        postListRefetch();
+        postListRefetch().catch(() => {});
     }, [postListRefetch]);
 
     useEffect(() => {
@@ -70,22 +70,7 @@ export default function MyPostsContainer() {
     }, [postListData, setPostList, postListError, history, itemsByHeight]);
 
     const handlePage = (page) => {
-        fetchMore({
-            variables: {
-                pageNumber: page,
-            },
-            updateQuery: (_, { fetchMoreResult }) => {
-                const { getMyPosts: nextData } = fetchMoreResult;
-                setPostList(
-                    nextData.map((p) => {
-                        return {
-                            ...p,
-                            createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
-                        };
-                    }),
-                );
-            },
-        });
+        history.push(`/my/post?page=${page}`);
     };
 
     return (
@@ -109,7 +94,7 @@ export default function MyPostsContainer() {
                             <Grid
                                 item
                                 xs={12}
-                                sm={8}
+                                sm={10}
                                 className={classes.title}
                                 style={{ textDecoration: 'none' }}
                             >
@@ -120,39 +105,37 @@ export default function MyPostsContainer() {
                                 <span style={{ color: 'black' }}>{post.title}</span>
                             </Grid>
                             <Grid item xs={12} sm={2} align="right">
-                                <Chip
-                                    className={classes.backColor}
-                                    size="small"
-                                    icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                                    label={post.likeCount}
-                                />
-                                <Chip
-                                    className={classes.backColor}
-                                    size="small"
-                                    icon={
-                                        <ChatBubbleOutlineOutlinedIcon
-                                            className={classes.commentIcon}
+                                <Space direction="vertical" size={0}>
+                                    <div>
+                                        <Chip
+                                            className={classes.backColor}
+                                            size="small"
+                                            icon={
+                                                <ThumbUpOutlinedIcon className={classes.upIcon} />
+                                            }
+                                            label={post.likeCount}
                                         />
-                                    }
-                                    label={post.commentCount}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={2} align="right">
-                                <Grid>
-                                    <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                        {post.gradeName}
-                                    </span>
-                                    <span> {post.authorName}</span>
-                                </Grid>
-                                {!isMobile && (
+                                        <Chip
+                                            className={classes.backColor}
+                                            size="small"
+                                            icon={
+                                                <ChatBubbleOutlineOutlinedIcon
+                                                    className={classes.commentIcon}
+                                                />
+                                            }
+                                            label={post.commentCount}
+                                        />
+                                    </div>
                                     <Grid className={classes.date}>
                                         <span>{post.createdAt}</span>
                                     </Grid>
-                                )}
+                                </Space>
                             </Grid>
                         </Grid>
                     ))}
                     <Pagination
+                        className={classes.paginationWrapper}
+                        defaultCurrent={page || 1}
                         defaultPageSize={itemsByHeight}
                         total={postsCount}
                         onChange={handlePage}
