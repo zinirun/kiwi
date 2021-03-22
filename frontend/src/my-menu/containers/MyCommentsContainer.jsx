@@ -7,7 +7,7 @@ import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import { useStyles } from '../../board/common/styles/board.style';
 import { boardCommonStyles } from '../../board/common/styles/board.common.style';
 import moment from 'moment';
-import { message, Pagination } from 'antd';
+import { message, Pagination, Space } from 'antd';
 import { GET_MY_COMMENTS, GET_MY_COMMENTS_COUNT } from '../../configs/queries';
 import NoResult from '../../board/common/components/NoResult';
 import { BoardListSkeleton } from '../../board/common/components/Skeletons';
@@ -16,7 +16,7 @@ import {
     DESKTOP_COMMENT_LIST_ELM_HEIGHT,
 } from '../../configs/variables';
 
-export default function MyCommentsContainer() {
+export default function MyCommentsContainer({ page }) {
     const classes = { ...useStyles(), ...boardCommonStyles() };
     const history = useHistory();
     const itemsByHeight = parseInt(
@@ -31,12 +31,12 @@ export default function MyCommentsContainer() {
         error: commentsError,
         loading: commentsLoading,
         refetch: commentsRefetch,
-        fetchMore,
     } = useQuery(GET_MY_COMMENTS, {
         variables: {
-            pageNumber: 1,
+            pageNumber: page || 1,
             elementCount: itemsByHeight,
         },
+        skip: commentsCount === 0,
     });
 
     useEffect(() => {
@@ -44,22 +44,23 @@ export default function MyCommentsContainer() {
             setCommentsCount(commentsCountData.getMyCommentsCount);
         }
         if (commentsCountError) {
-            message.error('게시물을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
+            message.error('댓글을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
             history.push('/');
         }
     }, [commentsCountData, commentsCountError, history]);
 
     useEffect(() => {
-        commentsRefetch();
+        commentsRefetch().catch(() => {});
     }, [commentsRefetch]);
 
     useEffect(() => {
         if (commentsData) {
+            const comments = commentsData.getMyComments;
             setComments(
-                commentsData.getMyComments.map((p) => {
+                comments.map((c) => {
                     return {
-                        ...p,
-                        createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
+                        ...c,
+                        createdAt: new moment(c.createdAt).format('YYYY-MM-DD HH:mm'),
                     };
                 }),
             );
@@ -71,22 +72,7 @@ export default function MyCommentsContainer() {
     }, [commentsData, setComments, commentsError, history]);
 
     const handlePage = (page) => {
-        fetchMore({
-            variables: {
-                pageNumber: page,
-            },
-            updateQuery: (_, { fetchMoreResult }) => {
-                const { getMyComments: nextData } = fetchMoreResult;
-                setComments(
-                    nextData.map((c) => {
-                        return {
-                            ...c,
-                            createdAt: new moment(c.createdAt).format('YYYY-MM-DD HH:mm'),
-                        };
-                    }),
-                );
-            },
-        });
+        history.push(`/my/comment?page=${page}`);
     };
 
     return (
@@ -116,16 +102,23 @@ export default function MyCommentsContainer() {
                                 <span style={{ color: 'black' }}>{comment.content}</span>
                             </Grid>
                             <Grid item xs={12} sm={2} align="right">
-                                <Chip
-                                    className={classes.backColor}
-                                    size="small"
-                                    icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                                    label={comment.likeCount}
-                                />
+                                <Space direction="vertical" size={0}>
+                                    <Chip
+                                        className={classes.backColor}
+                                        size="small"
+                                        icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
+                                        label={comment.likeCount}
+                                    />
+                                    <Grid className={classes.date}>
+                                        <span>{comment.createdAt}</span>
+                                    </Grid>
+                                </Space>
                             </Grid>
                         </Grid>
                     ))}
                     <Pagination
+                        className={classes.paginationWrapper}
+                        defaultCurrent={page || 1}
                         defaultPageSize={itemsByHeight}
                         total={commentsCount}
                         onChange={handlePage}
