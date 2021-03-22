@@ -120,7 +120,7 @@ module.exports = buildSchema(`
         title: String!
         gradeName: String!
         authorName: String!
-        updatedAt: Date!
+        createdAt: Date!
         categoryName: String
         likeCount: Int!
         commentCount: Int!
@@ -131,7 +131,7 @@ module.exports = buildSchema(`
         title: String!
         gradeName: String!
         authorName: String!
-        updatedAt: Date!
+        createdAt: Date!
         likeCount: Int!
         commentCount: Int!
     }

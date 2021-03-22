@@ -33,7 +33,7 @@ export const GET_POST_LIST = gql`
             title
             gradeName
             authorName
-            updatedAt
+            createdAt
             categoryName
             likeCount
             commentCount
@@ -129,7 +129,7 @@ export const GET_POST = gql`
             categoryName
             gradeName
             authorName
-            updatedAt
+            createdAt
             likeCount
             commentCount
             files {
@@ -151,7 +151,7 @@ export const GET_MY_POSTS = gql`
             categoryName
             gradeName
             authorName
-            updatedAt
+            createdAt
             likeCount
             commentCount
         }
@@ -217,7 +217,7 @@ export const GET_POSTS_BY_LIKE_COUNT = gql`
             title
             gradeName
             authorName
-            updatedAt
+            createdAt
             categoryName
             likeCount
             commentCount
@@ -303,7 +303,7 @@ export const SEARCH_POST_LIST = gql`
             title
             gradeName
             authorName
-            updatedAt
+            createdAt
             likeCount
             commentCount
         }
