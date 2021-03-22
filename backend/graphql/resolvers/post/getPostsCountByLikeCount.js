@@ -2,7 +2,6 @@ const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 
 module.exports = async ({ likeCount }, { departmentId }) => {
-    console.log(likeCount);
     const query = `SELECT p.id, COUNT(p.id) AS postsCount
     from post p
         left join (select pl.id, count(pl.id) as postLikeCount, postId

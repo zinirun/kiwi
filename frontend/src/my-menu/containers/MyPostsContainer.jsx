@@ -9,7 +9,7 @@ import { isMobile } from 'react-device-detect';
 import { useStyles } from '../../board/common/styles/board.style';
 import { boardCommonStyles } from '../../board/common/styles/board.common.style';
 import moment from 'moment';
-import { message, Pagination } from 'antd';
+import { message, Pagination, Space } from 'antd';
 import { GET_MY_POSTS, GET_MY_POSTS_COUNT } from '../../configs/queries';
 import NoResult from '../../board/common/components/NoResult';
 import { BoardListSkeleton } from '../../board/common/components/Skeletons';
@@ -109,7 +109,7 @@ export default function MyPostsContainer() {
                             <Grid
                                 item
                                 xs={12}
-                                sm={8}
+                                sm={10}
                                 className={classes.title}
                                 style={{ textDecoration: 'none' }}
                             >
@@ -120,35 +120,31 @@ export default function MyPostsContainer() {
                                 <span style={{ color: 'black' }}>{post.title}</span>
                             </Grid>
                             <Grid item xs={12} sm={2} align="right">
-                                <Chip
-                                    className={classes.backColor}
-                                    size="small"
-                                    icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                                    label={post.likeCount}
-                                />
-                                <Chip
-                                    className={classes.backColor}
-                                    size="small"
-                                    icon={
-                                        <ChatBubbleOutlineOutlinedIcon
-                                            className={classes.commentIcon}
+                                <Space direction="vertical" size={0}>
+                                    <div>
+                                        <Chip
+                                            className={classes.backColor}
+                                            size="small"
+                                            icon={
+                                                <ThumbUpOutlinedIcon className={classes.upIcon} />
+                                            }
+                                            label={post.likeCount}
                                         />
-                                    }
-                                    label={post.commentCount}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={2} align="right">
-                                <Grid>
-                                    <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                        {post.gradeName}
-                                    </span>
-                                    <span> {post.authorName}</span>
-                                </Grid>
-                                {!isMobile && (
+                                        <Chip
+                                            className={classes.backColor}
+                                            size="small"
+                                            icon={
+                                                <ChatBubbleOutlineOutlinedIcon
+                                                    className={classes.commentIcon}
+                                                />
+                                            }
+                                            label={post.commentCount}
+                                        />
+                                    </div>
                                     <Grid className={classes.date}>
                                         <span>{post.createdAt}</span>
                                     </Grid>
-                                )}
+                                </Space>
                             </Grid>
                         </Grid>
                     ))}
