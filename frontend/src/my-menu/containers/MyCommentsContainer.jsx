@@ -90,7 +90,7 @@ export default function MyCommentsContainer({ page }) {
                             <Grid item style={{ flex: 1 }} className={classes.title}>
                                 <span style={{ color: 'black' }}>{comment.content}</span>
                             </Grid>
-                            <Grid item>
+                            <Grid item style={{ marginLeft: 5, minWidth: 65 }} align="right">
                                 <Space direction="vertical" size={0}>
                                     <Chip
                                         className={classes.backColor}
