@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { Grid, Button, Chip } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
-import { isMobile } from 'react-device-detect';
 import { useStyles } from '../styles/board.style';
 import { boardCommonStyles } from '../styles/board.common.style';
 import SelectCategory from '../components/SelectCategory';
