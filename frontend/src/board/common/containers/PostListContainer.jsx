@@ -10,7 +10,7 @@ import { boardCommonStyles } from '../styles/board.common.style';
 import SelectCategory from '../components/SelectCategory';
 import { GET_POST_LIST, GET_POSTS_COUNT } from '../../../configs/queries';
 import moment from 'moment';
-import { Form, Input, message, Pagination, Space } from 'antd';
+import { Form, Input, message, Pagination } from 'antd';
 import NoResult from '../components/NoResult';
 import { BoardListSkeleton } from '../components/Skeletons';
 import { ITEMS_COUNT_PER_PAGE } from '../../../configs/variables';
@@ -135,55 +135,46 @@ export default function BoardListContainer({ board, page }) {
                     {postList.map((post, idx) => (
                         <Grid
                             container
-                            justify="center"
-                            spacing={0}
-                            alignItems="center"
                             className={classes.postWrapper}
                             component={Link}
                             to={`/post/${post.id}`}
                             key={idx}
                         >
-                            <Grid
-                                item
-                                xs={12}
-                                sm={10}
-                                className={classes.title}
-                                style={{ textDecoration: 'none' }}
-                            >
-                                <Space size={1} direction="vertical">
-                                    <span style={{ color: 'black' }}>
-                                        {post.categoryName && (
-                                            <span className={classes.part}>
-                                                {post.categoryName}
-                                            </span>
-                                        )}{' '}
-                                        {post.title}
-                                    </span>
+                            <Grid item className={classes.title} xs={12}>
+                                <span style={{ color: 'black' }}>
+                                    {post.categoryName && (
+                                        <span className={classes.part}>{post.categoryName}</span>
+                                    )}
+                                    {post.title}
+                                </span>
+                            </Grid>
+                            <Grid className={classes.flexWrapper} container>
+                                <Grid item style={{ flex: 1 }}>
                                     <span className={classes.infoWrapper}>
                                         {commentTimeFormatter(post.createdAt)}&nbsp;
                                         <span className={classes.author}>
                                             {post.gradeName}/{post.authorName}
                                         </span>
                                     </span>
-                                </Space>
-                            </Grid>
-                            <Grid item xs={12} sm={2} align="right">
-                                <Chip
-                                    className={classes.backColor}
-                                    size="small"
-                                    icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                                    label={post.likeCount}
-                                />
-                                <Chip
-                                    className={classes.backColor}
-                                    size="small"
-                                    icon={
-                                        <ChatBubbleOutlineOutlinedIcon
-                                            className={classes.commentIcon}
-                                        />
-                                    }
-                                    label={post.commentCount}
-                                />
+                                </Grid>
+                                <Grid item>
+                                    <Chip
+                                        className={classes.backColor}
+                                        size="small"
+                                        icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
+                                        label={post.likeCount}
+                                    />
+                                    <Chip
+                                        className={classes.backColor}
+                                        size="small"
+                                        icon={
+                                            <ChatBubbleOutlineOutlinedIcon
+                                                className={classes.commentIcon}
+                                            />
+                                        }
+                                        label={post.commentCount}
+                                    />
+                                </Grid>
                             </Grid>
                         </Grid>
                     ))}

@@ -12,6 +12,7 @@ import { GET_MY_COMMENTS, GET_MY_COMMENTS_COUNT } from '../../configs/queries';
 import NoResult from '../../board/common/components/NoResult';
 import { BoardListSkeleton } from '../../board/common/components/Skeletons';
 import { ITEMS_COUNT_PER_PAGE } from '../../configs/variables';
+import { commentTimeFormatter } from '../../board/common/tools/formatter';
 
 export default function MyCommentsContainer({ page }) {
     const classes = { ...useStyles(), ...boardCommonStyles() };
@@ -77,24 +78,18 @@ export default function MyCommentsContainer({ page }) {
                     {comments.map((comment, idx) => (
                         <Grid
                             container
-                            justify="center"
                             spacing={0}
+                            className={classes.commentWrapper}
+                            justify="center"
                             alignItems="center"
-                            className={classes.postWrapper}
                             component={Link}
                             to={`/post/${comment.postId}`}
                             key={idx}
                         >
-                            <Grid
-                                item
-                                xs={12}
-                                sm={10}
-                                className={classes.title}
-                                style={{ textDecoration: 'none' }}
-                            >
+                            <Grid item style={{ flex: 1 }} className={classes.title}>
                                 <span style={{ color: 'black' }}>{comment.content}</span>
                             </Grid>
-                            <Grid item xs={12} sm={2} align="right">
+                            <Grid item>
                                 <Space direction="vertical" size={0}>
                                     <Chip
                                         className={classes.backColor}
@@ -103,7 +98,9 @@ export default function MyCommentsContainer({ page }) {
                                         label={comment.likeCount}
                                     />
                                     <Grid className={classes.date}>
-                                        <span>{comment.createdAt}</span>
+                                        <span className={classes.infoWrapper}>
+                                            {commentTimeFormatter(comment.createdAt)}
+                                        </span>
                                     </Grid>
                                 </Space>
                             </Grid>
