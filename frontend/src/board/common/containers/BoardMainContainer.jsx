@@ -14,7 +14,7 @@ export default function BoardMainContainer({ data }) {
             <div>
                 <Chip
                     component={Link}
-                    to={`/${data.boardLink}`}
+                    to={`/board/${data.boardLink}`}
                     className={classes.titleChip}
                     icon={<IconViewer icon={data.boardIcon} classes={classes.iconColor} />}
                     label={data.boardName}

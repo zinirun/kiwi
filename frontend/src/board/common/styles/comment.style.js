@@ -14,6 +14,7 @@ export const useStyles = makeStyles((theme) => ({
         background: 'transparent',
     },
     commentField: {
+        padding: '0 10px',
         background: 'white',
         border: '1px solid #ddd',
         marginBottom: 5,
@@ -45,10 +46,15 @@ export const useStyles = makeStyles((theme) => ({
     },
     authorInfo: {
         color: '#999',
-        fontSize: '0.5rem',
+        fontSize: '0.75rem',
+        marginRight: 5,
     },
     author: {
-        color: '#000000DE',
-        fontSize: '0.78rem',
+        color: '#333',
+        fontSize: '0.8rem',
+    },
+    flexWrapper: {
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
     },
 }));

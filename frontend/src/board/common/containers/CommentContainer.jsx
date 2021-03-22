@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-apollo';
 import { useHistory } from 'react-router';
-import { Chip, Button } from '@material-ui/core';
+import { Chip, Button, Grid } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { Comment, List, Row, Col, message, Form, Input, Space, Modal, Tooltip } from 'antd';
@@ -125,7 +125,6 @@ export default function CommentList({ id }) {
                     </div>
                     {comments.length > 0 && (
                         <List
-                            className="comment-list"
                             itemLayout="horizontal"
                             dataSource={comments}
                             renderItem={(item) => (
@@ -135,53 +134,51 @@ export default function CommentList({ id }) {
                                         backgroundColor: item.authorId === item.userId && '#f1fff4',
                                     }}
                                 >
-                                    <Row justify="center" align="center">
-                                        <Col span={20}>
-                                            <Comment
-                                                author={
-                                                    <>
-                                                        <span className={classes.authorInfo}>
-                                                            {item.gradeName}&nbsp;
-                                                        </span>
-                                                        <span className={classes.author}>
-                                                            {item.authorName}
-                                                        </span>
-                                                    </>
-                                                }
-                                                content={item.content}
-                                                datetime={
-                                                    <>
-                                                        <span>{item.createdAt}</span>
-                                                        {item.authorId === item.userId && (
-                                                            <Tooltip title="댓글 삭제">
-                                                                <DeleteOutlinedIcon
-                                                                    post={item.postId}
-                                                                    onClick={() =>
-                                                                        handleDelete(item.id)
-                                                                    }
-                                                                    className={classes.deleteIcon}
-                                                                />
-                                                            </Tooltip>
-                                                        )}
-                                                    </>
-                                                }
-                                            />
-                                        </Col>
-                                        <Col span={3} align="center">
-                                            <Chip
-                                                className={classes.commentChip}
-                                                size="small"
-                                                icon={
-                                                    <ThumbUpOutlinedIcon
-                                                        value={item.id}
-                                                        onClick={handleLike}
-                                                        className={classes.upIcon}
+                                    <Comment
+                                        author={
+                                            <>
+                                                <span className={classes.authorInfo}>
+                                                    {item.gradeName}
+                                                </span>
+                                                <span className={classes.author}>
+                                                    {item.authorName}
+                                                </span>
+                                            </>
+                                        }
+                                        content={item.content}
+                                        datetime={
+                                            <Grid className={classes.flexWrapper} container>
+                                                <Grid item style={{ flex: 1, width: '100%' }}>
+                                                    <span>{item.createdAt}</span>
+                                                    {item.authorId === item.userId && (
+                                                        <Tooltip title="댓글 삭제">
+                                                            <DeleteOutlinedIcon
+                                                                post={item.postId}
+                                                                onClick={() =>
+                                                                    handleDelete(item.id)
+                                                                }
+                                                                className={classes.deleteIcon}
+                                                            />
+                                                        </Tooltip>
+                                                    )}
+                                                </Grid>
+                                                <Grid item>
+                                                    <Chip
+                                                        className={classes.commentChip}
+                                                        size="small"
+                                                        icon={
+                                                            <ThumbUpOutlinedIcon
+                                                                value={item.id}
+                                                                onClick={handleLike}
+                                                                className={classes.upIcon}
+                                                            />
+                                                        }
+                                                        label={item.likeCount}
                                                     />
-                                                }
-                                                label={item.likeCount}
-                                            />
-                                        </Col>
-                                    </Row>
+                                                </Grid>
+                                            </Grid>
+                                        }
+                                    />
                                 </li>
                             )}
                         />
