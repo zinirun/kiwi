@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
     upIcon: {
-        fontSize: 15,
+        width: 16,
         color: theme.palette.primary.main,
         cursor: 'pointer',
         '&:hover': {
@@ -10,11 +10,10 @@ export const useStyles = makeStyles((theme) => ({
         },
     },
     commentChip: {
-        marginTop: 10,
         background: 'transparent',
     },
     commentField: {
-        padding: '0 10px',
+        padding: 10,
         background: 'white',
         border: '1px solid #ddd',
         marginBottom: 5,
@@ -26,8 +25,7 @@ export const useStyles = makeStyles((theme) => ({
         color: '#999',
     },
     deleteIcon: {
-        marginLeft: 5,
-        fontSize: '0.9rem',
+        fontSize: '1.15rem',
         color: '#ccc',
         cursor: 'pointer',
         '&:hover': {
@@ -47,11 +45,16 @@ export const useStyles = makeStyles((theme) => ({
     authorInfo: {
         color: '#999',
         fontSize: '0.75rem',
-        marginRight: 5,
+        marginRight: 3,
     },
     author: {
         color: '#333',
         fontSize: '0.8rem',
+    },
+    date: {
+        marginLeft: 5,
+        color: '#bbb',
+        fontSize: '0.75rem',
     },
     flexWrapper: {
         flexWrap: 'wrap',

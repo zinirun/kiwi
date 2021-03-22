@@ -15,7 +15,7 @@ import { BoardListSkeleton } from '../../common/components/Skeletons';
 import { TOP_BOARD_LIKE_COUNT, ITEMS_COUNT_PER_PAGE } from '../../../configs/variables';
 import { commentTimeFormatter } from '../../common/tools/formatter';
 
-export default function TopListContainer() {
+export default function TopListContainer({ page }) {
     const classes = { ...useStyles(), ...boardCommonStyles() };
     const history = useHistory();
     const [postsCount, setPostsCount] = useState();
@@ -31,11 +31,10 @@ export default function TopListContainer() {
         error: postListError,
         loading: postListLoading,
         refetch: postListRefetch,
-        fetchMore,
     } = useQuery(GET_POSTS_BY_LIKE_COUNT, {
         variables: {
             likeCount: TOP_BOARD_LIKE_COUNT,
-            pageNumber: 1,
+            pageNumber: page || 1,
             elementCount: ITEMS_COUNT_PER_PAGE,
         },
     });
@@ -45,13 +44,13 @@ export default function TopListContainer() {
             setPostsCount(postsCountData.getPostsCountByLikeCount);
         }
         if (postsCountError) {
-            message.error('게시물을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
+            message.error('게시글을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
             history.push('/');
         }
     }, [postsCountData, postsCountError, history]);
 
     useEffect(() => {
-        postListRefetch();
+        postListRefetch().catch(() => {});
     }, [postListRefetch]);
 
     useEffect(() => {
@@ -66,28 +65,13 @@ export default function TopListContainer() {
             );
         }
         if (postListError) {
-            message.error('게시물을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
+            message.error('게시글을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
             history.push('/');
         }
     }, [postListData, setPostList, postListError, history]);
 
     const handlePage = (page) => {
-        fetchMore({
-            variables: {
-                pageNumber: page,
-            },
-            updateQuery: (_, { fetchMoreResult }) => {
-                const { getPostsByLikeCount: nextData } = fetchMoreResult;
-                setPostList(
-                    nextData.map((p) => {
-                        return {
-                            ...p,
-                            createdAt: new moment(p.createdAt).format('YYYY-MM-DD HH:mm'),
-                        };
-                    }),
-                );
-            },
-        });
+        history.push(`/top?page=${page}`);
     };
 
     return (
@@ -146,6 +130,8 @@ export default function TopListContainer() {
                         </Grid>
                     ))}
                     <Pagination
+                        className={classes.paginationWrapper}
+                        defaultCurrent={page || 1}
                         defaultPageSize={ITEMS_COUNT_PER_PAGE}
                         total={postsCount}
                         onChange={handlePage}

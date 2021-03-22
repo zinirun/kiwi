@@ -9,7 +9,7 @@ module.exports = async ({ likeCount }, { departmentId }) => {
                     where pl.isDeleted = 0
                     group by pl.postId) as v on p.id = v.postId
     where p.isDeleted = 0
-    and v.postLikeCount >= :likeCount
+    and ifnull(v.postLikeCount, 0) >= :likeCount
     and p.departmentId = :departmentId
     `;
     return await models.sequelize

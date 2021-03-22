@@ -30,7 +30,7 @@ export const useStyles = makeStyles((theme) => ({
         },
     },
     upIcon: {
-        fontSize: 15,
+        width: 18,
         color: theme.palette.primary.main,
         cursor: 'pointer',
         '&:hover': {
@@ -38,7 +38,7 @@ export const useStyles = makeStyles((theme) => ({
         },
     },
     commentIcon: {
-        fontSize: 15,
+        width: 18,
         marginLeft: 15,
         color: theme.palette.primary.main,
     },

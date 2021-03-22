@@ -24,11 +24,11 @@ export const useStyles = makeStyles((theme) => ({
         marginRight: 5,
     },
     upIcon: {
-        fontSize: 15,
+        width: 16,
         color: theme.palette.primary.main,
     },
     commentIcon: {
-        fontSize: 15,
+        width: 16,
         marginLeft: 15,
         color: theme.palette.primary.main,
     },
