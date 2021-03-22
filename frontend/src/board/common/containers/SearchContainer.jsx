@@ -38,18 +38,20 @@ export default function SearchContainer({ board, page, value }) {
             },
         },
     );
-    const { data: postListData, error: postListError, loading: postListLoading } = useQuery(
-        SEARCH_POST_LIST,
-        {
-            variables: {
-                boardId: board.id,
-                searchValue: '%' + value + '%',
-                pageNumber: page || 1,
-                elementCount: itemsByHeight,
-            },
-            skip: value && value.length < 2,
+    const {
+        data: postListData,
+        error: postListError,
+        loading: postListLoading,
+        refetch: postListRefetch,
+    } = useQuery(SEARCH_POST_LIST, {
+        variables: {
+            boardId: board.id,
+            searchValue: '%' + value + '%',
+            pageNumber: page || 1,
+            elementCount: itemsByHeight,
         },
-    );
+        skip: value && value.length < 2,
+    });
 
     useEffect(() => {
         if (postsCountData) {
@@ -64,6 +66,10 @@ export default function SearchContainer({ board, page, value }) {
     useEffect(() => {
         postCountRefetch().catch(() => {});
     }, [postCountRefetch]);
+
+    useEffect(() => {
+        postListRefetch().catch(() => {});
+    }, [postListRefetch]);
 
     useEffect(() => {
         if (postListData) {
