@@ -57,6 +57,5 @@ export const SignupValidator = (user) =>
             departmentId: user.departmentId,
             studentNumber: user.studentNumber,
             studentGradeId: user.studentGradeId,
-            companyId: user.companyId,
         });
     });
