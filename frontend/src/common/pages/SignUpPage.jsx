@@ -30,7 +30,6 @@ export default function SignUpPage(props) {
         departmentId: '',
         studentNumber: '',
         studentGradeId: '',
-        companyId: '',
     });
 
     useEffect(() => {
@@ -186,26 +185,6 @@ export default function SignUpPage(props) {
                                 {metadata.studentGrades.map((d, idx) => (
                                     <MenuItem key={idx} value={d.id}>
                                         {d.gradeName}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <FormControl variant="outlined" fullWidth>
-                            <InputLabel>재직중인 회사 선택</InputLabel>
-                            <Select
-                                name="companyId"
-                                label="재직중인 회사 선택"
-                                onChange={handleChange}
-                                value={user.companyId}
-                            >
-                                <MenuItem value="">
-                                    <em>회사 선택</em>
-                                </MenuItem>
-                                {metadata.companies.map((d, idx) => (
-                                    <MenuItem key={idx} value={d.id}>
-                                        {d.companyName}
                                     </MenuItem>
                                 ))}
                             </Select>

@@ -142,11 +142,6 @@ export default function TopListContainer() {
                             </Grid>
                             <Grid item xs={12} sm={3} align="right">
                                 <Grid>
-                                    {post.companyName && (
-                                        <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                            {post.companyName}/
-                                        </span>
-                                    )}
                                     <span style={{ color: '#999', fontSize: '0.75rem' }}>
                                         {post.gradeName}&nbsp;
                                     </span>

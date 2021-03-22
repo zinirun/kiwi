@@ -9,10 +9,8 @@ export const GET_USER = gql`
             studentNumber
             studentGradeId
             departmentId
-            companyId
             department
             grade
-            company
         }
     }
 `;
@@ -33,7 +31,6 @@ export const GET_POST_LIST = gql`
             id
             __typename @skip(if: true)
             title
-            companyName
             gradeName
             authorName
             updatedAt
@@ -129,7 +126,6 @@ export const GET_POST = gql`
             boardName
             boardLink
             content
-            companyName
             categoryName
             gradeName
             authorName
@@ -152,7 +148,6 @@ export const GET_MY_POSTS = gql`
         getMyPosts(pageNumber: $pageNumber, elementCount: $elementCount) {
             id
             title
-            companyName
             categoryName
             gradeName
             authorName
@@ -188,8 +183,6 @@ export const GET_COMMENTS = gql`
             content
             gradeId
             gradeName
-            companyId
-            companyName
             likeCount
             createdAt
         }
@@ -222,7 +215,6 @@ export const GET_POSTS_BY_LIKE_COUNT = gql`
             id
             __typename @skip(if: true)
             title
-            companyName
             gradeName
             authorName
             updatedAt
@@ -309,7 +301,6 @@ export const SEARCH_POST_LIST = gql`
             id
             __typename @skip(if: true)
             title
-            companyName
             gradeName
             authorName
             updatedAt
