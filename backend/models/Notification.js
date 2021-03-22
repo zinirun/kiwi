@@ -30,7 +30,7 @@ module.exports = function (sequelize, DataTypes) {
         Notification.belongsTo(models.comment, {
             foreignKey: 'commentId',
         });
-        Notification.belongsTo(models.message, {
+        Notification.belongsTo(models.user, {
             foreignKey: 'messageFromId',
         });
     };
