@@ -60,4 +60,7 @@ export const useStyles = makeStyles((theme) => ({
         flexWrap: 'wrap',
         justifyContent: 'space-around',
     },
+    commentLine: {
+        marginBottom: 5,
+    },
 }));

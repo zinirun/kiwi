@@ -81,13 +81,13 @@ export default function TopListContainer({ page }) {
             {!postListLoading && postList.length === 0 && <NoResult />}
             {!postListLoading && postList.length > 0 && (
                 <>
-                    {postList.map((post) => (
+                    {postList.map((post, idx) => (
                         <Grid
                             container
                             className={classes.postWrapper}
                             component={Link}
                             to={`/post/${post.id}`}
-                            key={`post-${post.id}`}
+                            key={idx}
                         >
                             <Grid item className={classes.title} xs={12}>
                                 <span style={{ color: 'black' }}>

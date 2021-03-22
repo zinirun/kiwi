@@ -81,14 +81,16 @@ export default function MyCommentsContainer({ page }) {
                             container
                             spacing={0}
                             className={classes.commentWrapper}
-                            justify="center"
-                            alignItems="center"
                             component={Link}
                             to={`/post/${comment.postId}`}
                             key={`comment-${comment.id}`}
                         >
                             <Grid item style={{ flex: 1 }} className={classes.title}>
-                                <span style={{ color: 'black' }}>{comment.content}</span>
+                                {comment.content.split('\n').map((text, idx) => (
+                                    <p key={idx} className={classes.commentLine}>
+                                        {text}
+                                    </p>
+                                ))}
                             </Grid>
                             <Grid item style={{ marginLeft: 5, minWidth: 65 }} align="right">
                                 <Space direction="vertical" size={0}>

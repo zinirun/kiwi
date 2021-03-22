@@ -67,4 +67,7 @@ export const useStyles = makeStyles((theme) => ({
             color: 'inherit',
         },
     },
+    commentLine: {
+        marginBottom: 5,
+    },
 }));

@@ -36,7 +36,7 @@ from post p
       left join (select c.id, count(c.id) as commentCount, c.postId
                  from comment c
                  where c.isDeleted = 0
-                 group by c.id) as z on p.id = z.postId
+                 group by c.postId) as z on p.id = z.postId
       left join (select pl.postId, count(pl.id) as postLikeCount
                  from post_like pl
                  where pl.isDeleted = 0
@@ -47,7 +47,6 @@ where p.authorId = u.id
 and p.isDeleted = 0
 and ifnull(v.postLikeCount, 0) >= :likeCount
 and p.departmentId = :departmentId
-
 order by p.id desc
 limit :pages, :elementCount;
                     `;

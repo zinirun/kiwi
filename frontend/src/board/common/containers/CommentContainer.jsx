@@ -166,7 +166,11 @@ export default function CommentList({ id }) {
                                     </Grid>
                                 </Grid>
                                 <Grid item xs={12}>
-                                    {item.content}
+                                    {item.content.split('\n').map((text, idx) => (
+                                        <p key={idx} className={classes.commentLine}>
+                                            {text}
+                                        </p>
+                                    ))}
                                 </Grid>
                             </Grid>
                         ))}
