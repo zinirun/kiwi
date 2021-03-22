@@ -288,7 +288,7 @@ export const DELETE_COMMENT = gql`
 `;
 
 export const SEARCH_POST_LIST = gql`
-    mutation searchPostsByBoardId(
+    query searchPostsByBoardId(
         $boardId: ID!
         $searchValue: String!
         $pageNumber: Int!

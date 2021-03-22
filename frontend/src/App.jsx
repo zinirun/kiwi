@@ -38,6 +38,9 @@ import MyCommentsPage from './my-menu/pages/MyCommentsPage';
 // 게시판 (통합)
 import PostListPage from './board/common/pages/PostListPage';
 
+// 검색 (통합)
+import SearchPage from './board/common/pages/SearchPage';
+
 function App() {
     return (
         <Router>
@@ -48,6 +51,7 @@ function App() {
                     <Route path="/signin" component={SignInPage} />
                     <Route path="/signup" component={SignUpPage} />
                     <Route path="/board/:boardName" component={PostListPage} />
+                    <Route path="/search/:boardName" component={SearchPage} />
                     <Route path="/top" component={TopPage} />
                     <Route path="/post/:id" component={PostContentPage} />
                     <Route path="/modify" component={PostModifyPage} />
