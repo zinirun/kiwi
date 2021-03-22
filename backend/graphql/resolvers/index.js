@@ -24,6 +24,7 @@ module.exports = {
     getPostsCountByBoardId: require('./post/getPostsCountByBoardId'),
     getPostsCountByLikeCount: require('./post/getPostsCountByLikeCount'),
     getMyPostsCount: require('./post/getMyPostsCount'),
+    getSearchPostsCount: require('./post/getSearchPostsCount'),
 
     // Comment
     getCommentsByPostId: require('./comment/getCommentsByPostId'),

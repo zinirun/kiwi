@@ -185,6 +185,7 @@ module.exports = buildSchema(`
         getMyPostsCount: Int
         getMyCommentsCount: Int
         searchPostsByBoardId(boardId: ID!, searchValue: String!, pageNumber: Int!, elementCount: Int!): [SearchPostList]
+        getSearchPostsCount(boardId: ID!, searchValue: String!): Int
     }
 
     type Mutation {

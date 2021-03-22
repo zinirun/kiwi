@@ -32,7 +32,7 @@ export default function SearchPage({ match }) {
         <>
             {board && (
                 <>
-                    <PageTitle title={`검색 - ${board.boardName}`} />
+                    <PageTitle title={`${board.boardName} - 검색`} />
                     <SearchContainer board={board} page={+page} value={value} />
                 </>
             )}

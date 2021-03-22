@@ -8,7 +8,7 @@ import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineO
 import { isMobile } from 'react-device-detect';
 import { useStyles } from '../styles/board.style';
 import { boardCommonStyles } from '../styles/board.common.style';
-import { SEARCH_POST_LIST } from '../../../configs/queries';
+import { GET_SEARCH_POSTS_COUNT, SEARCH_POST_LIST } from '../../../configs/queries';
 import moment from 'moment';
 import { Form, Input, message, Pagination } from 'antd';
 import NoResult from '../components/NoResult';
@@ -23,11 +23,18 @@ const { Search } = Input;
 export default function SearchContainer({ board, page, value }) {
     const classes = { ...useStyles(), ...boardCommonStyles() };
     const history = useHistory();
+    const [postsCount, setPostsCount] = useState();
     const [postList, setPostList] = useState([]);
     const [form] = Form.useForm();
     const itemsByHeight = parseInt(
         (window.innerHeight - DESKTOP_BOARD_HEAD_HEIGHT) / DESKTOP_BOARD_LIST_ELM_HEIGHT,
     );
+    const { data: postsCountData, error: postsCountError } = useQuery(GET_SEARCH_POSTS_COUNT, {
+        variables: {
+            boardId: board.id,
+            searchValue: '%' + value + '%',
+        },
+    });
     const { data: postListData, error: postListError, loading: postListLoading } = useQuery(
         SEARCH_POST_LIST,
         {
@@ -40,6 +47,16 @@ export default function SearchContainer({ board, page, value }) {
             skip: value && value.length < 2,
         },
     );
+
+    useEffect(() => {
+        if (postsCountData) {
+            setPostsCount(postsCountData.getSearchPostsCount);
+        }
+        if (postsCountError) {
+            message.error('게시글을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
+            history.push('/');
+        }
+    }, [postsCountData, postsCountError, history]);
 
     useEffect(() => {
         if (postListData) {
@@ -176,7 +193,7 @@ export default function SearchContainer({ board, page, value }) {
                         className={classes.paginationWrapper}
                         defaultCurrent={page || 1}
                         defaultPageSize={itemsByHeight}
-                        total={100}
+                        total={postsCount}
                         onChange={handlePage}
                         hideOnSinglePage
                         showSizeChanger={false}

@@ -68,6 +68,12 @@ export const GET_MY_COMMENTS_COUNT = gql`
     }
 `;
 
+export const GET_SEARCH_POSTS_COUNT = gql`
+    query getSearchPostsCount($boardId: ID!, $searchValue: String!) {
+        getSearchPostsCount(boardId: $boardId, searchValue: $searchValue)
+    }
+`;
+
 export const GET_CATEGORIES = gql`
     query getCategoriesByBoardId($boardId: ID!) {
         getCategoriesByBoardId(boardId: $boardId) {
