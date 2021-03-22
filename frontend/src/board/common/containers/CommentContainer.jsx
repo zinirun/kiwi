@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import { Chip, Button, Grid } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import { Comment, List, Row, Col, message, Form, Input, Space, Modal, Tooltip } from 'antd';
+import { Comment, List, message, Form, Input, Space, Modal, Tooltip } from 'antd';
 import { useStyles } from '../styles/comment.style';
 import { boardCommonStyles } from '../styles/board.common.style';
 import {
