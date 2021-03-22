@@ -140,11 +140,6 @@ export default function CommentList({ id }) {
                                             <Comment
                                                 author={
                                                     <>
-                                                        {item.companyName && (
-                                                            <span className={classes.authorInfo}>
-                                                                {item.companyName}/
-                                                            </span>
-                                                        )}
                                                         <span className={classes.authorInfo}>
                                                             {item.gradeName}&nbsp;
                                                         </span>

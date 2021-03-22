@@ -156,20 +156,6 @@ function ChangeUserInfo({ user, metadata }) {
                     ))}
                 </Select>
             </Form.Item>
-            <Form.Item
-                name="companyId"
-                className={classes.changeFormItem}
-                label="재직중인 회사"
-                initialValue={+user.companyId}
-            >
-                <Select name="companyId">
-                    {metadata.companies.map((d, idx) => (
-                        <Option key={idx} value={d.id}>
-                            {d.companyName}
-                        </Option>
-                    ))}
-                </Select>
-            </Form.Item>
             <Form.Item className={classes.changeFormItem}>
                 <Button type="submit" color="primary" className={classes.button} fullWidth>
                     인적사항 변경
