@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { Grid, Button, Chip } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
-import { isMobile } from 'react-device-detect';
 import { useStyles } from '../styles/board.style';
 import { boardCommonStyles } from '../styles/board.common.style';
 import { GET_SEARCH_POSTS_COUNT, SEARCH_POST_LIST } from '../../../configs/queries';
@@ -14,6 +13,7 @@ import { Form, Input, message, Pagination } from 'antd';
 import NoResult from '../components/NoResult';
 import { ITEMS_COUNT_PER_PAGE } from '../../../configs/variables';
 import { BoardListSkeleton } from '../components/Skeletons';
+import { commentTimeFormatter } from '../tools/formatter';
 
 const { Search } = Input;
 
@@ -136,58 +136,46 @@ export default function SearchContainer({ board, page, value }) {
                     {postList.map((post, idx) => (
                         <Grid
                             container
-                            justify="center"
-                            spacing={0}
-                            alignItems="center"
                             className={classes.postWrapper}
                             component={Link}
                             to={`/post/${post.id}`}
                             key={idx}
                         >
-                            <Grid
-                                item
-                                xs={12}
-                                sm={7}
-                                className={classes.title}
-                                style={{ textDecoration: 'none' }}
-                            >
-                                {post.categoryName && (
-                                    <span className={classes.part}>{post.categoryName}</span>
-                                )}
-                                {isMobile && <br />}
-                                <span style={{ color: 'black' }}>{post.title}</span>
+                            <Grid item className={classes.title} xs={12}>
+                                <span style={{ color: 'black' }}>
+                                    {post.categoryName && (
+                                        <span className={classes.part}>{post.categoryName}</span>
+                                    )}
+                                    {post.title}
+                                </span>
                             </Grid>
-
-                            <Grid item xs={12} sm={2} align="right">
-                                <Chip
-                                    className={classes.backColor}
-                                    size="small"
-                                    icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
-                                    label={post.likeCount}
-                                />
-                                <Chip
-                                    className={classes.backColor}
-                                    size="small"
-                                    icon={
-                                        <ChatBubbleOutlineOutlinedIcon
-                                            className={classes.commentIcon}
-                                        />
-                                    }
-                                    label={post.commentCount}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={3} align="right">
-                                <Grid>
-                                    <span style={{ color: '#999', fontSize: '0.75rem' }}>
-                                        {post.gradeName}&nbsp;
+                            <Grid className={classes.flexWrapper} container>
+                                <Grid item style={{ flex: 1 }}>
+                                    <span className={classes.infoWrapper}>
+                                        {commentTimeFormatter(post.createdAt)}&nbsp;
+                                        <span className={classes.author}>
+                                            {post.gradeName}/{post.authorName}
+                                        </span>
                                     </span>
-                                    <span>{post.authorName}</span>
                                 </Grid>
-                                {!isMobile && (
-                                    <Grid className={classes.date}>
-                                        <span>{post.createdAt}</span>
-                                    </Grid>
-                                )}
+                                <Grid item>
+                                    <Chip
+                                        className={classes.backColor}
+                                        size="small"
+                                        icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
+                                        label={post.likeCount}
+                                    />
+                                    <Chip
+                                        className={classes.backColor}
+                                        size="small"
+                                        icon={
+                                            <ChatBubbleOutlineOutlinedIcon
+                                                className={classes.commentIcon}
+                                            />
+                                        }
+                                        label={post.commentCount}
+                                    />
+                                </Grid>
                             </Grid>
                         </Grid>
                     ))}
