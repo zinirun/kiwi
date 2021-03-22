@@ -11,17 +11,11 @@ import { message, Pagination, Space } from 'antd';
 import { GET_MY_COMMENTS, GET_MY_COMMENTS_COUNT } from '../../configs/queries';
 import NoResult from '../../board/common/components/NoResult';
 import { BoardListSkeleton } from '../../board/common/components/Skeletons';
-import {
-    DESKTOP_BOARD_HEAD_HEIGHT,
-    DESKTOP_COMMENT_LIST_ELM_HEIGHT,
-} from '../../configs/variables';
+import { ITEMS_COUNT_PER_PAGE } from '../../configs/variables';
 
 export default function MyCommentsContainer({ page }) {
     const classes = { ...useStyles(), ...boardCommonStyles() };
     const history = useHistory();
-    const itemsByHeight = parseInt(
-        (window.innerHeight - DESKTOP_BOARD_HEAD_HEIGHT) / DESKTOP_COMMENT_LIST_ELM_HEIGHT,
-    );
     const [comments, setComments] = useState([]);
     const [commentsCount, setCommentsCount] = useState();
     const { data: commentsCountData, error: commentsCountError } = useQuery(GET_MY_COMMENTS_COUNT);
@@ -34,7 +28,7 @@ export default function MyCommentsContainer({ page }) {
     } = useQuery(GET_MY_COMMENTS, {
         variables: {
             pageNumber: page || 1,
-            elementCount: itemsByHeight,
+            elementCount: ITEMS_COUNT_PER_PAGE,
         },
         skip: commentsCount === 0,
     });
@@ -119,7 +113,7 @@ export default function MyCommentsContainer({ page }) {
                     <Pagination
                         className={classes.paginationWrapper}
                         defaultCurrent={page || 1}
-                        defaultPageSize={itemsByHeight}
+                        defaultPageSize={ITEMS_COUNT_PER_PAGE}
                         total={commentsCount}
                         onChange={handlePage}
                         hideOnSinglePage

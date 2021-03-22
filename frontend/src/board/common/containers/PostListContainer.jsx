@@ -14,10 +14,7 @@ import moment from 'moment';
 import { Form, Input, message, Pagination } from 'antd';
 import NoResult from '../components/NoResult';
 import { BoardListSkeleton } from '../components/Skeletons';
-import {
-    DESKTOP_BOARD_HEAD_HEIGHT,
-    DESKTOP_BOARD_LIST_ELM_HEIGHT,
-} from '../../../configs/variables';
+import { ITEMS_COUNT_PER_PAGE } from '../../../configs/variables';
 
 const { Search } = Input;
 
@@ -28,9 +25,6 @@ export default function BoardListContainer({ board, page }) {
     const [postList, setPostList] = useState([]);
     const [postsCount, setPostsCount] = useState();
     const [form] = Form.useForm();
-    const itemsByHeight = parseInt(
-        (window.innerHeight - DESKTOP_BOARD_HEAD_HEIGHT) / DESKTOP_BOARD_LIST_ELM_HEIGHT,
-    );
     const { data: postsCountData, error: postsCountError, refetch: postCountRefetch } = useQuery(
         GET_POSTS_COUNT,
         {
@@ -50,7 +44,7 @@ export default function BoardListContainer({ board, page }) {
             boardId: board.id,
             categoryId: selectedCategoryId,
             pageNumber: page || 1,
-            elementCount: itemsByHeight,
+            elementCount: ITEMS_COUNT_PER_PAGE,
         },
         skip: postsCount === 0,
     });
@@ -88,7 +82,7 @@ export default function BoardListContainer({ board, page }) {
             message.error('게시글을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
             history.push('/');
         }
-    }, [postListData, setPostList, postListError, history, itemsByHeight]);
+    }, [postListData, setPostList, postListError, history]);
 
     const handlePage = (page) => {
         history.push(`/board/${board.link}?page=${page}`);
@@ -205,7 +199,7 @@ export default function BoardListContainer({ board, page }) {
                     <Pagination
                         className={classes.paginationWrapper}
                         defaultCurrent={page || 1}
-                        defaultPageSize={itemsByHeight}
+                        defaultPageSize={ITEMS_COUNT_PER_PAGE}
                         total={postsCount}
                         onChange={handlePage}
                         hideOnSinglePage

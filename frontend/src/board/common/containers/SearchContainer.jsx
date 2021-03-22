@@ -12,10 +12,7 @@ import { GET_SEARCH_POSTS_COUNT, SEARCH_POST_LIST } from '../../../configs/queri
 import moment from 'moment';
 import { Form, Input, message, Pagination } from 'antd';
 import NoResult from '../components/NoResult';
-import {
-    DESKTOP_BOARD_HEAD_HEIGHT,
-    DESKTOP_BOARD_LIST_ELM_HEIGHT,
-} from '../../../configs/variables';
+import { ITEMS_COUNT_PER_PAGE } from '../../../configs/variables';
 import { BoardListSkeleton } from '../components/Skeletons';
 
 const { Search } = Input;
@@ -26,9 +23,6 @@ export default function SearchContainer({ board, page, value }) {
     const [postsCount, setPostsCount] = useState();
     const [postList, setPostList] = useState([]);
     const [form] = Form.useForm();
-    const itemsByHeight = parseInt(
-        (window.innerHeight - DESKTOP_BOARD_HEAD_HEIGHT) / DESKTOP_BOARD_LIST_ELM_HEIGHT,
-    );
     const { data: postsCountData, error: postsCountError, refetch: postCountRefetch } = useQuery(
         GET_SEARCH_POSTS_COUNT,
         {
@@ -38,18 +32,20 @@ export default function SearchContainer({ board, page, value }) {
             },
         },
     );
-    const { data: postListData, error: postListError, loading: postListLoading } = useQuery(
-        SEARCH_POST_LIST,
-        {
-            variables: {
-                boardId: board.id,
-                searchValue: '%' + value + '%',
-                pageNumber: page || 1,
-                elementCount: itemsByHeight,
-            },
-            skip: value && value.length < 2,
+    const {
+        data: postListData,
+        error: postListError,
+        loading: postListLoading,
+        refetch: postListRefetch,
+    } = useQuery(SEARCH_POST_LIST, {
+        variables: {
+            boardId: board.id,
+            searchValue: '%' + value + '%',
+            pageNumber: page || 1,
+            elementCount: ITEMS_COUNT_PER_PAGE,
         },
-    );
+        skip: value && value.length < 2,
+    });
 
     useEffect(() => {
         if (postsCountData) {
@@ -66,6 +62,10 @@ export default function SearchContainer({ board, page, value }) {
     }, [postCountRefetch]);
 
     useEffect(() => {
+        postListRefetch().catch(() => {});
+    }, [postListRefetch]);
+
+    useEffect(() => {
         if (postListData) {
             setPostList(
                 postListData.searchPostsByBoardId.map((p) => {
@@ -80,7 +80,7 @@ export default function SearchContainer({ board, page, value }) {
             message.error('게시글을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
             history.push('/');
         }
-    }, [postListData, setPostList, postListError, history, itemsByHeight]);
+    }, [postListData, setPostList, postListError, history]);
 
     const onSearch = useCallback(
         (value) => {
@@ -199,7 +199,7 @@ export default function SearchContainer({ board, page, value }) {
                     <Pagination
                         className={classes.paginationWrapper}
                         defaultCurrent={page || 1}
-                        defaultPageSize={itemsByHeight}
+                        defaultPageSize={ITEMS_COUNT_PER_PAGE}
                         total={postsCount}
                         onChange={handlePage}
                         hideOnSinglePage
