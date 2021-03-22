@@ -180,7 +180,7 @@ module.exports = buildSchema(`
         getCategoriesByBoardId(boardId: ID!): [CategoryList]
         getMyPosts(pageNumber: Int!, elementCount: Int!): [PostList]
         getMyComments(pageNumber: Int!, elementCount: Int!): [Comment]
-        searchPostsByBoardId(boardId: ID!, searchValue: String!): [SearchPostList]
+        searchPostsByBoardId(boardId: ID!, searchValue: String!, pageNumber: Int!, elementCount: Int!): [SearchPostList]
         getPostsCountByBoardId(boardId: ID!, categoryId: ID): Int
         getPostsCountByLikeCount(likeCount: Int!): Int
         getMyPostsCount: Int

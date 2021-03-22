@@ -22,7 +22,7 @@
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 
-module.exports = async ({ boardId, searchValue }, { departmentId }) => {
+module.exports = async ({ boardId, searchValue, pageNumber, elementCount }, { departmentId }) => {
     const query = `
                     select p.id, p.title, g.gradeName, u.userName as authorName, p.createdAt, p.updatedAt, ifnull(v.postLikeCount, 0) as likeCount, ifnull(z.commentCount, 0) as commentCount
                     from post p
@@ -42,7 +42,7 @@ module.exports = async ({ boardId, searchValue }, { departmentId }) => {
                     and p.boardId = :boardId
                     and p.departmentId = :departmentId
                     and title LIKE :searchValue
-                    order by p.id desc;
+                    order by p.id desc limit :pages, :elementCount;
                     `;
     return await models.sequelize
         .query(query, {
@@ -50,6 +50,8 @@ module.exports = async ({ boardId, searchValue }, { departmentId }) => {
                 boardId,
                 departmentId,
                 searchValue,
+                pages: elementCount * (+pageNumber - 1),
+                elementCount,
             },
         })
         .spread(
