@@ -7,6 +7,7 @@
  */
 
 const models = require('../../../models');
+const { createNotificationPostLike } = require('../../services/notification.service');
 const { ConflictError } = require('../../errors/errors');
 
 module.exports = async ({ postId }, { id: userId }) => {
@@ -43,7 +44,10 @@ module.exports = async ({ postId }, { id: userId }) => {
                     },
                     { where: { userId, postId } },
                 )
-                .then(() => 'Up')
+                .then(() => {
+                    createNotificationPostLike(postId);
+                    return 'Up';
+                })
                 .catch(() => ConflictError('Update error occured at Up'));
             // const query =
             //     'update post_like set isDeleted=0 where userId=:userId and postId=:postId;';
@@ -58,7 +62,10 @@ module.exports = async ({ postId }, { id: userId }) => {
                 userId,
                 postId,
             })
-            .then(() => 'Up')
+            .then(() => {
+                createNotificationPostLike(postId);
+                return 'Up';
+            })
             .catch(() => ConflictError('Insert error occured at Up'));
         // const query = 'insert into post_like (userId, postId) values (:userId, :postId);';
         // return await models.sequelize.query(query, { replacements: { userId, postId } }).spread(

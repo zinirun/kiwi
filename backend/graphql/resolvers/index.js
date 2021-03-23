@@ -52,4 +52,9 @@ module.exports = {
     createGroup: require('./group/createGroup'),
     getMyMasterGroups: require('./group/getMyMasterGroups'),
     getMyGroups: require('./group/getMyGroups'),
+    getGroupComments: require('./group/getGroupComments'),
+    inviteGroupMember: require('./group/inviteGroupMember'),
+    quitGroupMember: require('./group/quitGroupMember'),
+    createGroupComment: require('./group/createGroupComment'),
+    deleteGroupComment: require('./group/deleteGroupComment'),
 };

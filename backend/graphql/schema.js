@@ -169,6 +169,12 @@ module.exports = buildSchema(`
         content: String!
     }
 
+    type GroupCommentAfterCreate {
+        id: ID!
+        groupId: ID!
+        authorId: ID!
+    }
+
     input GroupCommentInput {
         groupId: ID!
         content: String!
@@ -218,6 +224,7 @@ module.exports = buildSchema(`
         getSearchPostsCount(boardId: ID!, searchValue: String!): Int
         getMyMasterGroups: [Group]
         getMyGroups: [Group]
+        getGroupComments(groupId: ID!): [GroupComment]
     }
 
     type Mutation {
@@ -232,5 +239,9 @@ module.exports = buildSchema(`
         deleteComment(id: ID!): Boolean
         handleCommentLike(commentId: ID!): String
         createGroup(title: String!): GroupAfterCreate
+        inviteGroupMember(groupId: ID!, memberId: ID!): Boolean
+        quitGroupMember(groupId: ID!, memberId: ID!): Boolean
+        createGroupComment(groupCommentInput: GroupCommentInput!): GroupCommentAfterCreate
+        deleteGroupComment(id: ID!): Boolean
     }
 `);
