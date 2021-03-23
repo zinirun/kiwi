@@ -21,9 +21,11 @@ module.exports = function (sequelize, DataTypes) {
         Groups.hasMany(models.group_member, {
             foreignKey: 'groupId',
         });
-
         Groups.belongsTo(models.user, {
             foreignKey: 'masterId',
+        });
+        Groups.belongsTo(models.department, {
+            foreignKey: 'departmentId',
         });
     };
 

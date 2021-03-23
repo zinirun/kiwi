@@ -21,6 +21,9 @@ module.exports = function (sequelize, DataTypes) {
         Department.hasMany(models.post, {
             foreignKey: 'departmentId',
         });
+        Department.hasMany(models.groups, {
+            foreignKey: 'departmentId',
+        });
     };
     return Department;
 };
