@@ -27,7 +27,6 @@ const query = `
 `;
 
 module.exports = async ({ groupId }, { id: userId }) => {
-    const { groupId } = groupCommentInput;
     const isMember =
         (await models.groups.findOne({
             attributes: ['id', 'masterId', 'groupId'],
