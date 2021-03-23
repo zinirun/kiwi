@@ -7,6 +7,7 @@
  */
 
 const models = require('../../../models');
+const { createNotificationPostLike } = require('../../services/notification.service');
 const { ConflictError } = require('../../errors/errors');
 
 module.exports = async ({ postId }, { id: userId }) => {
@@ -43,9 +44,8 @@ module.exports = async ({ postId }, { id: userId }) => {
                     },
                     { where: { userId, postId } },
                 )
-                .then((result) => {
-                    const data = result.get({ plain: true });
-                    createNotificationPostLike(data.postId);
+                .then(() => {
+                    createNotificationPostLike(postId);
                     return 'Up';
                 })
                 .catch(() => ConflictError('Update error occured at Up'));
@@ -62,9 +62,8 @@ module.exports = async ({ postId }, { id: userId }) => {
                 userId,
                 postId,
             })
-            .then((result) => {
-                const data = result.get({ plain: true });
-                createNotificationPostLike(data.postId);
+            .then(() => {
+                createNotificationPostLike(postId);
                 return 'Up';
             })
             .catch(() => ConflictError('Insert error occured at Up'));

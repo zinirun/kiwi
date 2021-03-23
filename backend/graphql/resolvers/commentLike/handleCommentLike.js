@@ -44,9 +44,8 @@ module.exports = async ({ commentId }, { id: userId }) => {
                     },
                     { where: { userId, commentId } },
                 )
-                .then((result) => {
-                    const data = result.get({ plain: true });
-                    createNotificationCommentLike(data.commentId);
+                .then(() => {
+                    createNotificationCommentLike(commentId);
                     return 'Up';
                 })
                 .catch(() => ConflictError('Update error occured at Up'));
@@ -63,9 +62,8 @@ module.exports = async ({ commentId }, { id: userId }) => {
                 userId,
                 commentId,
             })
-            .then((result) => {
-                const data = result.get({ plain: true });
-                createNotificationCommentLike(data.commentId);
+            .then(() => {
+                createNotificationCommentLike(commentId);
                 return 'Up';
             })
             .catch(() => ConflictError('Insert error occured at Up'));

@@ -19,7 +19,7 @@ const models = require('../../../models');
 const { ConflictError, BadRequestError } = require('../../errors/errors');
 
 const query = `
-    select gc.id, gc.groupId, gc.authorId as userId, u.userName as authorName, g.gradeName as authorGradeName, gc.content
+    select gc.id, gc.groupId, gc.authorId, u.userName as authorName, g.gradeName as authorGradeName, gc.content
     from user u
     join grade g on u.studentGradeId = g.gradeName
         join group_comment gc on gc.authorid = u.id
@@ -50,7 +50,12 @@ module.exports = async ({ groupId }, { id: userId }) => {
         .spread(
             (result) => {
                 const comments = JSON.parse(JSON.stringify(result));
-                return comments;
+                return comments.map((c) => {
+                    return {
+                        ...c,
+                        userId,
+                    };
+                });
             },
             () => ConflictError('Error occured at Selection'),
         );
