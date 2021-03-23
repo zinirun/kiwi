@@ -21,6 +21,5 @@ module.exports = async () => {
     if (!boards) {
         throw NotFoundError('Boards not exists');
     }
-    console.log(boards);
     return boards;
 };

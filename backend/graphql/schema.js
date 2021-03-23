@@ -232,6 +232,7 @@ module.exports = buildSchema(`
         inviteGroupMember(groupId: ID!, memberId: ID!): Boolean
         quitGroupMember(groupId: ID!, memberId: ID!): Boolean
         createGroupComment(groupCommentInput: GroupCommentInput!): GroupCommentAfterCreate
+        deleteGroup(id: ID!): Boolean
         deleteGroupComment(id: ID!): Boolean
     }
 `);
