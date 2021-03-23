@@ -1,12 +1,12 @@
 import React from 'react';
 import PageTitle from '../../common/components/PageTitle';
-import MessageContainer from '../containers/MessageContainer';
+import MyGroupContainer from '../containers/MyGroupContainer';
 
-export default function MessagePage() {
+export default function MyGroupPage() {
     return (
         <>
             <PageTitle title="속닥속닥" />
-            <MessageContainer />
+            <MyGroupContainer />
         </>
     );
 }

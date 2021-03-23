@@ -40,7 +40,7 @@ export const useStyles = makeStyles((theme) => ({
         color: 'white',
         minWidth: '35px',
         '& svg': {
-            fontSize: '1.05rem',
+            fontSize: '1.15rem',
         },
     },
     drawerText: {

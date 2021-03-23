@@ -2,8 +2,14 @@ import React from 'react';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 import Root from './header/Root';
 
-// 공통
+// 게시글
 import PostContentPage from './board/common/pages/PostContentPage';
+
+// 게시판 (통합)
+import PostListPage from './board/common/pages/PostListPage';
+
+// 검색 (통합)
+import SearchPage from './board/common/pages/SearchPage';
 
 // TOP 게시판
 import TopPage from './board/top/pages/TopPage';
@@ -38,14 +44,8 @@ import MyCommentsPage from './my-menu/pages/MyCommentsPage';
 // 나의 스크랩
 import MyScrapPage from './my-menu/pages/MyScrapPage';
 
-// 게시판 (통합)
-import PostListPage from './board/common/pages/PostListPage';
-
-// 검색 (통합)
-import SearchPage from './board/common/pages/SearchPage';
-
-// 메시지 (속닥속닥)
-import MessagePage from './my-menu/pages/MessagePage';
+// 나의 그룹 (속닥속닥)
+import MyGroupPage from './my-menu/pages/MyGroupPage';
 
 function App() {
     return (
@@ -66,7 +66,7 @@ function App() {
                     <Route path="/my/post" component={MyPostsPage} />
                     <Route path="/my/comment" component={MyCommentsPage} />
                     <Route path="/my/scrap" component={MyScrapPage} />
-                    <Route path="/message" component={MessagePage} />
+                    <Route path="/my/group" component={MyGroupPage} />
                     <Redirect to="/" />
                 </Switch>
             </Root>

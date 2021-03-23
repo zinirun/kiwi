@@ -11,8 +11,8 @@ export const MY_MENU = [
     {
         id: 1,
         boardName: '속닥속닥',
-        link: '/message',
-        icon: 'TelegramIcon',
+        link: '/my/group',
+        icon: 'SupervisedUserCircleIcon',
     },
     {
         id: 2,

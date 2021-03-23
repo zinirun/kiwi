@@ -11,6 +11,7 @@ import TelegramIcon from '@material-ui/icons/Telegram';
 import CommentIcon from '@material-ui/icons/Comment';
 import SubjectIcon from '@material-ui/icons/Subject';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 
 export function IconViewer({ icon, classes }) {
     switch (icon) {
@@ -38,8 +39,8 @@ export function IconViewer({ icon, classes }) {
             return <SubjectIcon className={classes && classes} />;
         case 'StarBorderIcon':
             return <StarBorderIcon className={classes && classes} />;
-        case 'SubjectIcon':
-            return <SubjectIcon className={classes && classes} />;
+        case 'SupervisedUserCircleIcon':
+            return <SupervisedUserCircleIcon className={classes && classes} />;
         default:
             return <></>;
     }
