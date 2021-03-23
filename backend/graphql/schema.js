@@ -136,6 +136,27 @@ module.exports = buildSchema(`
         commentCount: Int!
     }
 
+    type Group {
+        id: ID!
+        departmentId: ID!
+        title: String!
+        masterId: ID!
+        members: [ID]
+    }
+
+    type GroupComment {
+        id: ID!
+        groupId: ID!
+        userId: ID!
+        authorId: ID!
+        content: String!
+    }
+
+    input GroupCommentInput {
+        groupId: ID!
+        content: String!
+    }
+
     input UserUpdateInput {
         studentGradeId: ID!
     }
