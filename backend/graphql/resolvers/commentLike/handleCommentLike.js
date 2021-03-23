@@ -44,10 +44,7 @@ module.exports = async ({ commentId }, { id: userId }) => {
                     },
                     { where: { userId, commentId } },
                 )
-                .then(() => {
-                    createNotificationCommentLike(commentId);
-                    return 'Up';
-                })
+                .then(() => 'Up')
                 .catch(() => ConflictError('Update error occured at Up'));
             // const query =
             //     'update post_like set isDeleted=0 where userId=:userId and postId=:postId;';
@@ -63,7 +60,7 @@ module.exports = async ({ commentId }, { id: userId }) => {
                 commentId,
             })
             .then(() => {
-                createNotificationCommentLike(commentId);
+                createNotificationCommentLike(commentId, userId);
                 return 'Up';
             })
             .catch(() => ConflictError('Insert error occured at Up'));

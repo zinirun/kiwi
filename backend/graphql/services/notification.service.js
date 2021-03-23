@@ -1,13 +1,15 @@
 const models = require('../../models');
 
 // type: POST_COMMENT
-const createNotificationPostComment = async (postId) => {
+const createNotificationPostComment = async (postId, triggerId) => {
     const type = 'POST_COMMENT';
     const { authorId } = await models.post.findOne({
         attributes: ['id', 'authorId'],
         where: { id: postId },
         raw: true,
     });
+    if (+authorId === +triggerId) return;
+
     const data = await models.notification.findOne({
         attributes: ['isDeleted', 'postId', 'type', 'count'],
         where: { postId, type, userId: authorId },
@@ -42,13 +44,14 @@ const createNotificationPostComment = async (postId) => {
 };
 
 // type: COMMENT_LIKE
-const createNotificationCommentLike = async (commentId) => {
+const createNotificationCommentLike = async (commentId, triggerId) => {
     const type = 'COMMENT_LIKE';
     const { authorId } = await models.comment.findOne({
         attributes: ['id', 'authorId'],
         where: { id: commentId },
         raw: true,
     });
+    if (+authorId === +triggerId) return;
     const data = await models.notification.findOne({
         attributes: ['isDeleted', 'commentId', 'type', 'count'],
         where: { commentId, type, userId: authorId },
@@ -83,13 +86,14 @@ const createNotificationCommentLike = async (commentId) => {
 };
 
 // type: POST_LIKE
-const createNotificationPostLike = async (postId) => {
+const createNotificationPostLike = async (postId, triggerId) => {
     const type = 'POST_LIKE';
     const { authorId } = await models.post.findOne({
         attributes: ['id', 'authorId'],
         where: { id: postId },
         raw: true,
     });
+    if (+authorId === +triggerId) return;
     const data = await models.notification.findOne({
         attributes: ['isDeleted', 'postId', 'type', 'count'],
         where: { postId, type, userId: authorId },
