@@ -43,7 +43,11 @@ module.exports = async ({ postId }, { id: userId }) => {
                     },
                     { where: { userId, postId } },
                 )
-                .then(() => 'Up')
+                .then((result) => {
+                    const data = result.get({ plain: true });
+                    createNotificationPostLike(data.postId);
+                    return 'Up';
+                })
                 .catch(() => ConflictError('Update error occured at Up'));
             // const query =
             //     'update post_like set isDeleted=0 where userId=:userId and postId=:postId;';
