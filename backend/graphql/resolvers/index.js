@@ -59,4 +59,7 @@ module.exports = {
     createGroupComment: require('./group/createGroupComment'),
     deleteGroupComment: require('./group/deleteGroupComment'),
     deleteGroup: require('./group/deleteGroup'),
+
+    // Notification
+    seenNotification: require('./notification/seenNotification'),
 };

@@ -247,5 +247,6 @@ module.exports = buildSchema(`
         createGroupComment(groupCommentInput: GroupCommentInput!): GroupCommentAfterCreate
         deleteGroup(id: ID!): Boolean
         deleteGroupComment(id: ID!): Boolean
+        seenNotification(id: ID!): Boolean
     }
 `);
