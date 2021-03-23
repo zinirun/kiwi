@@ -152,6 +152,13 @@ module.exports = buildSchema(`
         members: [GroupMember]
     }
 
+    type GroupAfterCreate {
+        id: ID!
+        departmentId: ID!
+        title: String!
+        masterId: ID!
+    }
+    
     type GroupComment {
         id: ID!
         groupId: ID!
@@ -215,6 +222,8 @@ module.exports = buildSchema(`
         getMyCommentsCount: Int
         searchPostsByBoardId(boardId: ID!, searchValue: String!, pageNumber: Int!, elementCount: Int!): [SearchPostList]
         getSearchPostsCount(boardId: ID!, searchValue: String!): Int
+        getMyMasterGroups: [Group]
+        getMyGroups: [Group]
         getGroupComments(groupId: ID!): [GroupComment]
     }
 
@@ -229,6 +238,7 @@ module.exports = buildSchema(`
         createComment(comment: CommentInput!): CommentAfterCreate
         deleteComment(id: ID!): Boolean
         handleCommentLike(commentId: ID!): String
+        createGroup(title: String!): GroupAfterCreate
         inviteGroupMember(groupId: ID!, memberId: ID!): Boolean
         quitGroupMember(groupId: ID!, memberId: ID!): Boolean
         createGroupComment(groupCommentInput: GroupCommentInput!): GroupCommentAfterCreate
