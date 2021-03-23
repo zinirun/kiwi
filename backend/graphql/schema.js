@@ -136,12 +136,20 @@ module.exports = buildSchema(`
         commentCount: Int!
     }
 
+    type GroupMember {
+        memberId: ID!
+        memberName: String!
+        memberGradeName: String!
+    }
+
     type Group {
         id: ID!
         departmentId: ID!
         title: String!
         masterId: ID!
-        members: [ID]
+        masterName: String!
+        masterGradeName: String!
+        members: [GroupMember]
     }
 
     type GroupComment {
@@ -149,6 +157,8 @@ module.exports = buildSchema(`
         groupId: ID!
         userId: ID!
         authorId: ID!
+        authorName: String!
+        authorGradeName: String!
         content: String!
     }
 
