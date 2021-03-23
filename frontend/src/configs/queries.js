@@ -324,6 +324,17 @@ export const GET_GROUP_COMMENTS = gql`
     }
 `;
 
+export const CREATE_GROUP = gql`
+    mutation createGroup($title: String!) {
+        createGroup(title: $title) {
+            id
+            departmentId
+            title
+            masterId
+        }
+    }
+`;
+
 export const INVITE_GROUP_MEMBER = gql`
     mutation inviteGroupMember($groupId: ID!, $memberId: ID!) {
         inviteGroupMember(groupId: $groupId, memberId: $memberId)

@@ -1,17 +1,41 @@
 import { Button, Grid } from '@material-ui/core';
-import { Form, Input, message, Space } from 'antd';
+import { Form, Input, message, Space, Modal } from 'antd';
 import { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { CREATE_GROUP } from '../../configs/queries';
 import { useStyles } from '../styles/group.style';
+import { useMutation } from 'react-apollo';
+
+const { confirm } = Modal;
 
 export default function MyGroupContainer() {
     const classes = useStyles();
     const [formVisible, setFormVisible] = useState(false);
-    //const []
+    const [createGroup] = useMutation(CREATE_GROUP);
+    const triggerCreateGroup = (title) => {
+        createGroup({
+            variables: {
+                title,
+            },
+        })
+            .then(({ data }) => {
+                console.log(data);
+            })
+            .catch(() => message.error('그룹 생성 중 문제가 발생했습니다.'));
+    };
     const onSubmit = ({ title }) => {
         if (!title) {
-            message.error('그룹 이름을 입력하세요');
+            return message.error('그룹 이름을 입력하세요');
         }
+        confirm({
+            title: '그룹을 생성할까요?',
+            icon: <></>,
+            okText: '그룹 만들기',
+            cancelText: '취소',
+            onOk() {
+                triggerCreateGroup(title);
+            },
+        });
     };
     const handleVisible = useCallback(
         (e) => {
