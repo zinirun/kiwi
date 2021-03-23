@@ -58,7 +58,11 @@ module.exports = async ({ postId }, { id: userId }) => {
                 userId,
                 postId,
             })
-            .then(() => 'Up')
+            .then((result) => {
+                const data = result.get({ plain: true });
+                createNotificationPostLike(data.postId);
+                return 'Up';
+            })
             .catch(() => ConflictError('Insert error occured at Up'));
         // const query = 'insert into post_like (userId, postId) values (:userId, :postId);';
         // return await models.sequelize.query(query, { replacements: { userId, postId } }).spread(

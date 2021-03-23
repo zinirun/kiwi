@@ -8,6 +8,7 @@
 
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
+const { createNotificationCommentLike } = require('../../services/notification.service.js');
 
 module.exports = async ({ commentId }, { id: userId }) => {
     const data = await models.comment_like.findOne({
@@ -58,7 +59,11 @@ module.exports = async ({ commentId }, { id: userId }) => {
                 userId,
                 commentId,
             })
-            .then(() => 'Up')
+            .then((result) => {
+                const data = result.get({ plain: true });
+                createNotificationCommentLike(data.commentId);
+                return 'Up';
+            })
             .catch(() => ConflictError('Insert error occured at Up'));
         // const query = 'insert into post_like (userId, postId) values (:userId, :postId);';
         // return await models.sequelize.query(query, { replacements: { userId, postId } }).spread(

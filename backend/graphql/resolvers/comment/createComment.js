@@ -22,6 +22,7 @@
 
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
+const { createNotificationPostComment } = require('../../services/notification.service.js');
 
 module.exports = async ({ comment }, { id: authorId }) => {
     return await models.comment
@@ -30,7 +31,8 @@ module.exports = async ({ comment }, { id: authorId }) => {
             ...comment,
         })
         .then((result) => {
-            const data = result.get({ plain: true });
+            const data = result.get({ plain: true }); // data.postId
+            createNotificationPostComment(data.postId);
             return {
                 ...data,
             };
