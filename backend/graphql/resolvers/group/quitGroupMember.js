@@ -11,7 +11,7 @@ const { ConflictError, BadRequestError } = require('../../errors/errors');
 
 module.exports = async ({ groupId, memberId }, { id: masterId }) => {
     const isMaster = await models.groups.findOne({
-        attributes: ['id', 'masterId', 'groupId'],
+        attributes: ['id', 'masterId'],
         where: { masterId, id: groupId },
         raw: true,
     });

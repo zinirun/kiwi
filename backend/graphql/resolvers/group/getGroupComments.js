@@ -29,12 +29,12 @@ const query = `
 module.exports = async ({ groupId }, { id: userId }) => {
     const isMember =
         (await models.groups.findOne({
-            attributes: ['id', 'masterId', 'groupId'],
+            attributes: ['id', 'masterId'],
             where: { masterId: userId, id: groupId },
             raw: true,
         })) ||
         (await models.group_member.findOne({
-            attributes: ['id', 'memberId', 'groupId'],
+            attributes: ['memberId', 'groupId'],
             where: { memberId: userId, groupId },
             raw: true,
         }));

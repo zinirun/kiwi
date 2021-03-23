@@ -11,7 +11,7 @@ const { ConflictError, BadRequestError } = require('../../errors/errors');
 
 module.exports = async ({ groupId, memberId }, { id: masterId }) => {
     const isMaster = await models.groups.findOne({
-        attributes: ['id', 'masterId', 'groupId'],
+        attributes: ['id', 'masterId'],
         where: { masterId, id: groupId },
         raw: true,
     });
@@ -19,7 +19,7 @@ module.exports = async ({ groupId, memberId }, { id: masterId }) => {
         throw BadRequestError('Bad Request: Not Master');
     }
     const isAlreadyExists = await models.group_member.findOne({
-        attributes: ['id', 'memberId', 'groupId'],
+        attributes: ['memberId', 'groupId'],
         where: { memberId, groupId },
         raw: true,
     });

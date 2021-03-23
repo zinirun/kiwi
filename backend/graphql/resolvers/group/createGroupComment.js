@@ -22,12 +22,12 @@ module.exports = async ({ groupCommentInput }, { id: authorId }) => {
     const { groupId } = groupCommentInput;
     const isMember =
         (await models.groups.findOne({
-            attributes: ['id', 'masterId', 'groupId'],
+            attributes: ['id', 'masterId'],
             where: { masterId: authorId, id: groupId },
             raw: true,
         })) ||
         (await models.group_member.findOne({
-            attributes: ['id', 'memberId', 'groupId'],
+            attributes: ['memberId', 'groupId'],
             where: { memberId: authorId, groupId },
             raw: true,
         }));
