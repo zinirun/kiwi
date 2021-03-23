@@ -1,24 +1,51 @@
 import { Button, Grid } from '@material-ui/core';
-import { Space, Form, Input } from 'antd';
+import { Form, Input, message, Space } from 'antd';
+import { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useStyles } from '../styles/group.style';
 
 export default function MyGroupContainer() {
     const classes = useStyles();
+    const [formVisible, setFormVisible] = useState(false);
+    //const []
+    const onSubmit = ({ title }) => {
+        if (!title) {
+            message.error('그룹 이름을 입력하세요');
+        }
+    };
+    const handleVisible = useCallback(
+        (e) => {
+            e.preventDefault();
+            setFormVisible(!formVisible);
+        },
+        [formVisible],
+    );
     return (
         <div>
-            <div className={classes.groupMenuWrapper}>
-                <>
-                    <Form>
-                        <Form.Item noStyle>
-                            <Input />
-                        </Form.Item>
-                    </Form>
-                    <Button className={classes.button} size="small">
-                        만들기
-                    </Button>
-                </>
-            </div>
+            <Form onFinish={onSubmit}>
+                <div className={classes.groupMenuWrapper}>
+                    <Space>
+                        {formVisible && (
+                            <>
+                                <Form.Item name="title" noStyle>
+                                    <Input
+                                        name="title"
+                                        placeholder="그룹 이름을 입력하세요"
+                                        maxLength={25}
+                                        autoFocus
+                                    />
+                                </Form.Item>
+                                <Button type="submit" className={classes.button} size="small">
+                                    만들기
+                                </Button>
+                            </>
+                        )}
+                        <Button className={classes.button} size="small" onClick={handleVisible}>
+                            {formVisible ? '취소' : '만들기'}
+                        </Button>
+                    </Space>
+                </div>
+            </Form>
             <Grid
                 className={classes.groupWrapper}
                 container
