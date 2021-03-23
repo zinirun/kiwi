@@ -1,5 +1,4 @@
 const models = require('../../models');
-const { ConflictError } = require('../errors/errors');
 
 // type: POST_COMMENT
 const createNotificationPostComment = async (postId) => {
@@ -22,7 +21,7 @@ const createNotificationPostComment = async (postId) => {
                 {
                     count: data.count + 1,
                 },
-                { where: { userId, postId, type } },
+                { where: { userId: authorId, postId, type } },
             );
         } else {
             return await models.notification.update(
@@ -30,12 +29,12 @@ const createNotificationPostComment = async (postId) => {
                     count: data.count + 1,
                     isDeleted: 0,
                 },
-                { where: { userId, postId, type } },
+                { where: { userId: authorId, postId, type } },
             );
         }
     } else {
         return models.notification.create({
-            userId,
+            userId: authorId,
             postId,
             type,
         });
@@ -63,7 +62,7 @@ const createNotificationCommentLike = async (commentId) => {
                 {
                     count: data.count + 1,
                 },
-                { where: { userId, commentId, type } },
+                { where: { userId: authorId, commentId, type } },
             );
         } else {
             return await models.notification.update(
@@ -71,12 +70,12 @@ const createNotificationCommentLike = async (commentId) => {
                     count: data.count + 1,
                     isDeleted: 0,
                 },
-                { where: { userId, commentId, type } },
+                { where: { userId: authorId, commentId, type } },
             );
         }
     } else {
         return models.notification.create({
-            userId,
+            userId: authorId,
             commentId,
             type,
         });
@@ -104,7 +103,7 @@ const createNotificationPostLike = async (postId) => {
                 {
                     count: data.count + 1,
                 },
-                { where: { userId, postId, type } },
+                { where: { userId: authorId, postId, type } },
             );
         } else {
             return await models.notification.update(
@@ -112,12 +111,12 @@ const createNotificationPostLike = async (postId) => {
                     count: data.count + 1,
                     isDeleted: 0,
                 },
-                { where: { userId, postId, type } },
+                { where: { userId: authorId, postId, type } },
             );
         }
     } else {
         return models.notification.create({
-            userId,
+            userId: authorId,
             postId,
             type,
         });

@@ -5,7 +5,7 @@ module.exports = function (sequelize, DataTypes) {
         'notification',
         {
             userId: { type: DataTypes.INTEGER, allowNull: false },
-            type: { type: DataTypes.STRING(10), allowNull: false },
+            type: { type: DataTypes.STRING(15), allowNull: false },
             postId: { type: DataTypes.INTEGER, allowNull: true, defaultValue: null },
             commentId: { type: DataTypes.INTEGER, allowNull: true, defaultValue: null },
             messageFromId: { type: DataTypes.INTEGER, allowNull: true, defaultValue: null },
