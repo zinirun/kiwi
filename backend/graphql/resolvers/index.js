@@ -47,4 +47,11 @@ module.exports = {
     // Category
     getCategoryById: require('./category/getCategory'),
     getCategoriesByBoardId: require('./category/getCatogriesByBoardId'),
+
+    // Group
+    getGroupComments: require('./group/getGroupComments'),
+    inviteGroupMember: require('./group/inviteGroupMember'),
+    quitGroupMember: require('./group/quitGroupMember'),
+    createGroupComment: require('./group/createGroupComment'),
+    deleteGroupComment: require('./group/deleteGroupComment'),
 };

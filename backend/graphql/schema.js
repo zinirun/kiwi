@@ -162,6 +162,12 @@ module.exports = buildSchema(`
         content: String!
     }
 
+    type GroupCommentAfterCreate {
+        id: ID!
+        groupId: ID!
+        authorId: ID!
+    }
+
     input GroupCommentInput {
         groupId: ID!
         content: String!
@@ -209,6 +215,7 @@ module.exports = buildSchema(`
         getMyCommentsCount: Int
         searchPostsByBoardId(boardId: ID!, searchValue: String!, pageNumber: Int!, elementCount: Int!): [SearchPostList]
         getSearchPostsCount(boardId: ID!, searchValue: String!): Int
+        getGroupComments(groupId: ID!): [GroupComment]
     }
 
     type Mutation {
@@ -222,5 +229,9 @@ module.exports = buildSchema(`
         createComment(comment: CommentInput!): CommentAfterCreate
         deleteComment(id: ID!): Boolean
         handleCommentLike(commentId: ID!): String
+        inviteGroupMember(groupId: ID!, memberId: ID!): Boolean
+        quitGroupMember(groupId: ID!, memberId: ID!): Boolean
+        createGroupComment(groupCommentInput: GroupCommentInput!): GroupCommentAfterCreate
+        deleteGroupComment(id: ID!): Boolean
     }
 `);
