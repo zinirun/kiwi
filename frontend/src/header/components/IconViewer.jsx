@@ -7,6 +7,10 @@ import StorageIcon from '@material-ui/icons/Storage';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import LooksOneIcon from '@material-ui/icons/LooksOne';
+import TelegramIcon from '@material-ui/icons/Telegram';
+import CommentIcon from '@material-ui/icons/Comment';
+import SubjectIcon from '@material-ui/icons/Subject';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 export function IconViewer({ icon, classes }) {
     switch (icon) {
@@ -26,6 +30,16 @@ export function IconViewer({ icon, classes }) {
             return <WhatshotIcon className={classes && classes} />;
         case 'LooksOneIcon':
             return <LooksOneIcon className={classes && classes} />;
+        case 'TelegramIcon':
+            return <TelegramIcon className={classes && classes} />;
+        case 'CommentIcon':
+            return <CommentIcon className={classes && classes} />;
+        case 'SubjectIcon':
+            return <SubjectIcon className={classes && classes} />;
+        case 'StarBorderIcon':
+            return <StarBorderIcon className={classes && classes} />;
+        case 'SubjectIcon':
+            return <SubjectIcon className={classes && classes} />;
         default:
             return <></>;
     }

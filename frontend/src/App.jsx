@@ -35,11 +35,17 @@ import MyPostsPage from './my-menu/pages/MyPostsPage';
 // 나의 댓글
 import MyCommentsPage from './my-menu/pages/MyCommentsPage';
 
+// 나의 스크랩
+import MyScrapPage from './my-menu/pages/MyScrapPage';
+
 // 게시판 (통합)
 import PostListPage from './board/common/pages/PostListPage';
 
 // 검색 (통합)
 import SearchPage from './board/common/pages/SearchPage';
+
+// 메시지 (속닥속닥)
+import MessagePage from './my-menu/pages/MessagePage';
 
 function App() {
     return (
@@ -59,6 +65,8 @@ function App() {
                     <Route path="/my/info" component={ChangeUserInfoPage} />
                     <Route path="/my/post" component={MyPostsPage} />
                     <Route path="/my/comment" component={MyCommentsPage} />
+                    <Route path="/my/scrap" component={MyScrapPage} />
+                    <Route path="/message" component={MessagePage} />
                     <Redirect to="/" />
                 </Switch>
             </Root>
