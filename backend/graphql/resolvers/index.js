@@ -47,4 +47,9 @@ module.exports = {
     // Category
     getCategoryById: require('./category/getCategory'),
     getCategoriesByBoardId: require('./category/getCatogriesByBoardId'),
+
+    // Group
+    createGroup: require('./group/createGroup'),
+    getMyMasterGroups: require('./group/getMyMasterGroups'),
+    getMyGroups: require('./group/getMyGroups'),
 };
