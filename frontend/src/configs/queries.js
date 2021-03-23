@@ -309,3 +309,47 @@ export const SEARCH_POST_LIST = gql`
         }
     }
 `;
+
+export const GET_GROUP_COMMENTS = gql`
+    query getGroupComments($groupId: ID!) {
+        getGroupComments(groupId: $groupId) {
+            id
+            groupId
+            userId
+            authorId
+            authorName
+            authorGradeName
+            content
+        }
+    }
+`;
+
+export const INVITE_GROUP_MEMBER = gql`
+    mutation inviteGroupMember($groupId: ID!, $memberId: ID!) {
+        inviteGroupMember(groupId: $groupId, memberId: $memberId)
+    }
+`;
+
+export const QUIT_GROUP_MEMBER = gql`
+    mutation quitGroupMember($groupId: ID!, $memberId: ID!) {
+        quitGroupMember(groupId: $groupId, memberId: $memberId)
+    }
+`;
+
+export const CREATE_GROUP_COMMENT = gql`
+    mutation createGroupComment($groupCommentInput: GroupCommentInput!) {
+        createGroupComment(groupCommentInput: $groupCommentInput)
+    }
+`;
+
+export const DELETE_GROUP = gql`
+    mutation deleteGroup($id: ID!) {
+        deleteGroup(id: $id)
+    }
+`;
+
+export const DELETE_GROUP_COMMENT = gql`
+    mutation deleteGroupComment($id: ID!) {
+        deleteGroupComment(id: $id)
+    }
+`;

@@ -57,4 +57,5 @@ module.exports = {
     quitGroupMember: require('./group/quitGroupMember'),
     createGroupComment: require('./group/createGroupComment'),
     deleteGroupComment: require('./group/deleteGroupComment'),
+    deleteGroup: require('./group/deleteGroup'),
 };
