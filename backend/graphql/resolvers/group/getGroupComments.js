@@ -21,8 +21,8 @@ const { ConflictError, BadRequestError } = require('../../errors/errors');
 const query = `
     select gc.id, gc.groupId, gc.authorId, u.userName as authorName, g.gradeName as authorGradeName, gc.content
     from user u
-    join grade g on u.studentGradeId = g.gradeName
-        join group_comment gc on gc.authorid = u.id
+    left join grade g on u.studentGradeId = g.gradeName
+    left join group_comment gc on gc.authorid = u.id
     where gc.groupId = :groupId;
 `;
 

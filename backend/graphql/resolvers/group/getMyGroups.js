@@ -29,6 +29,7 @@ module.exports = async ({}, { id }) => {
                                 gp.departmentId,
                                 gp.title,
                                 gp.masterId,
+                                gp.createdAt,
                                 mas_u.userName as masterName,
                                 mas_g.gradeName as masterGradeName,
                                 gm.id as memberId,
@@ -48,6 +49,7 @@ module.exports = async ({}, { id }) => {
                                 gp.departmentId,
                                 gp.title,
                                 gp.masterId,
+                                gp.createdAt,
                                 mas_u.userName as masterName,
                                 mas_g.gradeName as masterGradeName,
                                 gm.id as memberId,
@@ -71,46 +73,7 @@ module.exports = async ({}, { id }) => {
         })
         .spread(
             async (result) => {
-                const pureData = JSON.parse(JSON.stringify(result));
-                pureData.forEach((member) => {
-                    const arrayIndex = member.id - 1;
-                    if (myGroups[arrayIndex] && member.memberId) {
-                        myGroups[arrayIndex].members.push({
-                            memberId: member.memberId,
-                            memberName: member.memberName,
-                            memberGradeName: member.memberGradeName,
-                        });
-                    } else {
-                        if (member.memberId) {
-                            myGroups[arrayIndex] = {
-                                id: member.id,
-                                departmentId: member.departmentId,
-                                title: member.title,
-                                masterId: member.masterId,
-                                masterName: member.masterName,
-                                masterGradeName: member.masterGradeName,
-                                members: [
-                                    {
-                                        memberId: member.memberId,
-                                        memberName: member.memberName,
-                                        memberGradeName: member.memberGradeName,
-                                    },
-                                ],
-                            };
-                        } else {
-                            myGroups[arrayIndex] = {
-                                id: member.id,
-                                departmentId: member.departmentId,
-                                title: member.title,
-                                masterId: member.masterId,
-                                masterName: member.masterName,
-                                masterGradeName: member.masterGradeName,
-                                members: [],
-                            };
-                        }
-                    }
-                });
-
+                const masterData = JSON.parse(JSON.stringify(result));
                 await models.sequelize
                     .query(getMemberGroupsQuery, {
                         replacements: {
@@ -119,8 +82,8 @@ module.exports = async ({}, { id }) => {
                     })
                     .spread(
                         (result) => {
-                            const pureData = JSON.parse(JSON.stringify(result));
-                            pureData.forEach((member) => {
+                            const memberData = JSON.parse(JSON.stringify(result));
+                            masterData.concat(memberData).forEach((member) => {
                                 const arrayIndex = member.id - 1;
                                 if (myGroups[arrayIndex] && member.memberId) {
                                     myGroups[arrayIndex].members.push({
@@ -133,7 +96,9 @@ module.exports = async ({}, { id }) => {
                                         myGroups[arrayIndex] = {
                                             id: member.id,
                                             departmentId: member.departmentId,
+                                            userId: id,
                                             title: member.title,
+                                            createdAt: member.createdAt,
                                             masterId: member.masterId,
                                             masterName: member.masterName,
                                             masterGradeName: member.masterGradeName,
@@ -149,7 +114,9 @@ module.exports = async ({}, { id }) => {
                                         myGroups[arrayIndex] = {
                                             id: member.id,
                                             departmentId: member.departmentId,
+                                            userId: id,
                                             title: member.title,
+                                            createdAt: member.createdAt,
                                             masterId: member.masterId,
                                             masterName: member.masterName,
                                             masterGradeName: member.masterGradeName,

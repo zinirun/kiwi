@@ -18,7 +18,7 @@ export const useStyles = makeStyles((theme) => ({
         flexDirection: 'row-reverse',
     },
     groupTitle: {
-        fontSize: '1.0rem',
+        fontSize: '0.95rem',
         color: '#333',
     },
     groupInfoWrapper: {

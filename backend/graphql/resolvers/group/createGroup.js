@@ -15,7 +15,7 @@ const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 
 module.exports = async ({ title }, { id: masterId, departmentId }) => {
-    return await models.post
+    return await models.groups
         .create({
             title,
             masterId,

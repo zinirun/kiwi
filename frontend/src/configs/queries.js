@@ -310,6 +310,63 @@ export const SEARCH_POST_LIST = gql`
     }
 `;
 
+export const GET_MY_MASTER_GROUPS = gql`
+    query getMyMasterGroups {
+        getMyMasterGroups {
+            id
+            title
+            userId
+            createdAt
+            masterId
+            masterName
+            masterGradeName
+            members {
+                memberId
+                memberName
+                memberGradeName
+            }
+        }
+    }
+`;
+
+export const GET_GROUP = gql`
+    query getGroup($id: ID!) {
+        getGroup(id: $id) {
+            id
+            title
+            userId
+            createdAt
+            masterId
+            masterName
+            masterGradeName
+            members {
+                memberId
+                memberName
+                memberGradeName
+            }
+        }
+    }
+`;
+
+export const GET_MY_GROUPS = gql`
+    query getMyGroups {
+        getMyGroups {
+            id
+            title
+            userId
+            createdAt
+            masterId
+            masterName
+            masterGradeName
+            members {
+                memberId
+                memberName
+                memberGradeName
+            }
+        }
+    }
+`;
+
 export const GET_GROUP_COMMENTS = gql`
     query getGroupComments($groupId: ID!) {
         getGroupComments(groupId: $groupId) {

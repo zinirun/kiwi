@@ -47,6 +47,9 @@ import MyScrapPage from './my-menu/pages/MyScrapPage';
 // 나의 그룹 (속닥속닥)
 import MyGroupPage from './my-menu/pages/MyGroupPage';
 
+// 그룹 컨텐츠 페이지
+import GroupContentPage from './my-menu/pages/GroupContentPage';
+
 function App() {
     return (
         <Router>
@@ -59,6 +62,7 @@ function App() {
                     <Route path="/board/:boardName" component={PostListPage} />
                     <Route path="/search/:boardName" component={SearchPage} />
                     <Route path="/top" component={TopPage} />
+                    <Route path="/group/:id" component={GroupContentPage} />
                     <Route path="/post/:id" component={PostContentPage} />
                     <Route path="/modify" component={PostModifyPage} />
                     <Route path="/write" component={PostWritePage} />

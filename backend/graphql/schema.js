@@ -146,9 +146,11 @@ module.exports = buildSchema(`
         id: ID!
         departmentId: ID!
         title: String!
+        userId: ID!
         masterId: ID!
         masterName: String!
         masterGradeName: String!
+        createdAt: Date
         members: [GroupMember]
     }
 
@@ -222,6 +224,7 @@ module.exports = buildSchema(`
         getMyCommentsCount: Int
         searchPostsByBoardId(boardId: ID!, searchValue: String!, pageNumber: Int!, elementCount: Int!): [SearchPostList]
         getSearchPostsCount(boardId: ID!, searchValue: String!): Int
+        getGroup(id: ID!): Group
         getMyMasterGroups: [Group]
         getMyGroups: [Group]
         getGroupComments(groupId: ID!): [GroupComment]
