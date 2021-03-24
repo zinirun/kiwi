@@ -27,15 +27,15 @@ const { ConflictError, NotFoundError } = require('../../errors/errors');
 
 const query = `
                 select gp.id,
-                        gp.departmentId,
-                        gp.title,
-                        gp.masterId,
-                        gp.createdAt,
-                        mas_u.userName as masterName,
-                        mas_g.gradeName as masterGradeName,
-                        gm.id as memberId,
-                        mem_u.userName as memberName,
-                        mem_g.gradeName as memberGradeName
+                    gp.departmentId,
+                    gp.title,
+                    gp.masterId,
+                    gp.createdAt,
+                    mas_u.userName as masterName,
+                    mas_g.gradeName as masterGradeName,
+                    gm.id as memberId,
+                    mem_u.userName as memberName,
+                    mem_g.gradeName as memberGradeName
                 from user mas_u
                     left join \`groups\` gp on mas_u.id = gp.masterId
                     left join group_member gm on gm.groupId = gp.id

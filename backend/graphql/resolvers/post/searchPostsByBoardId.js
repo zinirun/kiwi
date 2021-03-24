@@ -23,7 +23,14 @@ const { ConflictError } = require('../../errors/errors');
 
 module.exports = async ({ boardId, searchValue, pageNumber, elementCount }, { departmentId }) => {
     const query = `
-                    select p.id, p.title, g.gradeName, u.userName as authorName, p.createdAt, p.updatedAt, ifnull(v.postLikeCount, 0) as likeCount, ifnull(z.commentCount, 0) as commentCount
+                    select p.id,
+                    p.title,
+                    g.gradeName,
+                    u.userName as authorName,
+                    p.createdAt,
+                    p.updatedAt,
+                    ifnull(v.postLikeCount, 0) as likeCount,
+                    ifnull(z.commentCount, 0) as commentCount
                     from post p
                         left join (select c.id, count(c.id) as commentCount, postId
                                     from comment c
@@ -34,7 +41,7 @@ module.exports = async ({ boardId, searchValue, pageNumber, elementCount }, { de
                                     where pl.isDeleted = 0
                                     group by pl.postId) as v on p.id = v.postId,
                         user u
-                            left join grade g on u.studentGradeId = g.id
+                        left join grade g on u.studentGradeId = g.id
                     where p.authorId = u.id
                     and p.isDeleted = 0
                     and p.boardId = :boardId

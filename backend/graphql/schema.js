@@ -229,6 +229,7 @@ module.exports = buildSchema(`
         getMyMasterGroups: [Group]
         getMyGroups: [Group]
         getGroupComments(groupId: ID!): [GroupComment]
+        getScrapById(pageNumber: Int!, elementCount: Int!): [PostList]
     }
 
     type Mutation {
@@ -249,5 +250,6 @@ module.exports = buildSchema(`
         deleteGroup(id: ID!): Boolean
         deleteGroupComment(id: ID!): Boolean
         seenNotification(id: ID!): Boolean
+        scrapPost(postId: ID!): String
     }
 `);
