@@ -37,14 +37,12 @@ const query = `
                     mem_u.userName as memberName,
                     mem_g.gradeName as memberGradeName
                 from user mas_u
-                    left join \`groups\` gp on mas_u.id = gp.masterId
-                    left join group_member gm on gm.groupId = gp.id
+                    left join (select * from \`groups\` where isDeleted = 0) as gp on mas_u.id = gp.masterId
+                    left join (select * from group_member where isDeleted = 0) as gm on gm.groupId = gp.id
                     left join user mem_u on gm.memberId = mem_u.id
                     left join grade mem_g on mem_u.studentGradeId = mem_g.id
                     left join grade mas_g on mas_g.id = mas_u.studentGradeId
-                where gp.id = :id
-                and gm.isDeleted = 0
-                and gp.isDeleted = 0;
+                where gp.id = :id;
                 `;
 
 module.exports = async ({ id }, { id: userId }) => {
