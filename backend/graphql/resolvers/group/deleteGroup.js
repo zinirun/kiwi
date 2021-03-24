@@ -13,7 +13,7 @@ module.exports = async ({ id }, { id: masterId }) => {
     return await models.groups
         .update(
             {
-                isDeleted: 0,
+                isDeleted: 1,
             },
             {
                 where: {

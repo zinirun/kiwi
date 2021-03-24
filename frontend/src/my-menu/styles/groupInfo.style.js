@@ -20,10 +20,19 @@ export const useStyles = makeStyles((theme) => ({
     groupMember: {
         color: '#333',
         fontSize: '0.8rem',
-        padding: '1.5px 6px',
+        padding: '1.5px 4.5px 1.5px 8px',
         borderRadius: 3,
     },
     deleteIcon: {
+        fontSize: '1.15rem',
+        color: '#ccc',
+        cursor: 'pointer',
+        '&:hover': {
+            color: '#F86A6A',
+        },
+    },
+    deleteMemberIcon: {
+        marginTop: 3,
         fontSize: '1.15rem',
         color: '#ccc',
         cursor: 'pointer',
