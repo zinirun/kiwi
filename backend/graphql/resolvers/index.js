@@ -66,4 +66,5 @@ module.exports = {
     // Scrap
     getScrapById: require('./scrap/getScrap'),
     scrapPost: require('./scrap/scrapPost'),
+    getScrapCount: require('./scrap/getScrapCount'),
 };
