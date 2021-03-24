@@ -7,6 +7,7 @@
  */
 
 const models = require('../../../models');
+const { createNotificationGroupInvite } = require('../../services/notification.service');
 const { ConflictError, BadRequestError } = require('../../errors/errors');
 
 module.exports = async ({ groupId, memberId }, { id: masterId }) => {
