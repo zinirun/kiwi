@@ -12,7 +12,8 @@ import CommentIcon from '@material-ui/icons/Comment';
 import SubjectIcon from '@material-ui/icons/Subject';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
-
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import Filter7Icon from '@material-ui/icons/Filter7';
 export function IconViewer({ icon, classes }) {
     switch (icon) {
         case 'VolumeUpIcon':
@@ -41,6 +42,10 @@ export function IconViewer({ icon, classes }) {
             return <StarBorderIcon className={classes && classes} />;
         case 'SupervisedUserCircleIcon':
             return <SupervisedUserCircleIcon className={classes && classes} />;
+        case 'DateRangeIcon':
+            return <DateRangeIcon className={classes && classes} />;
+        case 'Filter7Icon':
+            return <Filter7Icon className={classes && classes} />;
         default:
             return <></>;
     }

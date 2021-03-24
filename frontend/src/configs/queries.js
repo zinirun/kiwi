@@ -203,7 +203,7 @@ export const GET_RECENT_POSTS = gql`
             boardIcon
             boardName
             posts {
-                postId
+                id
                 title
                 likeCount
             }
@@ -242,6 +242,16 @@ export const GET_SCRAP = gql`
             categoryName
             likeCount
             commentCount
+        }
+    }
+`;
+
+export const GET_BEST_POSTS = gql`
+    query getPostsByLikeCountWithDay($term: Int!) {
+        getPostsByLikeCountWithDay(term: $term) {
+            id
+            title
+            likeCount
         }
     }
 `;

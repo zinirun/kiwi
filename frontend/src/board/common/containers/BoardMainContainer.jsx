@@ -13,9 +13,9 @@ export default function BoardMainContainer({ data, noLink }) {
         <Card className={classes.paper}>
             <div>
                 <Chip
-                    component={!noLink && Link}
-                    to={!noLink && `/board/${data.boardLink}`}
-                    className={classes.titleChip}
+                    component={noLink ? 'span' : Link}
+                    to={noLink ? `` : `/board/${data.boardLink}`}
+                    className={noLink ? classes.bestChip : classes.titleChip}
                     icon={<IconViewer icon={data.boardIcon} classes={classes.iconColor} />}
                     label={data.boardName}
                 />
@@ -23,7 +23,7 @@ export default function BoardMainContainer({ data, noLink }) {
             <Divider />
             <List>
                 {data.posts.map((post, idx) => (
-                    <Link key={idx} className={classes.postLink} to={`/post/${post.postId}`}>
+                    <Link key={idx} className={classes.postLink} to={`/post/${post.id}`}>
                         <Row>
                             <Col span={20}>
                                 <ListItem classes={{ root: classes.listItem }}>

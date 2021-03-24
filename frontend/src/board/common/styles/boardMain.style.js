@@ -18,6 +18,13 @@ export const useStyles = makeStyles((theme) => ({
             color: theme.palette.primary.main,
         },
     },
+    bestChip: {
+        background: 'transparent',
+        color: '#777777',
+        fontSize: '1rem',
+        fontWeight: 'bold',
+        padding: '25px 8px',
+    },
     iconColor: {
         color: theme.palette.primary.main,
         fontSize: '1.2rem',
