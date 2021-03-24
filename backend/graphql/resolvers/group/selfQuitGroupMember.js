@@ -1,22 +1,22 @@
 /**
- * 그룹 멤버 탈퇴 (마스터 권한)
+ * 그룹 멤버 탈퇴 (멤버 자진탈퇴)
  * @author zini
- * @param {groupId, memberId}
+ * @param {groupId}
  * @return {Boolean}
- * @resolver quitGroupMember(groupId: ID!, memberId: ID!): Boolean
+ * @resolver selfQuitGroupMember(groupId: ID!): Boolean
  */
 
 const models = require('../../../models');
 const { ConflictError, BadRequestError } = require('../../errors/errors');
 
-module.exports = async ({ groupId, memberId }, { id: masterId }) => {
-    const isMaster = await models.groups.findOne({
-        attributes: ['id', 'masterId'],
-        where: { masterId, id: groupId },
+module.exports = async ({ groupId }, { id: memberId }) => {
+    const isMember = await models.group_member.findOne({
+        attributes: ['memberId', 'groupId'],
+        where: { memberId, groupId },
         raw: true,
     });
-    if (!isMaster) {
-        throw BadRequestError('Bad Request: Not Master');
+    if (!isMember) {
+        throw BadRequestError('Bad Request: Not Member');
     }
     return await models.group_member
         .update(

@@ -24,8 +24,10 @@ export const useStyles = makeStyles((theme) => ({
         fontWeight: 'bold',
         color: '#999',
     },
-    deleteIcon: {
+    extraIcon: {
         fontSize: '1.15rem',
+        verticalAlign: 'bottom',
+        paddingBottom: 2,
         color: '#ccc',
         cursor: 'pointer',
         '&:hover': {

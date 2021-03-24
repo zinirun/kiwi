@@ -4,8 +4,14 @@ import { message, Modal, Collapse, Tag, Tooltip, Space } from 'antd';
 import { useEffect, useState } from 'react';
 import { useStyles } from '../styles/groupInfo.style';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PageTitle from '../../common/components/PageTitle';
-import { DELETE_GROUP, GET_GROUP, QUIT_GROUP_MEMBER } from '../../configs/queries';
+import {
+    DELETE_GROUP,
+    GET_GROUP,
+    QUIT_GROUP_MEMBER,
+    SELF_QUIT_GROUP_MEMBER,
+} from '../../configs/queries';
 import { useHistory } from 'react-router';
 import moment from 'moment';
 const { confirm } = Modal;
@@ -27,6 +33,7 @@ export default function GroupInfoContainer({ id }) {
         },
     });
     const [deleteGroup] = useMutation(DELETE_GROUP);
+    const [selfQuitGroupMember] = useMutation(SELF_QUIT_GROUP_MEMBER);
 
     useEffect(() => {
         if (groupData) {
@@ -38,6 +45,20 @@ export default function GroupInfoContainer({ id }) {
         }
     }, [groupData, groupError, history]);
 
+    const triggerSelfQuitGroup = (groupId) => {
+        selfQuitGroupMember({
+            variables: {
+                groupId,
+            },
+        })
+            .then(() => {
+                message.success('그룹에서 탈퇴했습니다.');
+                history.push('/my/group');
+            })
+            .catch(() => {
+                message.error('그룹 탈퇴 중 문제가 발생했습니다.');
+            });
+    };
     const triggerDeleteGroup = (id) => {
         deleteGroup({
             variables: {
@@ -65,6 +86,19 @@ export default function GroupInfoContainer({ id }) {
         });
         e.stopPropagation();
     };
+    const handleSelfQuitGroup = (e, groupId) => {
+        confirm({
+            title: '이 그룹에서 탈퇴할까요?',
+            content: '탈퇴 후 이 그룹의 마스터가 초대하기 전까지는 다시 가입할 수 없습니다.',
+            icon: <></>,
+            okText: '그룹 탈퇴',
+            cancelText: '취소',
+            onOk() {
+                triggerSelfQuitGroup(groupId);
+            },
+        });
+        e.stopPropagation();
+    };
 
     return (
         <>
@@ -77,18 +111,25 @@ export default function GroupInfoContainer({ id }) {
                             header="그룹 정보"
                             key="group-info"
                             extra={
-                                group.masterId === group.userId && (
+                                group.masterId === group.userId ? (
                                     <Tooltip title="그룹 삭제">
                                         <DeleteOutlinedIcon
                                             className={classes.deleteIcon}
                                             onClick={(e) => handleDeleteGroup(e, group.id)}
                                         />
                                     </Tooltip>
+                                ) : (
+                                    <Tooltip title="그룹 탈퇴">
+                                        <ExitToAppIcon
+                                            className={classes.deleteIcon}
+                                            onClick={(e) => handleSelfQuitGroup(e, group.id)}
+                                        />
+                                    </Tooltip>
                                 )
                             }
                         >
                             <Grid className={classes.groupInfoWrapper} container>
-                                <Grid item xs={12} sm={10}>
+                                <Grid item xs={12}>
                                     <div>
                                         <span className={classes.groupInfoTitle}>개설일</span>
                                         <span className={classes.groupMaster}>

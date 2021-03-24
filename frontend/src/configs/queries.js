@@ -342,7 +342,6 @@ export const GET_MY_MASTER_GROUPS = gql`
         getMyMasterGroups {
             id
             title
-            userId
             createdAt
             masterId
             masterName
@@ -429,6 +428,12 @@ export const INVITE_GROUP_MEMBER = gql`
 export const QUIT_GROUP_MEMBER = gql`
     mutation quitGroupMember($groupId: ID!, $memberId: ID!) {
         quitGroupMember(groupId: $groupId, memberId: $memberId)
+    }
+`;
+
+export const SELF_QUIT_GROUP_MEMBER = gql`
+    mutation selfQuitGroupMember($groupId: ID!) {
+        selfQuitGroupMember(groupId: $groupId)
     }
 `;
 

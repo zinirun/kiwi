@@ -67,6 +67,14 @@ export const useStyles = makeStyles((theme) => ({
             color: theme.palette.primary.main,
         },
     },
+    scrapIcon: {
+        fontSize: '1.2rem',
+        cursor: 'pointer',
+        color: theme.palette.primary.main,
+        '&:hover': {
+            color: theme.palette.primary.light,
+        },
+    },
     contentLine: {
         margin: '3px 0',
     },
