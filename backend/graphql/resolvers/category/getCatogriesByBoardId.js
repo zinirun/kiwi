@@ -3,8 +3,13 @@ const { NotFoundError } = require('../../errors/errors');
 
 module.exports = async ({ boardId }, {}) => {
     const query = `
-    SELECT c.id AS categoryId, b.id as boardId, b.boardName, categoryName FROM board b, category c where b.id = c.boardId AND c.boardId=:boardId;
-    `;
+                    select c.id as categoryId,
+                        b.id as boardId, b.boardName,
+                        categoryName
+                    from board b, category c
+                    where b.id = c.boardId
+                    and c.boardId = :boardId;
+                    `;
 
     return await models.sequelize
         .query(query, {

@@ -46,23 +46,23 @@ module.exports = async ({}, { id }) => {
                             `;
     const getMemberGroupsQuery = `
                                 select gp.id,
-                                gp.departmentId,
-                                gp.title,
-                                gp.masterId,
-                                gp.createdAt,
-                                mas_u.userName as masterName,
-                                mas_g.gradeName as masterGradeName,
-                                gm.id as memberId,
-                                mem_u.userName as memberName,
-                                mem_g.gradeName as memberGradeName
-                            from user mas_u
-                                left join \`groups\` gp on mas_u.id = gp.masterId
-                                left join group_member gm on gm.groupId = gp.id
-                                left join user mem_u on gm.memberId = mem_u.id
-                                left join grade mem_g on mem_u.studentGradeId = mem_g.id
-                                left join grade mas_g on mas_g.id = mas_u.studentGradeId
-                            where gm.memberId = :id
-                            and gp.isDeleted = 0;
+                                    gp.departmentId,
+                                    gp.title,
+                                    gp.masterId,
+                                    gp.createdAt,
+                                    mas_u.userName as masterName,
+                                    mas_g.gradeName as masterGradeName,
+                                    gm.id as memberId,
+                                    mem_u.userName as memberName,
+                                    mem_g.gradeName as memberGradeName
+                                from user mas_u
+                                    left join \`groups\` gp on mas_u.id = gp.masterId
+                                    left join group_member gm on gm.groupId = gp.id
+                                    left join user mem_u on gm.memberId = mem_u.id
+                                    left join grade mem_g on mem_u.studentGradeId = mem_g.id
+                                    left join grade mas_g on mas_g.id = mas_u.studentGradeId
+                                where gm.memberId = :id
+                                and gp.isDeleted = 0;
                             `;
     const myGroups = [];
     return await models.sequelize
