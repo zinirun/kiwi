@@ -37,7 +37,10 @@ module.exports = async ({ groupId, memberId }, { id: masterId }) => {
                         },
                     },
                 )
-                .then(() => true)
+                .then(() => {
+                    createNotificationGroupInvite(groupId, memberId);
+                    return true;
+                })
                 .catch(() => {
                     throw ConflictError('Conflict error occured at Create');
                 });
@@ -50,7 +53,10 @@ module.exports = async ({ groupId, memberId }, { id: masterId }) => {
             groupId,
             memberId,
         })
-        .then(() => true)
+        .then(() => {
+            createNotificationGroupInvite(groupId, memberId);
+            return true;
+        })
         .catch(() => {
             throw ConflictError('Conflict error occured at Create');
         });
