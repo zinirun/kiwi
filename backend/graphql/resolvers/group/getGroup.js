@@ -43,6 +43,7 @@ const query = `
                     left join grade mem_g on mem_u.studentGradeId = mem_g.id
                     left join grade mas_g on mas_g.id = mas_u.studentGradeId
                 where gp.id = :id
+                and gm.isDeleted = 0
                 and gp.isDeleted = 0;
                 `;
 
@@ -73,6 +74,8 @@ module.exports = async ({ id }, { id: userId }) => {
                     const members = JSON.parse(JSON.stringify(result));
                     const group = {
                         id: members[0].id,
+                        userId,
+                        createdAt: members[0].createdAt,
                         departmentId: members[0].departmentId,
                         title: members[0].title,
                         masterId: members[0].masterId,
@@ -81,11 +84,12 @@ module.exports = async ({ id }, { id: userId }) => {
                         members: [],
                     };
                     members.forEach((member) => {
-                        group.members.push({
-                            memberId: member.memberId,
-                            memberName: member.memberName,
-                            memberGradeName: member.memberGradeName,
-                        });
+                        if (member.memberId)
+                            group.members.push({
+                                memberId: member.memberId,
+                                memberName: member.memberName,
+                                memberGradeName: member.memberGradeName,
+                            });
                     });
                     return group;
                 } else {
