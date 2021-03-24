@@ -230,6 +230,7 @@ module.exports = buildSchema(`
         getMyGroups: [Group]
         getGroupComments(groupId: ID!): [GroupComment]
         getScrapById(pageNumber: Int!, elementCount: Int!): [PostList]
+        getScrapCount: Int!
     }
 
     type Mutation {
