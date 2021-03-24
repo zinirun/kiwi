@@ -7,6 +7,7 @@
 const models = require('../../../models');
 
 module.exports = async ({}, { id: userId }) => {
+    // 제목까지 추출해서 쿼리로 날림
     return await models.notification.findAll({
         attributes: ['id', 'type', 'postId', 'commentId', 'groupId', 'count', 'updatedAt'],
         where: {
