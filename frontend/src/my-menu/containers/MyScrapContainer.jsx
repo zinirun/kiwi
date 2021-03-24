@@ -39,7 +39,7 @@ export default function MyScrapContainer({ page }) {
             setPostsCount(postsCountData.getScrapCount);
         }
         if (postsCountError) {
-            message.error('스크랩 게시물을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
+            message.error('스크랩 게시글을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
             history.push('/');
         }
     }, [postsCountData, postsCountError, history]);
@@ -62,7 +62,7 @@ export default function MyScrapContainer({ page }) {
             );
         }
         if (postListError) {
-            message.error('스크랩 게시물을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
+            message.error('스크랩 게시글을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
             history.push('/');
         }
     }, [postListData, setPostList, postListError, history]);
@@ -74,7 +74,7 @@ export default function MyScrapContainer({ page }) {
     return (
         <>
             {postListLoading && <BoardListSkeleton />}
-            {!postListLoading && postList.length === 0 && <NoResult title="스크랩 게시물" />}
+            {!postListLoading && postList.length === 0 && <NoResult title="스크랩 게시글" />}
             {!postListLoading && postList.length > 0 && (
                 <>
                     {postList.map((post, idx) => (

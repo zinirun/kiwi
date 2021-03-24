@@ -158,7 +158,7 @@ export default function PostContentContainer({ id }) {
                                     {post.userId !== post.authorId && (
                                         <Tooltip title="스크랩">
                                             <StarOutlineIcon
-                                                className={classes.modifyIcon}
+                                                className={classes.scrapIcon}
                                                 onClick={handleScrap}
                                             />
                                         </Tooltip>

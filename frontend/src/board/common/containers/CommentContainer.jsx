@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-apollo';
 import { useHistory } from 'react-router';
 import { Chip, Button, Grid } from '@material-ui/core';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import { message, Form, Input, Space, Modal, Tooltip } from 'antd';
+import CloseIcon from '@material-ui/icons/Close';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import { message, Form, Input, Space, Modal, Tooltip, Select } from 'antd';
 import { useStyles } from '../styles/comment.style';
 import { boardCommonStyles } from '../styles/board.common.style';
 import {
@@ -12,11 +13,14 @@ import {
     GET_COMMENTS,
     HANDLE_COMMENT_LIKE,
     DELETE_COMMENT,
+    INVITE_GROUP_MEMBER,
+    GET_MY_MASTER_GROUPS,
 } from '../../../configs/queries';
 import { commentTimeFormatter } from '../tools/formatter';
 import { PostCommentSkeleton } from '../components/Skeletons';
 const { TextArea } = Input;
 const { confirm } = Modal;
+const { Option } = Select;
 
 export default function CommentList({ id }) {
     const classes = { ...useStyles(), ...boardCommonStyles() };
@@ -36,6 +40,8 @@ export default function CommentList({ id }) {
     const [createComment] = useMutation(CREATE_COMMENT);
     const [handleCommentLike] = useMutation(HANDLE_COMMENT_LIKE);
     const [deleteComment] = useMutation(DELETE_COMMENT);
+    const [groupModalVisible, setGroupModalVisible] = useState(false);
+    const [groupMember, setGroupMember] = useState(null);
 
     useEffect(() => {
         if (commentsData) {
@@ -115,11 +121,23 @@ export default function CommentList({ id }) {
             },
         });
     };
+    const handleVisibleClick = (item) => {
+        setGroupMember({
+            memberName: item.authorName,
+            memberId: item.authorId,
+        });
+        setGroupModalVisible(true);
+    };
     return (
         <>
             {commentsLoading && <PostCommentSkeleton />}
             {!commentsLoading && (
                 <>
+                    <MyGroupListContainer
+                        visible={groupModalVisible}
+                        setVisible={setGroupModalVisible}
+                        groupMember={groupMember}
+                    />
                     <div className={classes.comment}>
                         <span>댓글</span>
                     </div>
@@ -140,13 +158,20 @@ export default function CommentList({ id }) {
                                         <span className={classes.date}>{item.createdAt}</span>
                                     </Grid>
                                     <Grid item>
-                                        <Space size={2}>
-                                            {item.authorId === item.userId && (
+                                        <Space size={3}>
+                                            {item.authorId === item.userId ? (
                                                 <Tooltip title="댓글 삭제">
-                                                    <DeleteOutlinedIcon
+                                                    <CloseIcon
                                                         post={item.postId}
                                                         onClick={() => handleDelete(item.id)}
-                                                        className={classes.deleteIcon}
+                                                        className={classes.extraIcon}
+                                                    />
+                                                </Tooltip>
+                                            ) : (
+                                                <Tooltip title="내 속닥속닥에 초대">
+                                                    <GroupAddIcon
+                                                        className={classes.extraIcon}
+                                                        onClick={() => handleVisibleClick(item)}
                                                     />
                                                 </Tooltip>
                                             )}
@@ -195,5 +220,86 @@ export default function CommentList({ id }) {
                 </>
             )}
         </>
+    );
+}
+
+function MyGroupListContainer({ visible, setVisible, groupMember }) {
+    const [groups, setGroups] = useState([]);
+    const [selectedGroupId, setSelectedGroupId] = useState(null);
+    const [inviteGroupMember] = useMutation(INVITE_GROUP_MEMBER);
+    const { data: groupsData, error: groupsError, loading: groupsLoading } = useQuery(
+        GET_MY_MASTER_GROUPS,
+    );
+    useEffect(() => {
+        if (groupsData) {
+            const groups = groupsData.getMyMasterGroups;
+            if (groups.length === 0) {
+                message.error('내 그룹이 없습니다. 속닥속닥에서 그룹을 만드세요!');
+                setVisible(false);
+            }
+            setGroups(groups);
+        }
+        if (groupsError) {
+            message.error('내 그룹을 가져오는 중 문제가 발생했습니다.');
+            setVisible(false);
+        }
+    }, [groupsData, groupsError, setVisible]);
+    const handleChange = useCallback((id) => {
+        setSelectedGroupId(id);
+    }, []);
+    const handleOk = () => {
+        if (!selectedGroupId) {
+            message.error('초대할 그룹을 선택하세요.');
+            return;
+        }
+        inviteGroupMember({
+            variables: {
+                groupId: selectedGroupId,
+                memberId: groupMember.memberId,
+            },
+        })
+            .then(() => {
+                message.success(`${groupMember.memberName}님을 그룹에 초대했어요!`);
+            })
+            .catch(() => {
+                message.error(`${groupMember.memberName}님은 이미 초대된 멤버입니다.`);
+            });
+        setVisible(false);
+    };
+    const handleCancel = () => {
+        setVisible(false);
+    };
+    return (
+        <Modal
+            title="내 속닥속닥에 초대하기"
+            visible={visible || false}
+            onOk={handleOk}
+            onCancel={handleCancel}
+            okText="초대하기"
+            cancelText="취소"
+        >
+            {!groupsLoading && groups && groupMember && (
+                <>
+                    <p>{groupMember.memberName}님을 초대할 그룹을 선택하세요.</p>
+                    <Select
+                        showSearch
+                        style={{ width: '100%' }}
+                        placeholder="초대할 그룹을 선택하세요"
+                        onChange={handleChange}
+                        optionFilterProp="children"
+                        filterOption={(input, option) =>
+                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }
+                    >
+                        {groups.map((group) => (
+                            <Option value={group.id} key={`my-group-${group.id}`}>
+                                {group.title}
+                            </Option>
+                        ))}
+                    </Select>
+                    ,
+                </>
+            )}
+        </Modal>
     );
 }

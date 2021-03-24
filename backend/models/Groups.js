@@ -21,6 +21,9 @@ module.exports = function (sequelize, DataTypes) {
         Groups.hasMany(models.group_member, {
             foreignKey: 'groupId',
         });
+        Groups.hasMany(models.notification, {
+            foreignKey: 'groupId',
+        });
         Groups.belongsTo(models.user, {
             foreignKey: 'masterId',
         });

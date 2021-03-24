@@ -27,10 +27,6 @@ function UserToolContent() {
     );
 }
 
-function UserAlertContent() {
-    return <div>알림이 없습니다.</div>;
-}
-
 export default function SideUserSection({ user }) {
     const classes = useStyles();
     return (
@@ -50,11 +46,11 @@ export default function SideUserSection({ user }) {
                             <SettingFilled className={classes.userToolButton} />
                         </Tooltip>
                     </Popover>
-                    <Popover title="나의 알림" content={UserAlertContent} trigger="click">
-                        <Tooltip title="나의 알림">
+                    <Tooltip title="나의 알림">
+                        <Link to="/my/notification" style={{ color: 'inherit' }}>
                             <BellFilled className={classes.userToolButton} />
-                        </Tooltip>
-                    </Popover>
+                        </Link>
+                    </Tooltip>
                 </Space>
             </Col>
         </Row>

@@ -8,6 +8,7 @@ import { IconViewer } from '../../../header/components/IconViewer';
 
 export default function BoardMainContainer({ data, noLink }) {
     const classes = useStyles();
+
     return (
         <Card className={classes.paper}>
             <div>

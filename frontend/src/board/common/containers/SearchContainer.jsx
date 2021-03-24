@@ -30,6 +30,8 @@ export default function SearchContainer({ board, page, value }) {
                 boardId: board.id,
                 searchValue: '%' + value + '%',
             },
+            skip: !value || (value && value.length < 2),
+            fetchPolicy: !value || (value && value.length < 2) ? 'cache-only' : 'cache-first',
         },
     );
     const {
@@ -44,7 +46,8 @@ export default function SearchContainer({ board, page, value }) {
             pageNumber: page || 1,
             elementCount: ITEMS_COUNT_PER_PAGE,
         },
-        skip: value && value.length < 2,
+        skip: !value || (value && value.length < 2),
+        fetchPolicy: !value || (value && value.length < 2) ? 'cache-only' : 'cache-first',
     });
 
     useEffect(() => {

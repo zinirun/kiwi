@@ -19,19 +19,44 @@ module.exports = async ({ groupId, memberId }, { id: masterId }) => {
         throw BadRequestError('Bad Request: Not Master');
     }
     const isAlreadyExists = await models.group_member.findOne({
-        attributes: ['memberId', 'groupId'],
+        attributes: ['memberId', 'groupId', 'isDeleted'],
         where: { memberId, groupId },
         raw: true,
     });
     if (isAlreadyExists) {
+        if (isAlreadyExists.isDeleted === 1) {
+            return await models.group_member
+                .update(
+                    {
+                        isDeleted: 0,
+                    },
+                    {
+                        where: {
+                            groupId,
+                            memberId,
+                        },
+                    },
+                )
+                .then(() => {
+                    createNotificationGroupInvite(groupId, memberId);
+                    return true;
+                })
+                .catch(() => {
+                    throw ConflictError('Conflict error occured at Create');
+                });
+        }
         throw BadRequestError('Bad Request: Already Member');
     }
+
     return await models.group_member
         .create({
             groupId,
             memberId,
         })
-        .then(() => true)
+        .then(() => {
+            createNotificationGroupInvite(groupId, memberId);
+            return true;
+        })
         .catch(() => {
             throw ConflictError('Conflict error occured at Create');
         });
