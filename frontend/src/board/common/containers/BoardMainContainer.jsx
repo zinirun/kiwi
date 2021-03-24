@@ -7,14 +7,14 @@ import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
 import { IconViewer } from '../../../header/components/IconViewer';
 
-export default function BoardMainContainer({ data }) {
+export default function BoardMainContainer({ data, noLink }) {
     const classes = useStyles();
     return (
         <Card className={classes.paper}>
             <div>
                 <Chip
-                    component={Link}
-                    to={`/board/${data.boardLink}`}
+                    component={!noLink && Link}
+                    to={!noLink && `/board/${data.boardLink}`}
                     className={classes.titleChip}
                     icon={<IconViewer icon={data.boardIcon} classes={classes.iconColor} />}
                     label={data.boardName}
