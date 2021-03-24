@@ -47,6 +47,12 @@ export const GET_POSTS_COUNT = gql`
     }
 `;
 
+export const GET_SCRAP_COUNT = gql`
+    query getScrapCount {
+        getScrapCount
+    }
+`;
+
 export const GET_TOP_POSTS_COUNT = gql`
     query getPostsCountByLikeCount($likeCount: Int!) {
         getPostsCountByLikeCount(likeCount: $likeCount)
@@ -214,6 +220,21 @@ export const GET_POSTS_BY_LIKE_COUNT = gql`
         ) {
             id
             __typename @skip(if: true)
+            title
+            gradeName
+            authorName
+            createdAt
+            categoryName
+            likeCount
+            commentCount
+        }
+    }
+`;
+
+export const GET_SCRAP = gql`
+    query getScrapById($pageNumber: Int!, $elementCount: Int!) {
+        getScrapById(pageNumber: $pageNumber, elementCount: $elementCount) {
+            id
             title
             gradeName
             authorName

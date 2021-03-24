@@ -28,7 +28,7 @@ module.exports = async ({ postId }, { id: userId }) => {
                     { where: { userId, postId } },
                 )
                 .then(() => 'Delete')
-                .catch(() => ConflictError('Update error occured at Down'));
+                .catch(() => ConflictError('Update error occured'));
         } else {
             return models.scrap
                 .update(
@@ -38,7 +38,7 @@ module.exports = async ({ postId }, { id: userId }) => {
                     { where: { userId, postId } },
                 )
                 .then(() => 'Add')
-                .catch(() => ConflictError('Update error occured at Up'));
+                .catch(() => ConflictError('Update error occured'));
         }
     } else {
         return models.scrap
@@ -47,8 +47,8 @@ module.exports = async ({ postId }, { id: userId }) => {
                 postId,
             })
             .then(() => {
-                return 'Delete';
+                return 'Add';
             })
-            .catch(() => ConflictError('Insert error occured at Up'));
+            .catch(() => ConflictError('Insert error occured'));
     }
 };

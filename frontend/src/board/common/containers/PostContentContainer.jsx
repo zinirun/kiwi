@@ -75,6 +75,7 @@ export default function PostContentContainer({ id }) {
         })
             .then(({ data }) => {
                 const { scrapPost: result } = data;
+                console.log(result);
                 if (result === 'Add') {
                     message.success('스크랩 되었습니다.');
                 } else {

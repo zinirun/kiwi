@@ -31,7 +31,7 @@ module.exports = async ({}, {}) => {
                         s.id as postId,
                         s.title,
                         ifnull(ppl.likeCount, 0) as likeCount
-                    from (select id, boardId, title, ROW_NUMBER() OVER (PARTITION BY boardId ORDER BY id desc) as rn from post where isDeleted = 0) as s
+                    from (select id, boardId, title, ROW_NUMBER() OVER (PARTITION BY boardId ORDER BY id desc) as rn from post where isDeleted = 0 order by rn desc) as s
                         join board b on b.id = s.boardId
                         left join (select pl.id, count(pl.id) as likeCount, postId from post_like pl where pl.isDeleted = 0 group by pl.postId) as ppl
                         on s.id = ppl.postId
