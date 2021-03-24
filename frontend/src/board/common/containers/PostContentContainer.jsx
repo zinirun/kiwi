@@ -8,7 +8,7 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import StarOutlineIcon from '@material-ui/icons/StarOutline';
 import { useStyles } from '../styles/postContent.style';
-import { GET_POST, HANDLE_POST_LIKE, DELETE_POST } from '../../../configs/queries';
+import { GET_POST, HANDLE_POST_LIKE, DELETE_POST, SCRAP_POST } from '../../../configs/queries';
 import { message, Modal, Tooltip, Space } from 'antd';
 import moment from 'moment';
 import PageTitle from '../../../common/components/PageTitle';
@@ -33,6 +33,7 @@ export default function PostContentContainer({ id }) {
 
     const [handlePostLike] = useMutation(HANDLE_POST_LIKE);
     const [deletePost] = useMutation(DELETE_POST);
+    const [scrapPost] = useMutation(SCRAP_POST);
 
     useEffect(() => {
         postRefetch().catch(() => {});
@@ -64,6 +65,23 @@ export default function PostContentContainer({ id }) {
             .catch(() => {
                 message.error('게시글 삭제 중 오류가 발생했습니다.');
             });
+    };
+
+    const handleScrap = () => {
+        scrapPost({
+            variables: {
+                postId: post.id,
+            },
+        })
+            .then(({ data }) => {
+                const { scrapPost: result } = data;
+                if (result === 'Add') {
+                    message.success('스크랩 되었습니다.');
+                } else {
+                    message.success('스크랩이 취소되었습니다.');
+                }
+            })
+            .catch(() => message.error('스크랩 중 문제가 발생했습니다.'));
     };
 
     const handleLike = () => {
@@ -139,7 +157,10 @@ export default function PostContentContainer({ id }) {
                                     )}
                                     {post.userId !== post.authorId && (
                                         <Tooltip title="스크랩">
-                                            <StarOutlineIcon className={classes.modifyIcon} />
+                                            <StarOutlineIcon
+                                                className={classes.modifyIcon}
+                                                onClick={handleScrap}
+                                            />
                                         </Tooltip>
                                     )}
                                 </Grid>

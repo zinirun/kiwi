@@ -249,6 +249,12 @@ export const CREATE_COMMENT = gql`
     }
 `;
 
+export const SCRAP_POST = gql`
+    mutation scrapPost($postId: ID!) {
+        scrapPost(postId: $postId)
+    }
+`;
+
 export const HANDLE_POST_LIKE = gql`
     mutation handlePostLike($postId: ID!) {
         handlePostLike(postId: $postId)
