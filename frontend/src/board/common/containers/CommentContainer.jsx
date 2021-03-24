@@ -133,11 +133,14 @@ export default function CommentList({ id }) {
             {commentsLoading && <PostCommentSkeleton />}
             {!commentsLoading && (
                 <>
-                    <MyGroupListContainer
-                        visible={groupModalVisible}
-                        setVisible={setGroupModalVisible}
-                        groupMember={groupMember}
-                    />
+                    {groupModalVisible && groupMember && (
+                        <MyGroupListContainer
+                            visible={groupModalVisible}
+                            setVisible={setGroupModalVisible}
+                            groupMember={groupMember}
+                        />
+                    )}
+
                     <div className={classes.comment}>
                         <span>댓글</span>
                     </div>

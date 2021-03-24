@@ -178,6 +178,16 @@ module.exports = buildSchema(`
         authorId: ID!
     }
 
+    type Notification {
+        id: ID!
+        type: String!
+        postId: ID
+        commentId: ID
+        groupId: ID
+        count: Int!
+        updatedAt: Date!
+    }
+
     input GroupCommentInput {
         groupId: ID!
         content: String!
@@ -231,6 +241,8 @@ module.exports = buildSchema(`
         getGroupComments(groupId: ID!): [GroupComment]
         getScrapById(pageNumber: Int!, elementCount: Int!): [PostList]
         getScrapCount: Int!
+        getMyNotifications: [Notification]
+        seenNotification: Boolean
     }
 
     type Mutation {

@@ -456,3 +456,17 @@ export const DELETE_GROUP_COMMENT = gql`
         deleteGroupComment(id: $id)
     }
 `;
+
+export const GET_MY_NOTIFICATIONS = gql`
+    query getMyNotifications {
+        getMyNotifications {
+            id
+            type
+            postId
+            commentId
+            groupId
+            count
+            updatedAt
+        }
+    }
+`;

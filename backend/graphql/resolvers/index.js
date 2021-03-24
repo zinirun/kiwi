@@ -62,6 +62,7 @@ module.exports = {
     selfQuitGroupMember: require('./group/selfQuitGroupMember'),
 
     // Notification
+    getMyNotifications: require('./notification/getMyNotifications'),
     seenNotification: require('./notification/seenNotification'),
 
     // Scrap
