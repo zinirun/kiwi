@@ -47,7 +47,7 @@ export default function GroupCommentContainer({ id }) {
         }
     }, [commentsData, commentsError]);
     const handleCommentSubmit = ({ content }) => {
-        if (!content.replaceAll(' ', '')) return;
+        if (!content || !content.replaceAll(' ', '')) return;
         createGroupComment({
             variables: {
                 comment: {
