@@ -46,15 +46,15 @@ const createNotificationPostComment = async (postId, triggerId) => {
 // type: COMMENT_LIKE
 const createNotificationCommentLike = async (commentId, triggerId) => {
     const type = 'COMMENT_LIKE';
-    const { authorId } = await models.comment.findOne({
-        attributes: ['id', 'authorId'],
+    const { authorId, postId } = await models.comment.findOne({
+        attributes: ['id', 'authorId', 'postId'],
         where: { id: commentId },
         raw: true,
     });
     if (+authorId === +triggerId) return;
     const data = await models.notification.findOne({
-        attributes: ['isDeleted', 'commentId', 'type', 'count'],
-        where: { commentId, type, userId: authorId },
+        attributes: ['isDeleted', 'postId', 'type', 'count'],
+        where: { postId, type, userId: authorId },
         raw: true,
     });
     if (data) {
@@ -65,7 +65,7 @@ const createNotificationCommentLike = async (commentId, triggerId) => {
                 {
                     count: data.count + 1,
                 },
-                { where: { userId: authorId, commentId, type } },
+                { where: { userId: authorId, postId, type } },
             );
         } else {
             return await models.notification.update(
@@ -73,13 +73,13 @@ const createNotificationCommentLike = async (commentId, triggerId) => {
                     count: data.count + 1,
                     isDeleted: 0,
                 },
-                { where: { userId: authorId, commentId, type } },
+                { where: { userId: authorId, postId, type } },
             );
         }
     } else {
         return models.notification.create({
             userId: authorId,
-            commentId,
+            postId,
             type,
         });
     }
