@@ -185,23 +185,30 @@ const createNotificationGroupComment = async (groupId, memberId) => {
         raw: true,
     });
 
-    const toUpdateCount = []; // NOT에 있고 isDeleted===0
-    const toUpdateCountAndIsDeleted = []; // NOT에 있고 isDeleted===1
-    const toCreate = []; // NOT에 없음
+    const toUpdateCount = []; // NOT에 있고 isDeleted===0 -> count += 1
+    const toUpdateCountAndIsDeleted = []; // NOT에 있고 isDeleted===1 -> count += 1, isDeleted 0
+    const toCreate = []; // NOT에 없음 -> insert
 
     targets.forEach((targetUserId) => {
         const targetInNotification = notificationOfTargets.find((t) => t.userId === targetUserId);
 
         if (targetInNotification) {
-            const { isDeleted } = targetInNotification;
+            const { isDeleted, count } = targetInNotification;
             if (isDeleted === 0) {
-                toUpdateCount.push(targetUserId);
+                toUpdateCount.push({
+                    userId: targetUserId,
+                    count,
+                });
             } else {
-                toUpdateCountAndIsDeleted.push(targetUserId);
+                toUpdateCountAndIsDeleted.push({
+                    userId: targetUserId,
+                    count,
+                });
             }
         } else toCreate.push(targetUserId);
     });
 
+    /*
     if (data) {
         const { isDeleted } = data.isDeleted;
 
@@ -228,6 +235,7 @@ const createNotificationGroupComment = async (groupId, memberId) => {
             type,
         });
     }
+    */
 };
 module.exports = {
     createNotificationPostComment,
