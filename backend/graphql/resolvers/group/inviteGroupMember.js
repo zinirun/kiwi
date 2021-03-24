@@ -44,6 +44,7 @@ module.exports = async ({ groupId, memberId }, { id: masterId }) => {
         }
         throw BadRequestError('Bad Request: Already Member');
     }
+
     return await models.group_member
         .create({
             groupId,

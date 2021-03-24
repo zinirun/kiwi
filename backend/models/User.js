@@ -45,9 +45,6 @@ module.exports = function (sequelize, DataTypes) {
         User.hasMany(models.scrap, {
             foreignKey: 'userId',
         });
-        User.hasMany(models.notification, {
-            foreignKey: 'messageFromId',
-        });
         User.hasMany(models.groups, {
             foreignKey: 'masterId',
         });

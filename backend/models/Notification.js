@@ -8,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
             type: { type: DataTypes.STRING(15), allowNull: false },
             postId: { type: DataTypes.INTEGER, allowNull: true, defaultValue: null },
             commentId: { type: DataTypes.INTEGER, allowNull: true, defaultValue: null },
-            messageFromId: { type: DataTypes.INTEGER, allowNull: true, defaultValue: null },
+            groupId: { type: DataTypes.INTEGER, allowNull: true, defaultValue: null },
             count: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1 },
             isDeleted: { type: DataTypes.TINYINT, defaultValue: 0 },
         },
@@ -30,8 +30,8 @@ module.exports = function (sequelize, DataTypes) {
         Notification.belongsTo(models.comment, {
             foreignKey: 'commentId',
         });
-        Notification.belongsTo(models.user, {
-            foreignKey: 'messageFromId',
+        Notification.belongsTo(models.groups, {
+            foreignKey: 'groupId',
         });
     };
 
