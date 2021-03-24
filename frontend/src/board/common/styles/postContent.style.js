@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { CONTENT_MAX_WIDTH } from '../../../configs/variables';
 
 export const useStyles = makeStyles((theme) => ({
     root: {
@@ -74,6 +75,9 @@ export const useStyles = makeStyles((theme) => ({
     },
     imageWrapper: {
         marginBottom: 10,
+    },
+    image: {
+        maxWidth: CONTENT_MAX_WIDTH - 100,
     },
     normalFileWrapper: {
         marginBottom: 10,

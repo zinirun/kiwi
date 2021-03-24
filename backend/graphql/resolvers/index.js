@@ -62,4 +62,8 @@ module.exports = {
 
     // Notification
     seenNotification: require('./notification/seenNotification'),
+
+    // Scrap
+    getScrapById: require('./scrap/getScrap'),
+    scrapPost: require('./scrap/scrapPost'),
 };

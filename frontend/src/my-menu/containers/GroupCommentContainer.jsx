@@ -10,6 +10,8 @@ import {
 import { useStyles } from '../styles/groupComment.style';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { commentTimeFormatter } from '../../board/common/tools/formatter';
+import { BoardListSkeleton } from '../../board/common/components/Skeletons';
+import NoResult from '../../board/common/components/NoResult';
 
 const { TextArea } = Input;
 const { confirm } = Modal;
@@ -89,6 +91,8 @@ export default function GroupCommentContainer({ id }) {
     };
     return (
         <>
+            {commentsLoading && <BoardListSkeleton />}
+            {!commentsLoading && comments.length === 0 && <NoResult title="대화 내용" />}
             {!commentsLoading &&
                 comments.length > 0 &&
                 comments.map((item) => (

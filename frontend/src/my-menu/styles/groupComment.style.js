@@ -51,4 +51,7 @@ export const useStyles = makeStyles((theme) => ({
             color: '#F86A6A',
         },
     },
+    commentLine: {
+        marginBottom: 5,
+    },
 }));

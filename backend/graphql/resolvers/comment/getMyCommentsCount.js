@@ -3,11 +3,11 @@ const { ConflictError } = require('../../errors/errors');
 
 module.exports = async ({}, { id }) => {
     const query = `
-    select c.id, COUNT(c.id) as commentsCount
-    from comment c
-    where c.authorId = :id
-    and c.isDeleted = 0
-    order by c.id;
+                    select c.id, COUNT(c.id) as commentsCount
+                    from comment c
+                    where c.authorId = :id
+                    and c.isDeleted = 0
+                    order by c.id;
                     `;
     return await models.sequelize
         .query(query, {

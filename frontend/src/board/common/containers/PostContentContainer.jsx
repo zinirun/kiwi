@@ -167,7 +167,11 @@ export default function PostContentContainer({ id }) {
                                     {post.files.map((file) =>
                                         isImageFile(file.fileType) ? (
                                             <p key={file.id} className={classes.imageWrapper}>
-                                                <img src={file.fileUrl} alt={file.fileName} />
+                                                <img
+                                                    className={classes.image}
+                                                    src={file.fileUrl}
+                                                    alt={file.fileName}
+                                                />
                                             </p>
                                         ) : (
                                             <p key={file.id} className={classes.normalFileWrapper}>
