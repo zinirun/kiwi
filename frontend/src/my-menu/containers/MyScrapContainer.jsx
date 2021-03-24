@@ -1,3 +1,83 @@
+import React, { useEffect, useState } from 'react';
+import { useQuery } from 'react-apollo';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
+import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
+import { useStyles } from '../../board/common/styles/board.style';
+import { boardCommonStyles } from '../../board/common/styles/board.common.style';
+import moment from 'moment';
+import { message, Pagination } from 'antd';
+import NoResult from '../../board/common/components/NoResult';
+import { BoardListSkeleton } from '../../board/common/components/Skeletons';
+import { commentTimeFormatter } from '../../board/common/tools/formatter';
+import { ITEMS_COUNT_PER_PAGE } from '../../configs/variables';
+
 export default function MyScrapContainer({ page }) {
-    return <div></div>;
+    // const classes = { ...useStyles(), ...boardCommonStyles() };
+    // return (
+    //     <>
+    //     {postListLoading && <BoardListSkeleton />}
+    //         {!postListLoading && postList.length === 0 && <NoResult />}
+    //     {!postListLoading && postList.length > 0 && (
+    //         <>
+    //             {postList.map((post, idx) => (
+    //                 <Grid
+    //                     container
+    //                     className={classes.postWrapper}
+    //                     component={Link}
+    //                     to={`/post/${post.id}`}
+    //                     key={idx}
+    //                 >
+    //                     <Grid item className={classes.title} xs={12}>
+    //                         <span style={{ color: 'black' }}>
+    //                             {post.categoryName && (
+    //                                 <span className={classes.part}>{post.categoryName}</span>
+    //                             )}
+    //                             {post.title}
+    //                         </span>
+    //                     </Grid>
+    //                     <Grid className={classes.flexWrapper} container>
+    //                         <Grid item style={{ flex: 1 }}>
+    //                             <span className={classes.infoWrapper}>
+    //                                 {commentTimeFormatter(post.createdAt)}&nbsp;
+    //                                 <span className={classes.author}>
+    //                                     {post.gradeName}/{post.authorName}
+    //                                 </span>
+    //                             </span>
+    //                         </Grid>
+    //                         <Grid item>
+    //                             <Chip
+    //                                 className={classes.backColor}
+    //                                 size="small"
+    //                                 icon={<ThumbUpOutlinedIcon className={classes.upIcon} />}
+    //                                 label={post.likeCount}
+    //                             />
+    //                             <Chip
+    //                                 className={classes.backColor}
+    //                                 size="small"
+    //                                 icon={
+    //                                     <ChatBubbleOutlineOutlinedIcon
+    //                                         className={classes.commentIcon}
+    //                                     />
+    //                                 }
+    //                                 label={post.commentCount}
+    //                             />
+    //                         </Grid>
+    //                     </Grid>
+    //                 </Grid>
+    //             ))}
+    //             <Pagination
+    //                 className={classes.paginationWrapper}
+    //                 defaultCurrent={page || 1}
+    //                 defaultPageSize={ITEMS_COUNT_PER_PAGE}
+    //                 total={postsCount}
+    //                 onChange={handlePage}
+    //                 hideOnSinglePage
+    //                 showSizeChanger={false}
+    //             />
+    //         </>
+    //     )}
+    // </>
+    // );
 }

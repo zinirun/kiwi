@@ -6,6 +6,7 @@ import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
+import StarOutlineIcon from '@material-ui/icons/StarOutline';
 import { useStyles } from '../styles/postContent.style';
 import { GET_POST, HANDLE_POST_LIKE, DELETE_POST } from '../../../configs/queries';
 import { message, Modal, Tooltip, Space } from 'antd';
@@ -135,6 +136,11 @@ export default function PostContentContainer({ id }) {
                                                 />
                                             </Tooltip>
                                         </Space>
+                                    )}
+                                    {post.userId !== post.authorId && (
+                                        <Tooltip title="스크랩">
+                                            <StarOutlineIcon className={classes.modifyIcon} />
+                                        </Tooltip>
                                     )}
                                 </Grid>
                             </Grid>
