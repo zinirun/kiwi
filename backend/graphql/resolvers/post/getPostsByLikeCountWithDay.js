@@ -46,7 +46,7 @@ module.exports = async ({ term }, { departmentId }) => {
                     where p.authorId = u.id
                     and p.isDeleted = 0
                     and p.departmentId = :departmentId
-                    and p.createdAt between substr(date_add(now(), interval -:term day), 1, 10) and substr(now(), 1, 10)
+                    and substr(p.createdAt, 1, 10) between substr(date_add(now(), interval -:term day), 1, 10) and substr(now(), 1, 10)
                     order by likeCount desc, id desc
                     limit 5;
                     `;

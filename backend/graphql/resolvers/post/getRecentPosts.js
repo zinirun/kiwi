@@ -28,7 +28,7 @@ module.exports = async ({}, {}) => {
                         b.boardName,
                         b.link as boardLink,
                         b.icon as boardIcon,
-                        s.id as postId,
+                        s.id,
                         s.title,
                         ifnull(ppl.likeCount, 0) as likeCount
                     from (select id, boardId, title, ROW_NUMBER() OVER (PARTITION BY boardId ORDER BY id desc) as rn from post where isDeleted = 0 order by rn desc) as s
@@ -46,7 +46,7 @@ module.exports = async ({}, {}) => {
                 const arrayIndex = d.boardId - 1;
                 if (recentPosts[arrayIndex]) {
                     recentPosts[arrayIndex].posts.push({
-                        postId: d.postId,
+                        id: d.id,
                         title: d.title,
                         likeCount: d.likeCount,
                     });
@@ -58,7 +58,7 @@ module.exports = async ({}, {}) => {
                         boardIcon: d.boardIcon,
                         posts: [
                             {
-                                postId: d.postId,
+                                id: d.id,
                                 title: d.title,
                                 likeCount: d.likeCount,
                             },

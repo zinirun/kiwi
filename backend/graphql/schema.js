@@ -50,7 +50,7 @@ module.exports = buildSchema(`
     }
 
     type RecentPost {
-        postId: ID!
+        id: ID!
         title: String!
         likeCount: Int
     }

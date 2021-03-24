@@ -3,19 +3,18 @@ import { useStyles } from '../styles/boardMain.style';
 import { Link } from 'react-router-dom';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import { Chip, Divider, Card, List, ListItem, ListItemText } from '@material-ui/core';
-import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
 import { IconViewer } from '../../../header/components/IconViewer';
 
-export default function BoardMainContainer({ data }) {
+export default function BoardMainContainer({ data, noLink }) {
     const classes = useStyles();
     return (
         <Card className={classes.paper}>
             <div>
                 <Chip
-                    component={Link}
-                    to={`/board/${data.boardLink}`}
-                    className={classes.titleChip}
+                    component={noLink ? 'span' : Link}
+                    to={noLink ? `` : `/board/${data.boardLink}`}
+                    className={noLink ? classes.bestChip : classes.titleChip}
                     icon={<IconViewer icon={data.boardIcon} classes={classes.iconColor} />}
                     label={data.boardName}
                 />
@@ -23,7 +22,7 @@ export default function BoardMainContainer({ data }) {
             <Divider />
             <List>
                 {data.posts.map((post, idx) => (
-                    <Link key={idx} className={classes.postLink} to={`/post/${post.postId}`}>
+                    <Link key={idx} className={classes.postLink} to={`/post/${post.id}`}>
                         <Row>
                             <Col span={20}>
                                 <ListItem classes={{ root: classes.listItem }}>
