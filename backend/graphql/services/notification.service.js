@@ -190,8 +190,10 @@ const createNotificationGroupComment = async (groupId, memberId) => {
     const toCreate = []; // NOT에 없음
 
     targets.forEach((targetUserId) => {
-        const { userId, isDeleted } = notificationOfTargets.find((t) => t.userId === targetUserId);
-        if (userId) {
+        const targetInNotification = notificationOfTargets.find((t) => t.userId === targetUserId);
+
+        if (targetInNotification) {
+            const { isDeleted } = targetInNotification;
             if (isDeleted === 0) {
                 toUpdateCount.push(targetUserId);
             } else {
@@ -200,36 +202,32 @@ const createNotificationGroupComment = async (groupId, memberId) => {
         } else toCreate.push(targetUserId);
     });
 
-    console.log(toUpdateCount);
-    console.log(toUpdateCountAndIsDeleted);
-    console.log(toCreate);
+    if (data) {
+        const { isDeleted } = data.isDeleted;
 
-    // if (data) {
-    //     const { isDeleted } = data.isDeleted;
-
-    //     if (isDeleted === 0) {
-    //         return await models.notification.update(
-    //             {
-    //                 count: data.count + 1,
-    //             },
-    //             { where: { userId: memberId, groupId, type } },
-    //         );
-    //     } else {
-    //         return await models.notification.update(
-    //             {
-    //                 count: data.count + 1,
-    //                 isDeleted: 0,
-    //             },
-    //             { where: { userId: memberId, groupId, type } },
-    //         );
-    //     }
-    // } else {
-    //     return models.notification.create({
-    //         userId: memberId,
-    //         groupId,
-    //         type,
-    //     });
-    // }
+        if (isDeleted === 0) {
+            return await models.notification.update(
+                {
+                    count: data.count + 1,
+                },
+                { where: { userId: memberId, groupId, type } },
+            );
+        } else {
+            return await models.notification.update(
+                {
+                    count: data.count + 1,
+                    isDeleted: 0,
+                },
+                { where: { userId: memberId, groupId, type } },
+            );
+        }
+    } else {
+        return models.notification.create({
+            userId: memberId,
+            groupId,
+            type,
+        });
+    }
 };
 module.exports = {
     createNotificationPostComment,

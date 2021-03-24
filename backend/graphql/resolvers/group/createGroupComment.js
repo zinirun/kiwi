@@ -16,6 +16,7 @@
  */
 
 const models = require('../../../models');
+const { createNotificationGroupComment } = require('../../services/notification.service');
 const { ConflictError, BadRequestError } = require('../../errors/errors');
 
 module.exports = async ({ comment }, { id: authorId }) => {
@@ -41,6 +42,7 @@ module.exports = async ({ comment }, { id: authorId }) => {
         })
         .then((result) => {
             const data = result.get({ plain: true });
+            createNotificationGroupComment(groupId, authorId);
             return {
                 ...data,
             };
