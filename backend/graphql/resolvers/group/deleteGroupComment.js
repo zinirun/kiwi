@@ -13,7 +13,7 @@ module.exports = async ({ id }, { id: authorId }) => {
     return await models.group_comment
         .update(
             {
-                isDeleted: 0,
+                isDeleted: 1,
             },
             {
                 where: {

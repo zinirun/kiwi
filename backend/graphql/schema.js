@@ -169,6 +169,7 @@ module.exports = buildSchema(`
         authorName: String!
         authorGradeName: String!
         content: String!
+        createdAt: Date!
     }
 
     type GroupCommentAfterCreate {
@@ -244,7 +245,7 @@ module.exports = buildSchema(`
         createGroup(title: String!): GroupAfterCreate
         inviteGroupMember(groupId: ID!, memberId: ID!): Boolean
         quitGroupMember(groupId: ID!, memberId: ID!): Boolean
-        createGroupComment(groupCommentInput: GroupCommentInput!): GroupCommentAfterCreate
+        createGroupComment(comment: GroupCommentInput!): GroupCommentAfterCreate
         deleteGroup(id: ID!): Boolean
         deleteGroupComment(id: ID!): Boolean
         seenNotification(id: ID!): Boolean

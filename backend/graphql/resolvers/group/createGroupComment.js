@@ -18,8 +18,8 @@
 const models = require('../../../models');
 const { ConflictError, BadRequestError } = require('../../errors/errors');
 
-module.exports = async ({ groupCommentInput }, { id: authorId }) => {
-    const { groupId } = groupCommentInput;
+module.exports = async ({ comment }, { id: authorId }) => {
+    const { groupId } = comment;
     const isMember =
         (await models.groups.findOne({
             attributes: ['id', 'masterId'],
@@ -36,7 +36,7 @@ module.exports = async ({ groupCommentInput }, { id: authorId }) => {
     }
     return await models.group_comment
         .create({
-            ...groupCommentInput,
+            ...comment,
             authorId,
         })
         .then((result) => {

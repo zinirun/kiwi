@@ -12,6 +12,7 @@
         authorName: String!
         authorGradeName: String!
         content: String!
+        createdAt: Date!
     }
  */
 
@@ -19,11 +20,11 @@ const models = require('../../../models');
 const { ConflictError, BadRequestError } = require('../../errors/errors');
 
 const query = `
-    select gc.id, gc.groupId, gc.authorId, u.userName as authorName, g.gradeName as authorGradeName, gc.content
+    select gc.id, gc.groupId, gc.authorId, u.userName as authorName, g.gradeName as authorGradeName, gc.content, gc.createdAt
     from user u
     left join grade g on u.studentGradeId = g.gradeName
     left join group_comment gc on gc.authorid = u.id
-    where gc.groupId = :groupId;
+    where gc.groupId = :groupId and gc.isDeleted = 0;
 `;
 
 module.exports = async ({ groupId }, { id: userId }) => {

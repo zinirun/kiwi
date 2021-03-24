@@ -377,6 +377,7 @@ export const GET_GROUP_COMMENTS = gql`
             authorName
             authorGradeName
             content
+            createdAt
         }
     }
 `;
@@ -405,8 +406,10 @@ export const QUIT_GROUP_MEMBER = gql`
 `;
 
 export const CREATE_GROUP_COMMENT = gql`
-    mutation createGroupComment($groupCommentInput: GroupCommentInput!) {
-        createGroupComment(groupCommentInput: $groupCommentInput)
+    mutation createGroupComment($comment: GroupCommentInput!) {
+        createGroupComment(comment: $comment) {
+            id
+        }
     }
 `;
 
