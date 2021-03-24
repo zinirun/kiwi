@@ -250,5 +250,6 @@ module.exports = buildSchema(`
         deleteGroup(id: ID!): Boolean
         deleteGroupComment(id: ID!): Boolean
         seenNotification(id: ID!): Boolean
+        scrapPost(postId: ID!): String
     }
 `);
