@@ -33,7 +33,7 @@ const query = `
                     gp.createdAt,
                     mas_u.userName as masterName,
                     mas_g.gradeName as masterGradeName,
-                    gm.id as memberId,
+                    gm.memberId,
                     mem_u.userName as memberName,
                     mem_g.gradeName as memberGradeName
                 from user mas_u

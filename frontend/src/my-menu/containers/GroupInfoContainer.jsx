@@ -1,11 +1,11 @@
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { Grid } from '@material-ui/core';
-import { message, Modal, Collapse, Tag, Tooltip } from 'antd';
+import { message, Modal, Collapse, Tag, Tooltip, Space } from 'antd';
 import { useEffect, useState } from 'react';
 import { useStyles } from '../styles/groupInfo.style';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import PageTitle from '../../common/components/PageTitle';
-import { GET_GROUP, QUIT_GROUP_MEMBER } from '../../configs/queries';
+import { DELETE_GROUP, GET_GROUP, QUIT_GROUP_MEMBER } from '../../configs/queries';
 import { useHistory } from 'react-router';
 import moment from 'moment';
 const { confirm } = Modal;
@@ -26,6 +26,7 @@ export default function GroupInfoContainer({ id }) {
             id,
         },
     });
+    const [deleteGroup] = useMutation(DELETE_GROUP);
 
     useEffect(() => {
         if (groupData) {
@@ -36,6 +37,34 @@ export default function GroupInfoContainer({ id }) {
             history.goBack();
         }
     }, [groupData, groupError, history]);
+
+    const triggerDeleteGroup = (id) => {
+        deleteGroup({
+            variables: {
+                id,
+            },
+        })
+            .then(() => {
+                message.success('그룹이 삭제되었습니다.');
+                history.push('/my/group');
+            })
+            .catch(() => {
+                message.error('그룹 삭제 중 문제가 발생했습니다.');
+            });
+    };
+    const handleDeleteGroup = (e, id) => {
+        confirm({
+            title: '이 그룹을 삭제할까요?',
+            content: '삭제된 그룹은 복구할 수 없습니다.',
+            icon: <></>,
+            okText: '그룹 삭제',
+            cancelText: '취소',
+            onOk() {
+                triggerDeleteGroup(id);
+            },
+        });
+        e.stopPropagation();
+    };
 
     return (
         <>
@@ -48,9 +77,14 @@ export default function GroupInfoContainer({ id }) {
                             header="그룹 정보"
                             key="group-info"
                             extra={
-                                <Tooltip title="그룹 삭제">
-                                    <DeleteOutlinedIcon className={classes.deleteIcon} />
-                                </Tooltip>
+                                group.masterId === group.userId && (
+                                    <Tooltip title="그룹 삭제">
+                                        <DeleteOutlinedIcon
+                                            className={classes.deleteIcon}
+                                            onClick={(e) => handleDeleteGroup(e, group.id)}
+                                        />
+                                    </Tooltip>
+                                )
                             }
                         >
                             <Grid className={classes.groupInfoWrapper} container>
@@ -73,6 +107,7 @@ export default function GroupInfoContainer({ id }) {
                                             groupId={group.id}
                                             members={group.members}
                                             refetch={groupRefetch}
+                                            isMaster={group.masterId === group.userId}
                                         />
                                     </div>
                                 </Grid>
@@ -85,7 +120,7 @@ export default function GroupInfoContainer({ id }) {
     );
 }
 
-function GroupMemberViewer({ groupId, members, refetch }) {
+function GroupMemberViewer({ groupId, members, refetch, isMaster }) {
     const classes = useStyles();
     const [quitGroupMember] = useMutation(QUIT_GROUP_MEMBER);
     const triggerQuitGroupMember = (memberId) => {
@@ -100,7 +135,7 @@ function GroupMemberViewer({ groupId, members, refetch }) {
                 message.success('멤버를 삭제했습니다.');
             })
             .catch(() => {
-                message.error('멤버 삭제 중 문제가 발생했습니다.');
+                message.error('이미 삭제된 멤버입니다.');
             });
     };
     const handleDeleteGroupMember = (memberId) => {
@@ -118,13 +153,22 @@ function GroupMemberViewer({ groupId, members, refetch }) {
         <>
             {members.length === 0 && '없음'}
             {members.map((member) => (
-                <Tag
-                    key={`member-${member.memberId}`}
-                    className={classes.groupMember}
-                    closable
-                    onClose={() => handleDeleteGroupMember(member.memberId)}
-                >
-                    {member.memberGradeName}/{member.memberName}
+                <Tag key={`member-${member.memberId}`} className={classes.groupMember}>
+                    <Space size={3}>
+                        <span>
+                            {member.memberGradeName}/{member.memberName}
+                        </span>
+                        {isMaster && (
+                            <span>
+                                <Tooltip title={`멤버 ${member.memberName} 삭제`}>
+                                    <DeleteOutlinedIcon
+                                        className={classes.deleteMemberIcon}
+                                        onClick={() => handleDeleteGroupMember(member.memberId)}
+                                    />
+                                </Tooltip>
+                            </span>
+                        )}
+                    </Space>
                 </Tag>
             ))}
         </>
