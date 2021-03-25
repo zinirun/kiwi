@@ -184,6 +184,8 @@ module.exports = buildSchema(`
         postId: ID
         commentId: ID
         groupId: ID
+        title: String!
+        titleLength: Int!
         count: Int!
         updatedAt: Date!
     }
