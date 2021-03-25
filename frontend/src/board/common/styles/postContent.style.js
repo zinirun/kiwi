@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { CONTENT_MAX_WIDTH } from '../../../configs/variables';
 
 export const useStyles = makeStyles((theme) => ({
     root: {

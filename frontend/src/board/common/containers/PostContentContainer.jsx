@@ -9,7 +9,7 @@ import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import StarOutlineIcon from '@material-ui/icons/StarOutline';
 import { useStyles } from '../styles/postContent.style';
 import { GET_POST, HANDLE_POST_LIKE, DELETE_POST, SCRAP_POST } from '../../../configs/queries';
-import { message, Modal, Tooltip, Space, Image } from 'antd';
+import { message, Modal, Tooltip, Space, Image, Divider } from 'antd';
 import moment from 'moment';
 import PageTitle from '../../../common/components/PageTitle';
 import { PostContentSkeleton } from '../components/Skeletons';
@@ -185,6 +185,7 @@ export default function PostContentContainer({ id }) {
                             ))}
                             {post.files && (
                                 <div className={classes.attachWrapper}>
+                                    <Divider />
                                     {post.files.map((file) =>
                                         isImageFile(file.fileType) ? (
                                             <div key={file.id} className={classes.imageWrapper}>

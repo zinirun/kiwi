@@ -8,8 +8,8 @@ import SideUserSection from './SideUserSection';
 import { EXTRA_BOARDS, MY_MENU } from '../../configs/siteMenu';
 import { GET_BOARDS } from '../../configs/queries';
 import { useQuery } from '@apollo/react-hooks';
-import { message, Tooltip } from 'antd';
-import { useDarkreader, Switch } from 'react-darkreader';
+import { message, Tooltip, Switch, Space } from 'antd';
+import { useDarkreader } from 'react-darkreader';
 import { withCookies } from 'react-cookie';
 
 export default withCookies(function SideDrawer({ user, cookies }) {
@@ -45,11 +45,6 @@ export default withCookies(function SideDrawer({ user, cookies }) {
 
     return (
         <div className={classes.sideDrawerWrapper}>
-            <Tooltip title="다크모드">
-                <div className={classes.darkReader}>
-                    <Switch checked={isDark} onChange={handleDarkToggle} styling="fluent" />
-                </div>
-            </Tooltip>
             <Link to={'/'} style={{ textDecoration: 'none' }}>
                 <Logo />
             </Link>
@@ -96,6 +91,14 @@ export default withCookies(function SideDrawer({ user, cookies }) {
                             </ListItem>
                         </Link>
                     ))}
+                    <ListItem className={classes.siderFooter}>
+                        <Space size={20}>
+                            <Tooltip title="다크모드">
+                                <Switch checked={isDark} onChange={handleDarkToggle} size="small" />
+                            </Tooltip>
+                            <span className={classes.copyright}>Powered by Kiwi</span>
+                        </Space>
+                    </ListItem>
                 </List>
             )}
         </div>

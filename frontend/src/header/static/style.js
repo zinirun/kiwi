@@ -82,9 +82,12 @@ export const useStyles = makeStyles((theme) => ({
     userSectionSmall: {
         fontSize: '0.75rem',
     },
-    darkReader: {
-        position: 'absolute',
-        bottom: 10,
-        left: 10,
+    copyright: {
+        color: '#b9f0ca',
+        fontSize: '0.825rem',
+    },
+    siderFooter: {
+        marginTop: 15,
+        paddingLeft: 20,
     },
 }));
