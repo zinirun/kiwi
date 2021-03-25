@@ -18,6 +18,7 @@ import {
 } from '../../../configs/queries';
 import { commentTimeFormatter } from '../tools/formatter';
 import { PostCommentSkeleton } from '../components/Skeletons';
+import { Link } from 'react-router-dom';
 const { TextArea } = Input;
 const { confirm } = Modal;
 const { Option } = Select;
@@ -230,16 +231,18 @@ function MyGroupListContainer({ visible, setVisible, groupMember }) {
     const [groups, setGroups] = useState([]);
     const [selectedGroupId, setSelectedGroupId] = useState(null);
     const [inviteGroupMember] = useMutation(INVITE_GROUP_MEMBER);
-    const { data: groupsData, error: groupsError, loading: groupsLoading } = useQuery(
-        GET_MY_MASTER_GROUPS,
-    );
+    const {
+        data: groupsData,
+        error: groupsError,
+        loading: groupsLoading,
+        refetch: groupsRefetch,
+    } = useQuery(GET_MY_MASTER_GROUPS);
+    useEffect(() => {
+        groupsRefetch().catch(() => {});
+    }, [groupsRefetch]);
     useEffect(() => {
         if (groupsData) {
             const groups = groupsData.getMyMasterGroups;
-            if (groups.length === 0) {
-                message.error('내 그룹이 없습니다. 속닥속닥에서 그룹을 만드세요!');
-                setVisible(false);
-            }
             setGroups(groups);
         }
         if (groupsError) {
@@ -273,35 +276,46 @@ function MyGroupListContainer({ visible, setVisible, groupMember }) {
         setVisible(false);
     };
     return (
-        <Modal
-            title="내 속닥속닥에 초대하기"
-            visible={visible || false}
-            onOk={handleOk}
-            onCancel={handleCancel}
-            okText="초대하기"
-            cancelText="취소"
-        >
+        <>
             {!groupsLoading && groups && groupMember && (
-                <>
-                    <p>{groupMember.memberName}님을 초대할 그룹을 선택하세요.</p>
-                    <Select
-                        showSearch
-                        style={{ width: '100%' }}
-                        placeholder="초대할 그룹을 선택하세요"
-                        onChange={handleChange}
-                        optionFilterProp="children"
-                        filterOption={(input, option) =>
-                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                        }
-                    >
-                        {groups.map((group) => (
-                            <Option value={group.id} key={`my-group-${group.id}`}>
-                                {group.title}
-                            </Option>
-                        ))}
-                    </Select>
-                </>
+                <Modal
+                    title="내 속닥속닥에 초대하기"
+                    visible={visible || false}
+                    onOk={handleOk}
+                    onCancel={handleCancel}
+                    okText="초대하기"
+                    cancelText="취소"
+                    okButtonProps={{ disabled: groups.length === 0 && true }}
+                >
+                    {groups.length === 0 && (
+                        <p>
+                            내 그룹이 없습니다. <Link to="/my/group">속닥속닥</Link>에서 그룹을
+                            만드세요!
+                        </p>
+                    )}
+                    {groups.length > 0 && (
+                        <>
+                            <p>{groupMember.memberName}님을 초대할 그룹을 선택하세요.</p>
+                            <Select
+                                showSearch
+                                style={{ width: '100%' }}
+                                placeholder="초대할 그룹을 선택하세요"
+                                onChange={handleChange}
+                                optionFilterProp="children"
+                                filterOption={(input, option) =>
+                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                }
+                            >
+                                {groups.map((group) => (
+                                    <Option value={group.id} key={`my-group-${group.id}`}>
+                                        {group.title}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </>
+                    )}
+                </Modal>
             )}
-        </Modal>
+        </>
     );
 }
