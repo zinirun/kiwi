@@ -9,7 +9,7 @@ import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import StarOutlineIcon from '@material-ui/icons/StarOutline';
 import { useStyles } from '../styles/postContent.style';
 import { GET_POST, HANDLE_POST_LIKE, DELETE_POST, SCRAP_POST } from '../../../configs/queries';
-import { message, Modal, Tooltip, Space } from 'antd';
+import { message, Modal, Tooltip, Space, Image } from 'antd';
 import moment from 'moment';
 import PageTitle from '../../../common/components/PageTitle';
 import { PostContentSkeleton } from '../components/Skeletons';
@@ -187,20 +187,16 @@ export default function PostContentContainer({ id }) {
                                 <div className={classes.attachWrapper}>
                                     {post.files.map((file) =>
                                         isImageFile(file.fileType) ? (
-                                            <p key={file.id} className={classes.imageWrapper}>
-                                                <img
+                                            <div key={file.id} className={classes.imageWrapper}>
+                                                <Image
                                                     className={classes.image}
                                                     src={file.fileUrl}
                                                     alt={file.fileName}
                                                 />
-                                            </p>
+                                            </div>
                                         ) : (
                                             <p key={file.id} className={classes.normalFileWrapper}>
-                                                <a
-                                                    href={file.fileUrl}
-                                                    target="_blank"
-                                                    rel="noreferrer"
-                                                >
+                                                <a href={file.fileUrl} download={file.fileName}>
                                                     {file.fileName}
                                                 </a>
                                             </p>

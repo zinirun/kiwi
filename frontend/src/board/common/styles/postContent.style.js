@@ -85,7 +85,7 @@ export const useStyles = makeStyles((theme) => ({
         marginBottom: 10,
     },
     image: {
-        maxWidth: CONTENT_MAX_WIDTH - 100,
+        maxWidth: 300,
     },
     normalFileWrapper: {
         marginBottom: 10,

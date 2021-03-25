@@ -16,7 +16,6 @@ module.exports = async ({}, { id: userId }) => {
                     `;
     return await models.sequelize.query(query, { replacements: { userId } }).spread(
         (result) => {
-            console.log(result);
             return result[0].unreadCount;
         },
         () => ConflictError(),
