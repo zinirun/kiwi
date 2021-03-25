@@ -300,7 +300,6 @@ function MyGroupListContainer({ visible, setVisible, groupMember }) {
                             </Option>
                         ))}
                     </Select>
-                    ,
                 </>
             )}
         </Modal>
