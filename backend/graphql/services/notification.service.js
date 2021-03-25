@@ -65,7 +65,7 @@ const createNotificationCommentLike = async (commentId, triggerId) => {
                 {
                     count: data.count + 1,
                 },
-                { where: { userId: authorId, postId, type } },
+                { where: { userId: authorId, commentId, type } },
             );
         } else {
             return await models.notification.update(
@@ -73,13 +73,14 @@ const createNotificationCommentLike = async (commentId, triggerId) => {
                     count: data.count + 1,
                     isDeleted: 0,
                 },
-                { where: { userId: authorId, postId, type } },
+                { where: { userId: authorId, commentId, type } },
             );
         }
     } else {
         return models.notification.create({
             userId: authorId,
             postId,
+            commentId,
             type,
         });
     }
@@ -177,7 +178,7 @@ const createNotificationGroupComment = async (groupId, memberId) => {
     });
     const targets = [master.masterId, ...members.map((member) => member.memberId)].filter(
         (target) => target !== memberId,
-    ); // [1, 2, 4, 5]
+    );
 
     const notificationOfTargets = await models.notification.findAll({
         attributes: ['userId', 'isDeleted', 'groupId', 'type', 'count'],
@@ -205,37 +206,49 @@ const createNotificationGroupComment = async (groupId, memberId) => {
                     count,
                 });
             }
-        } else toCreate.push(targetUserId);
+        } else toCreate.push({ userId: targetUserId, groupId, type });
     });
 
-    /*
-    if (data) {
-        const { isDeleted } = data.isDeleted;
-
-        if (isDeleted === 0) {
-            return await models.notification.update(
+    try {
+        for (const target of toUpdateCount) {
+            const { count, userId } = target;
+            await models.notification.update(
                 {
-                    count: data.count + 1,
+                    count: count + 1,
                 },
-                { where: { userId: memberId, groupId, type } },
-            );
-        } else {
-            return await models.notification.update(
                 {
-                    count: data.count + 1,
-                    isDeleted: 0,
+                    where: {
+                        userId,
+                        groupId,
+                        type,
+                    },
                 },
-                { where: { userId: memberId, groupId, type } },
             );
         }
-    } else {
-        return models.notification.create({
-            userId: memberId,
-            groupId,
-            type,
-        });
+
+        for (const target of toUpdateCountAndIsDeleted) {
+            const { count, userId } = target;
+            await models.notification.update(
+                {
+                    count: count + 1,
+                    isDeleted: 0,
+                },
+                {
+                    where: {
+                        userId,
+                        groupId,
+                        type,
+                    },
+                },
+            );
+        }
+
+        if (toCreate.length > 0) {
+            await models.notification.bulkCreate(toCreate);
+        }
+    } catch (err) {
+        console.error(err);
     }
-    */
 };
 module.exports = {
     createNotificationPostComment,

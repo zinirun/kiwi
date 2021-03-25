@@ -89,23 +89,25 @@ export default function BoardMainPage() {
     return (
         <>
             {(loading || weekLoading || monthLoading) && <BoardMainSkeleton />}
-            <Grid container spacing={1}>
-                {weekPosts && (
-                    <Grid item xs={12} sm={6}>
-                        <BoardMainContainer data={weekPosts} noLink />
-                    </Grid>
-                )}
-                {monthPosts && (
-                    <Grid item xs={12} sm={6}>
-                        <BoardMainContainer data={monthPosts} noLink />
-                    </Grid>
-                )}
-                {posts.map((p, idx) => (
-                    <Grid key={idx} item xs={12} sm={6}>
-                        <BoardMainContainer data={p} />
-                    </Grid>
-                ))}
-            </Grid>
+            {!loading && !weekLoading && !monthLoading && (
+                <Grid container spacing={1}>
+                    {monthPosts && (
+                        <Grid item xs={12} sm={6}>
+                            <BoardMainContainer data={monthPosts} noLink />
+                        </Grid>
+                    )}
+                    {weekPosts && (
+                        <Grid item xs={12} sm={6}>
+                            <BoardMainContainer data={weekPosts} noLink />
+                        </Grid>
+                    )}
+                    {posts.map((p, idx) => (
+                        <Grid key={idx} item xs={12} sm={6}>
+                            <BoardMainContainer data={p} />
+                        </Grid>
+                    ))}
+                </Grid>
+            )}
         </>
     );
 }

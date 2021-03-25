@@ -480,3 +480,9 @@ export const GET_MY_NOTIFICATIONS = gql`
         }
     }
 `;
+
+export const SEEN_NOTIFICATION = gql`
+    mutation seenNotification($id: ID!) {
+        seenNotification(id: $id)
+    }
+`;
