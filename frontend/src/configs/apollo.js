@@ -1,6 +1,13 @@
 import ApolloClient from 'apollo-boost';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { createHttpLink } from 'apollo-link-http';
+import { initialState, mutations } from './cache';
+
+const cache = new InMemoryCache();
+
+cache.writeData({
+    data: initialState,
+});
 
 export const AplClient = new ApolloClient({
     link: new createHttpLink({
@@ -8,5 +15,8 @@ export const AplClient = new ApolloClient({
         withCredentials: true,
     }),
     credentials: 'include',
-    cache: new InMemoryCache(),
+    cache,
+    resolvers: {
+        Mutation: mutations,
+    },
 });

@@ -244,7 +244,7 @@ module.exports = buildSchema(`
         getScrapById(pageNumber: Int!, elementCount: Int!): [PostList]
         getScrapCount: Int!
         getMyNotifications: [Notification]
-        seenNotification: Boolean
+        getNotificationsCount: Int
     }
 
     type Mutation {
@@ -267,5 +267,6 @@ module.exports = buildSchema(`
         deleteGroupComment(id: ID!): Boolean
         seenNotification(id: ID!): Boolean
         scrapPost(postId: ID!): String
+        seenAllNotifications: Boolean
     }
 `);

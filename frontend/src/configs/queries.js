@@ -1,5 +1,17 @@
 import gql from 'graphql-tag';
 
+export const GET_LOCAL_UNREAD_COUNT = gql`
+    query getLocalUnreadCount {
+        unreadCount @client
+    }
+`;
+
+export const UPDATE_LOCAL_UNREAD_COUNT = gql`
+    mutation updateLocalUnreadCount($count: Int!) {
+        updateLocalUnreadCount(count: $count) @client
+    }
+`;
+
 export const GET_USER = gql`
     query getUser {
         getUser {
@@ -475,14 +487,28 @@ export const GET_MY_NOTIFICATIONS = gql`
             postId
             commentId
             groupId
+            title
+            titleLength
             count
             updatedAt
         }
     }
 `;
 
+export const GET_NOTIFICATIONS_COUNT = gql`
+    query getNotificationsCount {
+        getNotificationsCount
+    }
+`;
+
 export const SEEN_NOTIFICATION = gql`
     mutation seenNotification($id: ID!) {
         seenNotification(id: $id)
+    }
+`;
+
+export const SEEN_ALL_NOTIFICATIONS = gql`
+    mutation seenAllNotifications {
+        seenAllNotifications
     }
 `;

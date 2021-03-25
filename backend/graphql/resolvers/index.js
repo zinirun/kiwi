@@ -64,6 +64,8 @@ module.exports = {
     // Notification
     getMyNotifications: require('./notification/getMyNotifications'),
     seenNotification: require('./notification/seenNotification'),
+    seenAllNotifications: require('./notification/seenAllNotifications'),
+    getNotificationsCount: require('./notification/getNotificationsCount'),
 
     // Scrap
     getScrapById: require('./scrap/getScrap'),

@@ -1,13 +1,19 @@
 import { useQuery, useMutation } from 'react-apollo';
-import { message, Tooltip } from 'antd';
+import { message, Tooltip, Modal } from 'antd';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import { GET_MY_NOTIFICATIONS, SEEN_NOTIFICATION } from '../../configs/queries';
+import {
+    GET_MY_NOTIFICATIONS,
+    SEEN_ALL_NOTIFICATIONS,
+    SEEN_NOTIFICATION,
+    UPDATE_LOCAL_UNREAD_COUNT,
+} from '../../configs/queries';
 import NoResult from '../../board/common/components/NoResult';
 import { useStyles } from '../styles/notification.style';
 import { commentTimeFormatter } from '../../board/common/tools/formatter';
 import CloseIcon from '@material-ui/icons/Close';
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
+const { confirm } = Modal;
 
 export default function MyNotificationContainer() {
     const classes = useStyles();
@@ -19,6 +25,8 @@ export default function MyNotificationContainer() {
         error: unreadError,
         refetch: unreadRefetch,
     } = useQuery(GET_MY_NOTIFICATIONS);
+    const [updateLocalUnreadCount] = useMutation(UPDATE_LOCAL_UNREAD_COUNT);
+    const [seenAllNotifications] = useMutation(SEEN_ALL_NOTIFICATIONS);
 
     useEffect(() => {
         unreadRefetch().catch(() => {});
@@ -26,13 +34,38 @@ export default function MyNotificationContainer() {
 
     useEffect(() => {
         if (unreadData) {
-            setUnreads(unreadData.getMyNotifications);
+            const unreads = unreadData.getMyNotifications;
+            setUnreads(unreads);
+            updateLocalUnreadCount({
+                variables: {
+                    count: unreads.length,
+                },
+            });
         }
         if (unreadError) {
             message.error('알림을 가져오는 중 문제가 발생했습니다.');
             history.goBack();
         }
-    }, [unreadData, unreadError, history]);
+    }, [unreadData, unreadError, history, updateLocalUnreadCount]);
+
+    const handleAllNotiCloseClick = () => {
+        confirm({
+            title: '모든 알림을 삭제할까요?',
+            icon: <></>,
+            okText: '삭제',
+            cancelText: '취소',
+            onOk() {
+                seenAllNotifications()
+                    .then(() => {
+                        unreadRefetch();
+                        message.success('모든 알림을 삭제했습니다.');
+                    })
+                    .catch(() => {
+                        message.error('알림 삭제 중 문제가 발생했습니다.');
+                    });
+            },
+        });
+    };
 
     return (
         <>
@@ -40,7 +73,11 @@ export default function MyNotificationContainer() {
             {!unreadLoading && unreads.length > 0 && (
                 <>
                     <div className={classes.notiActionWrapper}>
-                        <Button size="small" className={classes.button}>
+                        <Button
+                            size="small"
+                            onClick={handleAllNotiCloseClick}
+                            className={classes.button}
+                        >
                             모든 알림 삭제
                         </Button>
                     </div>
@@ -52,6 +89,7 @@ export default function MyNotificationContainer() {
                             date={unread.updatedAt}
                             targetId={unread.postId || unread.groupId}
                             key={`unread-${unread.id}`}
+                            title={unread.titleLength > 8 ? unread.title + '..' : unread.title}
                             refetch={unreadRefetch}
                         />
                     ))}
@@ -61,38 +99,36 @@ export default function MyNotificationContainer() {
     );
 }
 
-function NotificationViewer({ id, type, count, targetId, date, refetch }) {
+function NotificationViewer({ id, type, count, targetId, date, refetch, title }) {
     const classes = useStyles();
     const history = useHistory();
     const [seenNotification] = useMutation(SEEN_NOTIFICATION);
     let link = '';
     let messageText = '';
-    // 알림 있으면 알림아이콘 옆에 불 띄우기
-    // type group인거 제외하고 post면 게시글 제목, group이면 그룹 이름, comment면 댓글 콘텐츠 표시하기 (SQL에서)
     switch (type) {
         case 'POST_COMMENT':
             link = `/post/${targetId}`;
-            messageText = `[] 게시물에 댓글이 ${count}개 달렸습니다.`;
+            messageText = `[${title}] 게시물에 댓글이 ${count}개 달렸습니다.`;
             break;
         case 'POST_LIKE':
             link = `/post/${targetId}`;
-            messageText = `[] 게시물에 좋아요가 ${count}개 달렸습니다.`;
+            messageText = `[${title}] 게시물에 좋아요가 ${count}개 달렸습니다.`;
             break;
         case 'COMMENT_LIKE':
             link = `/post/${targetId}`;
-            messageText = `[] 댓글에 좋아요가 ${count}개 달렸습니다.`;
+            messageText = `[${title}] 댓글에 좋아요가 ${count}개 달렸습니다.`;
             break;
         case 'GROUP_INVITED':
             link = `/group/${targetId}`;
-            messageText = `[] 그룹에 초대되었습니다.`;
+            messageText = `[${title}] 그룹에 초대되었습니다.`;
             break;
         case 'GROUP_COMMENT':
             link = `/group/${targetId}`;
-            messageText = `[] 그룹에 대화가 ${count}개 달렸습니다.`;
+            messageText = `[${title}] 그룹에 대화가 ${count}개 달렸습니다.`;
             break;
         case 'NOTICE':
             link = `/post/${targetId}`;
-            messageText = `학과 공지[]가 게시되었습니다.`;
+            messageText = `학과 공지[${title}]가 게시되었습니다.`;
             break;
         default:
             break;
@@ -127,12 +163,16 @@ function NotificationViewer({ id, type, count, targetId, date, refetch }) {
         e.stopPropagation();
     };
     return (
-        <div className={classes.notificationWrapper} onClick={handleNotiClick}>
-            <span className={classes.notificationMessage}>{messageText}</span>
-            <span className={classes.notificationTime}>{commentTimeFormatter(date)}</span>
-            <Tooltip title="이 알림 삭제">
-                <CloseIcon onClick={handleCloseClick} className={classes.notificationIcon} />
-            </Tooltip>
-        </div>
+        <Grid container className={classes.notificationWrapper} onClick={handleNotiClick}>
+            <Grid item xs={12} sm={9} className={classes.notificationMessage}>
+                {messageText}
+            </Grid>
+            <Grid item xs={12} sm={3} className={classes.notificationTime} align="right">
+                {commentTimeFormatter(date)}
+                <Tooltip title="이 알림 삭제">
+                    <CloseIcon onClick={handleCloseClick} className={classes.notificationIcon} />
+                </Tooltip>
+            </Grid>
+        </Grid>
     );
 }

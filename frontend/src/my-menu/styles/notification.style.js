@@ -20,7 +20,7 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: '0.9rem',
     },
     notificationTime: {
-        marginLeft: 5,
+        display: 'inline-block',
         fontSize: '0.8rem',
         color: '#aaa',
     },

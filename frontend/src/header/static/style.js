@@ -69,8 +69,14 @@ export const useStyles = makeStyles((theme) => ({
     },
     userToolButton: {
         cursor: 'pointer',
+        color: 'white',
         '&:hover': {
             color: theme.palette.primary.light,
+        },
+    },
+    notiBadge: {
+        '& .ant-badge-dot': {
+            boxShadow: 'none',
         },
     },
     userSectionSmall: {

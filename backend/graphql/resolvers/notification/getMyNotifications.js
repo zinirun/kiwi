@@ -17,6 +17,7 @@
  */
 
 const models = require('../../../models');
+const { ConflictError } = require('../../errors/errors');
 
 module.exports = async ({}, { id: userId }) => {
     const query = `
@@ -38,9 +39,8 @@ module.exports = async ({}, { id: userId }) => {
                     `;
     return await models.sequelize.query(query, { replacements: { userId } }).spread(
         (results) => {
-            console.log(JSON.parse(JSON.stringify(results)));
             return JSON.parse(JSON.stringify(results));
         },
-        () => NotFoundError(),
+        () => ConflictError(),
     );
 };
