@@ -247,7 +247,7 @@ const createNotificationGroupComment = async (groupId, memberId) => {
             await models.notification.bulkCreate(toCreate);
         }
     } catch (err) {
-        console.log(err);
+        console.error(err);
     }
 };
 module.exports = {

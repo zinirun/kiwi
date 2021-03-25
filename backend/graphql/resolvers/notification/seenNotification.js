@@ -12,6 +12,7 @@ module.exports = async ({ id }, { id: authorId }) => {
     return await models.notification
         .update(
             {
+                count: 1,
                 isDeleted: 1,
             },
             { where: { id, userId: authorId } },
