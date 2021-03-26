@@ -18,5 +18,5 @@ module.exports = async (boardId, userType) => {
     if (isSpecial && userType !== 9) {
         throw AuthorizationError('Board not exists');
     }
-    return;
+    return isSpecial ? true : false;
 };

@@ -15,7 +15,7 @@ const { ConflictError } = require('../../errors/errors');
 const canAccessSpecialBoard = require('../../middlewares/canAccessSpecialBoard');
 
 module.exports = async ({ post }, { id: authorId, departmentId, type: userType }) => {
-    await canAccessSpecialBoard(post.boardId, userType);
+    const isSpecial = await canAccessSpecialBoard(post.boardId, userType);
     return await models.post
         .create({
             authorId,
@@ -25,6 +25,9 @@ module.exports = async ({ post }, { id: authorId, departmentId, type: userType }
         })
         .then((result) => {
             const data = result.get({ plain: true });
+            if (isSpecial) {
+                // Notification Logic (departmentId)
+            }
             return {
                 ...data,
             };
