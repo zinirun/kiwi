@@ -13,6 +13,7 @@
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 const canAccessSpecialBoard = require('../../middlewares/canAccessSpecialBoard');
+const { createNotificationPostSpecial } = require('../../services/notification.service.js');
 
 module.exports = async ({ post }, { id: authorId, departmentId, type: userType }) => {
     const isSpecial = await canAccessSpecialBoard(post.boardId, userType);
@@ -26,7 +27,7 @@ module.exports = async ({ post }, { id: authorId, departmentId, type: userType }
         .then((result) => {
             const data = result.get({ plain: true });
             if (isSpecial) {
-                // Notification Logic (departmentId)
+                createNotificationPostSpecial(data.id, departmentId, authorId);
             }
             return {
                 ...data,
