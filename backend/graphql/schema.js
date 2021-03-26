@@ -291,7 +291,7 @@ module.exports = buildSchema(`
         seenAllNotifications: Boolean
         createReport(report: ReportInput!): Boolean
         completeReport(id: ID!): Boolean
-        searchUserByStudentNumber(studentNumber: Int!): User!
+        searchUserByStudentNumber(studentNumber: String!): User!
         searchUserByUserId(id: String!): User!
     }
 `);

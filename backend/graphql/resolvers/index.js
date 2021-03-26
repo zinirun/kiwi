@@ -6,9 +6,6 @@ module.exports = {
 
     // User
     getUser: require('./user/getUser'),
-    getAllUsers: require('./admin/getAllUsers'),
-    searchUserByStudentNumber: require('./admin/searchUserByStudentNumber'),
-    searchUserByUserId: require('./admin/searchUserByUserId'),
     updateUser: require('./user/updateUser'),
     updateUserStatus: require('./user/updateUserStatus'),
     updateUserPassword: require('./user/updateUserPassword'),
@@ -79,4 +76,9 @@ module.exports = {
     createReport: require('./report/createReport'),
     completeReport: require('./report/completeReport'),
     getReports: require('./report/getReports'),
+
+    // Admin
+    getAllUsers: require('./admin/user/getAllUsers'),
+    searchUserByStudentNumber: require('./admin/user/searchUserByStudentNumber'),
+    searchUserByUserId: require('./admin/user/searchUserByUserId'),
 };

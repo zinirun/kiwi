@@ -19,9 +19,9 @@
 * getUserByUserAccount(userId: String!): User!
  */
 
-const models = require('../../../models');
-const { NotFoundError } = require('../../errors/errors');
-const isAdmin = require('../../middlewares/isAdmin');
+const models = require('../../../../models');
+const { NotFoundError } = require('../../../errors/errors');
+const isAdmin = require('../../../middlewares/isAdmin');
 
 module.exports = async ({ id }, { id: userId }) => {
     await isAdmin(userId);

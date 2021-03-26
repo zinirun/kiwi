@@ -563,3 +563,20 @@ export const SEARCH_USER_BY_USER_ID = gql`
         }
     }
 `;
+
+export const SEARCH_USER_BY_STUDENT_NUMBER = gql`
+    mutation searchUserByStudentNumber($studentNumber: String!) {
+        searchUserByStudentNumber(studentNumber: $studentNumber) {
+            id
+            userAccount
+            userName
+            studentNumber
+            studentGradeId
+            grade
+            email
+            department
+            status
+            type
+        }
+    }
+`;

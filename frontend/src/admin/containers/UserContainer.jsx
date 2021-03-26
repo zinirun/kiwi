@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Input, Row, Col, message, Button } from 'antd';
 import { Grid } from '@material-ui/core';
 import { useMutation } from 'react-apollo';
-import { SEARCH_USER_BY_USER_ID } from '../../configs/queries';
+import { SEARCH_USER_BY_USER_ID, SEARCH_USER_BY_STUDENT_NUMBER } from '../../configs/queries';
 import { useStyles } from '../styles/admin.style';
 const { Search } = Input;
 
@@ -34,6 +34,7 @@ export default function UserContainer() {
     const [userInfo, setUserInfo] = useState(null);
 
     const [searchUserByUserId] = useMutation(SEARCH_USER_BY_USER_ID);
+    const [searchUserByStudentNumber] = useMutation(SEARCH_USER_BY_STUDENT_NUMBER);
 
     const onSearchByUserId = (value) => {
         searchUserByUserId({
@@ -45,12 +46,22 @@ export default function UserContainer() {
                 setUserInfo(result.data.searchUserByUserId);
             })
             .catch(() => {
-                message.error('회원 조회 중 오류가 발생했습니다.');
+                message.error('고유아이디에 맞는 회원이 없습니다. 다시 입력해주세요.');
             });
     };
 
     const onSearchByGradeNumber = (value) => {
-        console.log(value);
+        searchUserByStudentNumber({
+            variables: {
+                studentNumber: value,
+            },
+        })
+            .then((result) => {
+                setUserInfo(result.data.searchUserByStudentNumber);
+            })
+            .catch(() => {
+                message.error('학번에 맞는 회원이 없습니다. 다시 입력해주세요.');
+            });
     };
     return (
         <>
@@ -105,8 +116,8 @@ export default function UserContainer() {
                                 정지
                             </Button>
                         </Grid>
-                        {buttonData.map((b) => (
-                            <Grid item xs={12} sm={2}>
+                        {buttonData.map((b, idx) => (
+                            <Grid key={idx} item xs={12} sm={2}>
                                 <Button
                                     type="primary"
                                     size="middle"
