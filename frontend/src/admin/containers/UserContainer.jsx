@@ -54,22 +54,24 @@ export default function UserContainer() {
             </Grid>
             {userInfo && (
                 <Row gutter={[12, 12]} className={classes.infoSection}>
-                    <Col span={3}>아이디</Col>
-                    <Col span={20}>{userInfo.userId}</Col>
-                    <Col span={3}>학과</Col>
-                    <Col span={21}>{userInfo.department}</Col>
-                    <Col span={3}>학번</Col>
-                    <Col span={21}>{userInfo.studentNumber}</Col>
-                    <Col span={3}>이름</Col>
-                    <Col span={21}>{userInfo.userName}</Col>
-                    <Col span={3}>이메일</Col>
-                    <Col span={21}>{userInfo.email}</Col>
-                    <Col span={3}>상태</Col>
-                    <Col span={21}>
+                    <Col span={4}>고유아이디</Col>
+                    <Col span={18}>{userInfo.id}</Col>
+                    <Col span={4}>계정</Col>
+                    <Col span={18}>{userInfo.userAccount}</Col>
+                    <Col span={4}>학과</Col>
+                    <Col span={20}>{userInfo.department}</Col>
+                    <Col span={4}>학번</Col>
+                    <Col span={20}>{userInfo.studentNumber}</Col>
+                    <Col span={4}>이름</Col>
+                    <Col span={20}>{userInfo.userName}</Col>
+                    <Col span={4}>이메일</Col>
+                    <Col span={20}>{userInfo.email}</Col>
+                    <Col span={4}>상태</Col>
+                    <Col span={20}>
                         <UserStatus status={userInfo.status} />
                     </Col>
-                    <Col span={3}>타입</Col>
-                    <Col span={21}>
+                    <Col span={4}>타입</Col>
+                    <Col span={20}>
                         <UserType type={userInfo.type} />
                     </Col>
                 </Row>
