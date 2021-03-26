@@ -5,6 +5,7 @@ import { GET_LOCAL_IS_ADMIN } from '../../configs/queries';
 import { useHistory } from 'react-router';
 import { Layout, Menu } from 'antd';
 import UserContainer from '../containers/UserContainer';
+import PostContainer from '../containers/PostContainer';
 
 const { Content, Sider } = Layout;
 
@@ -43,6 +44,7 @@ export default function AdminPage() {
                 </Sider>
                 <Content style={{ padding: 10, minHeight: '800px', background: 'white' }}>
                     {menuKey === 'user' && <UserContainer />}
+                    {menuKey === 'post' && <PostContainer />}
                 </Content>
             </Layout>
         </>
