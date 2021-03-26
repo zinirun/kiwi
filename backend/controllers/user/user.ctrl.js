@@ -52,7 +52,7 @@ module.exports = {
     makePasswordHashed,
     post_signup: async (req, res) => {
         const { userAccount: userAccountInput, studentNumber: studentNumberInput } = req.body.user;
-        const { userAccount, studentNumber } = await models.user.findOne({
+        const isExists = await models.user.findOne({
             attributes: ['id', 'userAccount', 'studentNumber'],
             raw: true,
             where: {
@@ -67,7 +67,8 @@ module.exports = {
             },
         });
 
-        if (userAccount || studentNumber) {
+        if (isExists) {
+            const { userAccount, studentNumber } = isExists;
             userAccount === userAccountInput
                 ? res.json({
                       success: false,
@@ -87,7 +88,9 @@ module.exports = {
                 password,
                 salt,
             })
-            .then((result) => res.json({ userAccount: result.dataValues.userAccount }))
+            .then((result) =>
+                res.json({ success: true, userAccount: result.dataValues.userAccount }),
+            )
             .catch((error) => res.status(409).json({ error }));
     },
 
