@@ -9,9 +9,11 @@ module.exports = buildSchema(`
         userName: String!
         studentNumber: String!
         studentGradeId: ID!
+        grade: String
+        email: String
         departmentId: ID!
         department: String
-        grade: String
+        status: Int
         type: Int
     }
 
@@ -220,6 +222,7 @@ module.exports = buildSchema(`
 
     type Query {
         getUser: User!
+        getAllUsers: [User]
         getPostById(id: ID!): Post
         getPostsByBoardId(boardId: ID!, categoryId: ID, pageNumber: Int!, elementCount: Int!): [PostList]
         getPostsByLikeCount(likeCount: Int!, pageNumber: Int!, elementCount: Int!): [PostList]
