@@ -11,12 +11,12 @@ const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 const isAdmin = require('../../middlewares/isAdmin');
 
-module.exports = async ({ id, report }, { id: userId }) => {
+module.exports = async ({ id }, { id: userId }) => {
     await isAdmin(userId);
     return await models.report
         .update(
             {
-                ...report,
+                isCompleted: 1,
             },
             { where: { id, userId } },
         )

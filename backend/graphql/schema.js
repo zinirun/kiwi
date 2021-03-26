@@ -231,10 +231,6 @@ module.exports = buildSchema(`
         content: String!
     }
 
-    input ReportCompletedInput {
-        isCompleted: Int!
-    }
-
     type Query {
         getUser: User!
         getPostById(id: ID!): Post
@@ -288,6 +284,6 @@ module.exports = buildSchema(`
         scrapPost(postId: ID!): String
         seenAllNotifications: Boolean
         createReport(report: ReportInput!): Boolean
-        completeReport(id: ID!, report: ReportCompletedInput!): Boolean
+        completeReport(id: ID!): Boolean
     }
 `);
