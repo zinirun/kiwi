@@ -44,6 +44,27 @@ module.exports = buildSchema(`
         files: [File]
     }
 
+    type PostAdmin {
+        id: ID!
+        userId: ID!
+        department: String!
+        authorId: ID!
+        boardId: ID!
+        boardName: String!
+        boardLink: String
+        categoryName: String
+        title: String!
+        content: String!
+        isDeleted: Int!
+        gradeName: String!
+        authorName: String!
+        createdAt: Date!
+        updatedAt: Date!
+        likeCount: Int!
+        commentCount: Int!
+        files: [File]
+    }
+
     type RecentPosts {
         boardId: ID!
         boardName: String!
@@ -242,6 +263,7 @@ module.exports = buildSchema(`
         getPostsByBoardId(boardId: ID!, categoryId: ID, pageNumber: Int!, elementCount: Int!): [PostList]
         getPostsByLikeCount(likeCount: Int!, pageNumber: Int!, elementCount: Int!): [PostList]
         getPostsByLikeCountWithDay(term: Int!): [PostList]
+        getPostByAdmin(postId: ID!): PostAdmin!
         getRecentPosts: [RecentPosts]
         getCommentsByPostId(id: ID!): [Comment]
         getBoardById(id: ID!): Board!
