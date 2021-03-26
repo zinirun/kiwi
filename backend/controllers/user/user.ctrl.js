@@ -2,6 +2,7 @@ const models = require('../../models');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { ConflictError } = require('../../graphql/errors/errors');
+const { Op } = require('sequelize');
 //const { sendMailOfResetPassword } = require('../../api/mailer');
 
 const createSalt = () =>
@@ -50,6 +51,36 @@ module.exports = {
     createHashedPassword,
     makePasswordHashed,
     post_signup: async (req, res) => {
+        const { userAccount: userAccountInput, studentNumber: studentNumberInput } = req.body.user;
+        const isExists = await models.user.findOne({
+            attributes: ['id', 'userAccount', 'studentNumber'],
+            raw: true,
+            where: {
+                [Op.or]: [
+                    {
+                        userAccount: userAccountInput,
+                    },
+                    {
+                        studentNumber: studentNumberInput,
+                    },
+                ],
+            },
+        });
+
+        if (isExists) {
+            const { userAccount, studentNumber } = isExists;
+            userAccount === userAccountInput
+                ? res.json({
+                      success: false,
+                      duplicate: 'USER_ACCOUNT',
+                  })
+                : res.json({
+                      success: false,
+                      duplicate: 'STUDENT_NUMBER',
+                  });
+            return;
+        }
+
         const { password, salt } = await createHashedPassword(req.body.user.password);
         return await models.user
             .create({
@@ -57,7 +88,9 @@ module.exports = {
                 password,
                 salt,
             })
-            .then((result) => res.json({ userAccount: result.dataValues.userAccount }))
+            .then((result) =>
+                res.json({ success: true, userAccount: result.dataValues.userAccount }),
+            )
             .catch((error) => res.status(409).json({ error }));
     },
 
@@ -85,7 +118,7 @@ module.exports = {
                     return res.status(409).json({ error: { name: 'invalid' } });
                 } else {
                     //sendMailOfResetPassword(name, userAccount, newPassword);
-                    return res.json({ userAccount });
+                    return res.json({ success: true, userAccount });
                 }
             })
             .catch((error) => res.status(409).json({ error }));
@@ -110,6 +143,7 @@ module.exports = {
                     'studentGradeId',
                     'status',
                     'type',
+                    'email',
                     'createdAt',
                     'updatedAt',
                 ],

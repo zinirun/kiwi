@@ -254,10 +254,32 @@ const createNotificationGroupComment = async (groupId, memberId) => {
         console.error(err);
     }
 };
+
+// type: POST_SPECIAL
+const createNotificationPostSpecial = async (postId, departmentId, triggerId) => {
+    const type = 'POST_SPECIAL';
+    const notificationOfTargets = await models.user
+        .findAll({
+            attributes: ['id'],
+            where: { departmentId },
+            raw: true,
+        })
+        .filter((target) => target.id !== +triggerId);
+    await models.notification.bulkCreate(
+        notificationOfTargets.map((target) => {
+            return {
+                userId: target.id,
+                postId,
+                type,
+            };
+        }),
+    );
+};
 module.exports = {
     createNotificationPostComment,
     createNotificationCommentLike,
     createNotificationPostLike,
     createNotificationGroupInvite,
     createNotificationGroupComment,
+    createNotificationPostSpecial,
 };

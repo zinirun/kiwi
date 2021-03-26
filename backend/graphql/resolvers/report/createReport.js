@@ -1,7 +1,7 @@
 /**
  * 신고 작성
  * @author 신창우
- * @param input nput ReportInput {
+ * @param input input ReportInput {
         content: String!
     }
 * type Report {
@@ -26,6 +26,6 @@ module.exports = async ({ report }, { id: userId }) => {
         })
         .then(() => true)
         .catch(() => {
-            throw ConflictError('Update error occured');
+            throw ConflictError('Create error occured');
         });
 };

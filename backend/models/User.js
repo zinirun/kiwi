@@ -10,7 +10,7 @@ module.exports = function (sequelize, DataTypes) {
             userName: { type: DataTypes.STRING, allowNull: false },
             email: { type: DataTypes.STRING(50), allowNull: false },
             departmentId: { type: DataTypes.INTEGER, allowNull: false },
-            studentNumber: { type: DataTypes.STRING(20), allowNull: false },
+            studentNumber: { type: DataTypes.STRING(20), allowNull: false, unique: true },
             studentGradeId: { type: DataTypes.INTEGER, allowNull: false },
             status: { type: DataTypes.TINYINT, defaultValue: 0 },
             type: { type: DataTypes.TINYINT, allowNull: false, defaultValue: 0 },
