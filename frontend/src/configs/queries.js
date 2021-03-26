@@ -580,3 +580,9 @@ export const SEARCH_USER_BY_STUDENT_NUMBER = gql`
         }
     }
 `;
+
+export const UPDATE_STATUS = gql`
+    mutation udpateStatus($status: String!, $id: String!) {
+        updateStatus(status: $status, id: $id)
+    }
+`;

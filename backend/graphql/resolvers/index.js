@@ -81,4 +81,5 @@ module.exports = {
     getAllUsers: require('./admin/user/getAllUsers'),
     searchUserByStudentNumber: require('./admin/user/searchUserByStudentNumber'),
     searchUserByUserId: require('./admin/user/searchUserByUserId'),
+    updateStatus: require('./admin/user/updateStatus'),
 };
