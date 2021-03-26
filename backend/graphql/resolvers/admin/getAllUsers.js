@@ -23,7 +23,7 @@ const { NotFoundError } = require('../../errors/errors');
 const isAdmin = require('../../middlewares/isAdmin');
 
 module.exports = async ({}, { id: userId }) => {
-    await isAdmin(userid);
+    await isAdmin(userId);
     const query = `
                     select u.id,
                     u.userAccount,
