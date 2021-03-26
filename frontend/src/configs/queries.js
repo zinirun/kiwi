@@ -586,3 +586,9 @@ export const UPDATE_STATUS = gql`
         updateStatus(status: $status, id: $id)
     }
 `;
+
+export const UPDATE_TYPE = gql`
+    mutation updateType($id: String!, $type: String!) {
+        updateType(id: $id, type: $type)
+    }
+`;

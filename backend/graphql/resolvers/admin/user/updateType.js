@@ -6,9 +6,9 @@
  * updateType(id: ID!, type: Int!): Boolean
  */
 
-const models = require('../../../models');
-const { ConflictError } = require('../../errors/errors');
-const isAdmin = require('../../middlewares/isAdmin');
+const models = require('../../../../models');
+const { ConflictError } = require('../../../errors/errors');
+const isAdmin = require('../../../middlewares/isAdmin');
 
 module.exports = async ({ id, type }, { id: userId }) => {
     await isAdmin(userId);
