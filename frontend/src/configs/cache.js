@@ -1,6 +1,7 @@
 export const initialState = {
     unreadCount: 0,
     isAdmin: false,
+    isSpecialType: false,
 };
 
 export const mutations = {
@@ -10,9 +11,15 @@ export const mutations = {
         });
         return null;
     },
-    updateLocalIsAdmin: (_, variables, { cache }) => {
+    updateLocalIsAdmin: (_, _variables, { cache }) => {
         cache.writeData({
             data: { isAdmin: true },
+        });
+        return null;
+    },
+    updateLocalIsSpecialType: (_, _variables, { cache }) => {
+        cache.writeData({
+            data: { isSpecialType: true },
         });
         return null;
     },

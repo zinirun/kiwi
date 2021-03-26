@@ -8,8 +8,8 @@ import MobileHeader from './components/MobileHeader';
 import { useHistory, useLocation } from 'react-router';
 import { isFullScreen, isPublic } from './tools/handler';
 import { useMutation, useQuery } from 'react-apollo';
-import { GET_USER, UPDATE_LOCAL_IS_ADMIN } from '../configs/queries';
-import { ADMIN_TYPE } from '../configs/variables';
+import { GET_USER, UPDATE_LOCAL_IS_ADMIN, UPDATE_LOCAL_IS_SPECIAL_TYPE } from '../configs/queries';
+import { ADMIN_TYPE, NORMAL_USER_TYPE } from '../configs/variables';
 
 export default function Root(props) {
     const { pathname } = useLocation();
@@ -21,6 +21,7 @@ export default function Root(props) {
 
     const [user, setUser] = useState(null);
     const { data, loading, error } = useQuery(GET_USER);
+    const [updateLocalIsSpecialType] = useMutation(UPDATE_LOCAL_IS_SPECIAL_TYPE);
     const [updateLocalIsAdmin] = useMutation(UPDATE_LOCAL_IS_ADMIN);
 
     useEffect(() => {
@@ -30,11 +31,14 @@ export default function Root(props) {
             if (user.type === ADMIN_TYPE) {
                 updateLocalIsAdmin().catch(() => {});
             }
+            if (user.type !== NORMAL_USER_TYPE) {
+                updateLocalIsSpecialType().catch(() => {});
+            }
         }
         if (error) {
             if (!isPublic(pathname)) history.push('/needsign');
         }
-    }, [data, error, history, pathname, updateLocalIsAdmin]);
+    }, [data, error, history, pathname, updateLocalIsAdmin, updateLocalIsSpecialType]);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
