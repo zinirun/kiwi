@@ -19,7 +19,7 @@
  */
 
 const models = require('../../../../models');
-const { NotFoundError } = require('../../../errors/errors');
+const { ConflictError } = require('../../../errors/errors');
 const isAdmin = require('../../../middlewares/isAdmin');
 
 module.exports = async ({}, { id: userId }) => {
