@@ -7,8 +7,8 @@ module.exports = {
     // User
     getUser: require('./user/getUser'),
     getAllUsers: require('./admin/getAllUsers'),
-    getUserByStudentNumber: require('./admin/getUserByStudentNumber'),
-    getUserByUserAccount: require('./admin/getUserByUserAccount'),
+    searchUserByStudentNumber: require('./admin/searchUserByStudentNumber'),
+    searchUserByUserId: require('./admin/searchUserByUserId'),
     updateUser: require('./user/updateUser'),
     updateUserStatus: require('./user/updateUserStatus'),
     updateUserPassword: require('./user/updateUserPassword'),
