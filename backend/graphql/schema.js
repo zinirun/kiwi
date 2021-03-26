@@ -263,7 +263,6 @@ module.exports = buildSchema(`
         getPostsByBoardId(boardId: ID!, categoryId: ID, pageNumber: Int!, elementCount: Int!): [PostList]
         getPostsByLikeCount(likeCount: Int!, pageNumber: Int!, elementCount: Int!): [PostList]
         getPostsByLikeCountWithDay(term: Int!): [PostList]
-        getPostByAdmin(postId: ID!): PostAdmin!
         getRecentPosts: [RecentPosts]
         getCommentsByPostId(id: ID!): [Comment]
         getBoardById(id: ID!): Board!
@@ -317,5 +316,6 @@ module.exports = buildSchema(`
         searchUserByStudentNumber(studentNumber: String!): User!
         searchUserByUserId(id: String!): User!
         updateStatus(status: String!, id: String!): Boolean
+        getPostByAdmin(postId: ID!): PostAdmin!
     }
 `);
