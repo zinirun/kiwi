@@ -31,7 +31,7 @@ module.exports = async ({ comment }, { id: authorId }) => {
             ...comment,
         })
         .then((result) => {
-            const data = result.get({ plain: true }); // data.postId
+            const data = result.get({ plain: true });
             createNotificationPostComment(data.postId, authorId);
             return {
                 ...data,

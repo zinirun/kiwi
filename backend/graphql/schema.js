@@ -191,6 +191,15 @@ module.exports = buildSchema(`
         updatedAt: Date!
     }
 
+    type Report {
+        id: ID!
+        userId: ID!
+        content: String!
+        isCompleted: Int!
+        createdAt: Date!
+        updatedAt: Date
+    }
+
     input GroupCommentInput {
         groupId: ID!
         content: String!
@@ -215,6 +224,14 @@ module.exports = buildSchema(`
     input CommentInput {
         postId: ID!
         content: String!
+    }
+
+    input ReportInput {
+        content: String!
+    }
+
+    input ReportCompletedInput {
+        isCompleted: Int!
     }
 
     type Query {
@@ -269,5 +286,7 @@ module.exports = buildSchema(`
         seenNotification(id: ID!): Boolean
         scrapPost(postId: ID!): String
         seenAllNotifications: Boolean
+        createReport(report: ReportInput!): Boolean
+        completeReport(id: ID!, report: ReportCompletedInput!): Boolean
     }
 `);
