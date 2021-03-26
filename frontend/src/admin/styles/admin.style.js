@@ -6,4 +6,10 @@ export const useStyles = makeStyles((theme) => ({
     searchSection: {
         width: 300,
     },
+    button: {
+        width: 100,
+    },
+    buttonSection: {
+        marginTop: 20,
+    },
 }));

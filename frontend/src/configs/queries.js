@@ -578,6 +578,23 @@ export const GET_REPORTS = gql`
     }
 `;
 
+export const SEARCH_USER_BY_STUDENT_NUMBER = gql`
+    mutation searchUserByStudentNumber($studentNumber: String!) {
+        searchUserByStudentNumber(studentNumber: $studentNumber) {
+            id
+            userAccount
+            userName
+            studentNumber
+            studentGradeId
+            grade
+            email
+            department
+            status
+            type
+        }
+    }
+`;
+
 export const COMPLETE_REPORT = gql`
     mutation completeReport($id: ID!) {
         completeReport(id: $id)
@@ -633,5 +650,17 @@ export const GET_ALL_CATEGORIES = gql`
 export const CREATE_CATEGORY = gql`
     mutation createCategory($category: CategoryInput!) {
         createCategory(category: $category)
+    }
+`;
+
+export const UPDATE_STATUS = gql`
+    mutation udpateStatus($status: String!, $id: String!) {
+        updateStatus(status: $status, id: $id)
+    }
+`;
+
+export const UPDATE_TYPE = gql`
+    mutation updateType($id: String!, $type: String!) {
+        updateType(id: $id, type: $type)
     }
 `;

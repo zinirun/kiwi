@@ -50,6 +50,27 @@ module.exports = buildSchema(`
         files: [File]
     }
 
+    type PostAdmin {
+        id: ID!
+        userId: ID!
+        department: String!
+        authorId: ID!
+        boardId: ID!
+        boardName: String!
+        boardLink: String
+        categoryName: String
+        title: String!
+        content: String!
+        isDeleted: Int!
+        gradeName: String!
+        authorName: String!
+        createdAt: Date!
+        updatedAt: Date!
+        likeCount: Int!
+        commentCount: Int!
+        files: [File]
+    }
+
     type RecentPosts {
         boardId: ID!
         boardName: String!
@@ -293,6 +314,7 @@ module.exports = buildSchema(`
         updateUser(user: UserUpdateInput!): Boolean
         updateUserStatus(status: Int!): Boolean
         updateUserPassword(currentPassword: String!, newPassword: String!): Boolean
+        updateType(id: String!, type: String!): Boolean
         createPost(post: PostInput!): PostAfterCreate
         updatePost(id: ID!, post: PostUpdateInput!): Boolean
         deletePost(id: ID!): Boolean
@@ -312,10 +334,12 @@ module.exports = buildSchema(`
         seenAllNotifications: Boolean
         createReport(report: ReportInput!): Boolean
         completeReport(id: ID!): Boolean
-        searchUserByStudentNumber(studentNumber: Int!): User!
+        searchUserByStudentNumber(studentNumber: String!): User!
         searchUserByUserId(id: String!): User!
         createDepartment(deptName: String!): Boolean
         createBoard(board: BoardInput!): Boolean
         createCategory(category: CategoryInput!): Boolean
+        updateStatus(status: String!, id: String!): Boolean
+        getPostByAdmin(postId: ID!): PostAdmin!
     }
 `);

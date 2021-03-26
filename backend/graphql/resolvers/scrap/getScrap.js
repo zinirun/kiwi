@@ -17,7 +17,7 @@
  */
 
 const models = require('../../../models');
-const { NotFoundError } = require('../../errors/errors');
+const { ConflictError } = require('../../errors/errors');
 
 module.exports = async ({ pageNumber, elementCount }, { id, departmentId }) => {
     const query = `

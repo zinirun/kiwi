@@ -7,6 +7,7 @@
 
 const models = require('../../../models');
 const { createHashedPassword, makePasswordHashed } = require('../../../controllers/user/user.ctrl');
+
 module.exports = async ({ currentPassword, newPassword }, { userAccount, id }) => {
     const currentHashedPassword = await makePasswordHashed(userAccount, currentPassword);
     if (currentHashedPassword instanceof Error) {

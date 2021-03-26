@@ -6,9 +6,6 @@ module.exports = {
 
     // User
     getUser: require('./user/getUser'),
-    getAllUsers: require('./admin/getAllUsers'),
-    searchUserByStudentNumber: require('./admin/searchUserByStudentNumber'),
-    searchUserByUserId: require('./admin/searchUserByUserId'),
     updateUser: require('./user/updateUser'),
     updateUserStatus: require('./user/updateUserStatus'),
     updateUserPassword: require('./user/updateUserPassword'),
@@ -80,6 +77,13 @@ module.exports = {
     completeReport: require('./report/completeReport'),
     getReports: require('./report/getReports'),
 
+    // Admin
+    getAllUsers: require('./admin/user/getAllUsers'),
+    searchUserByStudentNumber: require('./admin/user/searchUserByStudentNumber'),
+    searchUserByUserId: require('./admin/user/searchUserByUserId'),
+    updateStatus: require('./admin/user/updateStatus'),
+    updateType: require('./admin/user/updateType'),
+    getPostByAdmin: require('./admin/post/getPostByAdmin'),
     createDepartment: require('./admin/department/createDepartment'),
     getAllDepartments: require('./admin/department/getAllDepartments'),
     createBoard: require('./admin/board/createBoard'),

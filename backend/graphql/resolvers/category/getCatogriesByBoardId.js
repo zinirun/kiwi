@@ -1,5 +1,5 @@
 const models = require('../../../models');
-const { NotFoundError } = require('../../errors/errors');
+const { ConflictError } = require('../../errors/errors');
 
 module.exports = async ({ boardId }, {}) => {
     const query = `
@@ -19,6 +19,6 @@ module.exports = async ({ boardId }, {}) => {
         })
         .spread(
             (results) => JSON.parse(JSON.stringify(results)),
-            () => NotFoundError(),
+            () => ConflictError('Database error'),
         );
 };

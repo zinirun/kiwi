@@ -1,8 +1,8 @@
 /**
- * 유저 정보 Read by userId
+ * 유저 정보 Read by studentId
  * @author 이건욱
  * @returns {User}
- * @params (userId: String!)
+ * @params (studentNumber: Int!)
  * type User {
         id: ID!
         userAccount: String!
@@ -16,14 +16,14 @@
         status: Int
         type: Int
     }
-* getUserByUserAccount(userId: String!): User!
+* getUserByStudentNumber(studentNumber: Int!): User!
  */
 
-const models = require('../../../models');
-const { NotFoundError } = require('../../errors/errors');
-const isAdmin = require('../../middlewares/isAdmin');
+const models = require('../../../../models');
+const { NotFoundError } = require('../../../errors/errors');
+const isAdmin = require('../../../middlewares/isAdmin');
 
-module.exports = async ({ id }, { id: userId }) => {
+module.exports = async ({ studentNumber }, { id: userId }) => {
     await isAdmin(userId);
     const user = await models.user.findOne({
         attributes: [
@@ -47,7 +47,7 @@ module.exports = async ({ id }, { id: userId }) => {
                 attributes: [['gradeName', 'grade']],
             },
         ],
-        where: { id },
+        where: { studentNumber },
         raw: true,
     });
     if (!user) {
@@ -62,6 +62,7 @@ module.exports = async ({ id }, { id: userId }) => {
         studentGradeId: user.studentGradeId,
         departmentId: user.departmentId,
         type: user.type,
+        status: user.status,
         department: user['department.department'],
         grade: user['grade.grade'],
     };
