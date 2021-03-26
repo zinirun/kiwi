@@ -12,6 +12,7 @@ module.exports = buildSchema(`
         departmentId: ID!
         department: String
         grade: String
+        type: Int
     }
 
     type File {

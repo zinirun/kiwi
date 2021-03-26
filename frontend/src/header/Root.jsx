@@ -7,8 +7,9 @@ import SideDrawer from './components/SideDrawer';
 import MobileHeader from './components/MobileHeader';
 import { useHistory, useLocation } from 'react-router';
 import { isFullScreen, isPublic } from './tools/handler';
-import { useQuery } from 'react-apollo';
-import { GET_USER } from '../configs/queries';
+import { useMutation, useQuery } from 'react-apollo';
+import { GET_USER, UPDATE_LOCAL_IS_ADMIN } from '../configs/queries';
+import { ADMIN_TYPE } from '../configs/variables';
 
 export default function Root(props) {
     const { pathname } = useLocation();
@@ -20,15 +21,20 @@ export default function Root(props) {
 
     const [user, setUser] = useState(null);
     const { data, loading, error } = useQuery(GET_USER);
+    const [updateLocalIsAdmin] = useMutation(UPDATE_LOCAL_IS_ADMIN);
 
     useEffect(() => {
         if (data) {
+            const user = data.getUser;
             setUser(data.getUser);
+            if (user.type === ADMIN_TYPE) {
+                updateLocalIsAdmin().catch(() => {});
+            }
         }
         if (error) {
             if (!isPublic(pathname)) history.push('/needsign');
         }
-    }, [data, error, history, pathname]);
+    }, [data, error, history, pathname, updateLocalIsAdmin]);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);

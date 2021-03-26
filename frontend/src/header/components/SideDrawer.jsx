@@ -5,8 +5,8 @@ import Logo from '../../common/components/Logo';
 import { Link, useHistory } from 'react-router-dom';
 import { IconViewer } from './IconViewer';
 import SideUserSection from './SideUserSection';
-import { EXTRA_BOARDS, MY_MENU } from '../../configs/siteMenu';
-import { GET_BOARDS } from '../../configs/queries';
+import { ADMIN_MENU, EXTRA_BOARDS, MY_MENU } from '../../configs/siteMenu';
+import { GET_BOARDS, GET_LOCAL_IS_ADMIN } from '../../configs/queries';
 import { useQuery } from '@apollo/react-hooks';
 import { message, Tooltip, Switch, Space } from 'antd';
 import { useDarkreader } from 'react-darkreader';
@@ -18,7 +18,16 @@ export default withCookies(function SideDrawer({ user, cookies }) {
     const history = useHistory();
     const [boards, setBoards] = useState([]);
     const { data: boardsData, loading: boardsLoading, error: boardsError } = useQuery(GET_BOARDS);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const { data: isAdminData } = useQuery(GET_LOCAL_IS_ADMIN);
     const [darkFromCookie, setDarkFromCookie] = useState(false);
+
+    useEffect(() => {
+        if (isAdminData) {
+            const isAdmin = isAdminData.isAdmin;
+            isAdmin && setIsAdmin(true);
+        }
+    }, [isAdminData]);
 
     useEffect(() => {
         if (!darkFromCookie) {
@@ -91,6 +100,20 @@ export default withCookies(function SideDrawer({ user, cookies }) {
                             </ListItem>
                         </Link>
                     ))}
+                    <Divider className={classes.sideDivider} />
+                    {isAdmin &&
+                        ADMIN_MENU.map((m) => (
+                            <Link to={m.link} style={{ textDecoration: 'none' }} key={m.id}>
+                                <ListItem className={classes.drawerItem} button>
+                                    <ListItemIcon className={classes.drawerIcon}>
+                                        <IconViewer icon={m.icon} />
+                                    </ListItemIcon>
+                                    <ListItemText className={classes.drawerText}>
+                                        {m.boardName}
+                                    </ListItemText>
+                                </ListItem>
+                            </Link>
+                        ))}
                     <ListItem className={classes.siderFooter}>
                         <Space size={20}>
                             <Tooltip title="다크모드">

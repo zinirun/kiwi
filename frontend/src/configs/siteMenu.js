@@ -33,3 +33,12 @@ export const MY_MENU = [
         icon: 'CommentIcon',
     },
 ];
+
+export const ADMIN_MENU = [
+    {
+        id: 0,
+        boardName: '관리자 페이지',
+        link: '/admin',
+        icon: 'BuildIcon',
+    },
+];

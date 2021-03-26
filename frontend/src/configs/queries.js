@@ -12,6 +12,18 @@ export const UPDATE_LOCAL_UNREAD_COUNT = gql`
     }
 `;
 
+export const GET_LOCAL_IS_ADMIN = gql`
+    query getLocalIsAdmin {
+        isAdmin @client
+    }
+`;
+
+export const UPDATE_LOCAL_IS_ADMIN = gql`
+    mutation updateLocalIsAdmin {
+        updateLocalIsAdmin @client
+    }
+`;
+
 export const GET_USER = gql`
     query getUser {
         getUser {
@@ -23,6 +35,7 @@ export const GET_USER = gql`
             departmentId
             department
             grade
+            type
         }
     }
 `;

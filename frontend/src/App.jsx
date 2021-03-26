@@ -53,6 +53,9 @@ import GroupContentPage from './my-menu/pages/GroupContentPage';
 // 나의 알림
 import MyNotificationPage from './my-menu/pages/MyNotificationPage';
 
+// 관리자 페이지
+import AdminPage from './admin/pages/AdminPage';
+
 function App() {
     return (
         <Router>
@@ -69,6 +72,7 @@ function App() {
                     <Route path="/post/:id" component={PostContentPage} />
                     <Route path="/modify" component={PostModifyPage} />
                     <Route path="/write" component={PostWritePage} />
+                    <Route path="/admin" component={AdminPage} />
                     <Route path="/my/info" component={ChangeUserInfoPage} />
                     <Route path="/my/post" component={MyPostsPage} />
                     <Route path="/my/comment" component={MyCommentsPage} />

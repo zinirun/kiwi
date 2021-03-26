@@ -27,6 +27,7 @@ module.exports = async ({}, { id }) => {
             'studentNumber',
             'studentGradeId',
             'departmentId',
+            'type',
         ],
         include: [
             {
@@ -51,6 +52,7 @@ module.exports = async ({}, { id }) => {
         studentNumber: user.studentNumber,
         studentGradeId: user.studentGradeId,
         departmentId: user.departmentId,
+        type: user.type,
         department: user['department.department'],
         grade: user['grade.grade'],
     };
