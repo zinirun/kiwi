@@ -27,8 +27,8 @@
  */
 
 const isAdmin = require('../../../middlewares/isAdmin');
-const models = require('../../../models');
-const { NotFoundError, ConflictError } = require('../../errors/errors');
+const models = require('../../../../models');
+const { NotFoundError, ConflictError } = require('../../../errors/errors');
 
 module.exports = async ({ postId }, { id: userId }) => {
     await isAdmin(userId);
@@ -54,7 +54,7 @@ module.exports = async ({ postId }, { id: userId }) => {
                         left join board b on b.id = p.boardId
                         left join (select count(*) as commentCount, postId from comment c where c.isDeleted = 0 and c.postId = :postId group by postId) as pc
                         on p.id = pc.postId
-                        left join (select count(*) as likeCount, postId from post_like pl where pl.isDeleted = 0 and pl.postId = :postId:postId group by postId) as ppl
+                        left join (select count(*) as likeCount, postId from post_like pl where pl.isDeleted = 0 and pl.postId = :postId group by postId) as ppl
                         on p.id = ppl.postId,
                         user u
                         left join grade g on u.studentGradeId = g.id
@@ -74,13 +74,14 @@ module.exports = async ({ postId }, { id: userId }) => {
                     const post = JSON.parse(JSON.stringify(result[0]));
                     const files = await models.file.findAll({
                         attributes: ['id', 'postId', 'fileName', 'fileType', 'fileUrl'],
-                        where: { postId: id },
+                        where: { postId },
                         raw: true,
                     });
                     if (files) {
                         post.files = files;
                     }
                     post.userId = userId;
+                    console.log(post);
                     return post;
                 } else {
                     throw NotFoundError('Post Not Exist');

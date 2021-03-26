@@ -316,6 +316,6 @@ module.exports = buildSchema(`
         searchUserByStudentNumber(studentNumber: String!): User!
         searchUserByUserId(id: String!): User!
         updateStatus(status: String!, id: String!): Boolean
-        getPostByAdmin(postId: ID!): PostAdmin!
+        getPostByAdmin(postId: String!): PostAdmin!
     }
 `);
