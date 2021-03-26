@@ -17,6 +17,12 @@ module.exports = buildSchema(`
         type: Int
     }
 
+    type Department {
+        id: ID!
+        deptName: String!
+        createdAt: Date
+    }
+
     type File {
         id: ID!
         postId: ID!
@@ -256,6 +262,18 @@ module.exports = buildSchema(`
         content: String!
     }
 
+    input BoardInput {
+        boardName: String!
+        link: String!
+        icon: String!
+        isSpecial: Int!
+    }
+
+    input CategoryInput {
+        categoryName: String!
+        boardId: ID!
+    }
+
     type Query {
         getUser: User!
         getAllUsers: [User]
@@ -287,6 +305,9 @@ module.exports = buildSchema(`
         getMyNotifications: [Notification]
         getNotificationsCount: Int
         getReports(isCompleted: Int!): [Report]
+        getAllDepartments: [Department]
+        getAllBoards: [Board]
+        getAllCategories: [Category]
     }
 
     type Mutation {
@@ -315,6 +336,9 @@ module.exports = buildSchema(`
         completeReport(id: ID!): Boolean
         searchUserByStudentNumber(studentNumber: String!): User!
         searchUserByUserId(id: String!): User!
+        createDepartment(deptName: String!): Boolean
+        createBoard(board: BoardInput!): Boolean
+        createCategory(category: CategoryInput!): Boolean
         updateStatus(status: String!, id: String!): Boolean
         getPostByAdmin(postId: ID!): PostAdmin!
     }

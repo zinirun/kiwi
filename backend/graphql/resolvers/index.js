@@ -84,4 +84,10 @@ module.exports = {
     updateStatus: require('./admin/user/updateStatus'),
     updateType: require('./admin/user/updateType'),
     getPostByAdmin: require('./admin/post/getPostByAdmin'),
+    createDepartment: require('./admin/department/createDepartment'),
+    getAllDepartments: require('./admin/department/getAllDepartments'),
+    createBoard: require('./admin/board/createBoard'),
+    getAllBoards: require('./admin/board/getAllBoards'),
+    createCategory: require('./admin/category/createCategory'),
+    getAllCategories: require('./admin/category/getAllCategories'),
 };
