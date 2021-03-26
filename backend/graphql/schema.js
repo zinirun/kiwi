@@ -95,6 +95,7 @@ module.exports = buildSchema(`
         boardName: String!
         link: String!
         icon: String
+        isSpecial: Int
         createdAt: Date
         updatedAt: Date
     }

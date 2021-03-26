@@ -7,8 +7,8 @@
  * getUserById: User!
  */
 
-const models = require('../../../models');
-const { AuthorizationError } = require('../../errors/errors');
+const models = require('../../models');
+const { AuthorizationError } = require('../errors/errors');
 
 module.exports = async (id) => {
     const { type } = await models.user.findOne({
