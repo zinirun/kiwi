@@ -15,7 +15,7 @@ const { ConflictError } = require('../../errors/errors');
 const canAccessSpecialBoard = require('../../middlewares/canAccessSpecialBoard');
 
 module.exports = async ({ post }, { id: authorId, departmentId, type: userType }) => {
-    canAccessSpecialBoard(post.boardId, userType);
+    await canAccessSpecialBoard(post.boardId, userType);
     return await models.post
         .create({
             authorId,
