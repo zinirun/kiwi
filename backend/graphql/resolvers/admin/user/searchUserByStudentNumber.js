@@ -19,9 +19,9 @@
 * getUserByStudentNumber(studentNumber: Int!): User!
  */
 
-const models = require('../../../models');
-const { NotFoundError } = require('../../errors/errors');
-const isAdmin = require('../../middlewares/isAdmin');
+const models = require('../../../../models');
+const { NotFoundError } = require('../../../errors/errors');
+const isAdmin = require('../../../middlewares/isAdmin');
 
 module.exports = async ({ studentNumber }, { id: userId }) => {
     await isAdmin(userId);

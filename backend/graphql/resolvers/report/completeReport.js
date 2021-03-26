@@ -4,7 +4,7 @@
  * @param input input ReportCompletedInput {
         isCompleted: Int!
     }
- * completeReport(id: ID!, report: ReportCompletedInput!): Boolean
+ * completeReport(id: ID!): Boolean
  */
 
 const models = require('../../../models');

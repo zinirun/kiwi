@@ -540,3 +540,43 @@ export const SEEN_ALL_NOTIFICATIONS = gql`
         seenAllNotifications
     }
 `;
+
+export const CREATE_REPORT = gql`
+    mutation createReport($report: ReportInput!) {
+        createReport(report: $report)
+    }
+`;
+
+export const SEARCH_USER_BY_USER_ID = gql`
+    mutation searchUserByUserId($id: String!) {
+        searchUserByUserId(id: $id) {
+            id
+            userAccount
+            userName
+            studentNumber
+            studentGradeId
+            grade
+            email
+            department
+            status
+            type
+        }
+    }
+`;
+
+export const SEARCH_USER_BY_STUDENT_NUMBER = gql`
+    mutation searchUserByStudentNumber($studentNumber: String!) {
+        searchUserByStudentNumber(studentNumber: $studentNumber) {
+            id
+            userAccount
+            userName
+            studentNumber
+            studentGradeId
+            grade
+            email
+            department
+            status
+            type
+        }
+    }
+`;

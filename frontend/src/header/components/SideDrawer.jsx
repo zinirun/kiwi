@@ -11,6 +11,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { message, Tooltip, Switch, Space } from 'antd';
 import { useDarkreader } from 'react-darkreader';
 import { withCookies } from 'react-cookie';
+import { FOOTER_COPYRIGHT } from '../../configs/variables';
 
 export default withCookies(function SideDrawer({ user, cookies }) {
     const classes = useStyles();
@@ -115,11 +116,14 @@ export default withCookies(function SideDrawer({ user, cookies }) {
                             </Link>
                         ))}
                     <ListItem className={classes.siderFooter}>
-                        <Space size={20}>
+                        <Space size={2}>
                             <Tooltip title="다크모드">
                                 <Switch checked={isDark} onChange={handleDarkToggle} size="small" />
                             </Tooltip>
-                            <span className={classes.copyright}>Powered by Kiwi</span>
+                            <Link to="/report" className={classes.reportLink}>
+                                신고
+                            </Link>
+                            <span className={classes.copyright}>/ {FOOTER_COPYRIGHT}</span>
                         </Space>
                     </ListItem>
                 </List>

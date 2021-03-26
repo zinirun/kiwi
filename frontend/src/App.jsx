@@ -56,6 +56,9 @@ import MyNotificationPage from './my-menu/pages/MyNotificationPage';
 // 관리자 페이지
 import AdminPage from './admin/pages/AdminPage';
 
+// 신고 페이지
+import ReportPage from './common/pages/ReportPage';
+
 function App() {
     return (
         <Router>
@@ -72,6 +75,7 @@ function App() {
                     <Route path="/post/:id" component={PostContentPage} />
                     <Route path="/modify" component={PostModifyPage} />
                     <Route path="/write" component={PostWritePage} />
+                    <Route path="/report" component={ReportPage} />
                     <Route path="/admin" component={AdminPage} />
                     <Route path="/my/info" component={ChangeUserInfoPage} />
                     <Route path="/my/post" component={MyPostsPage} />
