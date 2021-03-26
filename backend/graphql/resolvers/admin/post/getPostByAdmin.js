@@ -1,7 +1,7 @@
 /**
  * (관리자)게시물 Read
  * @author 이건욱 
- * @param (postId: ID!)
+ * @param (postId: String!)
  * @returns {PostAdmin}
  * type PostAdmin {
         id: ID!
@@ -23,7 +23,7 @@
         commentCount: Int!
         files: [File]
     }
-* getPostByAdmin(postId: ID!): PostAdmin!
+* getPostByAdmin(postId: String!): PostAdmin!
  */
 
 const isAdmin = require('../../../middlewares/isAdmin');
@@ -74,7 +74,7 @@ module.exports = async ({ postId }, { id: userId }) => {
                     const post = JSON.parse(JSON.stringify(result[0]));
                     const files = await models.file.findAll({
                         attributes: ['id', 'postId', 'fileName', 'fileType', 'fileUrl'],
-                        where: { postId: id },
+                        where: { postId },
                         raw: true,
                     });
                     if (files) {
