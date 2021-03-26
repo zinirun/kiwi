@@ -84,10 +84,17 @@ export const useStyles = makeStyles((theme) => ({
     },
     copyright: {
         color: '#b9f0ca',
-        fontSize: '0.825rem',
     },
     siderFooter: {
         marginTop: 15,
-        paddingLeft: 20,
+        paddingLeft: 12,
+        fontSize: '0.75rem',
+    },
+    reportLink: {
+        color: 'white',
+        marginLeft: 10,
+        '&:hover': {
+            color: theme.palette.primary.light,
+        },
     },
 }));

@@ -540,3 +540,9 @@ export const SEEN_ALL_NOTIFICATIONS = gql`
         seenAllNotifications
     }
 `;
+
+export const CREATE_REPORT = gql`
+    mutation createReport($report: ReportInput!) {
+        createReport(report: $report)
+    }
+`;
