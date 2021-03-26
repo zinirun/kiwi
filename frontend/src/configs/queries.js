@@ -546,3 +546,20 @@ export const CREATE_REPORT = gql`
         createReport(report: $report)
     }
 `;
+
+export const SEARCH_USER_BY_USER_ID = gql`
+    mutation searchUserByUserId($id: String!) {
+        searchUserByUserId(id: $id) {
+            id
+            userAccount
+            userName
+            studentNumber
+            studentGradeId
+            grade
+            email
+            department
+            status
+            type
+        }
+    }
+`;
