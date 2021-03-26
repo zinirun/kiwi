@@ -563,3 +563,75 @@ export const SEARCH_USER_BY_USER_ID = gql`
         }
     }
 `;
+
+export const GET_REPORTS = gql`
+    query getReports($isCompleted: Int!) {
+        getReports(isCompleted: $isCompleted) {
+            id
+            userId
+            userName
+            deptName
+            content
+            isCompleted
+            createdAt
+        }
+    }
+`;
+
+export const COMPLETE_REPORT = gql`
+    mutation completeReport($id: ID!) {
+        completeReport(id: $id)
+    }
+`;
+
+export const GET_ALL_DEPARTMENTS = gql`
+    query getAllDepartments {
+        getAllDepartments {
+            id
+            deptName
+            createdAt
+        }
+    }
+`;
+
+export const CREATE_DEPARTMENT = gql`
+    mutation createDepartment($deptName: String!) {
+        createDepartment(deptName: $deptName)
+    }
+`;
+
+export const GET_ALL_BOARDS = gql`
+    query getAllBoards {
+        getAllBoards {
+            id
+            boardName
+            link
+            icon
+            isSpecial
+            createdAt
+        }
+    }
+`;
+
+export const CREATE_BOARD = gql`
+    mutation createBoard($board: BoardInput!) {
+        createBoard(board: $board)
+    }
+`;
+
+export const GET_ALL_CATEGORIES = gql`
+    query getAllCategories {
+        getAllCategories {
+            categoryId
+            categoryName
+            boardId
+            createdAt
+        }
+    }
+`;
+
+export const CREATE_CATEGORY = gql`
+    mutation createCategory($category: CategoryInput!) {
+        createCategory(category: $category)
+    }
+`;

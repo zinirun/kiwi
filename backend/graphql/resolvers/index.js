@@ -79,4 +79,11 @@ module.exports = {
     createReport: require('./report/createReport'),
     completeReport: require('./report/completeReport'),
     getReports: require('./report/getReports'),
+
+    createDepartment: require('./admin/department/createDepartment'),
+    getAllDepartments: require('./admin/department/getAllDepartments'),
+    createBoard: require('./admin/board/createBoard'),
+    getAllBoards: require('./admin/board/getAllBoards'),
+    createCategory: require('./admin/category/createCategory'),
+    getAllCategories: require('./admin/category/getAllCategories'),
 };
