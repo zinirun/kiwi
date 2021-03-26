@@ -195,6 +195,8 @@ module.exports = buildSchema(`
     type Report {
         id: ID!
         userId: ID!
+        userName: String!
+        deptName: String!
         content: String!
         isCompleted: Int!
         createdAt: Date!
@@ -260,6 +262,7 @@ module.exports = buildSchema(`
         getScrapCount: Int!
         getMyNotifications: [Notification]
         getNotificationsCount: Int
+        getReports(isCompleted: Int!): [Report]
     }
 
     type Mutation {

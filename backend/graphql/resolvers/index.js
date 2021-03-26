@@ -75,4 +75,5 @@ module.exports = {
     // Report
     createReport: require('./report/createReport'),
     completeReport: require('./report/completeReport'),
+    getReports: require('./report/getReports'),
 };

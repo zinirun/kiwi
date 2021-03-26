@@ -18,7 +18,7 @@ module.exports = async ({ id }, { id: userId }) => {
             {
                 isCompleted: 1,
             },
-            { where: { id, userId } },
+            { where: { id } },
         )
         .then(() => {
             return true;
