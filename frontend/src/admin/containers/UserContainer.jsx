@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { Input, Row, Col, message, Button } from 'antd';
 import { Grid } from '@material-ui/core';
 import { useMutation } from 'react-apollo';
-import { SEARCH_USER_BY_USER_ID, SEARCH_USER_BY_STUDENT_NUMBER } from '../../configs/queries';
+import {
+    SEARCH_USER_BY_USER_ID,
+    SEARCH_USER_BY_STUDENT_NUMBER,
+    UPDATE_STATUS,
+} from '../../configs/queries';
 import { useStyles } from '../styles/admin.style';
 const { Search } = Input;
 
@@ -35,6 +39,7 @@ export default function UserContainer() {
 
     const [searchUserByUserId] = useMutation(SEARCH_USER_BY_USER_ID);
     const [searchUserByStudentNumber] = useMutation(SEARCH_USER_BY_STUDENT_NUMBER);
+    const [updateStatus] = useMutation(UPDATE_STATUS);
 
     const onSearchByUserId = (value) => {
         searchUserByUserId({
@@ -63,6 +68,41 @@ export default function UserContainer() {
                 message.error('학번에 맞는 회원이 없습니다. 다시 입력해주세요.');
             });
     };
+
+    const handleStatus = (e) => {
+        if (e.currentTarget.value === '정지') {
+            updateStatus({
+                variables: {
+                    status: '2',
+                    id: userInfo.id,
+                },
+            })
+                .then((result) => {
+                    if (result.data.updateStatus) {
+                        message.success('회원 정지 처리 되었습니다.');
+                    }
+                })
+                .catch(() => {
+                    message.error('회원 정지 처리 중 오류가 발생했습니다.');
+                });
+        } else if (e.currentTarget.value === '정지해제') {
+            updateStatus({
+                variables: {
+                    status: '1',
+                    id: userInfo.id,
+                },
+            })
+                .then((result) => {
+                    if (result.data.updateStatus) {
+                        message.success('회원 정지 해제 처리 되었습니다.');
+                    }
+                })
+                .catch(() => {
+                    message.error('회원 정지 해제 처리 중 오류가 발생했습니다.');
+                });
+        }
+    };
+
     return (
         <>
             <Grid container>
@@ -112,10 +152,30 @@ export default function UserContainer() {
                     </Row>
                     <Grid container className={classes.buttonSection}>
                         <Grid item xs={12} sm={2}>
-                            <Button type="primary" danger size="middle" className={classes.button}>
+                            <Button
+                                type="primary"
+                                danger
+                                size="middle"
+                                value="정지"
+                                className={classes.button}
+                                onClick={handleStatus}
+                            >
                                 정지
                             </Button>
                         </Grid>
+                        <Grid item xs={12} sm={2}>
+                            <Button
+                                type="primary"
+                                size="middle"
+                                value="정지해제"
+                                className={classes.button}
+                                onClick={handleStatus}
+                            >
+                                정지해제
+                            </Button>
+                        </Grid>
+                    </Grid>
+                    <Grid container className={classes.buttonSection}>
                         {buttonData.map((b, idx) => (
                             <Grid key={idx} item xs={12} sm={2}>
                                 <Button

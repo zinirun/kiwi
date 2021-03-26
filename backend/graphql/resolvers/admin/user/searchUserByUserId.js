@@ -62,6 +62,7 @@ module.exports = async ({ id }, { id: userId }) => {
         studentGradeId: user.studentGradeId,
         departmentId: user.departmentId,
         type: user.type,
+        status: user.status,
         department: user['department.department'],
         grade: user['grade.grade'],
     };

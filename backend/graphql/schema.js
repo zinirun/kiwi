@@ -294,5 +294,6 @@ module.exports = buildSchema(`
         completeReport(id: ID!): Boolean
         searchUserByStudentNumber(studentNumber: String!): User!
         searchUserByUserId(id: String!): User!
+        updateStatus(status: String!, id: String!): Boolean
     }
 `);
