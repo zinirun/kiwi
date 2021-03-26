@@ -12,6 +12,7 @@ module.exports = {
     updateUser: require('./user/updateUser'),
     updateUserStatus: require('./user/updateUserStatus'),
     updateUserPassword: require('./user/updateUserPassword'),
+    updateType: require('./admin/updateType'),
 
     // Post
     getPostById: require('./post/getPost'),
