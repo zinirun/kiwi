@@ -7,16 +7,16 @@
  * getUserById: User!
  */
 
-const models = require('../../../models');
-const { AuthorizationError } = require('../../errors/errors');
+const models = require('../../models');
+const { AuthorizationError } = require('../errors/errors');
 
 module.exports = async (id) => {
-    const user = await models.user.findOne({
+    const { type } = await models.user.findOne({
         attributes: ['id', 'type'],
         where: { id },
         raw: true,
     });
-    if (user.type !== 9) {
+    if (type !== 9) {
         throw AuthorizationError();
     }
     return;

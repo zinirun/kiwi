@@ -9,7 +9,7 @@ import SelectCategory from '../components/SelectCategory';
 import { useStyles } from '../styles/postWrite.style';
 import { boardCommonStyles } from '../styles/board.common.style';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import { CREATE_POST, GET_BOARD } from '../../../configs/queries';
+import { CREATE_POST, GET_BOARD, GET_LOCAL_IS_SPECIAL_TYPE } from '../../../configs/queries';
 import { FileAddOutlined } from '@ant-design/icons';
 import { UploadOutlined } from '@ant-design/icons';
 import { CONTENT_FILE_UPLOAD_MAX_COUNT } from '../../../configs/variables';
@@ -34,7 +34,15 @@ export default function PostWritePage() {
             id: boardId,
         },
     });
+    const { data: isSpecialTypeData } = useQuery(GET_LOCAL_IS_SPECIAL_TYPE);
     const [createPost] = useMutation(CREATE_POST);
+
+    useEffect(() => {
+        if (isSpecialTypeData) {
+            const { isSpecialType } = isSpecialTypeData;
+            board.isSpecial && !isSpecialType && history.push('/');
+        }
+    }, [isSpecialTypeData, history, board.isSpecial]);
 
     useEffect(() => {
         if (boardData) {

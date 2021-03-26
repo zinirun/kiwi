@@ -24,6 +24,18 @@ export const UPDATE_LOCAL_IS_ADMIN = gql`
     }
 `;
 
+export const GET_LOCAL_IS_SPECIAL_TYPE = gql`
+    query getLocalIsSpecialType {
+        isSpecialType @client
+    }
+`;
+
+export const UPDATE_LOCAL_IS_SPECIAL_TYPE = gql`
+    mutation updateLocalIsSpecialType {
+        updateLocalIsSpecialType @client
+    }
+`;
+
 export const GET_USER = gql`
     query getUser {
         getUser {
@@ -118,6 +130,7 @@ export const GET_BOARD = gql`
         getBoardById(id: $id) {
             id
             boardName
+            isSpecial
             link
             icon
         }
@@ -129,6 +142,7 @@ export const GET_BOARD_BY_NAME = gql`
         getBoardByName(boardName: $boardName) {
             id
             boardName
+            isSpecial
             link
             icon
         }
@@ -140,6 +154,7 @@ export const GET_BOARDS = gql`
         getBoards {
             id
             boardName
+            isSpecial
             link
             icon
         }

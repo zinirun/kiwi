@@ -8,7 +8,11 @@ import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineO
 import { useStyles } from '../styles/board.style';
 import { boardCommonStyles } from '../styles/board.common.style';
 import SelectCategory from '../components/SelectCategory';
-import { GET_POST_LIST, GET_POSTS_COUNT } from '../../../configs/queries';
+import {
+    GET_POST_LIST,
+    GET_POSTS_COUNT,
+    GET_LOCAL_IS_SPECIAL_TYPE,
+} from '../../../configs/queries';
 import moment from 'moment';
 import { Form, Input, message, Pagination } from 'antd';
 import NoResult from '../components/NoResult';
@@ -24,6 +28,7 @@ export default function BoardListContainer({ board, page }) {
     const [selectedCategoryId, setSelectedCategoryId] = useState('');
     const [postList, setPostList] = useState([]);
     const [postsCount, setPostsCount] = useState();
+    const [isSpecialType, setIsSpecialType] = useState(false);
     const [form] = Form.useForm();
     const { data: postsCountData, error: postsCountError, refetch: postCountRefetch } = useQuery(
         GET_POSTS_COUNT,
@@ -47,6 +52,13 @@ export default function BoardListContainer({ board, page }) {
             elementCount: ITEMS_COUNT_PER_PAGE,
         },
     });
+    const { data: isSpecialTypeData } = useQuery(GET_LOCAL_IS_SPECIAL_TYPE);
+
+    useEffect(() => {
+        if (isSpecialTypeData) {
+            setIsSpecialType(isSpecialTypeData.isSpecialType);
+        }
+    }, [isSpecialTypeData]);
 
     useEffect(() => {
         if (postsCountData) {
@@ -119,14 +131,27 @@ export default function BoardListContainer({ board, page }) {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} sm={2} align="right">
-                    <Button
-                        component={Link}
-                        to={`/write?boardId=${board.id}`}
-                        className={classes.button}
-                        size="small"
-                    >
-                        글쓰기
-                    </Button>
+                    {board.isSpecial ? (
+                        isSpecialType && (
+                            <Button
+                                component={Link}
+                                to={`/write?boardId=${board.id}`}
+                                className={classes.button}
+                                size="small"
+                            >
+                                글쓰기
+                            </Button>
+                        )
+                    ) : (
+                        <Button
+                            component={Link}
+                            to={`/write?boardId=${board.id}`}
+                            className={classes.button}
+                            size="small"
+                        >
+                            글쓰기
+                        </Button>
+                    )}
                 </Grid>
             </Grid>
             {postListLoading && <BoardListSkeleton />}

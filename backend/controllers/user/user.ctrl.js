@@ -109,6 +109,7 @@ module.exports = {
                     'studentNumber',
                     'studentGradeId',
                     'status',
+                    'type',
                     'createdAt',
                     'updatedAt',
                 ],
