@@ -8,9 +8,12 @@
         userName: String!
         studentNumber: String!
         studentGradeId: ID!
+        grade: String
+        email: String
         departmentId: ID!
         department: String
-        grade: String
+        status: Int
+        type: Int
     }
 * getUserById: User!
  */
@@ -28,6 +31,7 @@ module.exports = async ({}, { id }) => {
             'studentGradeId',
             'departmentId',
             'type',
+            'status',
         ],
         include: [
             {
