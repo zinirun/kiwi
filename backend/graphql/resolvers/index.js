@@ -83,4 +83,5 @@ module.exports = {
     searchUserByUserId: require('./admin/user/searchUserByUserId'),
     updateStatus: require('./admin/user/updateStatus'),
     updateType: require('./admin/user/updateType'),
+    getPostByAdmin: require('./admin/post/getPostByAdmin'),
 };

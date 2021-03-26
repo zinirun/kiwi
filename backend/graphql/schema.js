@@ -44,6 +44,27 @@ module.exports = buildSchema(`
         files: [File]
     }
 
+    type PostAdmin {
+        id: ID!
+        userId: ID!
+        department: String!
+        authorId: ID!
+        boardId: ID!
+        boardName: String!
+        boardLink: String
+        categoryName: String
+        title: String!
+        content: String!
+        isDeleted: Int!
+        gradeName: String!
+        authorName: String!
+        createdAt: Date!
+        updatedAt: Date!
+        likeCount: Int!
+        commentCount: Int!
+        files: [File]
+    }
+
     type RecentPosts {
         boardId: ID!
         boardName: String!
@@ -295,5 +316,6 @@ module.exports = buildSchema(`
         searchUserByStudentNumber(studentNumber: String!): User!
         searchUserByUserId(id: String!): User!
         updateStatus(status: String!, id: String!): Boolean
+        getPostByAdmin(postId: ID!): PostAdmin!
     }
 `);
