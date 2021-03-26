@@ -65,9 +65,19 @@ export default function SignUpPage(props) {
             const newUser = await SignupValidator(user);
             axios
                 .post('/api/user/signup', {
-                    user: newUser,
+                    user: { ...newUser, email: `${newUser.studentNumber}@dankook.ac.kr` },
                 })
-                .then(() => {
+                .then(({ data }) => {
+                    const { success } = data;
+                    if (!success) {
+                        const { duplicate } = data;
+                        if (duplicate === 'USER_ACCOUNT') {
+                            message.error('사용 중인 아이디입니다. 다른 아이디를 사용하세요.');
+                        } else {
+                            message.error('이미 가입된 학번입니다.');
+                        }
+                        return;
+                    }
                     message.success('회원가입이 완료되었습니다.');
                     props.history.push('/signin');
                 })
@@ -144,8 +154,17 @@ export default function SignUpPage(props) {
                             label="학번"
                             onChange={handleChange}
                             value={user.studentNumber}
-                            autoFocus
                             required
+                        />
+                    </Grid>
+                    <Grid item xs={12} align="center">
+                        <TextField
+                            name="email"
+                            variant="outlined"
+                            fullWidth
+                            label="이메일 (자동 입력)"
+                            value={`${user.studentNumber}@dankook.ac.kr`}
+                            disabled
                         />
                     </Grid>
                     <Grid item xs={12}>
