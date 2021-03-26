@@ -12,3 +12,4 @@ export const MONTH_BEST_POSTS = {
     boardName: '월간 인기글',
     boardIcon: 'DateRangeIcon',
 };
+export const FOOTER_COPYRIGHT = 'Powered by Kiwi';

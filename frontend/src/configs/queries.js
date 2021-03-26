@@ -541,6 +541,12 @@ export const SEEN_ALL_NOTIFICATIONS = gql`
     }
 `;
 
+export const CREATE_REPORT = gql`
+    mutation createReport($report: ReportInput!) {
+        createReport(report: $report)
+    }
+`;
+
 export const SEARCH_USER_BY_USER_ID = gql`
     mutation searchUserByUserId($id: String!) {
         searchUserByUserId(id: $id) {
