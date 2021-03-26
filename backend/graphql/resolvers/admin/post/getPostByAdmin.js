@@ -1,7 +1,7 @@
 /**
  * (관리자)게시물 Read
  * @author 이건욱 
- * @param (postId: ID!)
+ * @param (postId: String!)
  * @returns {PostAdmin}
  * type PostAdmin {
         id: ID!
@@ -23,7 +23,7 @@
         commentCount: Int!
         files: [File]
     }
-* getPostByAdmin(postId: ID!): PostAdmin!
+* getPostByAdmin(postId: String!): PostAdmin!
  */
 
 const isAdmin = require('../../../middlewares/isAdmin');

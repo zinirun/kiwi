@@ -6,6 +6,10 @@ import { useHistory } from 'react-router';
 import { Layout, Menu } from 'antd';
 import UserContainer from '../containers/UserContainer';
 import PostContainer from '../containers/PostContainer';
+import ReportContainer from '../containers/ReportContainer';
+import DepartmentContainer from '../containers/DepartmentContainer';
+import BoardContainer from '../containers/BoardContainer';
+import CategoryContainer from '../containers/CategoryContainer';
 
 const { Content, Sider } = Layout;
 
@@ -45,6 +49,10 @@ export default function AdminPage() {
                 <Content style={{ padding: 10, minHeight: '800px', background: 'white' }}>
                     {menuKey === 'user' && <UserContainer />}
                     {menuKey === 'post' && <PostContainer />}
+                    {menuKey === 'report' && <ReportContainer />}
+                    {menuKey === 'department' && <DepartmentContainer />}
+                    {menuKey === 'board' && <BoardContainer />}
+                    {menuKey === 'category' && <CategoryContainer />}
                 </Content>
             </Layout>
         </>
