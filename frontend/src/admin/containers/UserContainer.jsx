@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { Input, Row, Col, message, Button } from 'antd';
+import { Input, Row, Col, message, Button, Modal } from 'antd';
 import { Grid } from '@material-ui/core';
 import { useMutation } from 'react-apollo';
 import {
     SEARCH_USER_BY_USER_ID,
     SEARCH_USER_BY_STUDENT_NUMBER,
     UPDATE_STATUS,
+    UPDATE_TYPE,
 } from '../../configs/queries';
 import { useStyles } from '../styles/admin.style';
 const { Search } = Input;
+const { confirm } = Modal;
 
 const buttonData = [
     {
@@ -40,6 +42,7 @@ export default function UserContainer() {
     const [searchUserByUserId] = useMutation(SEARCH_USER_BY_USER_ID);
     const [searchUserByStudentNumber] = useMutation(SEARCH_USER_BY_STUDENT_NUMBER);
     const [updateStatus] = useMutation(UPDATE_STATUS);
+    const [updateType] = useMutation(UPDATE_TYPE);
 
     const onSearchByUserId = (value) => {
         searchUserByUserId({
@@ -70,37 +73,65 @@ export default function UserContainer() {
     };
 
     const handleStatus = (e) => {
-        if (e.currentTarget.value === '정지') {
-            updateStatus({
-                variables: {
-                    status: '2',
-                    id: userInfo.id,
-                },
-            })
-                .then((result) => {
-                    if (result.data.updateStatus) {
-                        message.success('회원 정지 처리 되었습니다.');
-                    }
+        const status = e.currentTarget.value;
+        confirm({
+            title: '회원 정지/해제 처리 하시겠습니까?',
+            content:
+                '회원 정지/해제 처리 후 복구할 수 있습니다. 다시 조회하시면 변경사항 확인이 가능합니다.',
+            okText: '확인',
+            cancelText: '취소',
+            onOk() {
+                updateStatus({
+                    variables: {
+                        status: status,
+                        id: userInfo.id,
+                    },
                 })
-                .catch(() => {
-                    message.error('회원 정지 처리 중 오류가 발생했습니다.');
-                });
-        } else if (e.currentTarget.value === '정지해제') {
-            updateStatus({
-                variables: {
-                    status: '1',
-                    id: userInfo.id,
-                },
-            })
-                .then((result) => {
-                    if (result.data.updateStatus) {
-                        message.success('회원 정지 해제 처리 되었습니다.');
-                    }
+                    .then((result) => {
+                        if (result.data.updateStatus) {
+                            if (status === '2') {
+                                message.success('회원 정지 처리 되었습니다.');
+                            } else {
+                                message.success('회원 정지 해제 처리 되었습니다.');
+                            }
+                        }
+                    })
+                    .catch(() => {
+                        if (status === '2') {
+                            message.error('회원 정지 처리 중 오류가 발생했습니다.');
+                        } else {
+                            message.error('회원 정지 해제 처리 중 오류가 발생했습니다.');
+                        }
+                    });
+            },
+        });
+    };
+
+    const handleType = (e) => {
+        const type = e.currentTarget.value;
+        confirm({
+            title: '회원 타입을 변경할까요?',
+            content:
+                '타입 변경 후 복구할 수 있습니다. 다시 조회하시면 변경 사항 확인이 가능합니다.',
+            okText: '확인',
+            cancelText: '취소',
+            onOk() {
+                updateType({
+                    variables: {
+                        type: type,
+                        id: userInfo.id,
+                    },
                 })
-                .catch(() => {
-                    message.error('회원 정지 해제 처리 중 오류가 발생했습니다.');
-                });
-        }
+                    .then((result) => {
+                        if (result.data.updateType) {
+                            message.success('회원 타입이 변경되었습니다.');
+                        }
+                    })
+                    .catch(() => {
+                        message.error('회원 타입 변경 중 오류가 발생했습니다.');
+                    });
+            },
+        });
     };
 
     return (
@@ -156,7 +187,7 @@ export default function UserContainer() {
                                 type="primary"
                                 danger
                                 size="middle"
-                                value="정지"
+                                value="2"
                                 className={classes.button}
                                 onClick={handleStatus}
                             >
@@ -167,7 +198,7 @@ export default function UserContainer() {
                             <Button
                                 type="primary"
                                 size="middle"
-                                value="정지해제"
+                                value="1"
                                 className={classes.button}
                                 onClick={handleStatus}
                             >
@@ -181,8 +212,10 @@ export default function UserContainer() {
                                 <Button
                                     type="primary"
                                     size="middle"
+                                    danger={b.type === 9 ? true : false}
                                     value={b.type}
                                     className={classes.button}
+                                    onClick={handleType}
                                 >
                                     {b.buttonName}
                                 </Button>

@@ -9,7 +9,6 @@ module.exports = {
     updateUser: require('./user/updateUser'),
     updateUserStatus: require('./user/updateUserStatus'),
     updateUserPassword: require('./user/updateUserPassword'),
-    updateType: require('./admin/updateType'),
 
     // Post
     getPostById: require('./post/getPost'),
@@ -83,4 +82,5 @@ module.exports = {
     searchUserByStudentNumber: require('./admin/user/searchUserByStudentNumber'),
     searchUserByUserId: require('./admin/user/searchUserByUserId'),
     updateStatus: require('./admin/user/updateStatus'),
+    updateType: require('./admin/user/updateType'),
 };
