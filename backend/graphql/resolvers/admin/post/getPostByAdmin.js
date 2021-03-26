@@ -27,8 +27,8 @@
  */
 
 const isAdmin = require('../../../middlewares/isAdmin');
-const models = require('../../../models');
-const { NotFoundError, ConflictError } = require('../../errors/errors');
+const models = require('../../../../models');
+const { NotFoundError, ConflictError } = require('../../../errors/errors');
 
 module.exports = async ({ postId }, { id: userId }) => {
     await isAdmin(userId);
