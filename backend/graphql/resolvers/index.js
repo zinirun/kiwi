@@ -72,4 +72,9 @@ module.exports = {
     getScrapById: require('./scrap/getScrap'),
     scrapPost: require('./scrap/scrapPost'),
     getScrapCount: require('./scrap/getScrapCount'),
+
+    // Report
+    createReport: require('./report/createReport'),
+    completeReport: require('./report/completeReport'),
+    getReports: require('./report/getReports'),
 };

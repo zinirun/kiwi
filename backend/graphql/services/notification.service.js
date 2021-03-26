@@ -1,3 +1,7 @@
+/**
+ * 알림 기능
+ * @author 신창우
+ */
 const models = require('../../models');
 
 // type: POST_COMMENT
