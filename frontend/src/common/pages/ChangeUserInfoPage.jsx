@@ -92,7 +92,7 @@ function ChangeUserPassword() {
                   },
               })
                   .then(() => {
-                      handleLogout('changed');
+                      handleLogout('changed=pw');
                   })
                   .catch(() => message.error('현재 비밀번호가 일치하지 않습니다.'));
     };

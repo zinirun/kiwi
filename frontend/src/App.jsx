@@ -26,6 +26,9 @@ import SignInPage from './common/pages/SignInPage';
 // 회원가입
 import SignUpPage from './common/pages/SignUpPage';
 
+// 회원 계정 찾기
+import FindUserPage from './common/pages/FindUserPage';
+
 // 사이트 메인페이지 (로그인 전)
 import SiteMainPage from './common/pages/SiteMainPage';
 
@@ -68,6 +71,7 @@ function App() {
                     <Route exact path="/needsign" component={SiteMainPage} />
                     <Route path="/signin" component={SignInPage} />
                     <Route path="/signup" component={SignUpPage} />
+                    <Route path="/finduser" component={FindUserPage} />
                     <Route path="/board/:boardName" component={PostListPage} />
                     <Route path="/search/:boardName" component={SearchPage} />
                     <Route path="/top" component={TopPage} />

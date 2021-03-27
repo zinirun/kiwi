@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { ConflictError } = require('../../graphql/errors/errors');
 const { Op } = require('sequelize');
-//const { sendMailOfResetPassword } = require('../../api/mailer');
+const { sendMailOfResetPassword } = require('../../api/mailer');
 
 const createSalt = () =>
     new Promise((resolve, reject) => {
@@ -45,6 +45,10 @@ const makePasswordHashed = (userAccount, plainPassword) =>
 const createSixRandomPassword = () => {
     let result = Math.floor(Math.random() * 1000000) + 100000;
     return result > 1000000 ? result - 100000 : result;
+};
+
+const makeBlurUserAccount = (fullId) => {
+    return fullId.slice(0, fullId.length - fullId.length / 2).concat('***');
 };
 
 module.exports = {
@@ -91,36 +95,6 @@ module.exports = {
             .then((result) =>
                 res.json({ success: true, userAccount: result.dataValues.userAccount }),
             )
-            .catch((error) => res.status(409).json({ error }));
-    },
-
-    post_reset_password: async (req, res) => {
-        const { name, userAccount } = req.body.user;
-
-        const isValidUser = await models.user
-            .findOne({
-                attributes: ['id', 'userAccount'],
-                where: { userAccount, name },
-                raw: true,
-            })
-            .then((user) => (user ? true : false))
-            .catch(() => false);
-        if (!isValidUser) {
-            return res.status(409).json({ error: { name: 'invalid' } });
-        }
-
-        const newPassword = createSixRandomPassword().toString();
-        const { password, salt } = await createHashedPassword(newPassword);
-        return await models.user
-            .update({ password, salt }, { where: { userAccount, name } })
-            .then((result) => {
-                if (result[0] === 0) {
-                    return res.status(409).json({ error: { name: 'invalid' } });
-                } else {
-                    //sendMailOfResetPassword(name, userAccount, newPassword);
-                    return res.json({ success: true, userAccount });
-                }
-            })
             .catch((error) => res.status(409).json({ error }));
     },
 
@@ -229,5 +203,52 @@ module.exports = {
         } catch (err) {
             return res.status(409).json(ConflictError('Error occured at get signup metadata'));
         }
+    },
+
+    post_find_user_account: async (req, res) => {
+        const { userName, studentNumber } = req.body.user;
+        const user = await models.user.findOne({
+            attributes: ['id', 'userAccount'],
+            where: { userName, studentNumber },
+            raw: true,
+        });
+        if (!user) {
+            return res.status(409).json({ error: { name: 'invalid' } });
+        }
+        return res.json({
+            userName,
+            studentNumber,
+            userAccount: makeBlurUserAccount(user.userAccount),
+        });
+    },
+
+    post_reset_password: async (req, res) => {
+        const { userName, userAccount, studentNumber } = req.body.user;
+
+        const isValidUser = await models.user.findOne({
+            attributes: ['id', 'userName', 'userAccount', 'email'],
+            where: { userAccount, userName, studentNumber },
+            raw: true,
+        });
+        if (!isValidUser) {
+            return res.status(409).json({ error: { name: 'invalid' } });
+        }
+
+        const newPassword = createSixRandomPassword().toString();
+        const { password, salt } = await createHashedPassword(newPassword);
+        return await models.user
+            .update({ password, salt }, { where: { id: isValidUser.id } })
+            .then(() => {
+                const mail = sendMailOfResetPassword(isValidUser, newPassword);
+                return res.json({
+                    success: true,
+                    userAccount,
+                    userName: isValidUser.userName,
+                    email: isValidUser.email,
+                });
+            })
+            .catch((error) => {
+                return res.status(409).json({ error });
+            });
     },
 };
