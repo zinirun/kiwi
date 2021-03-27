@@ -69,6 +69,7 @@ module.exports = buildSchema(`
         likeCount: Int!
         commentCount: Int!
         files: [File]
+        comments: [CommentAdmin]
     }
 
     type RecentPosts {
@@ -107,6 +108,16 @@ module.exports = buildSchema(`
         gradeId: ID!
         gradeName: String!
         likeCount: Int!
+        createdAt: Date!
+        updatedAt: Date
+    }
+
+    type CommentAdmin {
+        id: ID!
+        postId: ID!
+        authorId: ID!
+        authorName: String!
+        content: String!
         createdAt: Date!
         updatedAt: Date
     }

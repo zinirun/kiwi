@@ -22,6 +22,23 @@
         likeCount: Int!
         commentCount: Int!
         files: [File]
+        comments: [CommentAdmin]
+    }
+    type File {
+        id: ID!
+        postId: ID!
+        fileName: String!
+        fileType: String!
+        fileUrl: String!
+    }
+    type CommentAdmin {
+        id: ID!
+        postId: ID!
+        authorId: ID!
+        authorName: String!
+        content: String!
+        createdAt: Date!
+        updatedAt: Date
     }
 * getPostByAdmin(postId: String!): PostAdmin!
  */
@@ -79,6 +96,22 @@ module.exports = async ({ postId }, { id: userId }) => {
                     });
                     if (files) {
                         post.files = files;
+                    }
+                    const comments = await models.comment.findAll({
+                        attributes: [
+                            'id',
+                            'postId',
+                            'authorId',
+                            'authorName',
+                            'content',
+                            'createdAt',
+                            'updatedAt',
+                        ],
+                        where: { postId },
+                        raw: true,
+                    });
+                    if (comments) {
+                        post.comments = comments;
                     }
                     post.userId = userId;
                     return post;
