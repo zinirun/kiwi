@@ -10,6 +10,7 @@ module.exports = function (sequelize, DataTypes) {
             commentId: { type: DataTypes.INTEGER, allowNull: true, defaultValue: null },
             groupId: { type: DataTypes.INTEGER, allowNull: true, defaultValue: null },
             count: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1 },
+            extraResult: { type: DataTypes.STRING(200), allowNull: true },
             isDeleted: { type: DataTypes.TINYINT, defaultValue: 0 },
         },
         {
