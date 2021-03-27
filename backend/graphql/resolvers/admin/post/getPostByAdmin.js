@@ -22,13 +22,32 @@
         likeCount: Int!
         commentCount: Int!
         files: [File]
+        comments: [CommentAdmin]
     }
-* getPostByAdmin(postId: String!): PostAdmin!
+    type File {
+        id: ID!
+        postId: ID!
+        fileName: String!
+        fileType: String!
+        fileUrl: String!
+    }
+    type CommentAdmin {
+        id: ID!
+        postId: ID!
+        authorId: ID!
+        authorName: String!
+        content: String!
+        isDeleted: Int!
+        createdAt: Date!
+        updatedAt: Date
+    }
+* getPostByAdmin(postId: ID!): PostAdmin!
  */
 
 const isAdmin = require('../../../middlewares/isAdmin');
 const models = require('../../../../models');
 const { NotFoundError, ConflictError } = require('../../../errors/errors');
+const { post_signin } = require('../../../../controllers/user/user.ctrl');
 
 module.exports = async ({ postId }, { id: userId }) => {
     await isAdmin(userId);
@@ -80,8 +99,34 @@ module.exports = async ({ postId }, { id: userId }) => {
                     if (files) {
                         post.files = files;
                     }
+                    const comments = await models.comment.findAll({
+                        attributes: [
+                            'id',
+                            'postId',
+                            'authorId',
+                            'content',
+                            'isDeleted',
+                            'createdAt',
+                            'updatedAt',
+                        ],
+                        include: [
+                            {
+                                model: models.user,
+                                attributes: [['userName', 'authorName']],
+                            },
+                        ],
+                        where: { postId },
+                        raw: true,
+                    });
+                    if (comments) {
+                        post.comments = comments.map((comment) => {
+                            return {
+                                ...comment,
+                                authorName: comment['user.authorName'],
+                            };
+                        });
+                    }
                     post.userId = userId;
-                    console.log(post);
                     return post;
                 } else {
                     throw NotFoundError('Post Not Exist');

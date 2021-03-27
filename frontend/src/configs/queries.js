@@ -548,7 +548,7 @@ export const CREATE_REPORT = gql`
 `;
 
 export const SEARCH_USER_BY_USER_ID = gql`
-    mutation searchUserByUserId($id: String!) {
+    mutation searchUserByUserId($id: ID!) {
         searchUserByUserId(id: $id) {
             id
             userAccount
@@ -654,19 +654,19 @@ export const CREATE_CATEGORY = gql`
 `;
 
 export const UPDATE_STATUS = gql`
-    mutation udpateStatus($status: String!, $id: String!) {
+    mutation udpateStatus($status: String!, $id: ID!) {
         updateStatus(status: $status, id: $id)
     }
 `;
 
 export const UPDATE_TYPE = gql`
-    mutation updateType($id: String!, $type: String!) {
+    mutation updateType($id: ID!, $type: String!) {
         updateType(id: $id, type: $type)
     }
 `;
 
 export const SEARCH_POST_BY_ADMIN = gql`
-    mutation getPostByAdmin($postId: String!) {
+    mutation getPostByAdmin($postId: ID!) {
         getPostByAdmin(postId: $postId) {
             id
             userId
@@ -684,6 +684,14 @@ export const SEARCH_POST_BY_ADMIN = gql`
                 fileType
                 fileUrl
             }
+            comments {
+                id
+                authorId
+                content
+                isDeleted
+                createdAt
+                authorName
+            }
         }
     }
 `;
@@ -696,5 +704,11 @@ export const GET_ADMIN_LOGS = gql`
             log
             createdAt
         }
+    }
+`;
+
+export const DELETE_COMMENT_BY_ADMIN = gql`
+    mutation deleteCommentByAdmin($id: ID!) {
+        deleteCommentByAdmin(id: $id)
     }
 `;

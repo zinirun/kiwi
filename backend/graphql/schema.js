@@ -69,6 +69,7 @@ module.exports = buildSchema(`
         likeCount: Int!
         commentCount: Int!
         files: [File]
+        comments: [CommentAdmin]
     }
 
     type RecentPosts {
@@ -107,6 +108,17 @@ module.exports = buildSchema(`
         gradeId: ID!
         gradeName: String!
         likeCount: Int!
+        createdAt: Date!
+        updatedAt: Date
+    }
+
+    type CommentAdmin {
+        id: ID!
+        postId: ID!
+        authorId: ID!
+        isDeleted: Int!
+        authorName: String!
+        content: String!
         createdAt: Date!
         updatedAt: Date
     }
@@ -322,7 +334,7 @@ module.exports = buildSchema(`
         updateUser(user: UserUpdateInput!): Boolean
         updateUserStatus(status: Int!): Boolean
         updateUserPassword(currentPassword: String!, newPassword: String!): Boolean
-        updateType(id: String!, type: String!): Boolean
+        updateType(id: ID!, type: String!): Boolean
         createPost(post: PostInput!): PostAfterCreate
         updatePost(id: ID!, post: PostUpdateInput!): Boolean
         deletePost(id: ID!): Boolean
@@ -343,11 +355,12 @@ module.exports = buildSchema(`
         createReport(report: ReportInput!): Boolean
         completeReport(id: ID!): Boolean
         searchUserByStudentNumber(studentNumber: String!): User!
-        searchUserByUserId(id: String!): User!
+        searchUserByUserId(id: ID!): User!
         createDepartment(deptName: String!): Boolean
         createBoard(board: BoardInput!): Boolean
         createCategory(category: CategoryInput!): Boolean
-        updateStatus(status: String!, id: String!): Boolean
-        getPostByAdmin(postId: String!): PostAdmin!
+        updateStatus(status: String!, id: ID!): Boolean
+        getPostByAdmin(postId: ID!): PostAdmin!
+        deleteCommentByAdmin(id: ID!): Boolean
     }
 `);

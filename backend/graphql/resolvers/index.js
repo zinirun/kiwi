@@ -91,4 +91,5 @@ module.exports = {
     getAllBoards: require('./admin/board/getAllBoards'),
     createCategory: require('./admin/category/createCategory'),
     getAllCategories: require('./admin/category/getAllCategories'),
+    deleteCommentByAdmin: require('./admin/post/deleteCommentByAdmin'),
 };
