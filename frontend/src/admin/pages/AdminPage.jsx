@@ -49,7 +49,6 @@ export default function AdminPage() {
                         <Menu.Item key="board">게시판</Menu.Item>
                         <Menu.Item key="category">카테고리</Menu.Item>
                         <Menu.Item key="post">게시글/댓글</Menu.Item>
-                        <Menu.Item key="groups">속닥속닥</Menu.Item>
                         <Menu.Item key="adminLog">관리자 로그</Menu.Item>
                     </Menu>
                 </Sider>
