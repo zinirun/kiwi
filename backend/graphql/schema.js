@@ -118,6 +118,7 @@ module.exports = buildSchema(`
         authorId: ID!
         authorName: String!
         content: String!
+        isDeleted: Int!
         createdAt: Date!
         updatedAt: Date
     }
