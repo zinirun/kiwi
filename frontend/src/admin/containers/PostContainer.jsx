@@ -34,7 +34,7 @@ export default function UserContainer() {
     return (
         <>
             <Search
-                placeholder="게시글 아이디로 조회"
+                placeholder="게시글 고유 ID로 조회"
                 enterButton="조회"
                 size="middle"
                 className={classes.searchSection}
@@ -55,7 +55,7 @@ export default function UserContainer() {
                         </Button>
                     </div>
                     <Row gutter={[12, 12]} className={classes.infoSection}>
-                        <Col span={4}>게시글 아이디</Col>
+                        <Col span={4}>게시글 고유 ID</Col>
                         <Col span={18}>{post.id}</Col>
                         <Col span={4}>게시글 제목</Col>
                         <Col span={18}>{post.title}</Col>
