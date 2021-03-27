@@ -139,7 +139,7 @@ export default function UserContainer() {
             <Grid container>
                 <Grid item xs={12} sm={6}>
                     <Search
-                        placeholder="아이디로 조회"
+                        placeholder="고유아이디로 조회"
                         enterButton="조회"
                         size="middle"
                         className={classes.searchSection}

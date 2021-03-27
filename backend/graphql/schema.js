@@ -340,6 +340,6 @@ module.exports = buildSchema(`
         createBoard(board: BoardInput!): Boolean
         createCategory(category: CategoryInput!): Boolean
         updateStatus(status: String!, id: String!): Boolean
-        getPostByAdmin(postId: ID!): PostAdmin!
+        getPostByAdmin(postId: String!): PostAdmin!
     }
 `);

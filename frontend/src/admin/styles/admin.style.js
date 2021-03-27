@@ -12,4 +12,17 @@ export const useStyles = makeStyles((theme) => ({
     buttonSection: {
         marginTop: 20,
     },
+    attachWrapper: {
+        marginTop: 20,
+    },
+    imageWrapper: {
+        marginBottom: 10,
+    },
+    image: {
+        maxWidth: 300,
+    },
+    normalFileWrapper: {
+        marginBottom: 10,
+        fontWeight: 'bold',
+    },
 }));

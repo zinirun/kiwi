@@ -664,3 +664,26 @@ export const UPDATE_TYPE = gql`
         updateType(id: $id, type: $type)
     }
 `;
+
+export const SEARCH_POST_BY_ADMIN = gql`
+    mutation getPostByAdmin($postId: String!) {
+        getPostByAdmin(postId: $postId) {
+            id
+            userId
+            department
+            authorId
+            title
+            isDeleted
+            gradeName
+            authorName
+            createdAt
+            files {
+                id
+                postId
+                fileName
+                fileType
+                fileUrl
+            }
+        }
+    }
+`;
