@@ -11,6 +11,8 @@ const { Panel } = Collapse;
 export default function UserContainer() {
     const classes = useStyles();
     const [post, setPost] = useState(null);
+    const [postReason, setPostReason] = useState(null);
+    const [commentReason, setCommentReason] = useState(null);
 
     const [getPostByAdmin] = useMutation(SEARCH_POST_BY_ADMIN);
     const [deletePost] = useMutation(DELETE_POST);
@@ -24,6 +26,7 @@ export default function UserContainer() {
         deletePost({
             variables: {
                 id: post.id,
+                reason: postReason,
             },
         })
             .then((result) => {
@@ -42,6 +45,8 @@ export default function UserContainer() {
         deleteCommentByAdmin({
             variables: {
                 id: commentId,
+                postId: post.id,
+                reason: commentReason,
             },
         })
             .then((result) => {
@@ -111,8 +116,14 @@ export default function UserContainer() {
             {post && (
                 <>
                     <div>
+                        <Input
+                            placeholder="게시글 삭제 사유를 입력하세요."
+                            className={classes.reasonInput}
+                            value={postReason}
+                            onChange={(e) => setPostReason(e.target.value)}
+                        />
                         <Button
-                            disabled={post.isDeleted === 0 ? false : true}
+                            disabled={post.isDeleted === 0 && postReason ? false : true}
                             type="primary"
                             danger
                             size="middle"
@@ -184,19 +195,27 @@ export default function UserContainer() {
                                         </Row>
                                         <div>
                                             {comment.isDeleted === 0 && (
-                                                <Button
-                                                    disabled={
-                                                        comment.isDeleted === 0 ? false : true
-                                                    }
-                                                    type="primary"
-                                                    danger
-                                                    size="middle"
-                                                    value={comment.id}
-                                                    className={classes.commentDeleteBtn}
-                                                    onClick={handleCommentDelete}
-                                                >
-                                                    삭제
-                                                </Button>
+                                                <>
+                                                    <Input
+                                                        placeholder="댓글 삭제 사유를 입력하세요."
+                                                        value={commentReason}
+                                                        className={classes.reasonInput}
+                                                        onChange={(e) =>
+                                                            setCommentReason(e.target.value)
+                                                        }
+                                                    />
+                                                    <Button
+                                                        disabled={commentReason ? false : true}
+                                                        type="primary"
+                                                        danger
+                                                        size="middle"
+                                                        value={comment.id}
+                                                        className={classes.commentDeleteBtn}
+                                                        onClick={handleCommentDelete}
+                                                    >
+                                                        삭제
+                                                    </Button>
+                                                </>
                                             )}
                                         </div>
                                     </div>

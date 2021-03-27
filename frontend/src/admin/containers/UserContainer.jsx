@@ -15,6 +15,7 @@ const { confirm } = Modal;
 export default function UserContainer() {
     const classes = useStyles();
     const [userInfo, setUserInfo] = useState(null);
+    const [reason, setReason] = useState(null);
     const [searchUserByUserId] = useMutation(SEARCH_USER_BY_USER_ID);
     const [searchUserByStudentNumber] = useMutation(SEARCH_USER_BY_STUDENT_NUMBER);
     const [updateStatus] = useMutation(UPDATE_STATUS);
@@ -61,6 +62,7 @@ export default function UserContainer() {
                     variables: {
                         status: status,
                         id: userInfo.id,
+                        reason,
                     },
                 })
                     .then((result) => {
@@ -109,7 +111,6 @@ export default function UserContainer() {
             },
         });
     };
-
     return (
         <>
             <Space>
@@ -153,9 +154,16 @@ export default function UserContainer() {
                             <UserType type={userInfo.type} />
                         </Col>
                     </Row>
+                    <Input
+                        placeholder="정지 사유를 입력하세요."
+                        value={reason}
+                        className={classes.reasonInput}
+                        onChange={(e) => setReason(e.target.value)}
+                    />
                     <Space className={classes.buttonSection}>
                         <Button
                             type="primary"
+                            disabled={reason ? false : true}
                             danger
                             size="middle"
                             value="2"
