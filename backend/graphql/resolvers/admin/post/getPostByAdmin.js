@@ -47,6 +47,7 @@
 const isAdmin = require('../../../middlewares/isAdmin');
 const models = require('../../../../models');
 const { NotFoundError, ConflictError } = require('../../../errors/errors');
+const { post_signin } = require('../../../../controllers/user/user.ctrl');
 
 module.exports = async ({ postId }, { id: userId }) => {
     await isAdmin(userId);
@@ -112,14 +113,18 @@ module.exports = async ({ postId }, { id: userId }) => {
                             {
                                 model: models.user,
                                 attributes: [['userName', 'authorName']],
-                                where: { id: models.comment.authorId },
                             },
                         ],
                         where: { postId },
                         raw: true,
                     });
                     if (comments) {
-                        post.comments = comments;
+                        post.comments = comments.map((comment) => {
+                            return {
+                                ...comment,
+                                authorName: comment['user.authorName'],
+                            };
+                        });
                     }
                     post.userId = userId;
                     return post;
