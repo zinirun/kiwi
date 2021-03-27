@@ -30,4 +30,10 @@ export const useStyles = makeStyles((theme) => ({
         marginTop: 15,
         marginBottom: 10,
     },
+    commentWrapper: {
+        border: '1px solid #ccc',
+        borderRadius: 5,
+        padding: 8,
+        marginBottom: 10,
+    },
 }));

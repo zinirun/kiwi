@@ -133,7 +133,7 @@ export default function UserContainer() {
                         <Col span={20}>{post.department}</Col>
                         <Col span={4}>학년</Col>
                         <Col span={20}>{post.gradeName}</Col>
-                        <Col span={4}>이름 / 아이디</Col>
+                        <Col span={4}>이름 / 회원ID</Col>
                         <Col span={20}>
                             {post.authorName} / {post.authorId}{' '}
                         </Col>
@@ -167,33 +167,37 @@ export default function UserContainer() {
                         <Panel header="게시글 관련 댓글 보기" key="1">
                             {post.comments &&
                                 post.comments.map((comment, idx) => (
-                                    <div key={idx}>
+                                    <div key={idx} className={classes.commentWrapper}>
                                         <Row gutter={[12, 12]}>
-                                            <Col span={4}>댓글 고유 ID</Col>
-                                            <Col span={18}>{comment.id}</Col>
-                                            <Col span={4}>댓글 작성자 / 아이디</Col>
-                                            <Col span={18}>
+                                            <Col span={5}>댓글 고유 ID</Col>
+                                            <Col span={19}>{comment.id}</Col>
+                                            <Col span={5}>댓글 작성자 / 회원ID</Col>
+                                            <Col span={19}>
                                                 {comment.authorName} / {comment.authorId}
                                             </Col>
-                                            <Col span={4}>댓글 내용</Col>
-                                            <Col span={18}>{comment.content}</Col>
-                                            <Col span={4}>상태</Col>
-                                            <Col span={18}>
+                                            <Col span={5}>댓글 내용</Col>
+                                            <Col span={19}>{comment.content}</Col>
+                                            <Col span={5}>상태</Col>
+                                            <Col span={19}>
                                                 {comment.isDeleted === 0 ? '게시 중' : '삭제 댓글'}
                                             </Col>
                                         </Row>
                                         <div>
-                                            <Button
-                                                disabled={comment.isDeleted === 0 ? false : true}
-                                                type="primary"
-                                                danger
-                                                size="middle"
-                                                value={comment.id}
-                                                className={classes.commentDeleteBtn}
-                                                onClick={handleCommentDelete}
-                                            >
-                                                삭제
-                                            </Button>
+                                            {comment.isDeleted === 0 && (
+                                                <Button
+                                                    disabled={
+                                                        comment.isDeleted === 0 ? false : true
+                                                    }
+                                                    type="primary"
+                                                    danger
+                                                    size="middle"
+                                                    value={comment.id}
+                                                    className={classes.commentDeleteBtn}
+                                                    onClick={handleCommentDelete}
+                                                >
+                                                    삭제
+                                                </Button>
+                                            )}
                                         </div>
                                     </div>
                                 ))}
