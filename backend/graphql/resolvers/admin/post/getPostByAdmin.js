@@ -81,7 +81,6 @@ module.exports = async ({ postId }, { id: userId }) => {
                         post.files = files;
                     }
                     post.userId = userId;
-                    console.log(post);
                     return post;
                 } else {
                     throw NotFoundError('Post Not Exist');
