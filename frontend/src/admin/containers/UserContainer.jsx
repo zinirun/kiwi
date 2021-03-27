@@ -15,7 +15,6 @@ const { confirm } = Modal;
 export default function UserContainer() {
     const classes = useStyles();
     const [userInfo, setUserInfo] = useState(null);
-
     const [searchUserByUserId] = useMutation(SEARCH_USER_BY_USER_ID);
     const [searchUserByStudentNumber] = useMutation(SEARCH_USER_BY_STUDENT_NUMBER);
     const [updateStatus] = useMutation(UPDATE_STATUS);
