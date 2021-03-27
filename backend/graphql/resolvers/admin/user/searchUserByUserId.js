@@ -2,7 +2,7 @@
  * 유저 정보 Read by userId
  * @author 이건욱
  * @returns {User}
- * @params (userId: String!)
+ * @params (id: ID!)
  * type User {
         id: ID!
         userAccount: String!
@@ -16,7 +16,7 @@
         status: Int
         type: Int
     }
-* getUserByUserAccount(userId: String!): User!
+* searchUserByUserId(id: ID!): User!
  */
 
 const models = require('../../../../models');

@@ -355,11 +355,11 @@ module.exports = buildSchema(`
         createReport(report: ReportInput!): Boolean
         completeReport(id: ID!): Boolean
         searchUserByStudentNumber(studentNumber: String!): User!
-        searchUserByUserId(id: String!): User!
+        searchUserByUserId(id: ID!): User!
         createDepartment(deptName: String!): Boolean
         createBoard(board: BoardInput!): Boolean
         createCategory(category: CategoryInput!): Boolean
         updateStatus(status: String!, id: String!): Boolean
-        getPostByAdmin(postId: String!): PostAdmin!
+        getPostByAdmin(postId: ID!): PostAdmin!
     }
 `);
