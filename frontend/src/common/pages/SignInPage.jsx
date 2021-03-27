@@ -1,14 +1,17 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { Button, Grid, TextField } from '@material-ui/core';
 import { LogoIcon } from '../components/Logo';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { message, Space } from 'antd';
 import { useStyles } from '../static/signPages.style';
 import axios from 'axios';
 import moment from 'moment';
 import StudentAuthContainer from '../containers/StudentAuthContainer';
+import QueryString from 'query-string';
 
 export default function SignInPage(props) {
+    const { search } = useLocation();
+    const { changed } = QueryString.parse(search);
     const classes = useStyles();
     const idInput = useRef();
     const pwdInput = useRef();
@@ -93,6 +96,11 @@ export default function SignInPage(props) {
                             spacing={2}
                             justify="center"
                         >
+                            {changed === 'pw' && (
+                                <Grid item xs={12} align="center" className={classes.signInfo}>
+                                    <span>변경한 비밀번호로 다시 로그인하세요.</span>
+                                </Grid>
+                            )}
                             <Grid item xs={12} align="center">
                                 <TextField
                                     name="userAccount"

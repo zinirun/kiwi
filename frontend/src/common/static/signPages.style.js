@@ -87,4 +87,19 @@ export const useStyles = makeStyles((theme) => ({
     backLink: {
         color: '#999',
     },
+    foundWrapper: {
+        padding: 10,
+        fontSize: '1.0rem',
+    },
+    foundText: {
+        fontWeight: 'bold',
+        color: theme.palette.primary.main,
+        marginRight: 3,
+    },
+    signInfo: {
+        fontSize: '1.1rem',
+        color: theme.palette.primary.main,
+        fontWeight: 'bold',
+        marginBottom: 7,
+    },
 }));
