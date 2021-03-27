@@ -6,7 +6,7 @@ import { useStyles } from './static/style';
 import SideDrawer from './components/SideDrawer';
 import MobileHeader from './components/MobileHeader';
 import { useHistory, useLocation } from 'react-router';
-import { isFullScreen, isPublic } from './tools/handler';
+import { isFullScreen, isNotPublicAndFullScreen, isPublic } from './tools/handler';
 import { useMutation, useQuery } from 'react-apollo';
 import { GET_USER, UPDATE_LOCAL_IS_ADMIN, UPDATE_LOCAL_IS_SPECIAL_TYPE } from '../configs/queries';
 import { ADMIN_TYPE, NORMAL_USER_TYPE } from '../configs/variables';
@@ -95,7 +95,13 @@ export default function Root(props) {
                                     </Drawer>
                                 </Hidden>
                             </nav>
-                            <main className={classes.content}>
+                            <main
+                                className={
+                                    isNotPublicAndFullScreen(pathname)
+                                        ? classes.fullScreen
+                                        : classes.content
+                                }
+                            >
                                 <Hidden smUp implementation="css">
                                     <div className={classes.toolbar} />
                                 </Hidden>

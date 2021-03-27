@@ -10,6 +10,20 @@ export const useStyles = makeStyles((theme) => ({
         width: 100,
     },
     buttonSection: {
+        marginTop: 25,
+        display: 'flex',
+    },
+    attachWrapper: {
         marginTop: 20,
+    },
+    imageWrapper: {
+        marginBottom: 10,
+    },
+    image: {
+        maxWidth: 300,
+    },
+    normalFileWrapper: {
+        marginBottom: 10,
+        fontWeight: 'bold',
     },
 }));

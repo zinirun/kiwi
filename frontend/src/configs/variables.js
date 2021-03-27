@@ -13,3 +13,25 @@ export const MONTH_BEST_POSTS = {
     boardIcon: 'DateRangeIcon',
 };
 export const FOOTER_COPYRIGHT = 'Powered by Kiwi';
+export const USER_TYPE = [
+    {
+        type: 0,
+        typeName: '일반회원',
+    },
+    {
+        type: 1,
+        typeName: '학생회장',
+    },
+    {
+        type: 2,
+        typeName: '부학생회장',
+    },
+    {
+        type: 3,
+        typeName: '과사무실',
+    },
+    {
+        type: 9,
+        typeName: '관리자',
+    },
+];

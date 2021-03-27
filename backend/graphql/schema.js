@@ -243,6 +243,13 @@ module.exports = buildSchema(`
         updatedAt: Date
     }
 
+    type AdminLog {
+        id: ID!
+        userId: ID!
+        log: String!
+        createdAt: Date!
+    }
+
     input GroupCommentInput {
         groupId: ID!
         content: String!
@@ -319,6 +326,7 @@ module.exports = buildSchema(`
         getAllDepartments: [Department]
         getAllBoards: [Board]
         getAllCategories: [Category]
+        getAdminLogs: [AdminLog]
     }
 
     type Mutation {
@@ -351,6 +359,6 @@ module.exports = buildSchema(`
         createBoard(board: BoardInput!): Boolean
         createCategory(category: CategoryInput!): Boolean
         updateStatus(status: String!, id: String!): Boolean
-        getPostByAdmin(postId: ID!): PostAdmin!
+        getPostByAdmin(postId: String!): PostAdmin!
     }
 `);

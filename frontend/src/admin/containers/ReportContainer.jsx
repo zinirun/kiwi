@@ -20,6 +20,10 @@ export default function ReportContainer() {
     );
 
     useEffect(() => {
+        reportsRefetch().catch(() => {});
+    }, [reportsRefetch]);
+
+    useEffect(() => {
         if (reportsData) {
             setReports(
                 reportsData.getReports.map((report) => {

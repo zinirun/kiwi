@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Row, Col, message, Button, Modal } from 'antd';
-import { Grid } from '@material-ui/core';
+import { Input, Row, Col, message, Button, Modal, Space } from 'antd';
 import { useMutation } from 'react-apollo';
 import {
     SEARCH_USER_BY_USER_ID,
@@ -9,31 +8,9 @@ import {
     UPDATE_TYPE,
 } from '../../configs/queries';
 import { useStyles } from '../styles/admin.style';
+import { USER_TYPE } from '../../configs/variables';
 const { Search } = Input;
 const { confirm } = Modal;
-
-const buttonData = [
-    {
-        type: 0,
-        buttonName: '일반회원',
-    },
-    {
-        type: 1,
-        buttonName: '학생회장',
-    },
-    {
-        type: 2,
-        buttonName: '부학생회장',
-    },
-    {
-        type: 3,
-        buttonName: '과사무실',
-    },
-    {
-        type: 9,
-        buttonName: '관리자',
-    },
-];
 
 export default function UserContainer() {
     const classes = useStyles();
@@ -54,7 +31,7 @@ export default function UserContainer() {
                 setUserInfo(result.data.searchUserByUserId);
             })
             .catch(() => {
-                message.error('고유아이디에 맞는 회원이 없습니다. 다시 입력해주세요.');
+                message.error('고유 ID로 조회된 회원이 없습니다.');
             });
     };
 
@@ -68,7 +45,7 @@ export default function UserContainer() {
                 setUserInfo(result.data.searchUserByStudentNumber);
             })
             .catch(() => {
-                message.error('학번에 맞는 회원이 없습니다. 다시 입력해주세요.');
+                message.error('학번으로 조회된 회원이 없습니다.');
             });
     };
 
@@ -136,31 +113,27 @@ export default function UserContainer() {
 
     return (
         <>
-            <Grid container>
-                <Grid item xs={12} sm={6}>
-                    <Search
-                        placeholder="아이디로 조회"
-                        enterButton="조회"
-                        size="middle"
-                        className={classes.searchSection}
-                        onSearch={onSearchByUserId}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <Search
-                        placeholder="학번으로 조회"
-                        allowClear
-                        enterButton="조회"
-                        size="middle"
-                        className={classes.searchSection}
-                        onSearch={onSearchByGradeNumber}
-                    />
-                </Grid>
-            </Grid>
+            <Space>
+                <Search
+                    placeholder="고유 ID로 조회"
+                    enterButton="조회"
+                    size="middle"
+                    className={classes.searchSection}
+                    onSearch={onSearchByUserId}
+                />
+                <Search
+                    placeholder="학번으로 조회"
+                    allowClear
+                    enterButton="조회"
+                    size="middle"
+                    className={classes.searchSection}
+                    onSearch={onSearchByGradeNumber}
+                />
+            </Space>
             {userInfo && (
                 <>
                     <Row gutter={[12, 12]} className={classes.infoSection}>
-                        <Col span={4}>고유아이디</Col>
+                        <Col span={4}>회원 고유 ID</Col>
                         <Col span={18}>{userInfo.id}</Col>
                         <Col span={4}>계정</Col>
                         <Col span={18}>{userInfo.userAccount}</Col>
@@ -181,47 +154,42 @@ export default function UserContainer() {
                             <UserType type={userInfo.type} />
                         </Col>
                     </Row>
-                    <Grid container className={classes.buttonSection}>
-                        <Grid item xs={12} sm={2}>
+                    <Space className={classes.buttonSection}>
+                        <Button
+                            type="primary"
+                            danger
+                            size="middle"
+                            value="2"
+                            className={classes.button}
+                            onClick={handleStatus}
+                        >
+                            정지
+                        </Button>
+                        <Button
+                            type="primary"
+                            size="middle"
+                            value="1"
+                            className={classes.button}
+                            onClick={handleStatus}
+                        >
+                            정지해제
+                        </Button>
+                    </Space>
+                    <Space className={classes.buttonSection}>
+                        {USER_TYPE.map((b) => (
                             <Button
-                                type="primary"
-                                danger
-                                size="middle"
-                                value="2"
-                                className={classes.button}
-                                onClick={handleStatus}
-                            >
-                                정지
-                            </Button>
-                        </Grid>
-                        <Grid item xs={12} sm={2}>
-                            <Button
+                                key={b.type}
                                 type="primary"
                                 size="middle"
-                                value="1"
+                                danger={b.type === 9 ? true : false}
+                                value={b.type}
                                 className={classes.button}
-                                onClick={handleStatus}
+                                onClick={handleType}
                             >
-                                정지해제
+                                {b.typeName}
                             </Button>
-                        </Grid>
-                    </Grid>
-                    <Grid container className={classes.buttonSection}>
-                        {buttonData.map((b, idx) => (
-                            <Grid key={idx} item xs={12} sm={2}>
-                                <Button
-                                    type="primary"
-                                    size="middle"
-                                    danger={b.type === 9 ? true : false}
-                                    value={b.type}
-                                    className={classes.button}
-                                    onClick={handleType}
-                                >
-                                    {b.buttonName}
-                                </Button>
-                            </Grid>
                         ))}
-                    </Grid>
+                    </Space>
                 </>
             )}
         </>
