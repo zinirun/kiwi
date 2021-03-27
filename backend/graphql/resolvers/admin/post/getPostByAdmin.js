@@ -41,7 +41,7 @@
         createdAt: Date!
         updatedAt: Date
     }
-* getPostByAdmin(postId: String!): PostAdmin!
+* getPostByAdmin(postId: ID!): PostAdmin!
  */
 
 const isAdmin = require('../../../middlewares/isAdmin');
@@ -103,11 +103,17 @@ module.exports = async ({ postId }, { id: userId }) => {
                             'id',
                             'postId',
                             'authorId',
-                            'authorName',
                             'content',
                             'isDeleted',
                             'createdAt',
                             'updatedAt',
+                        ],
+                        include: [
+                            {
+                                model: models.user,
+                                attributes: [['userName', 'authorName']],
+                                where: { id: models.comment.authorId },
+                            },
                         ],
                         where: { postId },
                         raw: true,
