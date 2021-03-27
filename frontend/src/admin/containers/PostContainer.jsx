@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-apollo';
 import { Input, Row, Col, message, Button, Modal, Divider, Image, Collapse } from 'antd';
 import { useStyles } from '../styles/admin.style';
-import { SEARCH_POST_BY_ADMIN, DELETE_POST } from '../../configs/queries';
+import { SEARCH_POST_BY_ADMIN, DELETE_POST, DELETE_COMMENT_BY_ADMIN } from '../../configs/queries';
 import moment from 'moment';
 const { Search } = Input;
 const { confirm } = Modal;
@@ -14,6 +14,7 @@ export default function UserContainer() {
 
     const [getPostByAdmin] = useMutation(SEARCH_POST_BY_ADMIN);
     const [deletePost] = useMutation(DELETE_POST);
+    const [deleteCommentByAdmin] = useMutation(DELETE_COMMENT_BY_ADMIN);
 
     const isImageFile = (mime) => {
         return mime.split('/')[0] === 'image';
@@ -37,10 +38,10 @@ export default function UserContainer() {
             });
     };
 
-    const triggerDeleteComment = (commentValue) => {
-        deletePost({
+    const triggerDeleteComment = (commentId) => {
+        deleteCommentByAdmin({
             variables: {
-                id: commentValue,
+                id: commentId,
             },
         })
             .then((result) => {
@@ -86,14 +87,14 @@ export default function UserContainer() {
     };
 
     const handleCommentDelete = (e) => {
-        const commentValue = e.currentTarget.value;
+        const commentId = e.currentTarget.value;
         confirm({
             title: '댓글을 삭제할까요?',
             content: '삭제된 댓글은 복구할 수 없습니다.',
             okText: '삭제',
             cancelText: '취소',
             onOk() {
-                triggerDeleteComment(commentValue);
+                triggerDeleteComment(commentId);
             },
         });
     };
@@ -111,6 +112,7 @@ export default function UserContainer() {
                 <>
                     <div>
                         <Button
+                            disabled={post.isDeleted === 0 ? false : true}
                             type="primary"
                             danger
                             size="middle"
@@ -165,8 +167,8 @@ export default function UserContainer() {
                         <Panel header="게시글 관련 댓글 보기" key="1">
                             {post.comments &&
                                 post.comments.map((comment, idx) => (
-                                    <>
-                                        <Row gutter={[12, 12]} className={classes.infoSection}>
+                                    <div key={idx}>
+                                        <Row gutter={[12, 12]}>
                                             <Col span={4}>댓글 고유 ID</Col>
                                             <Col span={18}>{comment.id}</Col>
                                             <Col span={4}>댓글 작성자 / 아이디</Col>
@@ -175,23 +177,25 @@ export default function UserContainer() {
                                             </Col>
                                             <Col span={4}>댓글 내용</Col>
                                             <Col span={18}>{comment.content}</Col>
-                                            <Col span={4}>댓글 생성일</Col>
-                                            <Col span={20}>{comment.createdAt}</Col>
                                             <Col span={4}>상태</Col>
+                                            <Col span={18}>
+                                                {comment.isDeleted === 0 ? '게시 중' : '삭제 댓글'}
+                                            </Col>
                                         </Row>
                                         <div>
                                             <Button
+                                                disabled={comment.isDeleted === 0 ? false : true}
                                                 type="primary"
                                                 danger
                                                 size="middle"
                                                 value={comment.id}
-                                                className={classes.buttonSection}
+                                                className={classes.commentDeleteBtn}
                                                 onClick={handleCommentDelete}
                                             >
                                                 삭제
                                             </Button>
                                         </div>
-                                    </>
+                                    </div>
                                 ))}
                         </Panel>
                     </Collapse>

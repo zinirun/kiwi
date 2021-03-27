@@ -334,7 +334,7 @@ module.exports = buildSchema(`
         updateUser(user: UserUpdateInput!): Boolean
         updateUserStatus(status: Int!): Boolean
         updateUserPassword(currentPassword: String!, newPassword: String!): Boolean
-        updateType(id: String!, type: String!): Boolean
+        updateType(id: ID!, type: String!): Boolean
         createPost(post: PostInput!): PostAfterCreate
         updatePost(id: ID!, post: PostUpdateInput!): Boolean
         deletePost(id: ID!): Boolean
@@ -359,7 +359,8 @@ module.exports = buildSchema(`
         createDepartment(deptName: String!): Boolean
         createBoard(board: BoardInput!): Boolean
         createCategory(category: CategoryInput!): Boolean
-        updateStatus(status: String!, id: String!): Boolean
+        updateStatus(status: String!, id: ID!): Boolean
         getPostByAdmin(postId: ID!): PostAdmin!
+        deleteCommentByAdmin(id: ID!): Boolean
     }
 `);

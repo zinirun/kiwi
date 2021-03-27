@@ -26,4 +26,8 @@ export const useStyles = makeStyles((theme) => ({
         marginBottom: 10,
         fontWeight: 'bold',
     },
+    commentDeleteBtn: {
+        marginTop: 15,
+        marginBottom: 10,
+    },
 }));
