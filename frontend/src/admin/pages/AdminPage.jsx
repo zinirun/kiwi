@@ -32,7 +32,14 @@ export default function AdminPage() {
     return (
         <>
             {!isAdminLoading && isAdmin && <PageTitle title="관리자 페이지" />}
-            <Layout>
+            <Layout
+                style={{
+                    background: 'white',
+                    border: '1px solid #ccc',
+                    padding: 3,
+                    borderRadius: 7,
+                }}
+            >
                 <Sider width={150}>
                     <Menu mode="inline" style={{ height: '100%' }} onSelect={handleMenu}>
                         <Menu.Item key="report">신고</Menu.Item>
@@ -46,7 +53,12 @@ export default function AdminPage() {
                         <Menu.Item key="adminLog">로그</Menu.Item>
                     </Menu>
                 </Sider>
-                <Content style={{ padding: 10, minHeight: '800px', background: 'white' }}>
+                <Content
+                    style={{
+                        padding: 10,
+                        minHeight: '800px',
+                    }}
+                >
                     {menuKey === 'user' && <UserContainer />}
                     {menuKey === 'post' && <PostContainer />}
                     {menuKey === 'report' && <ReportContainer />}

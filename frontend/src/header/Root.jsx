@@ -56,10 +56,7 @@ export default function Root(props) {
                         <Container maxWidth="sm">{props.children}</Container>
                     )
                 ) : (
-                    user &&
-                    (isNotPublicAndFullScreen(pathname) ? (
-                        <div className={classes.fullScreen}>{props.children}</div>
-                    ) : (
+                    user && (
                         <div className={classes.root}>
                             <CssBaseline />
                             <Hidden smUp implementation="css">
@@ -98,14 +95,20 @@ export default function Root(props) {
                                     </Drawer>
                                 </Hidden>
                             </nav>
-                            <main className={classes.content}>
+                            <main
+                                className={
+                                    isNotPublicAndFullScreen(pathname)
+                                        ? classes.fullScreen
+                                        : classes.content
+                                }
+                            >
                                 <Hidden smUp implementation="css">
                                     <div className={classes.toolbar} />
                                 </Hidden>
                                 {props.children}
                             </main>
                         </div>
-                    ))
+                    )
                 ))}
         </>
     );

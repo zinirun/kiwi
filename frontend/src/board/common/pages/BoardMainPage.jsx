@@ -76,15 +76,15 @@ export default function BoardMainPage() {
     }, [data, setPosts, error, history]);
 
     useEffect(() => {
-        refetch();
+        refetch().catch(() => {});
     }, [refetch]);
 
     useEffect(() => {
-        weekRefetch();
+        weekRefetch().catch(() => {});
     }, [weekRefetch]);
 
     useEffect(() => {
-        monthRefetch();
+        monthRefetch().catch(() => {});
     }, [monthRefetch]);
     return (
         <>

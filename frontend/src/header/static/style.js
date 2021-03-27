@@ -8,6 +8,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     fullScreen: {
         padding: 10,
+        width: '100%',
     },
     drawer: {
         [theme.breakpoints.up('sm')]: {
