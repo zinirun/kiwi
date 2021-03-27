@@ -126,9 +126,9 @@ function NotificationViewer({ id, type, count, targetId, date, refetch, title })
             link = `/group/${targetId}`;
             messageText = `[${title}] 그룹에 대화가 ${count}개 달렸습니다.`;
             break;
-        case 'NOTICE':
+        case 'POST_SPECIAL':
             link = `/post/${targetId}`;
-            messageText = `학과 공지[${title}]가 게시되었습니다.`;
+            messageText = `[${title}]가 게시되었습니다.`;
             break;
         default:
             break;

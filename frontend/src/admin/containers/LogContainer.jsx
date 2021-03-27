@@ -48,10 +48,16 @@ export default function LogContainer() {
         }
     }, [data, error]);
 
+    const handleRefetch = () => {
+        refetch()
+            .then(() => message.success('새로고침 되었습니다.'))
+            .catch(() => message.error('새로고침 중 문제가 발생했습니다.'));
+    };
+
     return (
         <>
-            {!loading && <Button onClick={() => refetch().catch(() => {})}>새로고침</Button>}
-            <Table dataSource={logs} columns={columns} />
+            {!loading && <Button onClick={handleRefetch}>새로고침</Button>}
+            <Table dataSource={logs} columns={columns} style={{ marginTop: 10 }} />
         </>
     );
 }
