@@ -89,6 +89,12 @@ export default function GroupCommentContainer({ id }) {
             },
         });
     };
+    const handleRefetchClick = (e) => {
+        e.preventDefault();
+        commentsRefetch()
+            .then(() => message.success('대화가 새로고침 되었습니다.'))
+            .catch(() => message.error('대화 새로고침 중 문제가 발생했습니다.'));
+    };
     return (
         <>
             {commentsLoading && <BoardListSkeleton />}
@@ -139,7 +145,10 @@ export default function GroupCommentContainer({ id }) {
                 </Form.Item>
                 <Form.Item>
                     <div className={classes.addCommentSection}>
-                        <Space size={0}>
+                        <Space size={7}>
+                            <Button onClick={handleRefetchClick} className={classes.button}>
+                                대화 새로고침
+                            </Button>
                             <Button type="submit" className={classes.button}>
                                 보내기
                             </Button>
