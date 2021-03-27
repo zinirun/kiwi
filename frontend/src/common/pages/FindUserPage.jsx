@@ -106,7 +106,8 @@ function FindPasswordGrid() {
                     <div className={classes.foundWrapper}>
                         <span className={classes.foundText}>{found.userName}</span>님의 이메일{' '}
                         <span className={classes.foundText}>{found.email}</span>로 초기화된
-                        비밀빈호를 전송했습니다.
+                        비밀번호를 전송했습니다. 메일이 수신되지 않았을 경우 스팸 메일함을
+                        확인해주세요.
                     </div>
                 ) : (
                     <Button
