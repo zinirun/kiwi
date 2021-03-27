@@ -20,6 +20,7 @@ module.exports = async ({ id, type }, { id: userId }) => {
             { where: { id } },
         )
         .then(() => {
+            createAdminLog(userId, `[User: ${id}] type 변경`);
             return true;
         })
         .catch(() => {
