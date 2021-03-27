@@ -116,9 +116,9 @@ module.exports = buildSchema(`
         id: ID!
         postId: ID!
         authorId: ID!
+        isDeleted: Int!
         authorName: String!
         content: String!
-        isDeleted: Int!
         createdAt: Date!
         updatedAt: Date
     }

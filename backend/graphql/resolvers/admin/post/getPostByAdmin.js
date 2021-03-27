@@ -112,6 +112,7 @@ module.exports = async ({ postId }, { id: userId }) => {
                         where: { postId },
                         raw: true,
                     });
+                    console.log(comments);
                     if (comments) {
                         post.comments = comments;
                     }

@@ -37,6 +37,24 @@ export default function UserContainer() {
             });
     };
 
+    const triggerDeleteComment = (commentValue) => {
+        deletePost({
+            variables: {
+                id: commentValue,
+            },
+        })
+            .then((result) => {
+                if (result.data) {
+                    message.success(
+                        '댓글이 삭제되었습니다. 다시 조회하시면 변경 사항 확인이 가능합니다.',
+                    );
+                }
+            })
+            .catch(() => {
+                message.error('댓글 삭제 중 오류가 발생했습니다.');
+            });
+    };
+
     const onSearchByAdmin = (value) => {
         getPostByAdmin({
             variables: {
@@ -67,6 +85,19 @@ export default function UserContainer() {
         });
     };
 
+    const handleCommentDelete = (e) => {
+        const commentValue = e.currentTarget.value;
+        confirm({
+            title: '댓글을 삭제할까요?',
+            content: '삭제된 댓글은 복구할 수 없습니다.',
+            okText: '삭제',
+            cancelText: '취소',
+            onOk() {
+                triggerDeleteComment(commentValue);
+            },
+        });
+    };
+
     return (
         <>
             <Search
@@ -83,7 +114,6 @@ export default function UserContainer() {
                             type="primary"
                             danger
                             size="middle"
-                            value="2"
                             className={classes.buttonSection}
                             onClick={handlePostDelete}
                         >
@@ -135,19 +165,33 @@ export default function UserContainer() {
                         <Panel header="게시글 관련 댓글 보기" key="1">
                             {post.comments &&
                                 post.comments.map((comment, idx) => (
-                                    <Row gutter={[12, 12]} className={classes.infoSection}>
-                                        <Col span={4}>댓글 고유 ID</Col>
-                                        <Col span={18}>{comment.id}</Col>
-                                        <Col span={4}>댓글 작성자 / 아이디</Col>
-                                        <Col span={18}>
-                                            {comment.authorName} / {comment.authorId}
-                                        </Col>
-                                        <Col span={4}>댓글 내용</Col>
-                                        <Col span={18}>{comment.content}</Col>
-                                        <Col span={4}>댓글 생성일</Col>
-                                        <Col span={20}>{comment.createdAt}</Col>
-                                        <Col span={4}>상태</Col>
-                                    </Row>
+                                    <>
+                                        <Row gutter={[12, 12]} className={classes.infoSection}>
+                                            <Col span={4}>댓글 고유 ID</Col>
+                                            <Col span={18}>{comment.id}</Col>
+                                            <Col span={4}>댓글 작성자 / 아이디</Col>
+                                            <Col span={18}>
+                                                {comment.authorName} / {comment.authorId}
+                                            </Col>
+                                            <Col span={4}>댓글 내용</Col>
+                                            <Col span={18}>{comment.content}</Col>
+                                            <Col span={4}>댓글 생성일</Col>
+                                            <Col span={20}>{comment.createdAt}</Col>
+                                            <Col span={4}>상태</Col>
+                                        </Row>
+                                        <div>
+                                            <Button
+                                                type="primary"
+                                                danger
+                                                size="middle"
+                                                value={comment.id}
+                                                className={classes.buttonSection}
+                                                onClick={handleCommentDelete}
+                                            >
+                                                삭제
+                                            </Button>
+                                        </div>
+                                    </>
                                 ))}
                         </Panel>
                     </Collapse>
