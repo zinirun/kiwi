@@ -37,6 +37,7 @@
         authorId: ID!
         authorName: String!
         content: String!
+        isDeleted: Int!
         createdAt: Date!
         updatedAt: Date
     }
@@ -104,6 +105,7 @@ module.exports = async ({ postId }, { id: userId }) => {
                             'authorId',
                             'authorName',
                             'content',
+                            'isDeleted',
                             'createdAt',
                             'updatedAt',
                         ],
