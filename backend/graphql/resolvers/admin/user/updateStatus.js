@@ -1,6 +1,7 @@
 const models = require('../../../../models');
 const { ConflictError } = require('../../../errors/errors');
 const isAdmin = require('../../../middlewares/isAdmin');
+const { createAdminLog } = require('../../../services/log.service');
 
 module.exports = async ({ status, id }, { id: userId }) => {
     await isAdmin(userId);
@@ -12,7 +13,7 @@ module.exports = async ({ status, id }, { id: userId }) => {
             { where: { id } },
         )
         .then(() => {
-            createAdminLog(userId, `[User: ${id}] status 변경`);
+            createAdminLog(userId, `회원 [ID ${id}] 상태 [${status}]으로 변경`);
             return true;
         })
         .catch(() => {
