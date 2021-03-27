@@ -42,6 +42,7 @@ export default function UserContainer() {
         deleteCommentByAdmin({
             variables: {
                 id: commentId,
+                postId: post.id,
             },
         })
             .then((result) => {

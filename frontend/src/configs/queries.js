@@ -708,7 +708,7 @@ export const GET_ADMIN_LOGS = gql`
 `;
 
 export const DELETE_COMMENT_BY_ADMIN = gql`
-    mutation deleteCommentByAdmin($id: ID!) {
-        deleteCommentByAdmin(id: $id)
+    mutation deleteCommentByAdmin($id: ID!, $postId: ID!) {
+        deleteCommentByAdmin(id: $id, postId: $postId)
     }
 `;
