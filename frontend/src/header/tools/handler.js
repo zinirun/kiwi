@@ -21,3 +21,13 @@ export const isFullScreen = (pathname) => {
             return false;
     }
 };
+
+export const isNotPublicAndFullScreen = (pathname) => {
+    const path = pathname.split('/')[1];
+    switch (path) {
+        case 'admin':
+            return true;
+        default:
+            return false;
+    }
+};

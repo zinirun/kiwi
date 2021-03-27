@@ -6,7 +6,7 @@ import { useStyles } from './static/style';
 import SideDrawer from './components/SideDrawer';
 import MobileHeader from './components/MobileHeader';
 import { useHistory, useLocation } from 'react-router';
-import { isFullScreen, isPublic } from './tools/handler';
+import { isFullScreen, isNotPublicAndFullScreen, isPublic } from './tools/handler';
 import { useMutation, useQuery } from 'react-apollo';
 import { GET_USER, UPDATE_LOCAL_IS_ADMIN, UPDATE_LOCAL_IS_SPECIAL_TYPE } from '../configs/queries';
 import { ADMIN_TYPE, NORMAL_USER_TYPE } from '../configs/variables';
@@ -56,7 +56,10 @@ export default function Root(props) {
                         <Container maxWidth="sm">{props.children}</Container>
                     )
                 ) : (
-                    user && (
+                    user &&
+                    (isNotPublicAndFullScreen(pathname) ? (
+                        <div className={classes.fullScreen}>{props.children}</div>
+                    ) : (
                         <div className={classes.root}>
                             <CssBaseline />
                             <Hidden smUp implementation="css">
@@ -102,7 +105,7 @@ export default function Root(props) {
                                 {props.children}
                             </main>
                         </div>
-                    )
+                    ))
                 ))}
         </>
     );

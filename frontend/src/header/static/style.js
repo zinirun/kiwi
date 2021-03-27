@@ -6,6 +6,9 @@ export const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
     },
+    fullScreen: {
+        padding: 10,
+    },
     drawer: {
         [theme.breakpoints.up('sm')]: {
             width: drawerWidth,

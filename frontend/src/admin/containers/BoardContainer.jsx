@@ -28,6 +28,11 @@ const columns = [
         key: 'icon',
     },
     {
+        title: '글쓰기권한',
+        dataIndex: 'isSpecial',
+        key: 'isSpecial',
+    },
+    {
         title: '생성일',
         dataIndex: 'createdAt',
         key: 'createdAt',
@@ -48,6 +53,7 @@ export default function BoardContainer() {
                     return {
                         ...d,
                         key: d.id,
+                        isSpecial: d.isSpecial ? '학과관계자' : '누구나',
                         createdAt: new moment(d.createdAt).format('YYYY-MM-DD HH:mm'),
                     };
                 }),
@@ -95,39 +101,35 @@ export default function BoardContainer() {
         <>
             <Form onFinish={handleSubmit} form={form}>
                 {showForm && (
-                    <>
-                        <Space size={10}>
-                            <Form.Item
-                                name="boardName"
-                                rules={[{ required: true, message: '게시판 이름을 입력하세요.' }]}
-                            >
-                                <Input name="boardName" placeholder="게시판 이름" autoFocus />
-                            </Form.Item>
-                            <Form.Item
-                                name="link"
-                                rules={[{ required: true, message: '링크를 입력하세요.' }]}
-                            >
-                                <Input name="link" placeholder="링크" />
-                            </Form.Item>
-                        </Space>
-                        <Space size={10}>
-                            <Form.Item
-                                name="icon"
-                                rules={[{ required: true, message: '아이콘을 입력하세요.' }]}
-                            >
-                                <Input name="icon" placeholder="아이콘" />
-                            </Form.Item>
-                            <Form.Item name="isSpecial" valuePropName="checked">
-                                <Checkbox name="isSpecial">학과관계자만 글쓰기 권한 부여</Checkbox>
-                            </Form.Item>
-                        </Space>
-                    </>
+                    <Space size={8}>
+                        <Form.Item
+                            name="boardName"
+                            rules={[{ required: true, message: '게시판 이름을 입력하세요.' }]}
+                        >
+                            <Input name="boardName" placeholder="게시판 이름" autoFocus />
+                        </Form.Item>
+                        <Form.Item
+                            name="link"
+                            rules={[{ required: true, message: '링크를 입력하세요.' }]}
+                        >
+                            <Input name="link" placeholder="링크" />
+                        </Form.Item>
+                        <Form.Item
+                            name="icon"
+                            rules={[{ required: true, message: '아이콘을 입력하세요.' }]}
+                        >
+                            <Input name="icon" placeholder="아이콘" />
+                        </Form.Item>
+                        <Form.Item name="isSpecial" valuePropName="checked">
+                            <Checkbox name="isSpecial">학과관계자만 글쓰기 권한 부여</Checkbox>
+                        </Form.Item>
+                    </Space>
                 )}
                 <Form.Item>
                     {showForm ? (
                         <Space size={4}>
                             <Button type="primary" htmlType="submit">
-                                추가
+                                게시판 추가
                             </Button>
                             <Button type="danger" onClick={handleShowForm}>
                                 취소
