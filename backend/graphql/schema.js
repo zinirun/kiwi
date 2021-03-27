@@ -232,6 +232,13 @@ module.exports = buildSchema(`
         updatedAt: Date
     }
 
+    type AdminLog {
+        id: ID!
+        userId: ID!
+        log: String!
+        createdAt: Date!
+    }
+
     input GroupCommentInput {
         groupId: ID!
         content: String!
@@ -308,6 +315,7 @@ module.exports = buildSchema(`
         getAllDepartments: [Department]
         getAllBoards: [Board]
         getAllCategories: [Category]
+        getAdminLogs: [AdminLog]
     }
 
     type Mutation {

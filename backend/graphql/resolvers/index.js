@@ -78,6 +78,7 @@ module.exports = {
     getReports: require('./report/getReports'),
 
     // Admin
+    getAdminLogs: require('./admin/log/getAdminLogs'),
     getAllUsers: require('./admin/user/getAllUsers'),
     searchUserByStudentNumber: require('./admin/user/searchUserByStudentNumber'),
     searchUserByUserId: require('./admin/user/searchUserByUserId'),

@@ -687,3 +687,14 @@ export const SEARCH_POST_BY_ADMIN = gql`
         }
     }
 `;
+
+export const GET_ADMIN_LOGS = gql`
+    query getAdminLogs {
+        getAdminLogs {
+            id
+            userId
+            log
+            createdAt
+        }
+    }
+`;
