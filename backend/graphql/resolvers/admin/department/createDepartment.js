@@ -12,6 +12,9 @@ module.exports = async ({ deptName }, { id: userId }) => {
         .create({
             deptName,
         })
-        .then(() => true)
+        .then(() => {
+            createAdminLog(userId, `[${deptName}] 학과 추가`);
+            return true;
+        })
         .catch(() => ConflictError());
 };
