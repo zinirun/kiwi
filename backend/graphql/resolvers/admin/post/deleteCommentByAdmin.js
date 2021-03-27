@@ -1,7 +1,8 @@
 const isAdmin = require('../../../middlewares/isAdmin');
 const models = require('../../../../models');
 const { ConflictError } = require('../../../errors/errors');
-module.exports = async ({ id }, { id: userId }) => {
+const { createAdminLog } = require('../../../services/log.service');
+module.exports = async ({ id, postId }, { id: userId }) => {
     await isAdmin(userId);
     return await models.comment
         .update(
@@ -14,6 +15,7 @@ module.exports = async ({ id }, { id: userId }) => {
             if (result[0] === 0) {
                 return false;
             }
+            createAdminLog(userId, `댓글 [ID: ${id}] 삭제 (게시글ID: ${postId})`);
             return true;
         })
         .catch(() => {

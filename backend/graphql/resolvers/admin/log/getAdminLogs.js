@@ -10,5 +10,6 @@ module.exports = async ({}, { id: userId }) => {
     return await models.admin_log.findAll({
         attributes: ['id', 'userId', 'log', 'createdAt'],
         raw: true,
+        order: [['id', 'DESC']],
     });
 };

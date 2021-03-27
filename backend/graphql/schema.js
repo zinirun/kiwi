@@ -361,6 +361,6 @@ module.exports = buildSchema(`
         createCategory(category: CategoryInput!): Boolean
         updateStatus(status: String!, id: ID!): Boolean
         getPostByAdmin(postId: ID!): PostAdmin!
-        deleteCommentByAdmin(id: ID!): Boolean
+        deleteCommentByAdmin(id: ID!, postId: ID!): Boolean
     }
 `);
