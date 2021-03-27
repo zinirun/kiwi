@@ -227,9 +227,10 @@ module.exports = buildSchema(`
         postId: ID
         commentId: ID
         groupId: ID
-        title: String!
-        titleLength: Int!
+        title: String
+        titleLength: Int
         count: Int!
+        extraResult: String
         updatedAt: Date!
     }
 
@@ -353,7 +354,7 @@ module.exports = buildSchema(`
         scrapPost(postId: ID!): String
         seenAllNotifications: Boolean
         createReport(report: ReportInput!): Boolean
-        completeReport(id: ID!): Boolean
+        completeReport(id: ID!, reporterId:ID!, result: String!): Boolean
         searchUserByStudentNumber(studentNumber: String!): User!
         searchUserByUserId(id: ID!): User!
         createDepartment(deptName: String!): Boolean

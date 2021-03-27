@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { Grid } from '@material-ui/core';
-import { Button, Divider, message, Modal } from 'antd';
+import { Button, Divider, Input, message, Modal, Space } from 'antd';
 import moment from 'moment';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useStyles } from '../styles/report.style';
 import { COMPLETE_REPORT, GET_REPORTS } from '../../configs/queries';
 
@@ -50,18 +50,22 @@ export default function ReportContainer() {
 
 function ReportContentViewer({ report, refetch }) {
     const classes = useStyles();
+    const [result, setResult] = useState('');
     const [completeReport] = useMutation(COMPLETE_REPORT);
 
     const handleCompleteReport = () => {
         confirm({
             title: `신고를 처리 완료할까요? (#${report.id})`,
             icon: <></>,
+            content: '신고 처리 결과는 회원에게 알림으로 전송됩니다.',
             okText: '처리 완료',
             cancelText: '취소',
             onOk() {
                 completeReport({
                     variables: {
                         id: report.id,
+                        reporterId: report.userId,
+                        result,
                     },
                 })
                     .then(() => {
@@ -75,22 +79,33 @@ function ReportContentViewer({ report, refetch }) {
         });
     };
 
+    const handleResultChange = useCallback((e) => {
+        setResult(e.target.value);
+    }, []);
+
     return (
         <Grid container spacing={1} className={classes.reportWrapper}>
-            <Grid item xs={12} sm={8}>
+            <Grid item xs={12} sm={6}>
                 <span className={classes.reportId}>#{report.id}</span>
                 <span className={classes.reportUser}>
                     {report.deptName}/{report.userName}
                     <span className={classes.reportUserId}>(ID: {report.userId})</span>
                 </span>
-            </Grid>
-            <Grid item xs={12} sm={3} align="right">
                 <span className={classes.date}>{report.createdAt}</span>
             </Grid>
-            <Grid item xs={12} sm={1} align="right">
-                <Button size="small" onClick={handleCompleteReport}>
-                    완료
-                </Button>
+            <Grid item xs={12} sm={6} align="right">
+                <Space>
+                    <Input
+                        className={classes.input}
+                        placeholder="처리결과 입력"
+                        size="small"
+                        onChange={handleResultChange}
+                        value={result}
+                    />
+                    <Button size="small" onClick={handleCompleteReport}>
+                        완료
+                    </Button>
+                </Space>
             </Grid>
             <Grid item xs={12}>
                 <Divider className={classes.reportDivider} />

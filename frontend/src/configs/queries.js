@@ -517,6 +517,7 @@ export const GET_MY_NOTIFICATIONS = gql`
             groupId
             title
             titleLength
+            extraResult
             count
             updatedAt
         }
@@ -596,8 +597,8 @@ export const SEARCH_USER_BY_STUDENT_NUMBER = gql`
 `;
 
 export const COMPLETE_REPORT = gql`
-    mutation completeReport($id: ID!) {
-        completeReport(id: $id)
+    mutation completeReport($id: ID!, $reporterId: ID!, $result: String!) {
+        completeReport(id: $id, reporterId: $reporterId, result: $result)
     }
 `;
 

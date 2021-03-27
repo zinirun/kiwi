@@ -28,6 +28,7 @@ module.exports = async ({}, { id: userId }) => {
                         n.groupId,
                         n.count,
                         n.updatedAt,
+                        n.extraResult,
                         substr(COALESCE(g.title, c.content, p.title), 1, 8) as title,
                         char_length(COALESCE(g.title, c.content, p.title)) as titleLength
                     from notification n

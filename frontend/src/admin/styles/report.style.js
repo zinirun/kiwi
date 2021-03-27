@@ -21,8 +21,9 @@ export const useStyles = makeStyles((theme) => ({
         marginLeft: 5,
     },
     date: {
+        marginLeft: 5,
         color: '#999',
-        fontSize: '0.75rem',
+        fontSize: '0.725rem',
     },
     reportContent: {
         color: '#222',
@@ -31,5 +32,8 @@ export const useStyles = makeStyles((theme) => ({
     reportDivider: {
         marginTop: 0,
         marginBottom: 10,
+    },
+    input: {
+        width: 250,
     },
 }));

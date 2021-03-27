@@ -275,6 +275,17 @@ const createNotificationPostSpecial = async (postId, departmentId, triggerId) =>
         }),
     );
 };
+
+// type: REPORT_RESULT
+const createNotificationReportResult = async (userId, result) => {
+    const type = 'REPORT_RESULT';
+    await models.notification.create({
+        type,
+        userId,
+        extraResult: result,
+    });
+};
+
 module.exports = {
     createNotificationPostComment,
     createNotificationCommentLike,
@@ -282,4 +293,5 @@ module.exports = {
     createNotificationGroupInvite,
     createNotificationGroupComment,
     createNotificationPostSpecial,
+    createNotificationReportResult,
 };

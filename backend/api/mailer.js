@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 const { mailerConf } = require('../config/mailerconfig');
+const models = require('../models');
 
 // mail: to, subject, text, html
 const sendMail = (mail) =>
@@ -45,6 +46,33 @@ const sendMailOfResetPassword = async (user, newPassword) => {
     return await sendMail(mail);
 };
 
+// 회원정지 메일발송
+const sendMailOfUserBanned = async (userId, reason) => {
+    const user = await models.user.findOne({
+        attributes: ['id', 'email', 'userName'],
+        where: {
+            id: userId,
+        },
+        raw: true,
+    });
+    if (!user) return;
+    const mail = {
+        to: user.email,
+        subject: `[키위] ${user.userName}님의 이용이 정지되었습니다.`,
+        text: `${user.userName}님 회원 이용 정지`,
+        html: `<div style="color: black"><ul style="font-size: 16px; background: #eee; border-radius: 10px; padding: 15px; list-style: none">
+        <li>사유: ${reason}</li>
+        <li>* 이용 재개에 대한 문의는 받지 않습니다.</li>
+    </ul>
+    <p style="margin-top: 35px; text-align: center; font-size: 18px">키위 운영팀</p>
+    <p style="margin-top: 15px; text-align: center; font-size: 12px; color: '#999'">
+        본 메일은 발신 전용입니다.
+    </p></div>`,
+    };
+    return await sendMail(mail);
+};
+
 module.exports = {
     sendMailOfResetPassword,
+    sendMailOfUserBanned,
 };

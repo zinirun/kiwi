@@ -87,6 +87,7 @@ export default function MyNotificationContainer() {
                             type={unread.type}
                             count={unread.count}
                             date={unread.updatedAt}
+                            extraResult={unread.extraResult}
                             targetId={unread.postId || unread.groupId}
                             key={`unread-${unread.id}`}
                             title={unread.titleLength > 8 ? unread.title + '..' : unread.title}
@@ -99,7 +100,7 @@ export default function MyNotificationContainer() {
     );
 }
 
-function NotificationViewer({ id, type, count, targetId, date, refetch, title }) {
+function NotificationViewer({ id, type, count, extraResult, targetId, date, refetch, title }) {
     const classes = useStyles();
     const history = useHistory();
     const [seenNotification] = useMutation(SEEN_NOTIFICATION);
@@ -129,6 +130,9 @@ function NotificationViewer({ id, type, count, targetId, date, refetch, title })
         case 'POST_SPECIAL':
             link = `/post/${targetId}`;
             messageText = `[${title}]가 게시되었습니다.`;
+            break;
+        case 'REPORT_RESULT':
+            messageText = `회원님의 신고가 처리되었습니다. 처리 결과: [${extraResult}]`;
             break;
         default:
             break;
