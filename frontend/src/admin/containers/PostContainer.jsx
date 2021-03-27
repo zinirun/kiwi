@@ -132,7 +132,24 @@ export default function UserContainer() {
                         </div>
                     }
                     <Collapse>
-                        <Panel header="게시글 관련 댓글 보기" key="1"></Panel>
+                        <Panel header="게시글 관련 댓글 보기" key="1">
+                            {post.comments &&
+                                post.comments.map((comment, idx) => (
+                                    <Row gutter={[12, 12]} className={classes.infoSection}>
+                                        <Col span={4}>댓글 고유 ID</Col>
+                                        <Col span={18}>{comment.id}</Col>
+                                        <Col span={4}>댓글 작성자 / 아이디</Col>
+                                        <Col span={18}>
+                                            {comment.authorName} / {comment.authorId}
+                                        </Col>
+                                        <Col span={4}>댓글 내용</Col>
+                                        <Col span={18}>{comment.content}</Col>
+                                        <Col span={4}>댓글 생성일</Col>
+                                        <Col span={20}>{comment.createdAt}</Col>
+                                        <Col span={4}>상태</Col>
+                                    </Row>
+                                ))}
+                        </Panel>
                     </Collapse>
                 </>
             )}
