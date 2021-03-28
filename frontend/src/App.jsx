@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 import Root from './header/Root';
 
@@ -61,8 +61,13 @@ import AdminPage from './admin/pages/AdminPage';
 
 // 신고 페이지
 import ReportPage from './common/pages/ReportPage';
+import consoleMessage from './configs/consoleMessage';
 
 function App() {
+    useEffect(() => {
+        consoleMessage();
+    }, []);
+
     return (
         <Router>
             <Root>
