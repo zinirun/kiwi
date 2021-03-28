@@ -9,10 +9,6 @@ export const useStyles = makeStyles((theme) => ({
     button: {
         width: 100,
     },
-    buttonSection: {
-        marginTop: 10,
-        display: 'flex',
-    },
     attachWrapper: {
         marginTop: 20,
     },
@@ -37,7 +33,9 @@ export const useStyles = makeStyles((theme) => ({
         marginBottom: 10,
     },
     reasonInput: {
-        marginTop: 20,
         width: 400,
+    },
+    reasonWrapper: {
+        marginTop: 20,
     },
 }));

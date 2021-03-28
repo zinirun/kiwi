@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from 'react-apollo';
-import { Input, Row, Col, message, Button, Modal, Divider, Image, Collapse } from 'antd';
+import { Input, Row, Col, message, Button, Modal, Divider, Image, Collapse, Space } from 'antd';
 import { useStyles } from '../styles/admin.style';
 import { SEARCH_POST_BY_ADMIN, DELETE_POST, DELETE_COMMENT_BY_ADMIN } from '../../configs/queries';
 import moment from 'moment';
@@ -106,16 +106,18 @@ export default function UserContainer() {
 
     return (
         <>
-            <Search
-                placeholder="게시글 고유 ID로 조회"
-                enterButton="조회"
-                size="middle"
-                className={classes.searchSection}
-                onSearch={onSearchByAdmin}
-            />
+            <div>
+                <Search
+                    placeholder="게시글 고유 ID로 조회"
+                    enterButton="조회"
+                    size="middle"
+                    className={classes.searchSection}
+                    onSearch={onSearchByAdmin}
+                />
+            </div>
             {post && (
                 <>
-                    <div>
+                    <Space size={0} className={classes.reasonWrapper}>
                         <Input
                             placeholder="게시글 삭제 사유를 입력하세요."
                             className={classes.reasonInput}
@@ -126,13 +128,12 @@ export default function UserContainer() {
                             disabled={post.isDeleted === 0 && postReason ? false : true}
                             type="primary"
                             danger
-                            size="middle"
                             className={classes.buttonSection}
                             onClick={handlePostDelete}
                         >
                             삭제
                         </Button>
-                    </div>
+                    </Space>
                     <Row gutter={[12, 12]} className={classes.infoSection}>
                         <Col span={4}>게시글 고유 ID</Col>
                         <Col span={18}>{post.id}</Col>
