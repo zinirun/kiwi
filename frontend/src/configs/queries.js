@@ -715,7 +715,7 @@ export const DELETE_COMMENT_BY_ADMIN = gql`
 `;
 
 export const DELETE_POST_BY_ADMIN = gql`
-    mutation deletePost($id: ID!, $reason: String!) {
-        deletePost(id: $id, reason: $reason)
+    mutation deletePostByAdmin($id: ID!, $reason: String!) {
+        deletePostByAdmin(id: $id, reason: $reason)
     }
 `;

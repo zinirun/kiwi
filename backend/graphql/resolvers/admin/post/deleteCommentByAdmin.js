@@ -2,7 +2,7 @@ const isAdmin = require('../../../middlewares/isAdmin');
 const models = require('../../../../models');
 const { ConflictError } = require('../../../errors/errors');
 const { createAdminLog } = require('../../../services/log.service');
-module.exports = async ({ id, postId }, { id: userId }) => {
+module.exports = async ({ id, postId, reason }, { id: userId }) => {
     await isAdmin(userId);
     return await models.comment
         .update(
