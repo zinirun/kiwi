@@ -32,6 +32,7 @@ export const useStyles = makeStyles((theme) => ({
         width: 400,
     },
     reasonWrapper: {
+        display: 'flex',
         marginTop: 20,
     },
     buttonSection: {

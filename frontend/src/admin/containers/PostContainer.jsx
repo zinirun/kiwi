@@ -97,7 +97,6 @@ export default function UserContainer() {
                             disabled={post.isDeleted === 0 && postReason ? false : true}
                             type="primary"
                             danger
-                            className={classes.buttonSection}
                             onClick={handlePostDelete}
                         >
                             삭제
