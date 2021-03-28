@@ -154,13 +154,13 @@ export default function UserContainer() {
                             <UserType type={userInfo.type} />
                         </Col>
                     </Row>
-                    <Input
-                        placeholder="정지 사유를 입력하세요."
-                        value={reason}
-                        className={classes.reasonInput}
-                        onChange={(e) => setReason(e.target.value)}
-                    />
                     <Space className={classes.buttonSection}>
+                        <Input
+                            placeholder="정지 사유를 입력하세요."
+                            value={reason}
+                            className={classes.reasonInput}
+                            onChange={(e) => setReason(e.target.value)}
+                        />
                         <Button
                             type="primary"
                             disabled={reason ? false : true}

@@ -34,4 +34,8 @@ export const useStyles = makeStyles((theme) => ({
     reasonWrapper: {
         marginTop: 20,
     },
+    buttonSection: {
+        marginTop: 25,
+        display: 'flex',
+    },
 }));
