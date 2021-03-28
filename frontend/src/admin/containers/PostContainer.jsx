@@ -143,18 +143,22 @@ export default function UserContainer() {
                                 )}
                         </div>
                     }
-                    <Collapse>
-                        <Panel header="게시글 관련 댓글 보기" key="1">
-                            {post.comments &&
-                                post.comments.map((comment) => (
-                                    <CommentContainer
-                                        key={comment.id}
-                                        comment={comment}
-                                        postId={post.id}
-                                    />
-                                ))}
-                        </Panel>
-                    </Collapse>
+                    {post.comments.length > 0 ? (
+                        <Collapse defaultActiveKey="post-comment-panel">
+                            <Panel header="게시글의 댓글" key="post-comment-panel">
+                                {post.comments &&
+                                    post.comments.map((comment) => (
+                                        <CommentContainer
+                                            key={comment.id}
+                                            comment={comment}
+                                            postId={post.id}
+                                        />
+                                    ))}
+                            </Panel>
+                        </Collapse>
+                    ) : (
+                        <p className={classes.commentInfoText}>댓글 없음</p>
+                    )}
                 </>
             )}
         </>

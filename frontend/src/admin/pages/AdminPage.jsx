@@ -17,7 +17,7 @@ const { Content, Sider } = Layout;
 export default function AdminPage() {
     const history = useHistory();
     const [isAdmin, setIsAdmin] = useState(false);
-    const [menuKey, setMenuKey] = useState(0);
+    const [menuKey, setMenuKey] = useState('report');
     const { data: isAdminData, loading: isAdminLoading } = useQuery(GET_LOCAL_IS_ADMIN);
     useEffect(() => {
         if (isAdminData) {
@@ -42,7 +42,12 @@ export default function AdminPage() {
                 }}
             >
                 <Sider width={140}>
-                    <Menu mode="inline" style={{ height: '100%' }} onSelect={handleMenu}>
+                    <Menu
+                        mode="inline"
+                        style={{ height: '100%' }}
+                        onSelect={handleMenu}
+                        defaultSelectedKeys={['report']}
+                    >
                         <Menu.Item key="report">신고 처리</Menu.Item>
                         <Menu.Item key="department">학과</Menu.Item>
                         <Menu.Item key="user">회원</Menu.Item>

@@ -39,4 +39,9 @@ export const useStyles = makeStyles((theme) => ({
         marginTop: 25,
         display: 'flex',
     },
+    commentInfoText: {
+        marginTop: 20,
+        color: '#777',
+        marginBottom: 0,
+    },
 }));
