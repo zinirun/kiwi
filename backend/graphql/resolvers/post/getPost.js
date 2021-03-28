@@ -30,10 +30,14 @@
 * getPostById(id: ID!): Post!
  */
 
+const { getCachedPost, setCachedPost } = require('../../../api/caching');
 const models = require('../../../models');
 const { NotFoundError, ConflictError } = require('../../errors/errors');
 
 module.exports = async ({ id }, { departmentId, id: userId }) => {
+    const cachedPost = await getCachedPost(id);
+    if (cachedPost) return cachedPost;
+
     const query = `
                     select p.id,
                         b.id as boardId,
@@ -82,6 +86,7 @@ module.exports = async ({ id }, { departmentId, id: userId }) => {
                         post.files = files;
                     }
                     post.userId = userId;
+                    await setCachedPost(id, post);
                     return post;
                 } else {
                     throw NotFoundError('Post Not Exist');
