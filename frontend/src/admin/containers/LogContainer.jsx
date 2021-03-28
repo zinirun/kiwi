@@ -11,7 +11,7 @@ const columns = [
         key: 'id',
     },
     {
-        title: '회원ID',
+        title: '관리자ID',
         dataIndex: 'userId',
         key: 'userId',
     },

@@ -134,6 +134,12 @@ function NotificationViewer({ id, type, count, extraResult, targetId, date, refe
         case 'REPORT_RESULT':
             messageText = `회원님의 신고가 처리되었습니다. 처리 결과: [${extraResult}]`;
             break;
+        case 'POST_DELETED':
+            messageText = `회원님의 게시글 [${title}]이 신고 처리에 의해 삭제되었습니다. 사유: [${extraResult}]`;
+            break;
+        case 'COMMENT_DELETED':
+            messageText = `회원님의 댓글 [${title}]이 신고 처리에 의해 삭제되었습니다. 사유: [${extraResult}]`;
+            break;
         default:
             break;
     }

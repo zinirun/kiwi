@@ -22,14 +22,10 @@ export const useStyles = makeStyles((theme) => ({
         marginBottom: 10,
         fontWeight: 'bold',
     },
-    commentDeleteBtn: {
-        marginTop: 15,
-        marginBottom: 10,
-    },
     commentWrapper: {
         border: '1px solid #ccc',
         borderRadius: 5,
-        padding: 8,
+        padding: 10,
         marginBottom: 10,
     },
     reasonInput: {

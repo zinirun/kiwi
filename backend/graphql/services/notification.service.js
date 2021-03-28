@@ -286,6 +286,42 @@ const createNotificationReportResult = async (userId, result) => {
     });
 };
 
+// type: POST_DELETED
+const createNotificationPostDeleted = async (postId, reason) => {
+    const type = 'POST_DELETED';
+    const { authorId } = await models.post.findOne({
+        attributes: ['authorId'],
+        raw: true,
+        where: {
+            id: postId,
+        },
+    });
+    await models.notification.create({
+        type,
+        userId: authorId,
+        postId,
+        extraResult: reason,
+    });
+};
+
+// type: COMMENT_DELETED
+const createNotificationCommentDeleted = async (commentId, reason) => {
+    const type = 'COMMENT_DELETED';
+    const { authorId } = await models.comment.findOne({
+        attributes: ['authorId'],
+        raw: true,
+        where: {
+            id: commentId,
+        },
+    });
+    await models.notification.create({
+        type,
+        userId: authorId,
+        commentId,
+        extraResult: reason,
+    });
+};
+
 module.exports = {
     createNotificationPostComment,
     createNotificationCommentLike,
@@ -294,4 +330,6 @@ module.exports = {
     createNotificationGroupComment,
     createNotificationPostSpecial,
     createNotificationReportResult,
+    createNotificationPostDeleted,
+    createNotificationCommentDeleted,
 };

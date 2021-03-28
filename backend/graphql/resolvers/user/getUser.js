@@ -49,7 +49,7 @@ module.exports = async ({}, { id }) => {
     if (!user) {
         throw NotFoundError('user not exists');
     }
-    return {
+    const ret_user = {
         id: user.id,
         userAccount: user.userAccount,
         userName: user.userName,
@@ -57,7 +57,12 @@ module.exports = async ({}, { id }) => {
         studentGradeId: user.studentGradeId,
         departmentId: user.departmentId,
         type: user.type,
+        status: user.status,
         department: user['department.department'],
         grade: user['grade.grade'],
     };
+    if (ret_user.status !== 1) {
+        throw BadRequestError('not normal user');
+    }
+    return ret_user;
 };

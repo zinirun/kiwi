@@ -34,7 +34,7 @@ export default function UserContainer() {
             .then((result) => {
                 if (result.data) {
                     message.success(
-                        '게시글이 삭제되었습니다. 다시 조회하시면 변경 사항 확인이 가능합니다.',
+                        '게시글이 삭제되었습니다. 변경 사항을 확인하려면 다시 조회하세요.',
                     );
                 }
             })
@@ -64,7 +64,7 @@ export default function UserContainer() {
     const handlePostDelete = () => {
         confirm({
             title: '게시글을 삭제할까요?',
-            content: '삭제된 게시글은 복구할 수 없습니다.',
+            content: '삭제된 게시글은 복구할 수 없습니다. 게시글의 하위 댓글도 모두 삭제됩니다.',
             okText: '삭제',
             cancelText: '취소',
             onOk() {
@@ -180,7 +180,7 @@ function CommentContainer({ comment, postId }) {
             .then((result) => {
                 if (result.data) {
                     message.success(
-                        '댓글이 삭제되었습니다. 다시 조회하시면 변경 사항 확인이 가능합니다.',
+                        '댓글이 삭제되었습니다. 변경 사항을 확인하려면 다시 조회하세요.',
                     );
                 }
             })
@@ -217,7 +217,7 @@ function CommentContainer({ comment, postId }) {
             </Row>
             <div>
                 {comment.isDeleted === 0 && (
-                    <>
+                    <Space size={0} className={classes.reasonWrapper}>
                         <Input
                             placeholder="댓글 삭제 사유를 입력하세요."
                             value={commentReason}
@@ -228,14 +228,12 @@ function CommentContainer({ comment, postId }) {
                             disabled={commentReason ? false : true}
                             type="primary"
                             danger
-                            size="middle"
                             value={comment.id}
-                            className={classes.commentDeleteBtn}
                             onClick={handleCommentDelete}
                         >
                             삭제
                         </Button>
-                    </>
+                    </Space>
                 )}
             </div>
         </div>
