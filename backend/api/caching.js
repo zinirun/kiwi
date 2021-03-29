@@ -22,45 +22,25 @@ client.on('ready', () => {
 ////////////////////////////////////
 
 /**
- * 게시글 캐시 Dirty bit 검사
- * @param {*} id
- * @returns {Boolean}
- */
-const getCachedPostUpdated = async (id) => {
-    return (await client.getAsync(`post-updated:${id}`)) ? true : false;
-};
-
-/**
- * 게시글 캐시 Dirty bit 추가
+ * 게시글 캐시 삭제
  * 추가 케이스: Post에 대한 CUD, User 정보 변경
  * @param {*} id
  */
 const setCachedPostUpdated = async (id) => {
-    await client.setAsync(`post-updated:${id}`, 1);
+    await client.delAsync(`post:${id}`);
 };
 
 /**
- * 게시글 캐시 Dirty bit 제거 (캐시 저장 후)
- * @param {*} id
- */
-const disableCachedPostUpdated = async (id) => {
-    await client.delAsync(`post-updated:${id}`);
-};
-
-/**
- * 게시글 캐시 가져오기 (Dirty bit 검사 후)
+ * 게시글 캐시 가져오기
  * @param {*} id
  * @returns {Post}
  */
 const getCachedPost = async (id) => {
-    if (!(await getCachedPostUpdated(id))) {
-        return JSON.parse(await client.getAsync(`post:${id}`));
-    }
-    console.log(`updated post [id: ${id}] - must read mysql`);
+    return JSON.parse(await client.getAsync(`post:${id}`));
 };
 
 /**
- * 게시글 캐시 저장 (이후 Dirty bit 제거)
+ * 게시글 캐시 저장
  * @param {id, post}
  */
 const setCachedPost = async (id, post) => {
@@ -69,7 +49,6 @@ const setCachedPost = async (id, post) => {
         await client.delAsync(cachedKeys[0]);
     }
     await client.setAsync(`post:${id}`, JSON.stringify(post));
-    await disableCachedPostUpdated(id);
 };
 
 ////////////////////////////////////
@@ -77,45 +56,25 @@ const setCachedPost = async (id, post) => {
 ////////////////////////////////////
 
 /**
- * 게시글 목록 캐시 Dirty bit 검사
- * @param {deptId, boardId}
- * @returns {Boolean}
- */
-const getCachedPostListUpdated = async (deptId, boardId) => {
-    return (await client.getAsync(`postlist-updated:${deptId}:${boardId}`)) ? true : false;
-};
-
-/**
- * 게시글 목록 캐시 Dirty bit 추가
+ * 게시글 목록 캐시 삭제
  * 추가 케이스: Post에 대한 CUD, User 정보 변경
  * @param {deptId, boardId}
  */
 const setCachedPostListUpdated = async (deptId, boardId) => {
-    await client.setAsync(`postlist-updated:${deptId}:${boardId}`, 1);
+    await client.delAsync(`postlist:${deptId}:${boardId}`, 1);
 };
 
 /**
- * 게시글 목록 캐시 Dirty bit 제거 (캐시 저장 후)
- * @param {deptId, boardId}
- */
-const disableCachedPostListUpdated = async (deptId, boardId) => {
-    await client.delAsync(`postlist-updated:${deptId}:${boardId}`);
-};
-
-/**
- * 게시글 목록 캐시 가져오기 (Dirty bit 검사 후)
+ * 게시글 목록 캐시 가져오기
  * @param {deptId, boardId}
  * @returns {Post}
  */
 const getCachedPostList = async (deptId, boardId) => {
-    if (!(await getCachedPostListUpdated(deptId, boardId))) {
-        return JSON.parse(await client.getAsync(`postlist:${deptId}:${boardId}`));
-    }
-    console.log(`updated postlist ${deptId}:${boardId} - must read mysql`);
+    return JSON.parse(await client.getAsync(`postlist:${deptId}:${boardId}`));
 };
 
 /**
- * 게시글 목록 캐시 저장 (이후 Dirty bit 제거)
+ * 게시글 목록 캐시 저장
  * @param {deptId, boardId, postlist}
  */
 const setCachedPostList = async (deptId, boardId, postlist) => {
@@ -124,7 +83,6 @@ const setCachedPostList = async (deptId, boardId, postlist) => {
         await client.delAsync(cachedKeys[0]);
     }
     await client.setAsync(`postlist:${deptId}:${boardId}`, JSON.stringify(postlist));
-    await disableCachedPostListUpdated(deptId, boardId);
 };
 
 module.exports = {
