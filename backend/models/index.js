@@ -6,11 +6,11 @@ const dotenv = require('dotenv');
 dotenv.config(); //LOAD CONFIG
 
 const sequelize = new Sequelize(
-    process.env.DATABASE,
-    process.env.DB_USER,
-    process.env.DB_PASSWORD,
+    process.env.AWS_RDS_DATABASE,
+    process.env.AWS_RDS_USER,
+    process.env.AWS_RDS_PASSWORD,
     {
-        host: process.env.DB_HOST,
+        host: process.env.AWS_RDS_HOST,
         dialect: 'mysql',
         timezone: '+09:00', //한국 시간 셋팅
         operatorsAliases: Sequelize.Op,
