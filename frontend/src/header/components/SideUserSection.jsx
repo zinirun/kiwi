@@ -49,7 +49,12 @@ export default function SideUserSection({ user }) {
 
     useEffect(() => {
         history.listen(() => {
-            notiRefetch().catch(() => {});
+            notiRefetch()
+                .then(({ data }) => {
+                    const { getNotificationsCount: count } = data;
+                    setUnreadCount(+count);
+                })
+                .catch(() => {});
         });
     }, [history, notiRefetch, unreadCount]);
 
