@@ -36,7 +36,11 @@ const { NotFoundError, ConflictError } = require('../../errors/errors');
 
 module.exports = async ({ id }, { departmentId, id: userId }) => {
     const cachedPost = await getCachedPost(id);
-    if (cachedPost) return cachedPost;
+    if (cachedPost) {
+        console.log(`post - cache hit! [id: ${id}]`);
+        return cachedPost;
+    }
+    console.log(`post - cache miss [id: ${id}]`);
 
     const query = `
                     select p.id,

@@ -37,10 +37,11 @@ module.exports = async ({ id, reason }, { id: userId }) => {
             },
             { where: { id } },
         )
-        .then((result) => {
+        .then(async (result) => {
             if (result[0] === 0) {
                 return false;
             }
+            await setCachedPostUpdated(id);
             createAdminLog(userId, `게시글 [ID: ${id}] 삭제 - 사유 [${reason}]`);
             createNotificationPostDeleted(id, reason);
             return true;
