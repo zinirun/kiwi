@@ -18,6 +18,7 @@ client.on('ready', () => {
     console.log('Redis is ready.');
 });
 
+// 모든 캐시 삭제
 const flushAllCache = async () => {
     await client.flushallAsync();
     console.log('Flushed all of Redis Cache.');
