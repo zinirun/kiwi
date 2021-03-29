@@ -1,7 +1,6 @@
 const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const db = require('./models');
@@ -46,8 +45,6 @@ class App {
         // this.app.use(hpp());
         this.app.use(logger('dev'));
         this.app.use(cookieParser());
-        this.app.use(bodyParser.json());
-        this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(cors());
     }
 

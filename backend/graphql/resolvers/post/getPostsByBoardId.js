@@ -20,8 +20,18 @@
 
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
+const { getCachedPostList, setCachedPostList } = require('../../../api/caching');
 
 module.exports = async ({ boardId, categoryId, pageNumber, elementCount }, { departmentId }) => {
+    if (+pageNumber === 1 && !categoryId) {
+        const cachedPostList = await getCachedPostList(departmentId, boardId);
+        if (cachedPostList) {
+            console.log(`postlist - cache hit! [${departmentId}:${boardId}]`);
+            return cachedPostList;
+        }
+        console.log(`postlist - cache miss [${departmentId}:${boardId}]`);
+    }
+
     const query = `
                     select p.id,
                         p.title,
@@ -61,7 +71,11 @@ module.exports = async ({ boardId, categoryId, pageNumber, elementCount }, { dep
             },
         })
         .spread(
-            (result) => JSON.parse(JSON.stringify(result)),
+            async (result) => {
+                const postList = JSON.parse(JSON.stringify(result));
+                setCachedPostList(departmentId, boardId, postList);
+                return postList;
+            },
             () => ConflictError('Database error'),
         );
 };

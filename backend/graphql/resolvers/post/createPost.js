@@ -14,6 +14,7 @@ const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 const canAccessSpecialBoard = require('../../middlewares/canAccessSpecialBoard');
 const { createNotificationPostSpecial } = require('../../services/notification.service.js');
+const { setCachedPostListUpdated } = require('../../../api/caching');
 
 module.exports = async ({ post }, { id: authorId, departmentId, type: userType }) => {
     const isSpecial = await canAccessSpecialBoard(post.boardId, userType);
@@ -24,8 +25,9 @@ module.exports = async ({ post }, { id: authorId, departmentId, type: userType }
             categoryId: post.categoryId || null,
             departmentId,
         })
-        .then((result) => {
+        .then(async (result) => {
             const data = result.get({ plain: true });
+            await setCachedPostListUpdated(departmentId, post.boardId);
             if (isSpecial) {
                 createNotificationPostSpecial(data.id, departmentId, authorId);
             }

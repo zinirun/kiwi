@@ -11,7 +11,6 @@ router.post('/uploadS3', ctrl.s3_upload, async (req, res) => {
     try {
         for await (const file of files) {
             const { location: fileUrl, mimetype: fileType, originalname: fileName, key } = file;
-            console.log(file);
             models.file.create({
                 postId,
                 fileName,
