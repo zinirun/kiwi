@@ -8,11 +8,11 @@
  * updatePost(id: ID!, post: PostUpdateInput!): Boolean
  */
 
-const { setCachedPostUpdated } = require('../../../api/caching');
+const { setCachedPostUpdated, setCachedPostListUpdated } = require('../../../api/caching');
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 
-module.exports = async ({ id, post }, { id: authorId }) => {
+module.exports = async ({ id, post }, { id: authorId, departmentId }) => {
     return await models.post
         .update(
             {
@@ -22,6 +22,12 @@ module.exports = async ({ id, post }, { id: authorId }) => {
         )
         .then(async () => {
             await setCachedPostUpdated(id);
+            const { boardId } = await models.post.findOne({
+                attributes: ['boardId'],
+                raw: true,
+                id,
+            });
+            await setCachedPostListUpdated(departmentId, boardId);
             return true;
         })
         .catch(() => {

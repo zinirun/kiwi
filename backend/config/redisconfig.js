@@ -6,5 +6,6 @@ module.exports = {
     },
     cachingLimits: {
         POST_MAX_LENGTH: 2000,
+        POST_LIST_MAX_LENGTH: 4000,
     },
 };

@@ -18,12 +18,11 @@ module.exports = async ({ id }, { id: authorId }) => {
             },
             { where: { postId: id } },
         )
-        .then(async (result) => {
+        .then((result) => {
             console.log(result);
             if (result[0] === 0) {
                 return false;
             }
-            await setCachedPostUpdated(id);
             return true;
         })
         .catch(() => {
@@ -36,10 +35,11 @@ module.exports = async ({ id }, { id: authorId }) => {
             },
             { where: { id, authorId } },
         )
-        .then((result) => {
+        .then(async (result) => {
             if (result[0] === 0) {
                 return false;
             }
+            await setCachedPostUpdated(id);
             return true;
         })
         .catch(() => {
