@@ -6,8 +6,9 @@ const redis = require('redis');
 const bluebird = require('bluebird');
 bluebird.promisifyAll(redis);
 
-const { redisHost, cachingLimits } = require('../config/redisconfig');
+const { redisHost, cachingLimits, cachingExpires } = require('../config/redisconfig');
 const { POST_MAX_LENGTH, POST_LIST_MAX_LENGTH } = cachingLimits;
+const { POST_TTL, POST_LIST_TTL } = cachingExpires;
 const client = redis.createClient(redisHost);
 
 client.on('error', (error) => {
@@ -16,6 +17,11 @@ client.on('error', (error) => {
 client.on('ready', () => {
     console.log('Redis is ready.');
 });
+
+const flushAllCache = async () => {
+    await client.flushallAsync();
+    console.log('Flushed all of Redis Cache.');
+};
 
 ////////////////////////////////////
 ////////// 게시글 내용 캐싱 //////////
@@ -48,7 +54,7 @@ const setCachedPost = async (id, post) => {
     if (cachedKeys.length > POST_MAX_LENGTH) {
         await client.delAsync(cachedKeys[0]);
     }
-    await client.setAsync(`post:${id}`, JSON.stringify(post));
+    await client.setexAsync(`post:${id}`, POST_TTL, JSON.stringify(post));
 };
 
 ////////////////////////////////////
@@ -61,7 +67,7 @@ const setCachedPost = async (id, post) => {
  * @param {deptId, boardId}
  */
 const setCachedPostListUpdated = async (deptId, boardId) => {
-    await client.delAsync(`postlist:${deptId}:${boardId}`, 1);
+    await client.delAsync(`postlist:${deptId}:${boardId}`);
 };
 
 /**
@@ -82,7 +88,11 @@ const setCachedPostList = async (deptId, boardId, postlist) => {
     if (cachedKeys.length > POST_LIST_MAX_LENGTH) {
         await client.delAsync(cachedKeys[0]);
     }
-    await client.setAsync(`postlist:${deptId}:${boardId}`, JSON.stringify(postlist));
+    await client.setexAsync(
+        `postlist:${deptId}:${boardId}`,
+        POST_LIST_TTL,
+        JSON.stringify(postlist),
+    );
 };
 
 module.exports = {
@@ -92,4 +102,5 @@ module.exports = {
     getCachedPostList,
     setCachedPostList,
     setCachedPostListUpdated,
+    flushAllCache,
 };

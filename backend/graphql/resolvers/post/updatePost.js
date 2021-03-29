@@ -25,7 +25,9 @@ module.exports = async ({ id, post }, { id: authorId, departmentId }) => {
             const { boardId } = await models.post.findOne({
                 attributes: ['boardId'],
                 raw: true,
-                id,
+                where: {
+                    id,
+                },
             });
             await setCachedPostListUpdated(departmentId, boardId);
             return true;
