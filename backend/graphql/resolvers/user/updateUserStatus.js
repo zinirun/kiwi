@@ -8,6 +8,7 @@
 
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
+const { setCachedUserUpdated } = require('../../../api/caching');
 
 module.exports = async ({ status }, { id }) => {
     return await models.user
@@ -17,7 +18,8 @@ module.exports = async ({ status }, { id }) => {
             },
             { where: { id } },
         )
-        .then(() => {
+        .then(async () => {
+            await setCachedUserUpdated(id);
             return true;
         })
         .catch(() => {

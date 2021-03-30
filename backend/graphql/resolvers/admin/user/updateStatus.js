@@ -2,6 +2,7 @@ const models = require('../../../../models');
 const { ConflictError } = require('../../../errors/errors');
 const isAdmin = require('../../../middlewares/isAdmin');
 const { createAdminLog } = require('../../../services/log.service');
+const { setCachedUserUpdated } = require('../../../../api/caching');
 
 module.exports = async ({ status, id }, { id: userId }) => {
     await isAdmin(userId);
@@ -12,8 +13,9 @@ module.exports = async ({ status, id }, { id: userId }) => {
             },
             { where: { id } },
         )
-        .then(() => {
+        .then(async () => {
             createAdminLog(userId, `회원 [ID ${id}] 상태 [${status}]으로 변경`);
+            await setCachedUserUpdated(id);
             return true;
         })
         .catch(() => {

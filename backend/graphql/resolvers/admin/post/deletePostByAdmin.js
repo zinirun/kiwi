@@ -11,6 +11,7 @@ const models = require('../../../../models');
 const { ConflictError } = require('../../../errors/errors');
 const { createAdminLog } = require('../../../services/log.service');
 const { createNotificationPostDeleted } = require('../../../services/notification.service');
+const { setCachedPostUpdated } = require('../../../../api/caching');
 
 module.exports = async ({ id, reason }, { id: userId }) => {
     await isAdmin(userId);

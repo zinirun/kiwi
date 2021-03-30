@@ -7,8 +7,8 @@ const bluebird = require('bluebird');
 bluebird.promisifyAll(redis);
 
 const { redisHost, cachingLimits, cachingExpires } = require('../config/redisconfig');
-const { POST_MAX_LENGTH, POST_LIST_MAX_LENGTH } = cachingLimits;
-const { POST_TTL, POST_LIST_TTL } = cachingExpires;
+const { POST_MAX_LENGTH, POST_LIST_MAX_LENGTH, USER_MAX_LENGTH } = cachingLimits;
+const { POST_TTL, POST_LIST_TTL, USER_TTL } = cachingExpires;
 const client = redis.createClient(redisHost);
 
 client.on('error', (error) => {
@@ -24,9 +24,9 @@ const flushAllCache = async () => {
     console.log('Flushed all of Redis Cache.');
 };
 
-////////////////////////////////////
-////////// 게시글 내용 캐싱 //////////
-////////////////////////////////////
+/**
+ * Caching Part 1. Post Content
+ */
 
 /**
  * 게시글 캐시 삭제
@@ -58,9 +58,9 @@ const setCachedPost = async (id, post) => {
     await client.setexAsync(`post:${id}`, POST_TTL, JSON.stringify(post));
 };
 
-////////////////////////////////////
-////////// 게시글 목록 캐싱 //////////
-////////////////////////////////////
+/**
+ * Caching Part 2. Post List
+ */
 
 /**
  * 게시글 목록 캐시 삭제
@@ -96,6 +96,103 @@ const setCachedPostList = async (deptId, boardId, postlist) => {
     );
 };
 
+/**
+ * Caching Part 3. Board Menu
+ */
+
+/**
+ * 게시판 캐시 삭제
+ * 추가 케이스: Admin 게시판 추가
+ */
+const setCachedBoardAllUpdated = async () => {
+    await client.delAsync(`board:all`);
+};
+
+/**
+ * 전체 게시판 캐시 가져오기
+ * @param {*}
+ * @returns {board}
+ */
+const getCachedBoardAll = async () => {
+    return JSON.parse(await client.getAsync(`board:all`));
+};
+
+/**
+ * 게시판 캐시 가져오기
+ * @param {*} id
+ * @returns {board}
+ */
+const getCachedBoardById = async (id) => {
+    return JSON.parse(await client.getAsync(`board:${id}`));
+};
+
+/**
+ * 게시판 캐시 저장
+ * @param {id, board}
+ */
+const setCachedBoardById = async (id, board) => {
+    await client.setAsync(`board:${id}`, JSON.stringify(board));
+};
+
+/**
+ * 게시판 캐시 가져오기
+ * @param {*} boardName
+ * @returns {board}
+ */
+const getCachedBoardByName = async (boardName) => {
+    return JSON.parse(await client.getAsync(`board:${boardName}`));
+};
+
+/**
+ * 게시판 캐시 저장
+ * @param {id, board}
+ */
+const setCachedBoardByName = async (boardName, board) => {
+    await client.setAsync(`board:${boardName}`, JSON.stringify(board));
+};
+
+/**
+ * 전체 게시판 캐시 저장
+ * @param {id, board}
+ */
+const setCachedBoardAll = async (board) => {
+    await client.setAsync(`board:all`, JSON.stringify(board));
+};
+
+/**
+ * Caching Part 4. User
+ */
+
+/**
+ * 유저 캐시 삭제
+ * 추가 케이스: User 정보 변경, Admin user 정보 변경
+ * @param {*} id
+ */
+const setCachedUserUpdated = async (id) => {
+    await client.delAsync(`user:${id}`);
+};
+
+/**
+ * 유저 캐시 가져오기
+ * @param {*} id
+ * @returns {Post}
+ */
+const getCachedUser = async (id) => {
+    return JSON.parse(await client.getAsync(`user:${id}`));
+};
+
+/**
+ * 유저 캐시 저장
+ * @param {id, post}
+ */
+const setCachedUser = async (id, user) => {
+    const cachedKeys = await client.keysAsync('user:*');
+    if (cachedKeys.length > USER_MAX_LENGTH) {
+        await client.delAsync(cachedKeys[0]);
+    }
+    await client.setexAsync(`user:${id}`, USER_TTL, JSON.stringify(user));
+};
+
 module.exports = {
     getCachedPost,
     setCachedPost,
@@ -103,5 +200,15 @@ module.exports = {
     getCachedPostList,
     setCachedPostList,
     setCachedPostListUpdated,
+    setCachedBoardAllUpdated,
+    getCachedBoardAll,
+    getCachedBoardByName,
+    setCachedBoardById,
+    setCachedBoardAll,
+    setCachedBoardByName,
+    getCachedBoardById,
+    setCachedUserUpdated,
+    getCachedUser,
+    setCachedUser,
     flushAllCache,
 };

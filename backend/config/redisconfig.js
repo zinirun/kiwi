@@ -7,9 +7,11 @@ module.exports = {
     cachingLimits: {
         POST_MAX_LENGTH: 2048,
         POST_LIST_MAX_LENGTH: 4096,
+        USER_MAX_LENGTH: 2048,
     },
     cachingExpires: {
         POST_TTL: 60 * 60 * 6,
         POST_LIST_TTL: 60 * 60 * 3,
+        USER_TTL: 60 * 60 * 12,
     },
 };

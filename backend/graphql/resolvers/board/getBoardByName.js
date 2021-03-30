@@ -14,8 +14,14 @@
 
 const models = require('../../../models');
 const { NotFoundError } = require('../../errors/errors');
+const { getCachedBoardByName, setCachedBoardByName } = require('../../../api/caching');
 
 module.exports = async ({ boardName }, {}) => {
+    const cachedBoard = await getCachedBoardByName(boardName);
+    if (cachedBoard) {
+        console.log(`board - cache hit! [id: ${boardName}]`);
+        return cachedBoard;
+    }
     const board = await models.board.findOne({
         attributes: ['id', 'boardName', 'link', 'isSpecial', 'icon'],
         where: { link: boardName },
@@ -24,5 +30,6 @@ module.exports = async ({ boardName }, {}) => {
     if (!board) {
         throw NotFoundError('Board not exists');
     }
+    await setCachedBoardByName(boardName, board);
     return board;
 };

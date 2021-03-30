@@ -9,7 +9,7 @@
 
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
-const { setCachedPostUpdated } = require('../../../api/caching');
+const { setCachedPostUpdated, setCachedUserUpdated } = require('../../../api/caching');
 
 module.exports = async ({ user }, { id }) => {
     return await models.user
@@ -32,6 +32,7 @@ module.exports = async ({ user }, { id }) => {
                     await setCachedPostUpdated(id);
                 }
             }
+            await setCachedUserUpdated(id);
             return true;
         })
         .catch(() => {
