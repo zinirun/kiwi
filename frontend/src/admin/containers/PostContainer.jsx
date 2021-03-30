@@ -57,7 +57,7 @@ export default function UserContainer() {
                 });
             })
             .catch(() => {
-                message.error('게시글 검색 중 오류가 발생했습니다.');
+                message.error('존재하지 않는 게시글입니다.');
             });
     };
 
@@ -119,6 +119,10 @@ export default function UserContainer() {
                         </Col>
                         <Col span={4}>상태</Col>
                         <Col span={20}>{post.isDeleted === 0 ? '게시 중' : '삭제 게시글'}</Col>
+                        <Col span={24}>
+                            <Divider />
+                            {post.content}
+                        </Col>
                     </Row>
                     {
                         <div className={classes.attachWrapper}>

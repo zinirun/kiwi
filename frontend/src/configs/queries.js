@@ -678,6 +678,7 @@ export const SEARCH_POST_BY_ADMIN = gql`
             gradeName
             authorName
             createdAt
+            content
             files {
                 id
                 postId
