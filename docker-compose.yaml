@@ -11,6 +11,10 @@ services:
             dockerfile: ./Dockerfile
         container_name: kiwi-backend
         restart: always
+        links:
+            - redis
+        depends_on:
+            - redis
         ports:
             - '4000:4000'
 
