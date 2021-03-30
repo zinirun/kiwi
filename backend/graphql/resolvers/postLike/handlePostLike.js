@@ -9,6 +9,7 @@
 const models = require('../../../models');
 const { createNotificationPostLike } = require('../../services/notification.service');
 const { ConflictError } = require('../../errors/errors');
+const { setCachedPostUpdated } = require('../../../api/caching');
 
 module.exports = async ({ postId }, { id: userId }) => {
     const data = await models.post_like.findOne({
@@ -28,7 +29,10 @@ module.exports = async ({ postId }, { id: userId }) => {
                     },
                     { where: { userId, postId } },
                 )
-                .then(() => 'Down')
+                .then(async () => {
+                    await setCachedPostUpdated(postId);
+                    return 'Down';
+                })
                 .catch(() => ConflictError('Update error occured at Down'));
             // const query =
             //     'update post_like set isDeleted=1 where userId=:userId and postId=:postId;';
@@ -44,7 +48,10 @@ module.exports = async ({ postId }, { id: userId }) => {
                     },
                     { where: { userId, postId } },
                 )
-                .then(() => 'Up')
+                .then(async () => {
+                    await setCachedPostUpdated(postId);
+                    return 'Up';
+                })
                 .catch(() => ConflictError('Update error occured at Up'));
             // const query =
             //     'update post_like set isDeleted=0 where userId=:userId and postId=:postId;';
@@ -59,8 +66,9 @@ module.exports = async ({ postId }, { id: userId }) => {
                 userId,
                 postId,
             })
-            .then(() => {
+            .then(async () => {
                 createNotificationPostLike(postId, userId);
+                await setCachedPostUpdated(postId);
                 return 'Up';
             })
             .catch(() => ConflictError('Insert error occured at Up'));
