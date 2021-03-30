@@ -1,4 +1,4 @@
-FROM node:alpine as builder
+FROM node:14 as builder
 RUN mkdir /app
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
