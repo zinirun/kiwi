@@ -50,7 +50,7 @@ services:
     redis:
         networks:
             - app-tier
-        env_file: ./backend/.env
+        env_file: ./.env
         image: redis:alpine
         container_name: kiwi-redis
         hostname: kiwi
