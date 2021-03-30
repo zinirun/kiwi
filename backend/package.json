@@ -6,7 +6,8 @@
   "scripts": {
     "init-before-start": "yarn sync-db; yarn server-db-build",
     "kill": "killall node",
-    "dev": "npx nodemon -e js,html ./bin/www"
+    "start:dev": "npx nodemon -e js,html ./bin/www",
+    "start:prod": "pm2-docker start ./ecosystem.config.json"
   },
   "dependencies": {
     "aws-sdk": "^2.868.0",
