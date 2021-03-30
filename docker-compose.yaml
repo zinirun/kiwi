@@ -13,8 +13,6 @@ services:
         restart: always
         ports:
             - '4000:4000'
-        expose:
-            - '4000'
 
     nginx:
         networks:
@@ -48,3 +46,16 @@ services:
             - ../certbot/conf:/etc/letsencrypt
             - ../certbot/www:/var/www/certbot
         entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+    redis:
+        networks:
+            - app-tier
+        env_file: ./backend/.env
+        image: redis:alpine
+        container_name: kiwi-redis
+        hostname: kiwi
+        #network_mode: host
+        command: redis-server --requirepass ${REDIS_PASSWORD} --port 6379
+        restart: always
+        ports:
+            - '6379:6379'
