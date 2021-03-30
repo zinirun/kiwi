@@ -10,8 +10,8 @@ module.exports = {
         USER_MAX_LENGTH: 2048,
     },
     cachingExpires: {
-        POST_TTL: 60 * 60 * 6,
-        POST_LIST_TTL: 60 * 60 * 3,
+        POST_TTL: 60 * 30,
+        POST_LIST_TTL: 60 * 10,
         USER_TTL: 60 * 60 * 12,
     },
 };

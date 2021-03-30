@@ -23,6 +23,7 @@
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 const { createNotificationPostComment } = require('../../services/notification.service.js');
+const { setCachedPostUpdated } = require('../../../api/caching');
 
 module.exports = async ({ comment }, { id: authorId }) => {
     return await models.comment
@@ -30,9 +31,10 @@ module.exports = async ({ comment }, { id: authorId }) => {
             authorId,
             ...comment,
         })
-        .then((result) => {
+        .then(async (result) => {
             const data = result.get({ plain: true });
             createNotificationPostComment(data.postId, authorId);
+            await setCachedPostUpdated(data.postId);
             return {
                 ...data,
             };

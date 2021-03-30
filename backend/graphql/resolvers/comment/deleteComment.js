@@ -8,6 +8,7 @@
 
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
+const { setCachedPostUpdated } = require('../../../api/caching');
 
 module.exports = async ({ id }, { id: authorId }) => {
     return await models.comment
@@ -17,10 +18,18 @@ module.exports = async ({ id }, { id: authorId }) => {
             },
             { where: { id, authorId } },
         )
-        .then((result) => {
+        .then(async (result) => {
             if (result[0] === 0) {
                 return false;
             }
+            const { postId } = await models.comment.findOne({
+                attributes: ['postId'],
+                raw: true,
+                where: {
+                    id,
+                },
+            });
+            await setCachedPostUpdated(postId);
             return true;
         })
         .catch(() => {
