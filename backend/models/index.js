@@ -3,7 +3,11 @@ const path = require('path');
 const fs = require('fs');
 const dotenv = require('dotenv');
 
-dotenv.config(); //LOAD CONFIG
+if (process.env.NODE_ENV === 'production') {
+    dotenv.config({ path: path.join(__dirname, '../.env.prod') });
+} else {
+    dotenv.config({ path: path.join(__dirname, '../.env.dev') });
+}
 
 const sequelize = new Sequelize(
     process.env.AWS_RDS_DATABASE,

@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const db = require('./models');
+const path = require('path');
+const dotenv = require('dotenv');
 //const helmet = require('helmet');
 //const hpp = require('hpp');
 
@@ -15,10 +17,19 @@ const resolvers = require('./graphql/resolvers');
 class App {
     constructor() {
         this.app = express();
+        this.envConfig();
         this.dbConnection();
         this.setConfig();
         this.setMiddleware();
         this.getRouting();
+    }
+
+    envConfig() {
+        if (process.env.NODE_ENV === 'production') {
+            dotenv.config({ path: path.join(__dirname, '.env.prod') });
+        } else {
+            dotenv.config({ path: path.join(__dirname, '.env.dev') });
+        }
     }
 
     dbConnection() {

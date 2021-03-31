@@ -1,3 +1,12 @@
+const path = require('path');
+const dotenv = require('dotenv');
+
+if (process.env.NODE_ENV === 'production') {
+    dotenv.config({ path: path.join(__dirname, '../.env.prod') });
+} else {
+    dotenv.config({ path: path.join(__dirname, '../.env.dev') });
+}
+
 module.exports = {
     redisHost: {
         host: process.env.REDIS_HOST,

@@ -1,5 +1,7 @@
 # Environtment (configs)
-.env
+*.env
+.env.dev
+.env.prod
 
 # Logs
 logs
