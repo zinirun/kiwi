@@ -12,7 +12,7 @@ export default function SiteMainPage() {
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
             <Grid item xs={false} sm={4} md={8} className={classes.leftContainer} align="center">
-                <div className={classes.paper}>
+                <div className={classes.leftWrapper}>
                     <WelcomeContainer />
                 </div>
             </Grid>
