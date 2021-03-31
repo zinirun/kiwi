@@ -3,7 +3,6 @@ import { CssBaseline, Grid, Paper } from '@material-ui/core';
 import { LogoIcon } from '../components/Logo';
 import { Link } from 'react-router-dom';
 import { useStyles } from '../static/mainPage.style';
-import WelcomeContainer from '../containers/WelcomeContainer';
 
 export default function SiteMainPage() {
     const classes = useStyles();
@@ -11,16 +10,12 @@ export default function SiteMainPage() {
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
-            <Grid item xs={false} sm={4} md={8} className={classes.leftContainer} align="center">
-                <div className={classes.leftWrapper}>
-                    <WelcomeContainer />
-                </div>
-            </Grid>
+            <Grid item xs={false} sm={4} md={9} className={classes.leftContainer} align="center" />
             <Grid
                 item
                 xs={12}
                 sm={8}
-                md={4}
+                md={3}
                 component={Paper}
                 elevation={8}
                 className={classes.rightContainer}

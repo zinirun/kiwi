@@ -10,11 +10,6 @@ export const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
     },
-    leftWrapper: {
-        width: '100%',
-        display: 'flex',
-        alignItems: 'center',
-    },
     linkContainer: {
         marginTop: theme.spacing(3),
     },
@@ -33,6 +28,10 @@ export const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         paddingBottom: 30,
         backgroundColor: theme.palette.primary.light,
+        backgroundImage: 'url(./assets/dku-image.jpg)',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
     },
     rightContainer: {
         display: 'flex',
