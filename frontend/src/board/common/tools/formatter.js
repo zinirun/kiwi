@@ -1,8 +1,10 @@
-export const commentTimeFormatter = (value) => {
-    const today = new Date();
-    const timeValue = new Date(value);
+import moment from 'moment';
 
-    const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+export const commentTimeFormatter = (value) => {
+    const today = new moment();
+    const timeValue = new moment(value);
+
+    const betweenTime = Math.floor((today - timeValue) / 1000 / 60);
     if (betweenTime < 1) return '방금';
     if (betweenTime < 60) {
         return `${betweenTime}분 전`;
