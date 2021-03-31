@@ -3,6 +3,12 @@
         {
             "name": "kiwi-backend",
             "script": "./bin/www.js",
+            "env": {
+                "NODE_ENV": "develop"
+            },
+            "env_production": {
+                "NODE_ENV": "production"
+            },
             "merge_logs": true,
             "max_restarts": 20,
             "exec_mode": "cluster",
