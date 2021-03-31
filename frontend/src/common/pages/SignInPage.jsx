@@ -101,7 +101,7 @@ export default function SignInPage(props) {
                                     <span>변경한 비밀번호로 다시 로그인하세요.</span>
                                 </Grid>
                             )}
-                            <Grid item xs={12} align="center">
+                            <Grid item xs={12}>
                                 <TextField
                                     name="userAccount"
                                     variant="outlined"
@@ -113,7 +113,7 @@ export default function SignInPage(props) {
                                     autoFocus
                                 />
                             </Grid>
-                            <Grid item xs={12} align="center">
+                            <Grid item xs={12}>
                                 <TextField
                                     type="password"
                                     name="password"

@@ -11,7 +11,7 @@ export default function SiteMainPage() {
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
-            <Grid item xs={false} sm={4} md={9} className={classes.leftContainer} align="center">
+            <Grid item xs={false} sm={4} md={8} className={classes.leftContainer} align="center">
                 <div className={classes.paper}>
                     <WelcomeContainer />
                 </div>
@@ -20,7 +20,7 @@ export default function SiteMainPage() {
                 item
                 xs={12}
                 sm={8}
-                md={3}
+                md={4}
                 component={Paper}
                 elevation={8}
                 className={classes.rightContainer}

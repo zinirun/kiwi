@@ -34,6 +34,9 @@ export const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('sm')]: {
             display: 'none',
         },
+        '& svg': {
+            fill: 'white',
+        },
     },
     drawerPaper: {
         width: drawerWidth,
@@ -44,6 +47,7 @@ export const useStyles = makeStyles((theme) => ({
         color: 'white',
         minWidth: '35px',
         '& svg': {
+            fill: 'white',
             fontSize: '1.15rem',
         },
     },

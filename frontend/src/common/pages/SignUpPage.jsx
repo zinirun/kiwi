@@ -99,7 +99,7 @@ export default function SignUpPage(props) {
             </Space>
             <form className={classes.form} onSubmit={handleSubmit} noValidate>
                 <Grid container className={classes.loginFormContainer} spacing={2} justify="center">
-                    <Grid item xs={12} align="center">
+                    <Grid item xs={12}>
                         <TextField
                             name="userAccount"
                             variant="outlined"
@@ -111,7 +111,7 @@ export default function SignUpPage(props) {
                             required
                         />
                     </Grid>
-                    <Grid item xs={12} align="center">
+                    <Grid item xs={12}>
                         <TextField
                             type="password"
                             name="password"
@@ -123,7 +123,7 @@ export default function SignUpPage(props) {
                             required
                         />
                     </Grid>
-                    <Grid item xs={12} align="center">
+                    <Grid item xs={12}>
                         <TextField
                             type="password"
                             name="passwordAgain"
@@ -135,7 +135,7 @@ export default function SignUpPage(props) {
                             required
                         />
                     </Grid>
-                    <Grid item xs={12} align="center">
+                    <Grid item xs={12}>
                         <TextField
                             name="userName"
                             variant="outlined"
@@ -146,7 +146,7 @@ export default function SignUpPage(props) {
                             required
                         />
                     </Grid>
-                    <Grid item xs={12} align="center">
+                    <Grid item xs={12}>
                         <TextField
                             name="studentNumber"
                             variant="outlined"
@@ -157,7 +157,7 @@ export default function SignUpPage(props) {
                             required
                         />
                     </Grid>
-                    <Grid item xs={12} align="center">
+                    <Grid item xs={12}>
                         <TextField
                             name="email"
                             variant="outlined"

@@ -10,11 +10,16 @@ export const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
     },
+    leftWrapper: {
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+    },
     linkContainer: {
         marginTop: theme.spacing(3),
     },
     mainBigText: {
-        fontSize: '1.125rem',
+        fontSize: '1.25rem',
         fontWeight: 'bold',
         color: '#bbb',
     },
