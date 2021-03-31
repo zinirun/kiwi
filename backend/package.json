@@ -7,7 +7,8 @@
     "init-before-start": "yarn sync-db; yarn server-db-build",
     "kill": "killall node",
     "start:dev": "cross-env NODE_ENV=develop npx nodemon -e js,html ./bin/www",
-    "start:prod": "pm2-docker start ./ecosystem.config.json env-production"
+    "start:staging": "pm2 start ./ecosystem.config.json --env production",
+    "start:prod": "pm2-docker start ./ecosystem.config.json --env production"
   },
   "dependencies": {
     "aws-sdk": "^2.868.0",
