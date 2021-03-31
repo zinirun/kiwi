@@ -2,7 +2,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 
 if (process.env.NODE_ENV === 'production') {
-    dotenv.config({ path: path.join(__dirname, '../.env.prod') });
+    dotenv.config({ path: path.join(__dirname, '../.env') });
 } else {
     dotenv.config({ path: path.join(__dirname, '../.env.dev') });
 }
