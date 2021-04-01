@@ -6,7 +6,7 @@
  * deletePost(id: ID!): Boolean
  */
 
-const { setCachedPostUpdated } = require('../../../api/caching');
+const { setCachedPostUpdated, setCachedPostListUpdated } = require('../../../api/caching');
 const models = require('../../../models');
 const { ConflictError } = require('../../errors/errors');
 
@@ -18,13 +18,6 @@ module.exports = async ({ id }, { id: authorId }) => {
             },
             { where: { postId: id } },
         )
-        .then((result) => {
-            console.log(result);
-            if (result[0] === 0) {
-                return false;
-            }
-            return true;
-        })
         .catch(() => {
             throw ConflictError('Delete(Update) error occured');
         });
@@ -40,6 +33,14 @@ module.exports = async ({ id }, { id: authorId }) => {
                 return false;
             }
             await setCachedPostUpdated(id);
+            const { boardId, departmentId } = await models.post.findOne({
+                attributes: ['boardId', 'departmentId'],
+                raw: true,
+                where: {
+                    id,
+                },
+            });
+            await setCachedPostListUpdated(departmentId, boardId);
             return true;
         })
         .catch(() => {
