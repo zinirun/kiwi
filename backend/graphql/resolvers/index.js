@@ -77,6 +77,9 @@ module.exports = {
     completeReport: require('./report/completeReport'),
     getReports: require('./report/getReports'),
 
+    // MainNotice
+    getMainNotices: require('./mainNotice/getMainNotices'),
+
     // Admin
     getAdminLogs: require('./admin/log/getAdminLogs'),
     getAllUsers: require('./admin/user/getAllUsers'),
@@ -93,4 +96,7 @@ module.exports = {
     getAllCategories: require('./admin/category/getAllCategories'),
     deleteCommentByAdmin: require('./admin/post/deleteCommentByAdmin'),
     deletePostByAdmin: require('./admin/post/deletePostByAdmin'),
+    createMainNotice: require('./admin/mainNotice/createMainNotice'),
+    deleteMainNotice: require('./admin/mainNotice/deleteMainNotice'),
+    getAllMainNotice: require('./admin/mainNotice/getAllMainNotice'),
 };

@@ -322,6 +322,27 @@ const createNotificationCommentDeleted = async (commentId, reason) => {
     });
 };
 
+// type: MAIN_NOTICE
+const createNotificationMainNotice = async (content) => {
+    const type = 'MAIN_NOTICE';
+    const users = await models.user.findAll({
+        attributes: ['userId'],
+        raw: true,
+        where: {
+            isDeleted: 0,
+        },
+    });
+    await models.notification.bulkCreate(
+        users.map((user) => {
+            return {
+                ...user,
+                extraResult: content,
+                type,
+            };
+        }),
+    );
+};
+
 module.exports = {
     createNotificationPostComment,
     createNotificationCommentLike,
@@ -332,4 +353,5 @@ module.exports = {
     createNotificationReportResult,
     createNotificationPostDeleted,
     createNotificationCommentDeleted,
+    createNotificationMainNotice,
 };

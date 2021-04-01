@@ -252,6 +252,13 @@ module.exports = buildSchema(`
         createdAt: Date!
     }
 
+    type MainNotice {
+        id: ID!
+        type: String!
+        content: String!
+        isDeleted: Int
+    }
+
     input GroupCommentInput {
         groupId: ID!
         content: String!
@@ -329,6 +336,8 @@ module.exports = buildSchema(`
         getAllBoards: [Board]
         getAllCategories: [Category]
         getAdminLogs: [AdminLog]
+        getAllMainNotice: [MainNotice]
+        getMainNotices: [MainNotice]
     }
 
     type Mutation {
@@ -364,5 +373,7 @@ module.exports = buildSchema(`
         getPostByAdmin(postId: ID!): PostAdmin!
         deleteCommentByAdmin(id: ID!, postId: ID!, reason: String!): Boolean
         deletePostByAdmin(id: ID!, reason: String!): Boolean
+        createMainNotice(content: String!, type: String!): Boolean,
+        deleteMainNotice(id: ID!): Boolean,
     }
 `);
