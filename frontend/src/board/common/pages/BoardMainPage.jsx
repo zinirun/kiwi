@@ -8,6 +8,7 @@ import { message } from 'antd';
 import { BoardMainSkeleton } from '../components/Skeletons';
 import moment from 'moment';
 import { WEEK_BEST_POSTS, MONTH_BEST_POSTS } from '../../../configs/variables';
+import MainNoticeContainer from '../containers/MainNoticeContainer';
 
 export default function BoardMainPage() {
     const history = useHistory();
@@ -108,7 +109,12 @@ export default function BoardMainPage() {
         <>
             {(loading || weekLoading || monthLoading || noticesLoading) && <BoardMainSkeleton />}
             {!loading && !weekLoading && !monthLoading && !noticesLoading && (
-                <Grid container spacing={1}>
+                <Grid container spacing={2}>
+                    {notices.length > 0 && (
+                        <Grid item xs={12}>
+                            <MainNoticeContainer notices={notices} />
+                        </Grid>
+                    )}
                     {monthPosts && (
                         <Grid item xs={12} sm={6}>
                             <BoardMainContainer data={monthPosts} noLink />

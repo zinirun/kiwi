@@ -16,7 +16,9 @@ module.exports = async ({ type, content }, { id: userId }) => {
             content,
         })
         .then(() => {
-            createNotificationMainNotice(content);
+            if (type !== '광고') {
+                createNotificationMainNotice(content);
+            }
             createAdminLog(userId, `[${content}] 메인 공지 추가 - 타입 [${type}]`);
             return true;
         })
