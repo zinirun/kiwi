@@ -140,6 +140,9 @@ function NotificationViewer({ id, type, count, extraResult, targetId, date, refe
         case 'COMMENT_DELETED':
             messageText = `회원님의 댓글 [${title}]이 신고 처리에 의해 삭제되었습니다. 사유: [${extraResult}]`;
             break;
+        case 'MAIN_NOTICE':
+            messageText = `키위 공지가 추가되었습니다. [${extraResult}]`;
+            break;
         default:
             break;
     }

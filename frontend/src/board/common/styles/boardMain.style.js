@@ -7,6 +7,26 @@ export const useStyles = makeStyles((theme) => ({
         borderBottomWidth: 2,
         boxShadow: 'none',
     },
+    noticePaper: {
+        border: '1px solid #ddd',
+        borderBottomColor: '#ddd',
+        borderBottomWidth: 2,
+        boxShadow: 'none',
+        padding: 7,
+        paddingBottom: 0,
+    },
+    noticeWrapper: {
+        fontSize: '0.85rem',
+        marginBottom: 10,
+    },
+    noticeType: {
+        fontSize: '0.675rem',
+        fontWeight: 'bold',
+        padding: 4,
+        marginRight: 7,
+        borderRadius: 3,
+        color: 'white',
+    },
     titleChip: {
         cursor: 'pointer',
         background: 'transparent',
