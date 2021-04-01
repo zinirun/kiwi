@@ -60,7 +60,8 @@ export default function PostContentContainer({ id }) {
             },
         })
             .then(() => {
-                history.push(`/${post.boardLink}`);
+                message.success('게시글이 삭제되었습니다.');
+                history.push(`/board/${post.boardLink}`);
             })
             .catch(() => {
                 message.error('게시글 삭제 중 오류가 발생했습니다.');
