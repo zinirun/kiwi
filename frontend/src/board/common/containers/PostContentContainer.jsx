@@ -13,6 +13,7 @@ import { message, Modal, Tooltip, Space, Image, Divider } from 'antd';
 import moment from 'moment';
 import PageTitle from '../../../common/components/PageTitle';
 import { PostContentSkeleton } from '../components/Skeletons';
+import CommentContainer from '../containers/CommentContainer';
 
 const { confirm } = Modal;
 
@@ -234,6 +235,7 @@ export default function PostContentContainer({ id }) {
                     </Card>
                 </>
             )}
+            <CommentContainer id={id} postRefetch={postRefetch} />
         </>
     );
 }

@@ -23,7 +23,7 @@ const { TextArea } = Input;
 const { confirm } = Modal;
 const { Option } = Select;
 
-export default function CommentList({ id }) {
+export default function CommentList({ id, postRefetch }) {
     const classes = { ...useStyles(), ...boardCommonStyles() };
     const history = useHistory();
     const [form] = Form.useForm();
@@ -89,6 +89,7 @@ export default function CommentList({ id }) {
             .then(() => {
                 form.resetFields();
                 commentsRefetch();
+                postRefetch();
             })
             .catch(() => message.error('댓글 등록 중 오류가 발생했습니다.'));
     };
