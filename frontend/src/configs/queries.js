@@ -720,3 +720,36 @@ export const DELETE_POST_BY_ADMIN = gql`
         deletePostByAdmin(id: $id, reason: $reason)
     }
 `;
+
+export const CREATE_MAIN_NOTICE = gql`
+    mutation createMainNotice($content: String!, $type: String!) {
+        createMainNotice(content: $content, type: $type)
+    }
+`;
+
+export const DELETE_MAIN_NOTICE = gql`
+    mutation deleteMainNotice($id: ID!) {
+        deleteMainNotice(id: $id)
+    }
+`;
+
+export const GET_ALL_MAIN_NOTICE = gql`
+    query getAllMainNotice {
+        getAllMainNotice {
+            id
+            type
+            content
+            isDeleted
+        }
+    }
+`;
+
+export const GET_MAIN_NOTICES = gql`
+    query getMainNotices {
+        getMainNotices {
+            id
+            type
+            content
+        }
+    }
+`;

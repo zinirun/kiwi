@@ -11,6 +11,7 @@ import DepartmentContainer from '../containers/DepartmentContainer';
 import BoardContainer from '../containers/BoardContainer';
 import CategoryContainer from '../containers/CategoryContainer';
 import LogContainer from '../containers/LogContainer';
+import MainNoticeContainer from '../containers/MainNoticeContainer';
 
 const { Content, Sider } = Layout;
 
@@ -49,6 +50,7 @@ export default function AdminPage() {
                         defaultSelectedKeys={['report']}
                     >
                         <Menu.Item key="report">신고 처리</Menu.Item>
+                        <Menu.Item key="mainNotice">메인 공지</Menu.Item>
                         <Menu.Item key="department">학과</Menu.Item>
                         <Menu.Item key="user">회원</Menu.Item>
                         <Menu.Item key="board">게시판</Menu.Item>
@@ -70,6 +72,7 @@ export default function AdminPage() {
                     {menuKey === 'board' && <BoardContainer />}
                     {menuKey === 'category' && <CategoryContainer />}
                     {menuKey === 'adminLog' && <LogContainer />}
+                    {menuKey === 'mainNotice' && <MainNoticeContainer />}
                 </Content>
             </Layout>
         </>

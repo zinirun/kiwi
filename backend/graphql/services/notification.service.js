@@ -326,10 +326,10 @@ const createNotificationCommentDeleted = async (commentId, reason) => {
 const createNotificationMainNotice = async (content) => {
     const type = 'MAIN_NOTICE';
     const users = await models.user.findAll({
-        attributes: ['userId'],
+        attributes: [['id', 'userId']],
         raw: true,
         where: {
-            isDeleted: 0,
+            status: 1,
         },
     });
     await models.notification.bulkCreate(
