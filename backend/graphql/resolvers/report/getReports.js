@@ -23,12 +23,12 @@ const isAdmin = require('../../middlewares/isAdmin');
 module.exports = async ({ isCompleted }, { id: userId }) => {
     await isAdmin(userId);
     const query = `
-    select r.id, r.userId, userName, deptName, content, isCompleted, createdAt
-from report r
-join (select u.id, userName, deptName, departmentId
-    from user u
-    join department d on d.id = u.departmentId) as z on r.userId = z.id
-where isCompleted = :isCompleted
+                    select r.id, r.userId, userName, deptName, content, isCompleted, createdAt
+                    from report r
+                        join (select u.id, userName, deptName, departmentId
+                    from user u
+                        join department d on d.id = u.departmentId) as z on r.userId = z.id
+                    where isCompleted = :isCompleted
                     `;
     return await models.sequelize
         .query(query, {
