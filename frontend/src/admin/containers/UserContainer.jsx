@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Input, Row, Col, message, Button, Modal, Space } from 'antd';
+import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { useMutation } from 'react-apollo';
 import {
     SEARCH_USER_BY_USER_ID,
     SEARCH_USER_BY_STUDENT_NUMBER,
     UPDATE_STATUS,
     UPDATE_TYPE,
+    UPDATE_DEPT,
 } from '../../configs/queries';
 import { useStyles } from '../styles/admin.style';
 import { USER_TYPE } from '../../configs/variables';
+import axios from 'axios';
+
 const { Search } = Input;
 const { confirm } = Modal;
 
@@ -16,10 +20,32 @@ export default function UserContainer() {
     const classes = useStyles();
     const [userInfo, setUserInfo] = useState(null);
     const [reason, setReason] = useState(null);
+    const [metadata, setMetadata] = useState({
+        departments: [],
+    });
     const [searchUserByUserId] = useMutation(SEARCH_USER_BY_USER_ID);
     const [searchUserByStudentNumber] = useMutation(SEARCH_USER_BY_STUDENT_NUMBER);
     const [updateStatus] = useMutation(UPDATE_STATUS);
     const [updateType] = useMutation(UPDATE_TYPE);
+    const [updateDept] = useMutation(UPDATE_DEPT);
+    const [user, setUser] = useState({
+        departmentId: '',
+    });
+    useEffect(() => {
+        axios
+            .get('/api/user/metadata/signup')
+            .then(({ data }) => {
+                const { departments } = data;
+                setMetadata({
+                    departments,
+                });
+            })
+            .catch(() =>
+                message.error(
+                    '메타 정보를 불러오는 중 에러가 발생했습니다. 새로고침 후 다시 시도하세요.',
+                ),
+            );
+    }, []);
 
     const onSearchByUserId = (value) => {
         searchUserByUserId({
@@ -80,6 +106,41 @@ export default function UserContainer() {
                         } else {
                             message.error('회원 정지 해제 처리 중 오류가 발생했습니다.');
                         }
+                    });
+            },
+        });
+    };
+
+    const handleDeptChange = useCallback(
+        (e) => {
+            const { name, value } = e.target;
+            setUser({ ...user, [name]: value });
+        },
+        [user],
+    );
+
+    const handleDept = (e) => {
+        const departmentId = e.currentTarget.value;
+        confirm({
+            title: '해당 회원의 학과를 변경 하시겠습니까?',
+            content:
+                '해당 회원의 학과 변경 후 복구할 수 있습니다. 다시 조회하시면 변경사항 확인이 가능합니다.',
+            okText: '확인',
+            cancelText: '취소',
+            onOk() {
+                updateDept({
+                    variables: {
+                        departmentId: departmentId,
+                        id: userInfo.id,
+                    },
+                })
+                    .then((result) => {
+                        if (result.data.updateDept) {
+                            message.success('학과가 변경 되었습니다.');
+                        }
+                    })
+                    .catch(() => {
+                        message.error('학과 변경 중 오류가 발생했습니다.');
                     });
             },
         });
@@ -154,6 +215,37 @@ export default function UserContainer() {
                             <UserType type={userInfo.type} />
                         </Col>
                     </Row>
+                    <Space>
+                        <FormControl variant="outlined" className={classes.formSection}>
+                            <InputLabel>학과 선택</InputLabel>
+                            <Select
+                                name="departmentId"
+                                label="학과 선택"
+                                onChange={handleDeptChange}
+                                value={user.departmentId}
+                                size="small"
+                            >
+                                <MenuItem value="">
+                                    <em>학과 선택</em>
+                                </MenuItem>
+                                {metadata.departments.map((d, idx) => (
+                                    <MenuItem key={idx} value={d.id}>
+                                        {d.deptName}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <Button
+                            type="primary"
+                            disabled={user.departmentId ? false : true}
+                            size="middle"
+                            value="2"
+                            className={classes.button}
+                            onClick={handleDept}
+                        >
+                            변경
+                        </Button>
+                    </Space>
                     <Space className={classes.buttonSection}>
                         <Input
                             placeholder="정지 사유를 입력하세요."

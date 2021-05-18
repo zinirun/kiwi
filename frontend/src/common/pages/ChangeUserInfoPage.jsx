@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Form, message, Row, Select, Collapse, Input } from 'antd';
+import { Col, Form, message, Row, Select, Collapse, Input, Modal } from 'antd';
 import { useStyles } from '../static/signPages.style';
+import { useHistory } from 'react-router';
 import axios from 'axios';
 import PageTitle from '../components/PageTitle';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import { GET_USER, UPDATE_USER, UPDATE_USER_PASSWORD } from '../../configs/queries';
-import { Button } from '@material-ui/core';
+import {
+    GET_USER,
+    UPDATE_USER,
+    UPDATE_USER_PASSWORD,
+    UPDATE_USER_STATUS,
+} from '../../configs/queries';
+import { Button, TextField } from '@material-ui/core';
 import { passwordValidator } from '../validators/signup.validator';
 import { handleLogout } from '../../header/components/SideUserSection';
 
 const { Panel } = Collapse;
 const { Option } = Select;
+const { confirm } = Modal;
 
 export default function ChangeUserInfoPage(props) {
     const classes = useStyles();
@@ -70,6 +77,9 @@ export default function ChangeUserInfoPage(props) {
                     </Panel>
                     <Panel header="비밀번호 변경" key="change-user-password">
                         <ChangeUserPassword />
+                    </Panel>
+                    <Panel header="서비스 탈퇴" key="user-quit">
+                        <UserQuit />
                     </Panel>
                 </Collapse>
             )}
@@ -159,6 +169,73 @@ function ChangeUserInfo({ user, metadata }) {
             <Form.Item className={classes.changeFormItem}>
                 <Button type="submit" color="primary" className={classes.button} fullWidth>
                     인적사항 변경
+                </Button>
+            </Form.Item>
+        </Form>
+    );
+}
+
+function UserQuit() {
+    const classes = useStyles();
+    const history = useHistory();
+    const [value, setValue] = useState();
+    const [updateUserStatus] = useMutation(UPDATE_USER_STATUS);
+
+    const handleDelete = () => {
+        confirm({
+            title: '회원 탈퇴를 계속 진행 하시겠습니까?',
+            content: '회원 탈퇴 후 계정을 복구할 수 없습니다.',
+            okText: '확인',
+            cancelText: '취소',
+            onOk() {
+                updateUserStatus({
+                    variables: {
+                        status: 3,
+                    },
+                })
+                    .then((result) => {
+                        if (result.data.updateUserStatus) {
+                            message.success('회원 탈퇴가 정상적으로 이루어졌습니다.');
+                            history.push('/needsign');
+                        }
+                    })
+                    .catch(() => {
+                        message.error('회원 탈퇴 중 오류가 발생했습니다.');
+                    });
+            },
+        });
+    };
+    const handleChange = (e) => {
+        setValue(e.target.value);
+    };
+    return (
+        <Form>
+            <div>
+                회원탈퇴를 진행하시려면 <strong>'키위를 탈퇴합니다.'</strong>를 입력해주세요.
+            </div>
+            <TextField
+                multiline
+                size="small"
+                variant="outlined"
+                onChange={handleChange}
+                fullWidth
+                placeholder="키위를 탈퇴합니다."
+            />
+            <Form.Item className={classes.changeFormItem}>
+                <Button
+                    type="submit"
+                    disabled={value === '키위를 탈퇴합니다.' ? false : true}
+                    color="secondary"
+                    style={
+                        value === '키위를 탈퇴합니다.'
+                            ? { background: '#F85D5D' }
+                            : { background: '#C6C6C6' }
+                    }
+                    className={classes.quitButton}
+                    onClick={handleDelete}
+                    fullWidth
+                >
+                    회원 탈퇴
                 </Button>
             </Form.Item>
         </Form>

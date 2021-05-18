@@ -87,6 +87,7 @@ module.exports = {
     searchUserByUserId: require('./admin/user/searchUserByUserId'),
     updateStatus: require('./admin/user/updateStatus'),
     updateType: require('./admin/user/updateType'),
+    updateDept: require('./admin/user/updateDept'),
     getPostByAdmin: require('./admin/post/getPostByAdmin'),
     createDepartment: require('./admin/department/createDepartment'),
     getAllDepartments: require('./admin/department/getAllDepartments'),
