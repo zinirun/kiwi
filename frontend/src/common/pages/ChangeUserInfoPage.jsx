@@ -68,10 +68,7 @@ export default function ChangeUserInfoPage(props) {
                             <Col span={3}>학번</Col>
                             <Col span={21}>{user.studentNumber}</Col>
                             <Col span={3}>학과</Col>
-                            <Col span={21}>
-                                {user.department}{' '}
-                                <strong>[학과 변경은 고객센터로 문의바랍니다.]</strong>
-                            </Col>
+                            <Col span={21}>{user.department}</Col>
                         </Row>
                     </Panel>
                     <Panel header="기본 인적사항 변경" key="change-user-info">
@@ -154,6 +151,7 @@ function ChangeUserInfo({ user, metadata }) {
     };
     return (
         <Form onFinish={handleInfoSubmit}>
+            <p>* 학과 변경은 고객센터로 문의하세요.</p>
             <Form.Item
                 name="studentGradeId"
                 className={classes.changeFormItem}
@@ -214,7 +212,7 @@ function UserQuit() {
     return (
         <Form>
             <div>
-                회원탈퇴를 진행하시려면 <strong>'키위를 탈퇴합니다.'</strong>를 입력해주세요.
+                회원탈퇴를 진행하시려면 <i>키위를 탈퇴합니다</i>를 입력하세요.
             </div>
             <TextField
                 multiline
@@ -222,15 +220,15 @@ function UserQuit() {
                 variant="outlined"
                 onChange={handleChange}
                 fullWidth
-                placeholder="키위를 탈퇴합니다."
+                placeholder="키위를 탈퇴합니다"
             />
             <Form.Item className={classes.changeFormItem}>
                 <Button
                     type="submit"
-                    disabled={value === '키위를 탈퇴합니다.' ? false : true}
+                    disabled={value === '키위를 탈퇴합니다' ? false : true}
                     color="secondary"
                     style={
-                        value === '키위를 탈퇴합니다.'
+                        value === '키위를 탈퇴합니다'
                             ? { background: '#F85D5D' }
                             : { background: '#C6C6C6' }
                     }

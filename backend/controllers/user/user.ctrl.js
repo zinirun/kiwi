@@ -57,7 +57,7 @@ module.exports = {
     post_signup: async (req, res) => {
         const { userAccount: userAccountInput, studentNumber: studentNumberInput } = req.body.user;
         const isExists = await models.user.findOne({
-            attributes: ['id', 'userAccount', 'studentNumber'],
+            attributes: ['id', 'userAccount', 'studentNumber', 'status'],
             raw: true,
             where: {
                 [Op.or]: [
@@ -72,17 +72,22 @@ module.exports = {
         });
 
         if (isExists) {
+            if (isExists.status === 3) {
+                return res.json({
+                    success: false,
+                    message: 'EXITED',
+                });
+            }
             const { userAccount } = isExists;
-            userAccount === userAccountInput
+            return userAccount === userAccountInput
                 ? res.json({
                       success: false,
-                      duplicate: 'USER_ACCOUNT',
+                      message: 'USER_ACCOUNT',
                   })
                 : res.json({
                       success: false,
-                      duplicate: 'STUDENT_NUMBER',
+                      message: 'STUDENT_NUMBER',
                   });
-            return;
         }
 
         const { password, salt } = await createHashedPassword(req.body.user.password);

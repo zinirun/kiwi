@@ -73,13 +73,17 @@ export default function SignUpPage(props) {
                     const { success } = data;
                     setLoading(false);
                     if (!success) {
-                        const { duplicate } = data;
-                        if (duplicate === 'USER_ACCOUNT') {
-                            message.error('사용 중인 아이디입니다. 다른 아이디를 사용하세요.');
-                        } else {
-                            message.error('이미 가입된 학번입니다.');
+                        const { message } = data;
+                        switch (message) {
+                            case 'EXITED':
+                                return message.info('탈퇴한 회원입니다.');
+                            case 'USER_ACCOUNT':
+                                return message.error(
+                                    '사용 중인 아이디입니다. 다른 아이디를 사용하세요.',
+                                );
+                            default:
+                                return message.error('이미 가입된 학번입니다.');
                         }
-                        return;
                     }
                     message.success(
                         '회원가입이 완료되었습니다. 이메일 인증 후 서비스를 이용하세요.',
