@@ -65,9 +65,9 @@ const sendMailOfEmailAuth = async (username, email, studentNumber, code) => {
         </p>
         <div style="text-align: center; margin-top: 35">
             <a
-                href="http://localhost:3000/emailauth?sn=${studentNumber}&code=${code}"
+                href="https://kiwi.nemobros.com/emailauth?sn=${studentNumber}&code=${code}"
                 target="_blank"
-                style="text-decoration: none; color: white; background-color: dodgerblue; padding: 10"
+                style="text-decoration: none; color: white; background-color: dodgerblue; padding: 10; width:110px; height:30px"
                 >이메일 인증하기</a
             >
         </div>
