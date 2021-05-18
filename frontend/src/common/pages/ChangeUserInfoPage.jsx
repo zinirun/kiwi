@@ -69,7 +69,10 @@ export default function ChangeUserInfoPage(props) {
                             <Col span={3}>학번</Col>
                             <Col span={21}>{user.studentNumber}</Col>
                             <Col span={3}>학과</Col>
-                            <Col span={21}>{user.department}</Col>
+                            <Col span={21}>
+                                {user.department}{' '}
+                                <strong>[학과 변경은 고객센터로 문의바랍니다.]</strong>
+                            </Col>
                         </Row>
                     </Panel>
                     <Panel header="기본 인적사항 변경" key="change-user-info">
