@@ -44,4 +44,8 @@ export const useStyles = makeStyles((theme) => ({
         color: '#777',
         marginBottom: 0,
     },
+    formSection: {
+        marginTop: 20,
+        width: 300,
+    },
 }));

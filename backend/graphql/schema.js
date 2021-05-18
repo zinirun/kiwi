@@ -345,6 +345,7 @@ module.exports = buildSchema(`
         updateUserStatus(status: Int!): Boolean
         updateUserPassword(currentPassword: String!, newPassword: String!): Boolean
         updateType(id: ID!, type: String!, reason: String!): Boolean
+        updateDept(id: ID!, departmentId: ID!): Boolean
         createPost(post: PostInput!): PostAfterCreate
         updatePost(id: ID!, post: PostUpdateInput!): Boolean
         deletePost(id: ID!): Boolean

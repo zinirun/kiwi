@@ -666,6 +666,12 @@ export const UPDATE_TYPE = gql`
     }
 `;
 
+export const UPDATE_DEPT = gql`
+    mutation updateDept($id: ID!, $departmentId: ID!) {
+        updateDept(id: $id, departmentId: $departmentId)
+    }
+`;
+
 export const SEARCH_POST_BY_ADMIN = gql`
     mutation getPostByAdmin($postId: ID!) {
         getPostByAdmin(postId: $postId) {
@@ -751,5 +757,11 @@ export const GET_MAIN_NOTICES = gql`
             type
             content
         }
+    }
+`;
+
+export const UPDATE_USER_STATUS = gql`
+    mutation updateUserStatus($status: Int!) {
+        updateUserStatus(status: $status)
     }
 `;
