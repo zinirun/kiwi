@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Form, message, Row, Select, Collapse, Input, Modal } from 'antd';
 import { useStyles } from '../static/signPages.style';
-import { useHistory } from 'react-router';
 import axios from 'axios';
 import PageTitle from '../components/PageTitle';
 import { useMutation, useQuery } from '@apollo/react-hooks';
@@ -180,7 +179,6 @@ function ChangeUserInfo({ user, metadata }) {
 
 function UserQuit() {
     const classes = useStyles();
-    const history = useHistory();
     const [value, setValue] = useState();
     const [updateUserStatus] = useMutation(UPDATE_USER_STATUS);
 
@@ -198,12 +196,14 @@ function UserQuit() {
                 })
                     .then((result) => {
                         if (result.data.updateUserStatus) {
-                            message.success('회원 탈퇴가 정상적으로 이루어졌습니다.');
-                            history.push('/needsign');
+                            axios
+                                .post('/api/user/logout')
+                                .then(() => (window.location.href = '/'))
+                                .catch(() => (window.location.href = '/'));
                         }
                     })
                     .catch(() => {
-                        message.error('회원 탈퇴 중 오류가 발생했습니다.');
+                        message.error('회원 탈퇴 중 오류가 발생했습니다. 고객센터로 문의해주세요.');
                     });
             },
         });
