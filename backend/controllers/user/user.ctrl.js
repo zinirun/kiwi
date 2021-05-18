@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { ConflictError } = require('../../graphql/errors/errors');
 const { Op } = require('sequelize');
-const { sendMailOfResetPassword } = require('../../api/mailer');
+const { sendMailOfResetPassword, sendMailOfEmailAuth } = require('../../api/mailer');
 
 const createSalt = () =>
     new Promise((resolve, reject) => {
@@ -72,7 +72,7 @@ module.exports = {
         });
 
         if (isExists) {
-            const { userAccount, studentNumber } = isExists;
+            const { userAccount } = isExists;
             userAccount === userAccountInput
                 ? res.json({
                       success: false,
@@ -86,15 +86,24 @@ module.exports = {
         }
 
         const { password, salt } = await createHashedPassword(req.body.user.password);
-        return await models.user
-            .create({
-                ...req.body.user,
-                password,
-                salt,
+        const { studentNumber, userName, email } = req.body.user;
+
+        return sendMailOfEmailAuth(userName, email, studentNumber, password.slice(0, 6))
+            .then(async () => {
+                await models.user
+                    .create({
+                        ...req.body.user,
+                        password,
+                        salt,
+                    })
+                    .then(async (result) => {
+                        return res.json({
+                            success: true,
+                            userAccount: result.dataValues.userAccount,
+                        });
+                    })
+                    .catch((error) => res.status(409).json({ error }));
             })
-            .then((result) =>
-                res.json({ success: true, userAccount: result.dataValues.userAccount }),
-            )
             .catch((error) => res.status(409).json({ error }));
     },
 
@@ -130,10 +139,11 @@ module.exports = {
                     switch (
                         status // 1: 인증됨
                     ) {
-                        case 0: // 미인증
+                        case 0: // 미인증 (메일)
                             return res.json({
                                 success: false,
-                                message: 'NO_STUDENT_CARD',
+                                message: 'NO_EMAIL_CHECK',
+                                email: user.email,
                                 user,
                             });
                         case 2: // 정지
@@ -247,6 +257,57 @@ module.exports = {
                     email: isValidUser.email,
                 });
             })
+            .catch((error) => {
+                return res.status(409).json({ error });
+            });
+    },
+
+    post_email_auth: async (req, res) => {
+        const { sn: studentNumber, code } = req.body;
+
+        const user = await models.user.findOne({
+            attributes: ['id', 'password', 'status'],
+            where: { studentNumber },
+            raw: true,
+        });
+
+        if (user.status !== 0) {
+            return user.status === 1
+                ? res.json({
+                      success: false,
+                      message: 'ALREADY_DONE',
+                      user,
+                  })
+                : res.json({
+                      success: false,
+                      message: 'BAD_USER',
+                      user,
+                  });
+        }
+
+        if (!user) {
+            return res.json({
+                success: false,
+                message: 'NO_USER',
+                user,
+            });
+        }
+
+        if (user.password.slice(0, 6) !== code) {
+            return res.json({
+                success: false,
+                message: 'INVALID_CODE',
+                user,
+            });
+        }
+
+        return await models.user
+            .update({ status: 1 }, { where: { id: user.id } })
+            .then(() =>
+                res.json({
+                    success: true,
+                }),
+            )
             .catch((error) => {
                 return res.status(409).json({ error });
             });

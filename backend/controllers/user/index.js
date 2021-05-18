@@ -9,5 +9,6 @@ router.post('/logout', ctrl.post_logout);
 router.post('/find_user_account', ctrl.post_find_user_account);
 router.post('/reset_password', ctrl.post_reset_password);
 router.get('/metadata/signup', ctrl.get_signup_metadata);
+router.post('/emailauth', ctrl.post_email_auth);
 
 module.exports = router;

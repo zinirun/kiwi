@@ -102,4 +102,16 @@ export const useStyles = makeStyles((theme) => ({
         fontWeight: 'bold',
         marginBottom: 7,
     },
+    authText: {
+        fontSize: '1rem',
+        margin: 0,
+    },
+    authIcon: {
+        fontSize: '2rem',
+        color: theme.palette.primary.main,
+    },
+    authRedIcon: {
+        fontSize: '2rem',
+        color: theme.palette.secondary.main,
+    },
 }));

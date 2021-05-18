@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import { LogoIcon } from '../components/Logo';
 import { Link } from 'react-router-dom';
-import { message, Space } from 'antd';
+import { message, Space, Spin } from 'antd';
 import { useStyles } from '../static/signPages.style';
 import axios from 'axios';
 import { SignupValidator } from '../validators/signup.validator';
@@ -31,6 +31,7 @@ export default function SignUpPage(props) {
         studentNumber: '',
         studentGradeId: '',
     });
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         axios
@@ -61,6 +62,7 @@ export default function SignUpPage(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        setLoading(true);
         try {
             const newUser = await SignupValidator(user);
             axios
@@ -69,6 +71,7 @@ export default function SignUpPage(props) {
                 })
                 .then(({ data }) => {
                     const { success } = data;
+                    setLoading(false);
                     if (!success) {
                         const { duplicate } = data;
                         if (duplicate === 'USER_ACCOUNT') {
@@ -78,13 +81,17 @@ export default function SignUpPage(props) {
                         }
                         return;
                     }
-                    message.success('회원가입이 완료되었습니다.');
+                    message.success(
+                        '회원가입이 완료되었습니다. 이메일 인증 후 서비스를 이용하세요.',
+                    );
                     props.history.push('/signin');
                 })
                 .catch(() => {
                     message.error('회원가입 중 오류가 발생했습니다.');
+                    setLoading(false);
                 });
         } catch (error) {
+            setLoading(false);
             message.error(error.message);
         }
     };
@@ -210,16 +217,20 @@ export default function SignUpPage(props) {
                         </FormControl>
                     </Grid>
                     <Grid item xs={12} align="center">
-                        <Button
-                            fullWidth
-                            type="submit"
-                            color="primary"
-                            variant="contained"
-                            size="large"
-                            className={classes.loginBt}
-                        >
-                            회원가입
-                        </Button>
+                        {loading ? (
+                            <Spin />
+                        ) : (
+                            <Button
+                                fullWidth
+                                type="submit"
+                                color="primary"
+                                variant="contained"
+                                size="large"
+                                className={classes.loginBt}
+                            >
+                                회원가입
+                            </Button>
+                        )}
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <Button

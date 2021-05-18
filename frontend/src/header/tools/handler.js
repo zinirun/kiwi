@@ -5,6 +5,7 @@ export const isPublic = (pathname) => {
         case 'signup':
         case 'needsign':
         case 'finduser':
+        case 'emailauth':
             return true;
         default:
             return false;

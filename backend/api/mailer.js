@@ -4,7 +4,7 @@ const models = require('../models');
 
 // mail: to, subject, text, html
 const sendMail = (mail) =>
-    new Promise(async () => {
+    new Promise(async (resolve, reject) => {
         try {
             const transporter = nodemailer.createTransport({
                 service: 'gmail',
@@ -21,13 +21,15 @@ const sendMail = (mail) =>
                 ...mail,
             });
             console.log(`Mail sent: ${send.messageId}`);
-            return send.messageId;
+            resolve(send.messageId);
         } catch (error) {
             console.error(`Mail Error: ${error}`);
+            reject(error);
         }
     });
 
 // user: email, userName, userAccount, newPassword
+// 비밀번호 초기화 메일발송
 const sendMailOfResetPassword = async (user, newPassword) => {
     const mail = {
         to: user.email,
@@ -42,6 +44,39 @@ const sendMailOfResetPassword = async (user, newPassword) => {
     <p style="margin-top: 15px; text-align: center; font-size: 12px; color: '#999'">
         본 메일은 발신 전용입니다.
     </p></div>`,
+    };
+    return await sendMail(mail);
+};
+
+// user: email, userName, userAccount, newPassword
+// 회원가입 이메일 인증
+const sendMailOfEmailAuth = async (username, email, studentNumber, code) => {
+    const mail = {
+        to: email,
+        subject: `[키위] ${username}님의 이메일 인증입니다.`,
+        text: `${username}님의 이메일 인증입니다.`,
+        html: `<div style="color: black">
+        <p style="color: #0ab07e; text-align: center; font-size: 26px; font-weight: 600">Kiwi</p>
+        <p style="text-align: center; font-size: 16px; font-weight: 600; margin: 0">
+            서비스 이용에 필요한 이메일 인증입니다.
+        </p>
+        <p style="text-align: center; font-size: 16px; font-weight: 600; margin: 5">
+            인증을 계속 하시려면 아래 버튼을 클릭하세요.
+        </p>
+        <div style="text-align: center; margin-top: 35">
+            <a
+                href="http://localhost:3000/emailauth?sn=${studentNumber}&code=${code}"
+                target="_blank"
+                style="text-decoration: none; color: white; background-color: dodgerblue; padding: 10"
+                >이메일 인증하기</a
+            >
+        </div>
+        <p style="margin-top: 35px; text-align: center; font-size: 18px">키위 운영팀</p>
+        <p style="margin-top: 15px; text-align: center; font-size: 12px; color: '#999'">
+            본 메일은 발신 전용입니다.
+        </p>
+    </div>
+    `,
     };
     return await sendMail(mail);
 };
@@ -75,4 +110,5 @@ const sendMailOfUserBanned = async (userId, reason) => {
 module.exports = {
     sendMailOfResetPassword,
     sendMailOfUserBanned,
+    sendMailOfEmailAuth,
 };

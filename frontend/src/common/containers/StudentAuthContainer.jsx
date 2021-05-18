@@ -10,10 +10,6 @@ export default function StudentAuthContainer() {
     const [state, setState] = useState({
         loading: false,
     });
-    const [showExample, setShowExample] = useState(false);
-    const handleShowExample = () => {
-        setShowExample(!showExample);
-    };
     const handleChange = (info) => {
         if (info.file.status === 'uploading') {
             setState({ loading: true });
@@ -46,37 +42,6 @@ export default function StudentAuthContainer() {
             </p>
             <Grid className={classes.authFormWrapper} container justify="center" spacing={2}>
                 <Form layout="vertical" onFinish={handleSubmit}>
-                    <Grid item xs={12}>
-                        <Form.Item
-                            className={classes.typeWrapper}
-                            name="cardType"
-                            label="학생증 유형을 선택하세요."
-                        >
-                            <Grid container justify="center">
-                                <Grid item xs={12} sm={7}>
-                                    <Radio.Group>
-                                        <Radio.Button value="old">구학생증</Radio.Button>
-                                        <Radio.Button value="new">신학생증</Radio.Button>
-                                    </Radio.Group>
-                                </Grid>
-                                <Grid item xs={12} sm={5} align="right">
-                                    <Button
-                                        size="small"
-                                        color="secondary"
-                                        onClick={handleShowExample}
-                                    >
-                                        {showExample ? <>닫기</> : <>잘 모르겠어요</>}
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Form.Item>
-                    </Grid>
-                    {showExample && (
-                        <Grid className={classes.exampleWrapper} item xs={12}>
-                            <p>구학생증</p>
-                            <p>신학생증</p>
-                        </Grid>
-                    )}
                     <Grid item xs={12} align="center">
                         <Form.Item
                             name="cardImage"
@@ -89,7 +54,6 @@ export default function StudentAuthContainer() {
                                 listType="picture-card"
                                 className={classes.uploader}
                                 showUploadList={false}
-                                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                                 beforeUpload={beforeUpload}
                                 onChange={handleChange}
                             >

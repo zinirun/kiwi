@@ -61,6 +61,11 @@ import AdminPage from './admin/pages/AdminPage';
 
 // 신고 페이지
 import ReportPage from './common/pages/ReportPage';
+
+// 이메일 인증 페이지
+import EmailAuthPage from './common/pages/EmailAuthPage';
+
+// console warning
 import consoleMessage from './configs/consoleMessage';
 
 function App() {
@@ -92,6 +97,7 @@ function App() {
                     <Route path="/my/scrap" component={MyScrapPage} />
                     <Route path="/my/group" component={MyGroupPage} />
                     <Route path="/my/notification" component={MyNotificationPage} />
+                    <Route path="/emailauth" component={EmailAuthPage} />
                     <Redirect to="/" />
                 </Switch>
             </Root>
