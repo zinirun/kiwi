@@ -23,11 +23,11 @@ const { NotFoundError } = require('../../errors/errors');
 const { getCachedUser, setCachedUser } = require('../../../api/caching');
 
 module.exports = async ({}, { id }) => {
-    const cachedUser = await getCachedUser(id);
-    if (cachedUser) {
-        console.log(`user - cache hit! [id: ${id}]`);
-        return cachedUser;
-    }
+    // const cachedUser = await getCachedUser(id);
+    // if (cachedUser) {
+    //     console.log(`user - cache hit! [id: ${id}]`);
+    //     return cachedUser;
+    // }
     const user = await models.user.findOne({
         attributes: [
             'id',
@@ -70,6 +70,6 @@ module.exports = async ({}, { id }) => {
     if (ret_user.status !== 1) {
         throw BadRequestError('not normal user');
     }
-    await setCachedUser(id, ret_user);
+    //await setCachedUser(id, ret_user);
     return ret_user;
 };
