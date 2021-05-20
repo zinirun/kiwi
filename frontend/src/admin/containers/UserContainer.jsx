@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Input, Row, Col, message, Button, Modal, Space } from 'antd';
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { FormControl, Grid, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { useMutation } from 'react-apollo';
 import {
     SEARCH_USER_BY_USER_ID,
@@ -119,10 +119,9 @@ export default function UserContainer() {
         [user],
     );
 
-    const handleDept = (e) => {
-        const departmentId = e.currentTarget.value;
+    const handleDept = () => {
         confirm({
-            title: '해당 회원의 학과를 변경 하시겠습니까?',
+            title: '해당 회원의 학과를 변경할까요?',
             content:
                 '해당 회원의 학과 변경 후 복구할 수 있습니다. 다시 조회하시면 변경사항 확인이 가능합니다.',
             okText: '확인',
@@ -130,7 +129,7 @@ export default function UserContainer() {
             onOk() {
                 updateDept({
                     variables: {
-                        departmentId: departmentId,
+                        departmentId: user.departmentId,
                         id: userInfo.id,
                     },
                 })
@@ -215,37 +214,38 @@ export default function UserContainer() {
                             <UserType type={userInfo.type} />
                         </Col>
                     </Row>
-                    <Space>
-                        <FormControl variant="outlined" className={classes.formSection}>
-                            <InputLabel>학과 선택</InputLabel>
-                            <Select
-                                name="departmentId"
-                                label="학과 선택"
-                                onChange={handleDeptChange}
-                                value={user.departmentId}
-                                size="small"
-                            >
-                                <MenuItem value="">
-                                    <em>학과 선택</em>
-                                </MenuItem>
-                                {metadata.departments.map((d, idx) => (
-                                    <MenuItem key={idx} value={d.id}>
-                                        {d.deptName}
+                    <Grid container alignItems="center" className={classes.infoSection} spacing={1}>
+                        <Grid item xs={12} sm={3}>
+                            <FormControl variant="outlined" size="small" fullWidth>
+                                <InputLabel>학과 선택</InputLabel>
+                                <Select
+                                    name="departmentId"
+                                    label="학과 선택"
+                                    onChange={handleDeptChange}
+                                    value={user.departmentId}
+                                >
+                                    <MenuItem value="">
+                                        <em>학과 선택</em>
                                     </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        <Button
-                            type="primary"
-                            disabled={user.departmentId ? false : true}
-                            size="middle"
-                            value="2"
-                            className={classes.button}
-                            onClick={handleDept}
-                        >
-                            변경
-                        </Button>
-                    </Space>
+                                    {metadata.departments.map((d, idx) => (
+                                        <MenuItem key={idx} value={d.id}>
+                                            {d.deptName}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={1}>
+                            <Button
+                                type="primary"
+                                disabled={user.departmentId ? false : true}
+                                className={classes.button}
+                                onClick={handleDept}
+                            >
+                                변경
+                            </Button>
+                        </Grid>
+                    </Grid>
                     <Space className={classes.buttonSection}>
                         <Input
                             placeholder="정지 사유를 입력하세요."
