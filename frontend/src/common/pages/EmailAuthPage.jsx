@@ -1,4 +1,4 @@
-import { useHistory, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 import QueryString from 'query-string';
 import { useEffect, useState } from 'react';
 import { Spin } from 'antd';
