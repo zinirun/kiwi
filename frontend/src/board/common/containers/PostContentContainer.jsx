@@ -124,8 +124,6 @@ export default function PostContentContainer({ id }) {
         return mime.split('/')[0] === 'image';
     };
 
-    console.log(post);
-
     return (
         <>
             {postLoading && <PostContentSkeleton />}
