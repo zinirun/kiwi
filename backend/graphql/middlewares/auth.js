@@ -9,6 +9,7 @@ const authToken = (req, res, next) => {
     if (!token) {
         return res.status(403).json({
             success: false,
+            error: 'NO_TOKEN_EXCEPTION',
             message: 'not logged in',
         });
     }
@@ -25,6 +26,7 @@ const authToken = (req, res, next) => {
     const onError = (error) => {
         res.status(403).json({
             success: false,
+            error: 'INVALID_TOKEN_EXCEPTION',
             message: error.message,
         });
     };
