@@ -4,7 +4,7 @@ const isAdmin = require('../../../middlewares/isAdmin');
 const { createAdminLog } = require('../../../services/log.service');
 const { setCachedUserUpdated } = require('../../../../api/caching');
 
-module.exports = async ({ status, id }, { id: userId }) => {
+module.exports = async ({ status, id, reason }, { id: userId }) => {
     await isAdmin(userId);
     return await models.user
         .update(
@@ -14,7 +14,7 @@ module.exports = async ({ status, id }, { id: userId }) => {
             { where: { id } },
         )
         .then(async () => {
-            createAdminLog(userId, `회원 [ID ${id}] 상태 [${status}]으로 변경`);
+            createAdminLog(userId, `회원 [ID ${id}] 상태 [${status}]으로 변경: 사유[${reason}]`);
             await setCachedUserUpdated(id);
             return true;
         })
