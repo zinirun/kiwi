@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains="kiwi.nemobros.com"
+domains="zzangwoo.shop"
 rsa_key_size=4096
 data_path="../certbot"
 email="zrunkr@gmail.com" # Adding a valid address is strongly recommended
